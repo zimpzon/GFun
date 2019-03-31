@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 public class CampScript : MonoBehaviour
 {
     public string EnterPortalSceneName;
+    public Canvas IntroCanvas;
+    public Canvas LoadingCanvas;
+
     PlayerScript playerScript_;
     CameraPositioner camPos_;
     CameraShake camShake_;
@@ -19,11 +22,55 @@ public class CampScript : MonoBehaviour
 
         camPos_.SetTarget(playerScript_.transform.position);
         camPos_.SetPosition(playerScript_.transform.position);
+
+        StartCoroutine(InMenu());
     }
 
     public void OnPlayerEnterStartPortal()
     {
+        StopAllCoroutines();
         StartCoroutine(PlayerEnteredPortal());
+    }
+
+    IEnumerator InCamp()
+    {
+        lightingImageEffect_.MonochromeAmount = 0.0f;
+        lightingImageEffect_.Brightness = 1.5f;
+        IntroCanvas.enabled = false;
+        playerScript_.CanMove = true;
+
+
+        while (true)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                StartCoroutine(InMenu());
+                yield break;
+            }
+            yield return null;
+        }
+    }
+
+    IEnumerator InMenu()
+    {
+        playerScript_.CanMove = false;
+        IntroCanvas.enabled = true;
+
+        lightingImageEffect_.MonochromeDisplayR = 1.0f;
+        lightingImageEffect_.MonochromeDisplayG = 1.0f;
+        lightingImageEffect_.MonochromeDisplayB = 1.0f;
+        lightingImageEffect_.MonochromeAmount = 1.0f;
+        lightingImageEffect_.Brightness = 0.75f;
+
+        while (true)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                StartCoroutine(InCamp());
+                yield break;
+            }
+            yield return null;
+        }
     }
 
     IEnumerator PlayerEnteredPortal()
@@ -36,11 +83,10 @@ public class CampScript : MonoBehaviour
         float fade = 0.0f;
         while (fade < 1.0f)
         {
-            fade += Time.unscaledDeltaTime;
+            fade += Time.unscaledDeltaTime * 0.75f;
+            lightingImageEffect_.MonochromeAmount = Mathf.Max(0.0f, fade * 2 - 1.0f);
 
-            lightingImageEffect_.MonochromeAmount = fade;
-
-            float scale = Mathf.Max(0.0f, 1.0f - fade);
+            float scale = Mathf.Max(0.2f, 1.0f - fade);
             playerScript_.gameObject.transform.localScale = new Vector3(scale, scale, 1);
 
             camShake_.SetShake(1);
@@ -48,8 +94,9 @@ public class CampScript : MonoBehaviour
         }
 
         lightingImageEffect_.Brightness = 0.0f;
+        LoadingCanvas.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
 
-        yield return new WaitForSeconds(0.5f);
         SceneManager.LoadScene(EnterPortalSceneName, LoadSceneMode.Single);
     }
 

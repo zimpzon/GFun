@@ -86,7 +86,6 @@ public class PlayerScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        SceneGlobals.Instance.DebugLinesScript.SetLine("Fixed", Time.fixedUnscaledDeltaTime);
         UpdatePlayer(Time.fixedUnscaledDeltaTime);
     }
 
@@ -98,15 +97,16 @@ public class PlayerScript : MonoBehaviour
 
     void UpdateBulletTime()
     {
-        SceneGlobals.Instance.DebugLinesScript.SetLine("bulletTimeValue_", bulletTimeValue_);
+        if (!bulletTime_ && bulletTimeValue_ == 0.0f)
+            return;
 
-        lightingImageEffect_.MonochromeAmount = 2.0f * bulletTimeValue_;
         Time.timeScale = 1.0f - bulletTimeValue_ * 0.995f;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
 
         float diff = bulletTimeTarget_ - bulletTimeValue_;
         bulletTimeValue_ += diff * Time.unscaledDeltaTime * 30;
         bulletTimeValue_ = Mathf.Clamp01(bulletTimeValue_);
+        lightingImageEffect_.MonochromeAmount = 2.0f * bulletTimeValue_;
     }
 
     void Fire(Vector3 direction)
@@ -143,7 +143,6 @@ public class PlayerScript : MonoBehaviour
 
         var walls = SceneGlobals.Instance.MapScript.WallTileMap;
         var cell = walls.WorldToCell(transform_.position);
-        SceneGlobals.Instance.DebugLinesScript.SetLine("Player cell", cell);
 
         if (Input.GetKey(KeyCode.F))
             map_.ExplodeWalls(transform.position, 5f);

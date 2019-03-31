@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/TheCamp.unity
+    guid: 4d1b7bee0d1d58c48aff55bec82f472c
+  - enabled: 1
+    path: Assets/Scenes/Level1.unity
+    guid: ec018ebcc4085d747aa8e4e9729e6e60
   m_configObjects: {}
