@@ -1,0 +1,36 @@
+﻿using System.Collections.Generic;
+using System.Text;
+using TMPro;
+using UnityEngine;
+
+public class DebugLinesScript : MonoBehaviour
+{
+    Dictionary<string, string> lines_ = new Dictionary<string, string>();
+    TextMeshProUGUI text_;
+
+    public void SetLine(string key, object value)
+    {
+        lines_[key] = value.ToString();
+    }
+
+    void Awake()
+    {
+        text_ = GetComponent<TextMeshProUGUI>();
+        text_.enabled = false;
+    }
+
+    void Update()
+    {
+        if (lines_.Count == 0)
+            return;
+
+        StringBuilder sb = new StringBuilder();
+        foreach(var pair in lines_)
+        {
+            sb.AppendLine($"{pair.Key}: {pair.Value}");
+        }
+
+        text_.text = sb.ToString();
+        text_.enabled = true;
+    }
+}

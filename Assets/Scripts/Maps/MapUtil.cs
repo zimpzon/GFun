@@ -1,0 +1,57 @@
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Tilemaps;
+
+public static class MapUtil
+{
+    // Reuse the same lists for all returned results. Assumes single-threaded.
+    public static List<Vector3Int> LatestResultPositions = new List<Vector3Int>(50);
+    public static List<bool> LatestResultFlags = new List<bool>(50);
+
+    /// <summary>
+    /// Clears cells in tilemap in a circle at worldPosition within worldRadius.
+    /// Returns number of cleared cells. LatestResult contains the cells.
+    /// </summary>
+    public static int ClearCircle(Tilemap wallTiles, Tilemap topTiles, Vector3 worldPosition, float worldRadius)
+    {
+        LatestResultPositions.Clear();
+        LatestResultFlags.Clear();
+
+        var cellCenter = wallTiles.WorldToCell(worldPosition);
+        int cellRadius = (int)(worldRadius / wallTiles.cellSize.x); // Assuming square tiles
+
+        int y0 = cellCenter.y - cellRadius;
+        int y1 = cellCenter.y + cellRadius;
+        int x0 = cellCenter.x - cellRadius;
+        int x1 = cellCenter.x + cellRadius;
+
+        var cellPos = new Vector3Int();
+        for (int y = y0; y <= y1; ++y)
+        {
+            for (int x = x0; x <= x1; ++x)
+            {
+                cellPos.x = x;
+                cellPos.y = y;
+                var offsetFromCenter = cellCenter - cellPos;
+                if (offsetFromCenter.sqrMagnitude < cellRadius)
+                {
+                    var tile = wallTiles.GetTile<Tile>(cellPos);
+                    LatestResultPositions.Add(cellPos);
+                    LatestResultFlags.Add(tile != null);
+
+                    if (tile != null)
+                    {
+                        // Clear wall tile
+                        wallTiles.SetTile(cellPos, null);
+
+                        // Clear top tile
+                        cellPos.y += 1;
+                        topTiles.SetTile(cellPos, null);
+                    }
+                }
+            }
+        }
+
+        return LatestResultPositions.Count;
+    }
+}
