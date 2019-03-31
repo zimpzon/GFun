@@ -8,6 +8,8 @@ public class PlayerScript : MonoBehaviour
     public GameObject BulletPrefab;
     public Transform ShootOrigin;
     public float Drag = 1.0f;
+    public bool CanAttack = true;
+    public bool CanMove = true;
 
     Transform transform_;
     SpriteRenderer renderer_;
@@ -52,9 +54,13 @@ public class PlayerScript : MonoBehaviour
 
     void UpdatePlayer(float dt)
     {
-        var horz = Input.GetAxisRaw("Horizontal");
-        var vert = Input.GetAxisRaw("Vertical");
-        moveVec_ = new Vector3(horz, vert);
+        moveVec_ = Vector3.zero;
+        if (CanMove)
+        {
+            var horz = Input.GetAxisRaw("Horizontal");
+            var vert = Input.GetAxisRaw("Vertical");
+            moveVec_ = new Vector3(horz, vert);
+        }
         Vector3 movement = moveVec_ * Speed * dt + force_ * dt;
 
         if (force_.sqrMagnitude > 0.0f)
@@ -114,14 +120,8 @@ public class PlayerScript : MonoBehaviour
             AddForce(direction * 3);
     }
 
-    void Update()
+    void CheckAttack()
     {
-        UpdateBulletTime();
-
-        var walls = SceneGlobals.Instance.MapScript.WallTileMap;
-        var cell = walls.WorldToCell(transform_.position);
-        SceneGlobals.Instance.DebugLinesScript.SetLine("Player cell", cell);
-
         if (Input.GetKeyDown(KeyCode.DownArrow))
             Fire(Vector3.down);
         else if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -131,17 +131,21 @@ public class PlayerScript : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.RightArrow))
             Fire(Vector3.right);
 
-        if (Input.GetKey(KeyCode.P))
-        {
-            var particles = SceneGlobals.Instance.ParticleScript.BulletFizzleParticles;
-            particles.transform.position = transform_.position;
-            particles.Emit(4);
-        }
+        if (Input.GetKeyDown(KeyCode.Space))
+            ToggleBulletTime();
+    }
+
+    void Update()
+    {
+        UpdateBulletTime();
+        if (CanAttack)
+            CheckAttack();
+
+        var walls = SceneGlobals.Instance.MapScript.WallTileMap;
+        var cell = walls.WorldToCell(transform_.position);
+        SceneGlobals.Instance.DebugLinesScript.SetLine("Player cell", cell);
 
         if (Input.GetKey(KeyCode.F))
             map_.ExplodeWalls(transform.position, 5f);
-
-        if (Input.GetKeyDown(KeyCode.Space))
-            ToggleBulletTime();
     }
 }

@@ -21,6 +21,11 @@ public class CameraShake : MonoBehaviour
         CurrentAmount = Mathf.Clamp01(CurrentAmount + amount);
     }
 
+    public void SetShake(float amount)
+    {
+        CurrentAmount = Mathf.Clamp01(amount);
+    }
+
     void Update()
     {
         float t = Time.unscaledTime * 10.0f;
