@@ -27613,6 +27613,12 @@ PrefabInstance:
       propertyPath: BulletPrefab
       value: 
       objectReference: {fileID: 1018815292}
+    - target: {fileID: 6194186374522397826, guid: bb90b62f2275d5346b30882a3abed69b,
+        type: 3}
+      propertyPath: Anim
+      value: 
+      objectReference: {fileID: 11400000, guid: 861a36bbdedb0854188e5cddd67508d5,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb90b62f2275d5346b30882a3abed69b, type: 3}
 --- !u!1001 &6979251333387510446
