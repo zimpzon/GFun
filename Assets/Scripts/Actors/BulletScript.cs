@@ -36,6 +36,13 @@ public class BulletScript : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        Debug.Log("Stay");
+        DieParticles();
+        Destroy(this.gameObject);
+    }
+
     void DieParticles()
     {
         var particles = SceneGlobals.Instance.ParticleScript.BulletFizzleParticles;
