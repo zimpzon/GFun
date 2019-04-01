@@ -61,6 +61,7 @@ public class PlayerScript : MonoBehaviour
             var vert = Input.GetAxisRaw("Vertical");
             moveVec_ = new Vector3(horz, vert);
         }
+
         Vector3 movement = moveVec_ * Speed * dt + force_ * dt;
 
         if (force_.sqrMagnitude > 0.0f)

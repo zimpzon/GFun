@@ -39,7 +39,6 @@ public class CampScript : MonoBehaviour
         IntroCanvas.enabled = false;
         playerScript_.CanMove = true;
 
-
         while (true)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -98,11 +97,5 @@ public class CampScript : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         SceneManager.LoadScene(EnterPortalSceneName, LoadSceneMode.Single);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

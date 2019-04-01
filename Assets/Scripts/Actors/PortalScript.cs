@@ -5,8 +5,6 @@ public class PortalScript : MonoBehaviour
 {
     public Transform EntryPoint;
     public SpriteAnimationFrames_Single Anim;
-    public float FloatDistance = 0.1f;
-    public float FloatSpeed = 0.2f;
     public float PullForce = 10;
     public UnityEvent OnPlayerEnter;
 
@@ -60,7 +58,6 @@ public class PortalScript : MonoBehaviour
 
     void Update()
     {
-        transform_.localPosition = basePosition_ + new Vector3(0, Mathf.Sin(Time.unscaledTime * FloatSpeed) * FloatDistance, 0);
         renderer_.sprite = SimpleSpriteAnimator.GetAnimationSprite(Anim.Sprites, Anim.DefaultAnimationFramesPerSecond);
     }
 }
