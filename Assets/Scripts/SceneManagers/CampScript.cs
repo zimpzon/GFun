@@ -41,6 +41,9 @@ public class CampScript : MonoBehaviour
 
         while (true)
         {
+            // Just an example of easy debug info. Can be deleted.
+            SceneGlobals.Instance.DebugLinesScript.SetLine("Example debug info", "In camp, deltatime: " + Time.unscaledDeltaTime);
+
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 StartCoroutine(InMenu());
@@ -63,6 +66,9 @@ public class CampScript : MonoBehaviour
 
         while (true)
         {
+            // Just an example of easy debug info. Can be deleted.
+            SceneGlobals.Instance.DebugLinesScript.SetLine("Example debug info", "In menu, deltatime: " + Time.unscaledDeltaTime);
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 StartCoroutine(InCamp());
@@ -82,6 +88,9 @@ public class CampScript : MonoBehaviour
         float fade = 0.0f;
         while (fade < 1.0f)
         {
+            // Just an example of easy debug info. Can be deleted.
+            SceneGlobals.Instance.DebugLinesScript.SetLine("Example debug info", "In portal, deltatime: " + Time.unscaledDeltaTime);
+
             fade += Time.unscaledDeltaTime * 0.75f;
             lightingImageEffect_.MonochromeAmount = Mathf.Max(0.0f, fade * 2 - 1.0f);
 

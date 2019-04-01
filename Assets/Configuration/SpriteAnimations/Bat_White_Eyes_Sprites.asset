@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acba23d901cf4de4794eb48ba0cbc0a2, type: 3}
+  m_Name: Bat_White_Eyes_Sprites
+  m_EditorClassIdentifier: 
+  DefaultAnimationFramesPerSecond: 6
+  Sprites:
+  - {fileID: 21300010, guid: aff0e86a4febd424cb1672d6572e016e, type: 3}
+  - {fileID: 21300012, guid: aff0e86a4febd424cb1672d6572e016e, type: 3}
+  - {fileID: 21300014, guid: aff0e86a4febd424cb1672d6572e016e, type: 3}
+  - {fileID: 21300016, guid: aff0e86a4febd424cb1672d6572e016e, type: 3}
+  - {fileID: 21300018, guid: aff0e86a4febd424cb1672d6572e016e, type: 3}

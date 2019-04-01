@@ -26830,7 +26830,7 @@ GameObject:
   - component: {fileID: 1515438198}
   - component: {fileID: 1515438197}
   m_Layer: 0
-  m_Name: EnemyTest
+  m_Name: EnemyTest_Bat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27627,7 +27627,7 @@ PrefabInstance:
         type: 3}
       propertyPath: Anim
       value: 
-      objectReference: {fileID: 11400000, guid: 861a36bbdedb0854188e5cddd67508d5,
+      objectReference: {fileID: 11400000, guid: 8bbb8c8b4a55801448692f5c9d834023,
         type: 2}
     - target: {fileID: 6194186374522397824, guid: bb90b62f2275d5346b30882a3abed69b,
         type: 3}

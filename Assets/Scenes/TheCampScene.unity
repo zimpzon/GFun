@@ -19709,6 +19709,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8add7301f3ba2434b97ef744fb20d97e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnterPortalSceneName: Level1
+  EnterPortalSceneName: GameScene
   IntroCanvas: {fileID: 1676626834}
   LoadingCanvas: {fileID: 1802530377}
