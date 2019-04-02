@@ -6,14 +6,19 @@ public class MapScript : MonoBehaviour
     public Tilemap FloorTileMap;
     public Tilemap WallTileMap;
     public Tilemap TopTileMap;
+    public MapStyle MapStyle;
     public GameObject BackgroundQuad;
     public CompositeCollider2D WallCompositeCollider;
-    public CompositeCollider2D TopCompositeCollider;
+
+    // When destroy walls some colliders are left behind. Fix should be incoming:
+    // https://github.com/Unity-Technologies/2d-extras/issues/34
 
     public void ExplodeWalls(Vector3 worldPosition, float worldRadius)
     {
-        int tilesChecked = MapUtil.ClearCircle(WallTileMap, TopTileMap, worldPosition, worldRadius);
+        int tilesChecked = MapUtil.ClearCircle(this, MapStyle, worldPosition, worldRadius);
         var particles = SceneGlobals.Instance.ParticleScript.WallDestructionParticles;
+
+        WallCompositeCollider.generationType = CompositeCollider2D.GenerationType.Manual;
 
         int tilesCleared = 0;
         for (int i = 0; i < tilesChecked; ++i)
@@ -31,12 +36,12 @@ public class MapScript : MonoBehaviour
             }
         }
 
-        WallCompositeCollider.GenerateGeometry();
+        WallCompositeCollider.generationType = CompositeCollider2D.GenerationType.Synchronous;
     }
 
     void Awake()
     {
-        WallCompositeCollider = WallTileMap.GetComponent<CompositeCollider2D>();
-        WallCompositeCollider.generationType = CompositeCollider2D.GenerationType.Manual;
+        //WallCompositeCollider = WallTileMap.GetComponent<CompositeCollider2D>();
+        //WallCompositeCollider.generationType = CompositeCollider2D.GenerationType.Manual;
     }
 }
