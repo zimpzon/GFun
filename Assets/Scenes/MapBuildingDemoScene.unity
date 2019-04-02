@@ -13305,6 +13305,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -15
       objectReference: {fileID: 0}
+    - target: {fileID: 4619418340046607857, guid: 46bd76d6b3d875b4b9dbdd1aa11b2b3d,
+        type: 3}
+      propertyPath: far clip plane
+      value: 200
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46bd76d6b3d875b4b9dbdd1aa11b2b3d, type: 3}
 --- !u!1001 &6028833511072547718
@@ -13486,12 +13491,12 @@ PrefabInstance:
     - target: {fileID: 6194186374522397827, guid: bb90b62f2275d5346b30882a3abed69b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 50
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6194186374522397827, guid: bb90b62f2275d5346b30882a3abed69b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 50
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6194186374522397827, guid: bb90b62f2275d5346b30882a3abed69b,
         type: 3}

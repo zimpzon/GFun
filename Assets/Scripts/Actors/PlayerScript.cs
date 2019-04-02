@@ -54,6 +54,12 @@ public class PlayerScript : MonoBehaviour
 
     void UpdatePlayer(float dt)
     {
+        float z = Camera.main.transform.localPosition.z;
+        if (Input.GetKeyDown(KeyCode.Z))
+            Camera.main.transform.localPosition = new Vector3(0, 0, z - 5);
+        if (Input.GetKeyDown(KeyCode.X))
+            Camera.main.transform.localPosition = new Vector3(0, 0, z + 5);
+
         moveVec_ = Vector3.zero;
         if (CanMove)
         {
