@@ -18,6 +18,7 @@ public class SceneGlobals : MonoBehaviour
     public LayerMask PlayerInteractionLayer;
     public LayerMask EnemyLayer;
     public LayerMask EnemyDamageLayer;
+    public AiBlackboard AiBlackboard;
 
     void Awake()
     {
@@ -36,6 +37,7 @@ public class SceneGlobals : MonoBehaviour
         ParticleScript = FindObjectOfType<ParticleScript>();
         DebugLinesScript = FindObjectOfType<DebugLinesScript>();
         LightingImageEffect = FindObjectOfType<LightingImageEffect>();
+        AiBlackboard = FindObjectOfType<AiBlackboard>();
 
         Instance = this;
     }

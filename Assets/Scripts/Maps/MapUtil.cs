@@ -12,11 +12,12 @@ public static class MapUtil
     /// Clears cells in tilemap in a circle at worldPosition within worldRadius.
     /// Returns number of cleared cells. LatestResult contains the cells.
     /// </summary>
-    public static int ClearCircle(Tilemap wallTiles, Tilemap topTiles, Vector3 worldPosition, float worldRadius)
+    public static int ClearCircle(MapScript mapScript, MapStyle mapStyle, Vector3 worldPosition, float worldRadius)
     {
         LatestResultPositions.Clear();
         LatestResultFlags.Clear();
 
+        var wallTiles = mapScript.WallTileMap;
         var cellCenter = wallTiles.WorldToCell(worldPosition);
         int cellRadius = (int)(worldRadius / wallTiles.cellSize.x); // Assuming square tiles
 
@@ -35,19 +36,12 @@ public static class MapUtil
                 var offsetFromCenter = cellCenter - cellPos;
                 if (offsetFromCenter.sqrMagnitude < cellRadius)
                 {
-                    var tile = wallTiles.GetTile<Tile>(cellPos);
+                    bool hasTile = wallTiles.HasTile(cellPos);
                     LatestResultPositions.Add(cellPos);
-                    LatestResultFlags.Add(tile != null);
+                    LatestResultFlags.Add(hasTile);
 
-                    if (tile != null)
-                    {
-                        // Clear wall tile
-                        wallTiles.SetTile(cellPos, null);
-
-                        // Clear top tile
-                        cellPos.y += 1;
-                        topTiles.SetTile(cellPos, null);
-                    }
+                    if (hasTile)
+                        MapBuilder.DestroyTile(mapScript, mapStyle, cellPos);
                 }
             }
         }

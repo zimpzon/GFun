@@ -8886,9 +8886,9 @@ MonoBehaviour:
   FloorTileMap: {fileID: 1298272540}
   WallTileMap: {fileID: 124941212}
   TopTileMap: {fileID: 388240446}
+  MapStyle: {fileID: 0}
   BackgroundQuad: {fileID: 186394918}
   WallCompositeCollider: {fileID: 0}
-  TopCompositeCollider: {fileID: 0}
 --- !u!156049354 &1174650702
 Grid:
   m_ObjectHideFlags: 0
@@ -19709,6 +19709,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8add7301f3ba2434b97ef744fb20d97e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnterPortalSceneName: GameScene
+  EnterPortalSceneName: MapBuildingDemoScene
   IntroCanvas: {fileID: 1676626834}
   LoadingCanvas: {fileID: 1802530377}
