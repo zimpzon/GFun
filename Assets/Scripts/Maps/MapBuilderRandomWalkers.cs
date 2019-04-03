@@ -6,9 +6,9 @@ public static class MapBuilderRandomWalkers
     {
         var param = new WalkParam(w, h);
 
-        for (int i = 0; i < 10; ++i)
+        for (int i = 0; i < 5; ++i)
         {
-            param.steps = 100;
+            param.steps = 60;
             DoWalk(param, MapBuilder.map);
         }
     }

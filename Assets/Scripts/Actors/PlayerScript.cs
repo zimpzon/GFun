@@ -54,12 +54,6 @@ public class PlayerScript : MonoBehaviour
 
     void UpdatePlayer(float dt)
     {
-        float z = Camera.main.transform.localPosition.z;
-        if (Input.GetKeyDown(KeyCode.Z))
-            Camera.main.transform.localPosition = new Vector3(0, 0, z - 5);
-        if (Input.GetKeyDown(KeyCode.X))
-            Camera.main.transform.localPosition = new Vector3(0, 0, z + 5);
-
         moveVec_ = Vector3.zero;
         if (CanMove)
         {
@@ -120,7 +114,7 @@ public class PlayerScript : MonoBehaviour
     {
         var bullet = Instantiate(BulletPrefab).GetComponent<BulletScript>();
         bullet.gameObject.SetActive(true);
-        bullet.Init(ShootOrigin.position + direction * 0.25f, direction, 30, 15);
+        bullet.Init(ShootOrigin.position + direction * 0.25f, direction, 20, 15);
 
         // Don't add force when already running in shooting direction
         if (direction != moveVec_)
