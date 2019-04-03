@@ -8920,6 +8920,21 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -15
       objectReference: {fileID: 0}
+    - target: {fileID: 4619418340046607857, guid: 46bd76d6b3d875b4b9dbdd1aa11b2b3d,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 16151
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619418338329035128, guid: 46bd76d6b3d875b4b9dbdd1aa11b2b3d,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 16384
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619418339460128234, guid: 46bd76d6b3d875b4b9dbdd1aa11b2b3d,
+        type: 3}
+      propertyPath: LightingResolution
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 4619418339619055736, guid: 46bd76d6b3d875b4b9dbdd1aa11b2b3d,
         type: 3}
       propertyPath: ShakeRotation
