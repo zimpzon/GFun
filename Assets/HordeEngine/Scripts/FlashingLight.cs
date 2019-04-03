@@ -1,7 +1,5 @@
-﻿using HordeEngine;
-using UnityEngine;
+﻿using UnityEngine;
 
-[RequireComponent(typeof(MaterialColorSetter))]
 public class FlashingLight : MonoBehaviour
 {
     public float ScaleVariance = 0.1f;
@@ -11,6 +9,8 @@ public class FlashingLight : MonoBehaviour
     Transform trans_;
     MaterialColorSetter colorSetter_;
     Vector2 baseScale_;
+    SpriteRenderer renderer_;
+
     float h0_, s0_, v0_;
     float h1_, s1_, v1_;
     float a0_, a1_;
@@ -20,8 +20,8 @@ public class FlashingLight : MonoBehaviour
     {
         trans_ = transform;
         baseScale_ = trans_.localScale;
+        renderer_ = GetComponent<SpriteRenderer>();
 
-        colorSetter_ = GetComponent<MaterialColorSetter>();
         Color.RGBToHSV(Color0, out h0_, out s0_, out v0_);
         Color.RGBToHSV(Color1, out h1_, out s1_, out v1_);
         a0_ = Color0.a;
@@ -30,7 +30,7 @@ public class FlashingLight : MonoBehaviour
 
     void Update()
     {
-        if (Horde.Time.SlowableTime > nextFlash_)
+        if (Time.time > nextFlash_)
         {
             trans_.localScale = baseScale_ + Vector2.one * (Random.value - 0.5f) * ScaleVariance;
 
@@ -38,10 +38,12 @@ public class FlashingLight : MonoBehaviour
             float s = Random.value * (s1_ - s0_) + s0_;
             float v = Random.value * (v1_ - v0_) + v0_;
             float a = Random.value * (a1_ - a0_) + a0_;
-            colorSetter_.Color = Color.HSVToRGB(h, s, v);
-            colorSetter_.Color.a = a;
 
-            nextFlash_ = Horde.Time.SlowableTime + Random.value * 0.1f + 0.1f;
+            var color = Color.HSVToRGB(h, s, v);
+            color.a = a;
+            renderer_.color = color;
+
+            nextFlash_ = Time.time + Random.value * 0.1f + 0.1f;
         }
     }
 }
