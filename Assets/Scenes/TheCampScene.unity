@@ -2117,7 +2117,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b0b471c1f44cc2a4e81613274f102186, type: 3}
-  m_Color: {r: 1, g: 0.68199855, b: 0.09800005, a: 0.25882354}
+  m_Color: {r: 1, g: 0.68199855, b: 0.09800005, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -8930,10 +8930,30 @@ PrefabInstance:
       propertyPath: m_CullingMask.m_Bits
       value: 16384
       objectReference: {fileID: 0}
+    - target: {fileID: 4619418338329035128, guid: 46bd76d6b3d875b4b9dbdd1aa11b2b3d,
+        type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.1509434
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619418338329035128, guid: 46bd76d6b3d875b4b9dbdd1aa11b2b3d,
+        type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.1509434
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619418338329035128, guid: 46bd76d6b3d875b4b9dbdd1aa11b2b3d,
+        type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.1509434
+      objectReference: {fileID: 0}
     - target: {fileID: 4619418339460128234, guid: 46bd76d6b3d875b4b9dbdd1aa11b2b3d,
         type: 3}
       propertyPath: LightingResolution
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619418339460128234, guid: 46bd76d6b3d875b4b9dbdd1aa11b2b3d,
+        type: 3}
+      propertyPath: LightingTextureFormat
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4619418339619055736, guid: 46bd76d6b3d875b4b9dbdd1aa11b2b3d,
         type: 3}
