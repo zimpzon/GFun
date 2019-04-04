@@ -1,4 +1,4 @@
-﻿Shader "Engine/LightingBlend"
+﻿Shader "GFun/LightingBlend"
 {
     Properties
     {

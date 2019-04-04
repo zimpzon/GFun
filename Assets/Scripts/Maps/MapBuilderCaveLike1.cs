@@ -4,9 +4,9 @@ public static class MapBuilderCaveLike1
 {
     public static void Build(int w, int h)
     {
-        var mapHandler = new MapHandler(MapBuilder.map, w, h, 40);
-        mapHandler.RandomFillMap();
+        var mapHandler = new MapHandler(MapBuilder.map, w, h, 0.5f);
         mapHandler.MakeCaverns();
+        mapHandler.InvertMap();
     }
 
     public class MapHandler
@@ -25,6 +25,18 @@ public static class MapBuilderCaveLike1
             WallPct = wallPct;
 
             RandomFillMap();
+        }
+
+        public void InvertMap()
+        {
+            for (int y = 0; y < MapHeight; ++y)
+            {
+                for (int x = 0; x < MapWidth; ++x)
+                {
+                    byte val = Map[x, y];
+                    Map[x, y] = (byte)(val == 0 ? 1 : 0);
+                }
+            }
         }
 
         public void MakeCaverns()

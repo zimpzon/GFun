@@ -10,9 +10,37 @@ public class MapScript : MonoBehaviour
     public GameObject BackgroundQuad;
     public CompositeCollider2D WallCompositeCollider;
 
-    // When destroy walls some colliders are left behind. Fix should be incoming:
-    // https://github.com/Unity-Technologies/2d-extras/issues/34
+    Renderer wallRenderer_;
+    Renderer topRenderer_;
+    Renderer backgroundRenderer_;
+    float wallClarity_;
 
+    public float GetWallClarity()
+        => wallClarity_;
+
+    public void SetWallClarity(float value01)
+    {
+        wallClarity_ = Mathf.Clamp01(value01);
+
+        wallRenderer_.material.SetFloat("_ClarityTop", wallClarity_);
+        wallRenderer_.material.SetFloat("_ClarityBottom", wallClarity_ * 2); // Bottom wall is less affected
+        topRenderer_.material.SetFloat("_Clarity", wallClarity_);
+        backgroundRenderer_.material.SetFloat("_Clarity", wallClarity_);
+    }
+
+    /// <summary>
+    /// Access cells at start to avoid spike mid-game the first time it is accessed
+    /// </summary>
+    void TouchMap()
+    {
+        // TODO: Currently not helping, touch the right places.
+        var wallbounds = WallTileMap.cellBounds;
+        var topbounds = WallTileMap.cellBounds;
+        var floorbounds = WallTileMap.cellBounds;
+    }
+
+    // When destroying walls some colliders are left behind. Fix should be incoming:
+    // https://github.com/Unity-Technologies/2d-extras/issues/34
     public void ExplodeWalls(Vector3 worldPosition, float worldRadius)
     {
         int tilesChecked = MapUtil.ClearCircle(this, MapStyle, worldPosition, worldRadius);
@@ -41,7 +69,13 @@ public class MapScript : MonoBehaviour
 
     void Awake()
     {
-        //WallCompositeCollider = WallTileMap.GetComponent<CompositeCollider2D>();
-        //WallCompositeCollider.generationType = CompositeCollider2D.GenerationType.Manual;
+        wallRenderer_ = WallTileMap.GetComponent<Renderer>();
+        topRenderer_ = TopTileMap.GetComponent<Renderer>();
+        backgroundRenderer_ = BackgroundQuad.GetComponent<Renderer>();
+
+        // Wall, top and background should all be equal so just pick one to start with
+        wallClarity_ = -topRenderer_.material.GetFloat("_Clarity");
+
+        TouchMap();
     }
 }

@@ -1,47 +1,50 @@
 ﻿using UnityEngine;
 
-namespace HordeEngine
+[RequireComponent(typeof(Camera))]
+public class LightingCamera : MonoBehaviour
 {
-    [RequireComponent(typeof(Camera))]
-    public class LightingCamera : MonoBehaviour
+    public RenderTextureFormat LightingTextureFormat;
+    public Camera ParentCamera;
+    public float LightingResolution = 1.0f;
+    public LightingImageEffect lightingImageEffect_;
+
+    Camera lightingCam_;
+
+    public void SetAmbientLightColor(Color color)
+        => lightingCam_.backgroundColor = color;
+
+    public Color GetAmbientLightColor()
+        => lightingCam_.backgroundColor;
+
+    private void Awake()
     {
-        public RenderTextureFormat LightingTextureFormat;
-        public Camera ParentCamera;
-        public float LightingResolution = 1.0f;
-        public LightingImageEffect lightingImageEffect_;
+        lightingCam_ = GetComponent<Camera>();
+        lightingImageEffect_ = ParentCamera.GetComponent<LightingImageEffect>();
+    }
 
-        Camera lightingCam_;
+    private void OnEnable()
+    {
+        AlignWithParentCamera(ParentCamera);
 
-        private void Awake()
-        {
-            lightingCam_ = GetComponent<Camera>();
-            lightingImageEffect_ = ParentCamera.GetComponent<LightingImageEffect>();
-        }
+        int texW = Mathf.RoundToInt(ParentCamera.pixelWidth * LightingResolution);
+        int texH = Mathf.RoundToInt(ParentCamera.pixelHeight * LightingResolution);
+        lightingCam_.targetTexture = RenderTexture.GetTemporary(texW, texH, 0, LightingTextureFormat);
+        lightingImageEffect_.LightingTexture = lightingCam_.targetTexture;
+    }
 
-        private void OnEnable()
-        {
-            AlignWithParentCamera(ParentCamera);
+    private void OnDisable()
+    {
+        RenderTexture.ReleaseTemporary(lightingCam_.targetTexture);
+        lightingCam_.targetTexture = null;
+        lightingImageEffect_.LightingTexture = null;
+    }
 
-            int texW = Mathf.RoundToInt(ParentCamera.pixelWidth * LightingResolution);
-            int texH = Mathf.RoundToInt(ParentCamera.pixelHeight * LightingResolution);
-            lightingCam_.targetTexture = RenderTexture.GetTemporary(texW, texH, 0, LightingTextureFormat);
-            lightingImageEffect_.LightingTexture = lightingCam_.targetTexture;
-        }
+    void AlignWithParentCamera(Camera parent)
+    {
+        // Render before main camera
+        lightingCam_.depth = parent.depth - 1;
 
-        private void OnDisable()
-        {
-            RenderTexture.ReleaseTemporary(lightingCam_.targetTexture);
-            lightingCam_.targetTexture = null;
-            lightingImageEffect_.LightingTexture = null;
-        }
-
-        void AlignWithParentCamera(Camera parent)
-        {
-            // Render before main camera
-            lightingCam_.depth = parent.depth - 1;
-
-            // Align size with main camera
-            lightingCam_.orthographicSize = parent.orthographicSize;
-        }
+        // Align size with main camera
+        lightingCam_.orthographicSize = parent.orthographicSize;
     }
 }

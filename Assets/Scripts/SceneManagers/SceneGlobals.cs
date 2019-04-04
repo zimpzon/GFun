@@ -12,6 +12,8 @@ public class SceneGlobals : MonoBehaviour
     public ParticleScript ParticleScript;
     public DebugLinesScript DebugLinesScript;
     public LightingImageEffect LightingImageEffect;
+    public LightingCamera LightingCamera;
+    public MapCamera MapCamera;
     public LayerMask MapLayer;
     public LayerMask PlayerLayer;
     public LayerMask PlayerDamageLayer;
@@ -37,6 +39,8 @@ public class SceneGlobals : MonoBehaviour
         ParticleScript = FindObjectOfType<ParticleScript>();
         DebugLinesScript = FindObjectOfType<DebugLinesScript>();
         LightingImageEffect = FindObjectOfType<LightingImageEffect>();
+        LightingCamera = FindObjectOfType<LightingCamera>();
+        MapCamera = FindObjectOfType<MapCamera>();
         AiBlackboard = FindObjectOfType<AiBlackboard>();
 
         Instance = this;

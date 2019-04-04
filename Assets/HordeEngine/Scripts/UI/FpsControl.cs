@@ -14,7 +14,6 @@ public class FpsControl : MonoBehaviour
     int textUpdateRate_ = 2;
     Color32 background_ = new Color32(50, 50, 50, 255);
     RawImage image_;
-    TextMeshProUGUI textFps_;
     Texture2D texture_;
     Color32[] pixels_;
     Rect uvRect_ = new Rect(0.0f, 0.0f, 1.0f, 1.0f);
@@ -23,7 +22,6 @@ public class FpsControl : MonoBehaviour
     private void Awake()
     {
         image_ = GetComponentInChildren<RawImage>();
-        textFps_ = GetComponentInChildren<TextMeshProUGUI>();
 
         pixels_ = new Color32[W * H];
         for (int i = 0; i < pixels_.Length; ++i)
@@ -81,9 +79,6 @@ public class FpsControl : MonoBehaviour
         {
             float fps = 1.0f / Time.deltaTime;
             Add(fps);
-
-            //if (Time.frameCount % textUpdateRate_ == 0)
-            //    textFps_.SetText("{0:1} FpS", fps);
         }
     }
 }
