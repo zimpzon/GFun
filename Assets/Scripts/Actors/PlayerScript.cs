@@ -114,7 +114,7 @@ public class PlayerScript : MonoBehaviour
     {
         var bullet = Instantiate(BulletPrefab).GetComponent<BulletScript>();
         bullet.gameObject.SetActive(true);
-        bullet.Init(ShootOrigin.position + direction * 0.25f, direction, 20, 15);
+        bullet.Init(ShootOrigin.position + direction * 0.25f, direction, 10, 15);
 
         // Don't add force when already running in shooting direction
         if (direction != moveVec_)

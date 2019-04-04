@@ -13,6 +13,7 @@ public class SceneGlobals : MonoBehaviour
     public DebugLinesScript DebugLinesScript;
     public LightingImageEffect LightingImageEffect;
     public LightingCamera LightingCamera;
+    public MapCamera MapCamera;
     public LayerMask MapLayer;
     public LayerMask PlayerLayer;
     public LayerMask PlayerDamageLayer;
@@ -39,6 +40,7 @@ public class SceneGlobals : MonoBehaviour
         DebugLinesScript = FindObjectOfType<DebugLinesScript>();
         LightingImageEffect = FindObjectOfType<LightingImageEffect>();
         LightingCamera = FindObjectOfType<LightingCamera>();
+        MapCamera = FindObjectOfType<MapCamera>();
         AiBlackboard = FindObjectOfType<AiBlackboard>();
 
         Instance = this;

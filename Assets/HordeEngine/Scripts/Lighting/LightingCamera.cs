@@ -10,10 +10,10 @@ public class LightingCamera : MonoBehaviour
 
     Camera lightingCam_;
 
-    public void SetClearColor(Color color)
+    public void SetAmbientLightColor(Color color)
         => lightingCam_.backgroundColor = color;
 
-    public Color GetClearColor()
+    public Color GetAmbientLightColor()
         => lightingCam_.backgroundColor;
 
     private void Awake()

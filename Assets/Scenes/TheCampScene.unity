@@ -4069,6 +4069,11 @@ PrefabInstance:
       propertyPath: CanMove
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6194186374522397826, guid: bb90b62f2275d5346b30882a3abed69b,
+        type: 3}
+      propertyPath: Speed
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6194186374522397824, guid: bb90b62f2275d5346b30882a3abed69b,
         type: 3}
       propertyPath: m_Sprite
@@ -4087,7 +4092,7 @@ GameObject:
   m_Component:
   - component: {fileID: 884617081}
   - component: {fileID: 884617082}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4102,7 +4107,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 884617080}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -4.76, z: 0}
+  m_LocalPosition: {x: 0, y: -3.9, z: 0}
   m_LocalScale: {x: 2.9412897, y: 1.7647737, z: 5.8825793}
   m_Children: []
   m_Father: {fileID: 1179353111}
@@ -9139,7 +9144,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1179353111}
   - component: {fileID: 1179353110}
-  m_Layer: 0
+  - component: {fileID: 1179353112}
+  - component: {fileID: 1179353113}
+  m_Layer: 13
   m_Name: campfirePlaceholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9182,7 +9189,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 30
   m_Sprite: {fileID: 21300000, guid: 66d1e4792c0b76247b81376906944280, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -9210,6 +9217,43 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &1179353112
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179353109}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -1.73}
+  serializedVersion: 2
+  m_Radius: 2
+--- !u!50 &1179353113
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179353109}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1211617998
 GameObject:
   m_ObjectHideFlags: 0
