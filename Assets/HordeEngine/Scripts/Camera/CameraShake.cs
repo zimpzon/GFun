@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using HordeEngine;
 
 // Object to shake will be forced at 0, 0, 0
 public class CameraShake : MonoBehaviour

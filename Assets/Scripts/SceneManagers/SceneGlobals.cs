@@ -8,7 +8,7 @@ public class SceneGlobals : MonoBehaviour
     public CameraPositioner CameraPositioner;
     public CameraShake CameraShake;
     public MapScript MapScript;
-    public SoundManager SoundManager;
+    public AudioManager AudioManager;
     public ParticleScript ParticleScript;
     public DebugLinesScript DebugLinesScript;
     public LightingImageEffect LightingImageEffect;
@@ -34,7 +34,7 @@ public class SceneGlobals : MonoBehaviour
         PlayerScript = FindObjectOfType<PlayerScript>();
         CameraPositioner = FindObjectOfType<CameraPositioner>();
         CameraShake = FindObjectOfType<CameraShake>();
-        SoundManager = FindObjectOfType<SoundManager>();
+        AudioManager = FindObjectOfType<AudioManager>();
         MapScript = FindObjectOfType<MapScript>();
         ParticleScript = FindObjectOfType<ParticleScript>();
         DebugLinesScript = FindObjectOfType<DebugLinesScript>();

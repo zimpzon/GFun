@@ -5,7 +5,6 @@ public class PlayerScript : MonoBehaviour
     public float Speed = 10;
     public SpriteAnimationFrames_IdleRun Anim;
     public float LookAtOffset = 10;
-    public GameObject BulletPrefab;
     public Transform ShootOrigin;
     public float Drag = 1.0f;
     public bool CanAttack = true;
@@ -112,9 +111,11 @@ public class PlayerScript : MonoBehaviour
 
     void Fire(Vector3 direction)
     {
-        var bullet = Instantiate(BulletPrefab).GetComponent<BulletScript>();
-        bullet.gameObject.SetActive(true);
-        bullet.Init(ShootOrigin.position + direction * 0.25f, direction, 10, 15);
+        SceneGlobals.Instance.AudioManager.PlaySfxClip(SceneGlobals.Instance.AudioManager.AudioClips.ShotgunShot, 1);
+        SceneGlobals.Instance.CameraShake.AddShake(1);
+        //var bullet = Instantiate(BulletPrefab).GetComponent<BulletScript>();
+        //bullet.gameObject.SetActive(true);
+        //bullet.Init(ShootOrigin.position + direction * 0.25f, direction, 10, 15);
 
         // Don't add force when already running in shooting direction
         if (direction != moveVec_)
@@ -141,9 +142,6 @@ public class PlayerScript : MonoBehaviour
         UpdateBulletTime();
         if (CanAttack)
             CheckAttack();
-
-        var walls = SceneGlobals.Instance.MapScript.WallTileMap;
-        var cell = walls.WorldToCell(transform_.position);
 
         if (Input.GetKey(KeyCode.F))
             map_.ExplodeWalls(transform.position, 5f);

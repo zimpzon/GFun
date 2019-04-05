@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 324343e13017d384895b49303c9d6ca3, type: 3}
+  m_Name: AudioClips
+  m_EditorClassIdentifier: 
+  IntroMusic: {fileID: 8300000, guid: 0b4a983e54723df4ebbf28867b2ee79c, type: 3}
+  LargeExplosion1: {fileID: 8300000, guid: 152962d8dfb98ba49a9cd3b9525ec614, type: 3}
+  ShotgunShot: {fileID: 8300000, guid: 810c97943c369fe43876f64b287305f2, type: 3}
