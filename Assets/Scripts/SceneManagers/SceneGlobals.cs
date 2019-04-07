@@ -21,6 +21,9 @@ public class SceneGlobals : MonoBehaviour
     public LayerMask EnemyLayer;
     public LayerMask EnemyDamageLayer;
     public AiBlackboard AiBlackboard;
+    public WeaponPrefabs WeaponPrefabs;
+    public GameObjectPool PlainBulletPool;
+    public GameObjectPool ElongatedBulletPool;
 
     void Awake()
     {
@@ -42,6 +45,7 @@ public class SceneGlobals : MonoBehaviour
         LightingCamera = FindObjectOfType<LightingCamera>();
         MapCamera = FindObjectOfType<MapCamera>();
         AiBlackboard = FindObjectOfType<AiBlackboard>();
+        WeaponPrefabs = FindObjectOfType<WeaponPrefabs>();
 
         Instance = this;
     }

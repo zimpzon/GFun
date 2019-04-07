@@ -1,16 +1,17 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace GFun
 {
-    public class IWeapon : MonoBehaviour
+    public interface IWeapon
     {
-        public AmmoType AmmoType { get; }
-        public int MaxAmmo { get; }
-        public int AmmoCount { get; }
+        AmmoType AmmoType { get; }
+        int AmmoMax { get; }
+        int AmmoCount { get; }
+        int Level { get; }
 
-        public FiringMode FiringMode{ get; }
-        public int BurstCount { get; }
-        public float TimeBetweenBurstShots { get; }
-        public float TimeBetweenAutoShots { get; }
+        void OnTriggerDown();
+        void OnTriggerUp();
+        void SetForceCallback(Action<Vector3> forceCallback);
     }
 }

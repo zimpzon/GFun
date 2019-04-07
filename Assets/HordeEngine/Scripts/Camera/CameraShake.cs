@@ -15,14 +15,10 @@ public class CameraShake : MonoBehaviour
         trans_ = transform;
     }
 
-    public void AddShake(float amount)
+    public void SetMinimumShake(float amount)
     {
-        CurrentAmount = Mathf.Clamp01(CurrentAmount + amount);
-    }
-
-    public void SetShake(float amount)
-    {
-        CurrentAmount = Mathf.Clamp01(amount);
+        if (amount > CurrentAmount)
+            CurrentAmount = Mathf.Clamp01(amount);
     }
 
     void Update()

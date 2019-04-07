@@ -97,7 +97,7 @@ public class CampScript : MonoBehaviour
             float scale = Mathf.Max(0.2f, 1.0f - fade);
             playerScript_.gameObject.transform.localScale = new Vector3(scale, scale, 1);
 
-            camShake_.SetShake(1);
+            camShake_.SetMinimumShake(1);
             yield return null;
         }
 
