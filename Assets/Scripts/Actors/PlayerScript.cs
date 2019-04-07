@@ -220,8 +220,8 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
             RandomizeWeapon();
 
-        if (Input.GetKeyDown(KeyCode.Space))
-            ToggleBulletTime();
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //    ToggleBulletTime();
 
         if (Input.GetKeyDown(KeyCode.E))
             PlainBulletGun.EffectsOn = !PlainBulletGun.EffectsOn;
