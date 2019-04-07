@@ -1,15 +1,19 @@
-﻿using UnityEngine;
+﻿using GFun;
+using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
     public float Speed = 10;
     public SpriteAnimationFrames_IdleRun Anim;
     public float LookAtOffset = 10;
-    public GameObject BulletPrefab;
     public Transform ShootOrigin;
     public float Drag = 1.0f;
     public bool CanAttack = true;
     public bool CanMove = true;
+    public GameObject DefaultWeapon;
+    public GameObject ActiveWeapon;
+    public Transform WeaponPositionRight;
+    public GameObject Blip;
 
     Transform transform_;
     SpriteRenderer renderer_;
@@ -24,10 +28,12 @@ public class PlayerScript : MonoBehaviour
     float bulletTimeValue_;
     float bulletTimeTarget_;
     Vector3 moveVec_;
+    IWeapon activeWeaponScript_;
 
-    public void AddForce(Vector3 force)
+    public void SetMinimumForce(Vector3 force)
     {
-        force_ += force;
+        if (force.sqrMagnitude > force_.sqrMagnitude)
+            force_ = force;
     }
 
     public void SetForce(Vector3 force)
@@ -40,6 +46,7 @@ public class PlayerScript : MonoBehaviour
         transform_ = transform;
         renderer_ = GetComponent<SpriteRenderer>();
         body_ = GetComponent<Rigidbody2D>();
+        Blip.SetActive(true);
     }
 
     private void Start()
@@ -50,6 +57,60 @@ public class PlayerScript : MonoBehaviour
         camPositioner_.Target = lookAt_;
         camPositioner_.SetPosition(lookAt_);
         lightingImageEffect_ = SceneGlobals.Instance.LightingImageEffect;
+
+        SetActiveWeaponFromPrefab(DefaultWeapon);
+    }
+
+    void SetActiveWeaponFromPrefab(GameObject prefab)
+    {
+        var instantiated = Instantiate(prefab);
+        SetActiveWeaponFromInstantiated(instantiated);
+    }
+
+    void SetActiveWeaponFromInstantiated(GameObject weapon)
+    {
+        ActiveWeapon = weapon;
+        ActiveWeapon.transform.SetParent(transform_);
+        ActiveWeapon.transform.localPosition = Vector3.zero;
+
+        ActiveWeapon.SetActive(true);
+        activeWeaponScript_ = ActiveWeapon.GetComponent<IWeapon>();
+        activeWeaponScript_.SetForceCallback(WeaponForceCallback);
+    }
+
+    private void RandomizeWeapon()
+    {
+        var gun = ActiveWeapon.GetComponent<PlainBulletGun>();
+        gun.GunSettings.BurstCount = Random.Range(1, 4);
+        gun.GunSettings.FiringMode = (FiringMode)Random.Range(1, 3);
+        gun.GunSettings.FiringSpread = (FiringSpread)Random.Range(0, 3);
+
+        string burstName = "";
+        if (gun.GunSettings.BurstCount == 2)
+            burstName = "Dual Burst ";
+        else if (gun.GunSettings.BurstCount == 3)
+            burstName = $"Tripple Burst ";
+
+        string autoName = gun.GunSettings.FiringMode == FiringMode.Auto ? "Auto " : "";
+
+        string spreadName = "";
+        if (gun.GunSettings.FiringSpread == FiringSpread.Dual)
+            spreadName = "Double Shot ";
+        else if (gun.GunSettings.FiringSpread == FiringSpread.Tripple)
+            spreadName = "Tripple Shot ";
+
+        string name = $"{autoName}{burstName}{spreadName}Rifle";
+        SceneGlobals.Instance.DebugLinesScript.SetLine("Gun", name);
+    }
+
+    void WeaponForceCallback(Vector3 force)
+    {
+        SetMinimumForce(force);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        force_ = Vector3.zero;
     }
 
     void UpdatePlayer(float dt)
@@ -78,6 +139,11 @@ public class PlayerScript : MonoBehaviour
             flipX_ = movement.x < 0;
             lookAt_ = transform_.position + movement * LookAtOffset;
         }
+
+        var weaponPos = WeaponPositionRight.transform.localPosition;
+        if (flipX_)
+            weaponPos.x *= -1;
+        ActiveWeapon.transform.localPosition = weaponPos;
 
         renderer_.sprite = SimpleSpriteAnimator.GetAnimationSprite(isRunning ? Anim.Run : Anim.Idle, Anim.DefaultAnimationFramesPerSecond);
         renderer_.flipX = flipX_;
@@ -112,40 +178,52 @@ public class PlayerScript : MonoBehaviour
 
     void Fire(Vector3 direction)
     {
-        var bullet = Instantiate(BulletPrefab).GetComponent<BulletScript>();
-        bullet.gameObject.SetActive(true);
-        bullet.Init(ShootOrigin.position + direction * 0.25f, direction, 10, 15);
-
-        // Don't add force when already running in shooting direction
-        if (direction != moveVec_)
-            AddForce(direction * 3);
+        ActiveWeapon.transform.rotation = Quaternion.FromToRotation(Vector3.right, direction);
+        activeWeaponScript_.OnTriggerDown();
     }
 
-    void CheckAttack()
+    void ReleaseFire()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        activeWeaponScript_.OnTriggerUp();
+    }
+
+    void UpdateWeapon()
+    {
+        if (Input.GetKey(KeyCode.DownArrow))
             Fire(Vector3.down);
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        else if (Input.GetKey(KeyCode.UpArrow))
             Fire(Vector3.up);
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        else if (Input.GetKey(KeyCode.LeftArrow))
             Fire(Vector3.left);
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        else if (Input.GetKey(KeyCode.RightArrow))
             Fire(Vector3.right);
 
-        if (Input.GetKeyDown(KeyCode.Space))
-            ToggleBulletTime();
+        if (Input.GetKeyUp(KeyCode.DownArrow))
+            ReleaseFire();
+        else if (Input.GetKeyUp(KeyCode.UpArrow))
+            ReleaseFire();
+        else if (Input.GetKeyUp(KeyCode.LeftArrow))
+            ReleaseFire();
+        else if (Input.GetKeyUp(KeyCode.RightArrow))
+            ReleaseFire();
     }
 
     void Update()
     {
         UpdateBulletTime();
         if (CanAttack)
-            CheckAttack();
+            UpdateWeapon();
 
-        var walls = SceneGlobals.Instance.MapScript.WallTileMap;
-        var cell = walls.WorldToCell(transform_.position);
-
-        if (Input.GetKey(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F))
             map_.ExplodeWalls(transform.position, 5f);
+
+        if (Input.GetKeyDown(KeyCode.R))
+            RandomizeWeapon();
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            ToggleBulletTime();
+
+        if (Input.GetKeyDown(KeyCode.E))
+            PlainBulletGun.EffectsOn = !PlainBulletGun.EffectsOn;
     }
 }

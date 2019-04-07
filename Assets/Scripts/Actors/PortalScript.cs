@@ -45,7 +45,7 @@ public class PortalScript : MonoBehaviour
             float relativeDistance = (colliderRadius_ - vec.magnitude) / colliderRadius_;
             float sign = Mathf.Sign(relativeDistance);
             float strength = -(relativeDistance * relativeDistance * PullForce * sign);
-            cameraShake_.SetShake(strength);
+            cameraShake_.SetMinimumShake(strength);
             playerScript_.SetForce(dir * strength);
 
             if (!enterTriggered_ && relativeDistance > 0.95f)

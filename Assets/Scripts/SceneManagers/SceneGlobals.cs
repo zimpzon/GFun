@@ -8,7 +8,7 @@ public class SceneGlobals : MonoBehaviour
     public CameraPositioner CameraPositioner;
     public CameraShake CameraShake;
     public MapScript MapScript;
-    public SoundManager SoundManager;
+    public AudioManager AudioManager;
     public ParticleScript ParticleScript;
     public DebugLinesScript DebugLinesScript;
     public LightingImageEffect LightingImageEffect;
@@ -21,6 +21,9 @@ public class SceneGlobals : MonoBehaviour
     public LayerMask EnemyLayer;
     public LayerMask EnemyDamageLayer;
     public AiBlackboard AiBlackboard;
+    public WeaponPrefabs WeaponPrefabs;
+    public GameObjectPool PlainBulletPool;
+    public GameObjectPool ElongatedBulletPool;
 
     void Awake()
     {
@@ -34,7 +37,7 @@ public class SceneGlobals : MonoBehaviour
         PlayerScript = FindObjectOfType<PlayerScript>();
         CameraPositioner = FindObjectOfType<CameraPositioner>();
         CameraShake = FindObjectOfType<CameraShake>();
-        SoundManager = FindObjectOfType<SoundManager>();
+        AudioManager = FindObjectOfType<AudioManager>();
         MapScript = FindObjectOfType<MapScript>();
         ParticleScript = FindObjectOfType<ParticleScript>();
         DebugLinesScript = FindObjectOfType<DebugLinesScript>();
@@ -42,6 +45,7 @@ public class SceneGlobals : MonoBehaviour
         LightingCamera = FindObjectOfType<LightingCamera>();
         MapCamera = FindObjectOfType<MapCamera>();
         AiBlackboard = FindObjectOfType<AiBlackboard>();
+        WeaponPrefabs = FindObjectOfType<WeaponPrefabs>();
 
         Instance = this;
     }

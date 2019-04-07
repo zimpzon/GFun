@@ -8,6 +8,12 @@ public class DebugLinesScript : MonoBehaviour
     Dictionary<string, string> lines_ = new Dictionary<string, string>();
     TextMeshProUGUI text_;
 
+    public void RemoveLine(string key)
+    {
+        if (lines_.ContainsKey(key))
+            lines_.Remove(key);
+    }
+
     public void SetLine(string key, object value)
     {
         lines_[key] = value.ToString();

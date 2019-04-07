@@ -57,12 +57,13 @@ public class MapScript : MonoBehaviour
                 // Show effect a bit above wall tile center since they also have a top
                 const float EffectOffset = 0.5f;
                 var tileWorldPos = WallTileMap.GetCellCenterWorld(tile) + Vector3.up * EffectOffset;
-                particles.transform.position = tileWorldPos;
-                particles.Emit(10);
-                SceneGlobals.Instance.CameraShake.AddShake(4.0f);
+                ParticleScript.EmitAtPosition(particles, tileWorldPos, 10);
                 tilesCleared++;
             }
         }
+
+        SceneGlobals.Instance.AudioManager.PlaySfxClip(SceneGlobals.Instance.AudioManager.AudioClips.LargeExplosion1, 1, 0.1f);
+        SceneGlobals.Instance.CameraShake.SetMinimumShake(1.0f);
 
         WallCompositeCollider.generationType = CompositeCollider2D.GenerationType.Synchronous;
     }
