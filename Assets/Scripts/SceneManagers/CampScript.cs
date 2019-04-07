@@ -7,6 +7,7 @@ public class CampScript : MonoBehaviour
     public string EnterPortalSceneName;
     public Canvas IntroCanvas;
     public Canvas LoadingCanvas;
+    public AudioClip IntroMusicClip;
 
     PlayerScript playerScript_;
     CameraPositioner camPos_;
@@ -38,6 +39,7 @@ public class CampScript : MonoBehaviour
         lightingImageEffect_.Brightness = 1.5f;
         IntroCanvas.enabled = false;
         playerScript_.CanMove = true;
+        SceneGlobals.Instance.AudioManager.StopMusic();
 
         while (true)
         {
@@ -63,6 +65,7 @@ public class CampScript : MonoBehaviour
         lightingImageEffect_.MonochromeDisplayB = 1.0f;
         lightingImageEffect_.MonochromeAmount = 1.0f;
         lightingImageEffect_.Brightness = 0.75f;
+        SceneGlobals.Instance.AudioManager.PlayMusic(IntroMusicClip);
 
         while (true)
         {

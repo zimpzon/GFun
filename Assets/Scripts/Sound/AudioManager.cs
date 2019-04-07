@@ -14,8 +14,8 @@ public class AudioManager : MonoBehaviour
 
     bool debugIsShown_;
     bool musicIsPlaying_;
-    float musicVolume_;
-    float sfxVolume_;
+    float musicVolume_ = 1;
+    float sfxVolume_ = 1;
 
     void Awake()
     {
