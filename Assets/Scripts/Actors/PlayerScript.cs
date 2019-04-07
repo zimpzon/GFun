@@ -30,9 +30,10 @@ public class PlayerScript : MonoBehaviour
     Vector3 moveVec_;
     IWeapon activeWeaponScript_;
 
-    public void AddForce(Vector3 force)
+    public void SetMinimumForce(Vector3 force)
     {
-        force_ += force;
+        if (force.sqrMagnitude > force_.sqrMagnitude)
+            force_ = force;
     }
 
     public void SetForce(Vector3 force)
@@ -57,12 +58,18 @@ public class PlayerScript : MonoBehaviour
         camPositioner_.SetPosition(lookAt_);
         lightingImageEffect_ = SceneGlobals.Instance.LightingImageEffect;
 
-        SetActiveWeapon(DefaultWeapon);
+        SetActiveWeaponFromPrefab(DefaultWeapon);
     }
 
-    void SetActiveWeapon(GameObject prefab)
+    void SetActiveWeaponFromPrefab(GameObject prefab)
     {
-        ActiveWeapon = Instantiate(prefab);
+        var instantiated = Instantiate(prefab);
+        SetActiveWeaponFromInstantiated(instantiated);
+    }
+
+    void SetActiveWeaponFromInstantiated(GameObject weapon)
+    {
+        ActiveWeapon = weapon;
         ActiveWeapon.transform.SetParent(transform_);
         ActiveWeapon.transform.localPosition = Vector3.zero;
 
@@ -71,9 +78,34 @@ public class PlayerScript : MonoBehaviour
         activeWeaponScript_.SetForceCallback(WeaponForceCallback);
     }
 
+    private void RandomizeWeapon()
+    {
+        var gun = ActiveWeapon.GetComponent<PlainBulletGun>();
+        gun.GunSettings.BurstCount = Random.Range(1, 4);
+        gun.GunSettings.FiringMode = (FiringMode)Random.Range(1, 3);
+        gun.GunSettings.FiringSpread = (FiringSpread)Random.Range(0, 3);
+
+        string burstName = "";
+        if (gun.GunSettings.BurstCount == 2)
+            burstName = "Dual Burst ";
+        else if (gun.GunSettings.BurstCount == 3)
+            burstName = $"Tripple Burst ";
+
+        string autoName = gun.GunSettings.FiringMode == FiringMode.Auto ? "Auto " : "";
+
+        string spreadName = "";
+        if (gun.GunSettings.FiringSpread == FiringSpread.Dual)
+            spreadName = "Double Shot ";
+        else if (gun.GunSettings.FiringSpread == FiringSpread.Tripple)
+            spreadName = "Tripple Shot ";
+
+        string name = $"{autoName}{burstName}{spreadName}Rifle";
+        SceneGlobals.Instance.DebugLinesScript.SetLine("Gun", name);
+    }
+
     void WeaponForceCallback(Vector3 force)
     {
-        AddForce(force);
+        SetMinimumForce(force);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -174,9 +206,6 @@ public class PlayerScript : MonoBehaviour
             ReleaseFire();
         else if (Input.GetKeyUp(KeyCode.RightArrow))
             ReleaseFire();
-
-        if (Input.GetKeyDown(KeyCode.Space))
-            ToggleBulletTime();
     }
 
     void Update()
@@ -185,7 +214,16 @@ public class PlayerScript : MonoBehaviour
         if (CanAttack)
             UpdateWeapon();
 
-        if (Input.GetKey(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F))
             map_.ExplodeWalls(transform.position, 5f);
+
+        if (Input.GetKeyDown(KeyCode.R))
+            RandomizeWeapon();
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            ToggleBulletTime();
+
+        if (Input.GetKeyDown(KeyCode.E))
+            PlainBulletGun.EffectsOn = !PlainBulletGun.EffectsOn;
     }
 }

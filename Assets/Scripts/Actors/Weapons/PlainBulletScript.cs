@@ -46,7 +46,7 @@ public class PlainBulletScript : MonoBehaviour
     void Die()
     {
         ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.BulletFizzleParticles, position_, 4);
-        SceneGlobals.Instance.PlainBulletPool.ReturnToPool(this.gameObject);
+        SceneGlobals.Instance.ElongatedBulletPool.ReturnToPool(this.gameObject);
     }
 
     void UpdateState()

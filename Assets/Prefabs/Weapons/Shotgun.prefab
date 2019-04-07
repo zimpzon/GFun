@@ -127,13 +127,13 @@ MonoBehaviour:
   GunSettings:
     Level: 1
     AmmoCount: 100
-    FiringSpread: 0
+    FiringSpread: 1
     FiringMode: 2
     BurstCount: 1
     TimeBetweenShots: 0.1
   BulletSettings:
-    Speed: 30
+    Speed: 20
     Range: 10
-    Size: 0.5
+    Size: 0.25
     BounceWalls: 0
     Damage: 10

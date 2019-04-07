@@ -28,8 +28,8 @@ public class CameraShake : MonoBehaviour
         if (ShakePosition)
         {
             trans_.localPosition = new Vector3(
-                Scale * power * Mathf.PerlinNoise(t + 1, t + 3.33f),
-                Scale * power * Mathf.PerlinNoise(t + 2, t + 4.44f) * 0.25f,
+                Scale * power * (Mathf.PerlinNoise(t + 1, t + 3.33f) - 0.5f),
+                Scale * power * (Mathf.PerlinNoise(t + 2, t + 4.44f) - 0.5f) * 0.25f,
                 0.0f
             );
         }

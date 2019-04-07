@@ -14,6 +14,13 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
     public PlainBulletGunSettings GunSettings;
     public PlainBulletSettings BulletSettings;
 
+    public static bool EffectsOn = true;
+
+    static readonly float[] FiringAngleOffsetsSingle = new float[] { 0 };
+    static readonly float[] FiringAngleOffsetsDual = new float[] { -5, 5 };
+    static readonly float[] FiringAngleOffsetsTripple = new float[] { -5, 0, 5 };
+    static readonly float[] FiringAngleOffsetsQuad = new float[] { -10, -5, 5, 10 };
+
     GameObjectPool bulletPool_;
     AudioManager audioManager_;
     Action<Vector3> forceCallback_;
@@ -53,6 +60,17 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         awaitingRelease_ = false;
     }
 
+    float[] GetFiringAngleOffsets(FiringSpread spread, float precision)
+    {
+        switch(spread)
+        {
+            case FiringSpread.Single: return FiringAngleOffsetsSingle;
+            case FiringSpread.Dual: return FiringAngleOffsetsDual;
+            case FiringSpread.Tripple: return FiringAngleOffsetsTripple;
+            default: return FiringAngleOffsetsSingle;
+        }
+    }
+
     IEnumerator FireCo()
     {
         isFiring_ = true;
@@ -61,7 +79,13 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         {
             var direction = transform.right;
             var position = transform.position + direction * 0.5f;
-            Fire(position, direction);
+
+            var angleOffsets = GetFiringAngleOffsets(GunSettings.FiringSpread, 1.0f);
+            for (int j = 0; j < angleOffsets.Length; ++j)
+            {
+                var offsetDirection = Quaternion.AngleAxis(angleOffsets[j], Vector3.forward) * direction;
+                Fire(position, offsetDirection);
+            }
 
             yield return shotDelay_;
         }
@@ -79,12 +103,15 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         bulletScript.Init(position, direction, BulletSettings);
         bullet.SetActive(true);
 
-        audioManager_.PlaySfxClip(FireSound, 1, 0.1f);
-        cameraShake_.SetMinimumShake(0.5f);
-        forceCallback_?.Invoke(-direction * 4);
+        if (EffectsOn)
+        {
+            audioManager_.PlaySfxClip(FireSound, 1, 0.1f);
+            cameraShake_.SetMinimumShake(0.75f);
+            forceCallback_?.Invoke(-direction * 2);
 
-        var particleCenter = position + direction * 0.3f;
-        ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.MuzzleFlashParticles, particleCenter, 1);
-        ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.MuzzleSmokeParticles, particleCenter, 5);
+            var particleCenter = position + direction * 0.3f;
+            ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.MuzzleFlashParticles, particleCenter, 1);
+            ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.MuzzleSmokeParticles, particleCenter, 5);
+        }
     }
 }

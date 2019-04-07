@@ -1,4 +1,4 @@
 ﻿namespace GFun
 {
-    public enum FiringSpread { Single, Dual, Tripple, Quad }
+    public enum FiringSpread { Single, Dual, Tripple, }
 }
