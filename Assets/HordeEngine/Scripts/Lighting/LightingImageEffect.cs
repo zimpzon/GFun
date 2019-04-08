@@ -27,16 +27,7 @@ public struct LightingEffectSettings
 
 public class LightingImageEffect : MonoBehaviour
 {
-    // TODO: make private
     public Material EffectMaterial;
-    public float Brightness = 1.0f;
-    public float MonochromeAmount = 0.0f;
-    public float MonochromeFactorR = 1.0f;
-    public float MonochromeFactorG = -1.0f;
-    public float MonochromeFactorB = 1.0f;
-    public float MonochromeDisplayR = 0.1f;
-    public float MonochromeDisplayG = 1.0f;
-    public float MonochromeDisplayB = 0.0f;
 
     [NonSerialized] public RenderTexture LightingTexture;
 
@@ -55,6 +46,11 @@ public class LightingImageEffect : MonoBehaviour
         baseTransitionSpeed_ = transitionSpeed;
     }
 
+    public void SetBaseColor(LightingEffectSettings target)
+    {
+        current_ = target;
+    }
+
     public void FlashColor(LightingEffectSettings flashTarget, AnimationCurve flashCurve, float flashTimeMs)
     {
         flashTimeMs_ = flashTimeMs;
@@ -71,6 +67,12 @@ public class LightingImageEffect : MonoBehaviour
         float t = duration / flashTimeMs_;
         float value = flashCurve_.Evaluate(t);
         return value;
+    }
+
+    private void Awake()
+    {
+        current_ = new LightingEffectSettings();
+        current_.SetDefaults();
     }
 
     void MoveToTarget(float target, float dt, ref float value)
@@ -93,31 +95,16 @@ public class LightingImageEffect : MonoBehaviour
         MoveToTarget(target_.MonochromeDisplayB, dt, ref current_.MonochromeDisplayB);
     }
 
-    private void Start()
-    {
-        current_.Brightness = EffectMaterial.GetFloat("_Brightness");
-        current_.MonochromeAmount = EffectMaterial.GetFloat("_MonochromeAmount");
-
-        current_.MonochromeFactorR = EffectMaterial.GetFloat("_MonochromeFactorR");
-        current_.MonochromeFactorG = EffectMaterial.GetFloat("_MonochromeFactorG");
-        current_.MonochromeFactorB = EffectMaterial.GetFloat("_MonochromeFactorB");
-
-        current_.MonochromeFactorR = EffectMaterial.GetFloat("_MonochromeDisplayR");
-        current_.MonochromeFactorG = EffectMaterial.GetFloat("_MonochromeDisplayG");
-        current_.MonochromeFactorB = EffectMaterial.GetFloat("_MonochromeDisplayB");
-    }
-
     private void Update()
     {
         float dt = Time.unscaledDeltaTime;
         MoveCurrentToTarget(dt);
-        SceneGlobals.Instance.DebugLinesScript.SetLine("mono", current_.MonochromeAmount);
     }
 
     void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
         EffectMaterial.SetTexture("_LightingTex", LightingTexture);
-        EffectMaterial.SetFloat("_Brightness", Brightness);
+        EffectMaterial.SetFloat("_Brightness", current_.Brightness);
         EffectMaterial.SetFloat("_MonochromeAmount", current_.MonochromeAmount);
         EffectMaterial.SetFloat("_MonochromeFactorR", current_.MonochromeFactorR);
         EffectMaterial.SetFloat("_MonochromeFactorG", current_.MonochromeFactorG);

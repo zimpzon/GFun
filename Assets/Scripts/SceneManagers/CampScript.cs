@@ -42,8 +42,10 @@ public class CampScript : MonoBehaviour
 
     IEnumerator InCamp()
     {
-        lightingImageEffect_.MonochromeAmount = 0.0f;
-        lightingImageEffect_.Brightness = 1.5f;
+        var lightingSettings = new LightingEffectSettings();
+        lightingSettings.SetDefaults();
+        lightingImageEffect_.SetBaseColorTarget(lightingSettings);
+
         IntroCanvas.enabled = false;
         playerScript_.CanMove = true;
         SceneGlobals.Instance.AudioManager.StopMusic();
@@ -67,11 +69,15 @@ public class CampScript : MonoBehaviour
         playerScript_.CanMove = false;
         IntroCanvas.enabled = true;
 
-        lightingImageEffect_.MonochromeDisplayR = 1.0f;
-        lightingImageEffect_.MonochromeDisplayG = 1.0f;
-        lightingImageEffect_.MonochromeDisplayB = 1.0f;
-        lightingImageEffect_.MonochromeAmount = 1.0f;
-        lightingImageEffect_.Brightness = 0.75f;
+        var lightingSettings = new LightingEffectSettings();
+        lightingSettings.SetDefaults();
+        lightingSettings.MonochromeAmount = 1.0f;
+        lightingSettings.MonochromeDisplayR = 1.0f;
+        lightingSettings.MonochromeDisplayG = 1.0f;
+        lightingSettings.MonochromeDisplayB = 1.0f;
+        lightingSettings.Brightness = 0.75f;
+        lightingImageEffect_.SetBaseColorTarget(lightingSettings, 30);
+
         SceneGlobals.Instance.AudioManager.PlayMusic(IntroMusicClip);
 
         while (true)
@@ -91,9 +97,14 @@ public class CampScript : MonoBehaviour
     IEnumerator PlayerEnteredPortal()
     {
         playerScript_.CanMove = false;
-        lightingImageEffect_.MonochromeDisplayR = 0.33f;
-        lightingImageEffect_.MonochromeDisplayG = 0.33f;
-        lightingImageEffect_.MonochromeDisplayB = 0.33f;
+
+        var lightingSettings = new LightingEffectSettings();
+        lightingSettings.SetDefaults();
+        lightingSettings.MonochromeAmount = 1.0f;
+        lightingSettings.MonochromeDisplayR = 0.33f;
+        lightingSettings.MonochromeDisplayG = 0.33f;
+        lightingSettings.MonochromeDisplayB = 0.33f;
+        lightingImageEffect_.SetBaseColorTarget(lightingSettings, 10);
 
         float fade = 0.0f;
         while (fade < 1.0f)
@@ -102,7 +113,6 @@ public class CampScript : MonoBehaviour
             SceneGlobals.Instance.DebugLinesScript.SetLine("Example debug info", "In portal, deltatime: " + Time.unscaledDeltaTime);
 
             fade += Time.unscaledDeltaTime * 0.75f;
-            lightingImageEffect_.MonochromeAmount = Mathf.Max(0.0f, fade * 2 - 1.0f);
 
             float scale = Mathf.Max(0.2f, 1.0f - fade);
             playerScript_.gameObject.transform.localScale = new Vector3(scale, scale, 1);
@@ -111,7 +121,9 @@ public class CampScript : MonoBehaviour
             yield return null;
         }
 
-        lightingImageEffect_.Brightness = 0.0f;
+        lightingSettings.Brightness = 0.0f;
+        lightingImageEffect_.SetBaseColor(lightingSettings);
+
         LoadingCanvas.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.1f);
 
