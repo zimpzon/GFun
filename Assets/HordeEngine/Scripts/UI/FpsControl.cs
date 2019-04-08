@@ -11,7 +11,6 @@ public class FpsControl : MonoBehaviour
     const int H = 64;
 
     int currentColumn_;
-    int textUpdateRate_ = 2;
     Color32 background_ = new Color32(50, 50, 50, 255);
     RawImage image_;
     Texture2D texture_;

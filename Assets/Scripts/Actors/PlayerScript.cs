@@ -14,6 +14,8 @@ public class PlayerScript : MonoBehaviour
     public GameObject ActiveWeapon;
     public Transform WeaponPositionRight;
     public GameObject Blip;
+    public bool ShowCollisionDebug;
+    public int ShowCollisionDebugSize = 10;
 
     Transform transform_;
     SpriteRenderer renderer_;
@@ -149,6 +151,26 @@ public class PlayerScript : MonoBehaviour
         renderer_.flipX = flipX_;
 
         camPositioner_.Target = lookAt_;
+
+        if (ShowCollisionDebug)
+            DrawCollisionDebug();
+    }
+
+    void DrawCollisionDebug()
+    {
+        var collPos = map_.GetCollisionTilePosFromWorldPos(transform_.position);
+        SceneGlobals.Instance.DebugLinesScript.SetLine("Collision cell", collPos);
+        var worldPos = map_.GetWorldPosFromCollisionTileCenter(collPos.x, collPos.y);
+        SceneGlobals.Instance.DebugLinesScript.SetLine("Collision worldPos", worldPos);
+
+        int Radius = ShowCollisionDebugSize;
+        for (int y = collPos.y - Radius; y <= collPos.y + Radius; ++y)
+        {
+            for (int x = collPos.x - Radius; x <= collPos.x + Radius; ++x)
+            {
+                map_.DebugDrawCollisionTile(x, y, dark: x == collPos.x && y == collPos.y);
+            }
+        }
     }
 
     void FixedUpdate()

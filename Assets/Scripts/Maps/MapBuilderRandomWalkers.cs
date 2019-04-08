@@ -4,26 +4,30 @@ public static class MapBuilderRandomWalkers
 {
     public static void Build(int w, int h)
     {
-        var param = new WalkParam(w, h);
+        var param = new WalkParam(MapBuilder.MapMaxWidth / 2, MapBuilder.MapMaxHeight / 2, w, h);
 
         for (int i = 0; i < 5; ++i)
         {
             param.steps = 60;
-            DoWalk(param, MapBuilder.map);
+            DoWalk(param, MapBuilder.MapSource);
         }
     }
 
     struct WalkParam
     {
-        public WalkParam(int w, int h)
+        public WalkParam(int x, int y, int w, int h)
         {
             this.w = w;
             this.h = h;
-            x = w / 2;
-            y = h / 2;
+            this.x = x;
+            this.y = y;
             steps = 50;
             minBeforeTurn = 2;
             maxBeforeTurn = 5;
+            xMin = x - w / 2;
+            xMax = x + w / 2;
+            yMin = y - h / 2;
+            yMax = y + h / 2;
         }
 
         public int x;
@@ -33,6 +37,10 @@ public static class MapBuilderRandomWalkers
         public int steps;
         public int minBeforeTurn;
         public int maxBeforeTurn;
+        public int xMin;
+        public int xMax;
+        public int yMin;
+        public int yMax;
     }
 
     static (int dirX, int dirY) GetDirection()
@@ -63,12 +71,12 @@ public static class MapBuilderRandomWalkers
                 map[param.x + 0, param.y + 1] = 1;
                 map[param.x + 1, param.y + 1] = 1;
 
-                if (param.x > 0 && param.x < param.w - 2)
+                if (param.x > param.xMin && param.x < param.xMax - 2)
                     param.x += dirX;
                 else
                     dirX = -dirX;
 
-                if (param.y > 0 && param.y < param.h - 2)
+                if (param.y > param.yMin && param.y < param.yMax - 2)
                     param.y += dirY;
                 else
                     dirY = -dirY;

@@ -4,19 +4,19 @@ public static class MapBuilderCaveLike1
 {
     public static void Build(int w, int h)
     {
-        var mapHandler = new MapHandler(MapBuilder.map, w, h, 0.5f);
+        var mapHandler = new CaveBuilder1(MapBuilder.MapSource, w, h, 0.5f);
         mapHandler.MakeCaverns();
         mapHandler.InvertMap();
     }
 
-    public class MapHandler
+    public class CaveBuilder1
     {
         public byte[,] Map;
         public int MapWidth { get; set; }
         public int MapHeight { get; set; }
         public float WallPct { get; set; }
 
-        public MapHandler(byte[,] map, int w, int h, float wallPct)
+        public CaveBuilder1(byte[,] map, int w, int h, float wallPct)
         {
             Map = map;
 

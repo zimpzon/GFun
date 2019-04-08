@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using GFun;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class MapScript : MonoBehaviour
+public class MapScript : MonoBehaviour, IMapAccess
 {
     public Tilemap FloorTileMap;
     public Tilemap WallTileMap;
@@ -14,18 +15,22 @@ public class MapScript : MonoBehaviour
     Renderer topRenderer_;
     Renderer backgroundRenderer_;
     float wallClarity_;
+    bool shaderHasClarity_;
 
     public float GetWallClarity()
         => wallClarity_;
 
     public void SetWallClarity(float value01)
     {
-        wallClarity_ = Mathf.Clamp01(value01);
+        if (shaderHasClarity_)
+        {
+            wallClarity_ = Mathf.Clamp01(value01);
 
-        wallRenderer_.material.SetFloat("_ClarityTop", wallClarity_);
-        wallRenderer_.material.SetFloat("_ClarityBottom", wallClarity_ * 2); // Bottom wall is less affected
-        topRenderer_.material.SetFloat("_Clarity", wallClarity_);
-        backgroundRenderer_.material.SetFloat("_Clarity", wallClarity_);
+            wallRenderer_.material.SetFloat("_ClarityTop", wallClarity_);
+            wallRenderer_.material.SetFloat("_ClarityBottom", wallClarity_ * 2); // Bottom wall is less affected
+            topRenderer_.material.SetFloat("_Clarity", wallClarity_);
+            backgroundRenderer_.material.SetFloat("_Clarity", wallClarity_);
+        }
     }
 
     /// <summary>
@@ -72,11 +77,48 @@ public class MapScript : MonoBehaviour
     {
         wallRenderer_ = WallTileMap.GetComponent<Renderer>();
         topRenderer_ = TopTileMap.GetComponent<Renderer>();
-        backgroundRenderer_ = BackgroundQuad.GetComponent<Renderer>();
+        backgroundRenderer_ = BackgroundQuad?.GetComponent<Renderer>();
 
         // Wall, top and background should all be equal so just pick one to start with
-        wallClarity_ = -topRenderer_.material.GetFloat("_Clarity");
+        shaderHasClarity_ = topRenderer_.material.HasProperty("_Clarity");
+        wallClarity_ = shaderHasClarity_ ? -topRenderer_.material.GetFloat("_Clarity") : 0.0f;
 
         TouchMap();
     }
+
+    public int GetCollisionTileValue(int tileX, int tileY, int valueIfOutsideBounds = 1)
+    {
+        if (tileX < 0 || tileX >= MapBuilder.MapMaxWidth || tileY < 0 || tileY >= MapBuilder.MapMaxHeight)
+            return valueIfOutsideBounds;
+
+        return MapBuilder.CollisionMap[tileX, tileY];
+    }
+
+    public void DebugDrawCollisionTile(int tileX, int tileY, bool dark)
+    {
+        var worldPos = GetWorldPosFromCollisionTileCenter(tileX, tileY);
+        int value = GetCollisionTileValue(tileX, tileY, -1);
+        var col = Color.red;
+        if (value == -1)
+            col = Color.yellow;
+        if (value == MapBuilder.TileWalkable)
+            col = Color.green;
+
+        if (dark)
+            col *= 0.5f;
+
+        Debug.DrawRay(worldPos, Vector3.down * 0.25f, col);
+        Debug.DrawRay(worldPos, Vector3.up * 0.25f, col);
+        Debug.DrawRay(worldPos, Vector3.left * 0.25f, col);
+        Debug.DrawRay(worldPos, Vector3.right * 0.25f, col);
+    }
+
+    public Vector2Int GetCollisionTilePosFromWorldPos(Vector3 worldPos)
+        => new Vector2Int((int)worldPos.x, (int)worldPos.y);
+
+    public Vector3 GetWorldPosFromCollisionTileCenter(int tileX, int tileY)
+        => new Vector3(tileX + 0.5f, tileY + 0.5f);
+
+    public void BuildCollisionMapFromFloorTilemap(Tilemap floorTilemap)
+        => MapBuilder.BuildCollisionMapFromFloorTilemap(floorTilemap);
 }

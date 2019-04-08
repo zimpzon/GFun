@@ -1,18 +1,32 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public enum MapFloorAlgorithm { SingleRoom, RandomWalkers, CaveLike1,  }
+public enum MapFloorAlgorithm { SingleRoom, RandomWalkers, CaveLike1, }
 
 public static class MapBuilder
 {
-    public const int MapMaxWidth = 100;
+    public const int TileWalkable = 0;
+    public const int MapMaxWidth = 200;
     public const int MapMaxHeight = 100;
     public static readonly RectInt Rect = new RectInt(0, 0, MapMaxWidth, MapMaxHeight);
     public static readonly Vector2Int Center = new Vector2Int((int)Rect.center.x, (int)Rect.center.y);
 
-    public static byte[,] map = new byte[MapMaxWidth, MapMaxHeight];
+    public static readonly byte[,] CollisionMap = new byte[MapMaxWidth, MapMaxHeight];
+    public static readonly byte[,] MapSource = new byte[MapMaxWidth, MapMaxHeight];
 
-    public static void ApplyFloorTiles(MapScript mapScript, MapStyle mapStyle)
+    public static void BuildMapTiles(byte[,] map, MapScript mapScript, MapStyle mapStyle)
+    {
+        mapScript.FloorTileMap.ClearAllTiles();
+        mapScript.WallTileMap.ClearAllTiles();
+        mapScript.TopTileMap.ClearAllTiles();
+
+        ApplyFloorTiles(mapScript, mapStyle);
+        BuildWallTiles(mapScript, mapStyle);
+
+        BuildCollisionMapFromFloorTilemap(mapScript.FloorTileMap);
+    }
+
+    static void ApplyFloorTiles(MapScript mapScript, MapStyle mapStyle)
     {
         Vector3Int pos = Vector3Int.zero;
 
@@ -20,7 +34,7 @@ public static class MapBuilder
         {
             for (int x = 0; x < Rect.width; ++x)
             {
-                if (map[x, y] != 0)
+                if (MapSource[x, y] != 0)
                 {
                     pos.x = x;
                     pos.y = y;
@@ -32,7 +46,21 @@ public static class MapBuilder
         mapScript.FloorTileMap.CompressBounds();
     }
 
-    public static void BuildWallTiles(MapScript mapScript, MapStyle mapStyle)
+    public static void BuildCollisionMapFromFloorTilemap(Tilemap floorTilemap)
+    {
+        var pos = Vector3Int.zero;
+        for (int y = 0; y < MapMaxHeight; ++y)
+        {
+            for (int x = 0; x < MapMaxWidth; ++x)
+            {
+                pos.x = x;
+                pos.y = y;
+                CollisionMap[x, y] = (byte)(floorTilemap.HasTile(pos) ? TileWalkable : 1);
+            }
+        }
+    }
+
+    static void BuildWallTiles(MapScript mapScript, MapStyle mapStyle)
     {
         var bounds = mapScript.FloorTileMap.cellBounds;
         var pos = Vector3Int.zero;
@@ -107,6 +135,8 @@ public static class MapBuilder
         mapScript.FloorTileMap.SetTile(pos, floorTile);
 
         SingleFloorTileBuildWalls(mapScript, mapStyle, pos);
+
+        CollisionMap[pos.x, pos.y] = TileWalkable;
     }
 
     static TileBase ChooseTile(TileBase tile, TileBase[] variations, float variationChance)
@@ -144,7 +174,7 @@ public static class MapBuilder
     {
         foreach(var pos in rect.allPositionsWithin)
         {
-            map[pos.x, pos.y] = value;
+            MapSource[pos.x, pos.y] = value;
         }
     }
 

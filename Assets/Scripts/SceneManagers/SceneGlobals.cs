@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GFun;
+using UnityEngine;
 
 public class SceneGlobals : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class SceneGlobals : MonoBehaviour
     public CameraPositioner CameraPositioner;
     public CameraShake CameraShake;
     public MapScript MapScript;
+    public IMapAccess MapAccess;
     public AudioManager AudioManager;
     public ParticleScript ParticleScript;
     public DebugLinesScript DebugLinesScript;
@@ -39,6 +41,7 @@ public class SceneGlobals : MonoBehaviour
         CameraShake = FindObjectOfType<CameraShake>();
         AudioManager = FindObjectOfType<AudioManager>();
         MapScript = FindObjectOfType<MapScript>();
+        MapAccess = (IMapAccess)MapScript;
         ParticleScript = FindObjectOfType<ParticleScript>();
         DebugLinesScript = FindObjectOfType<DebugLinesScript>();
         LightingImageEffect = FindObjectOfType<LightingImageEffect>();

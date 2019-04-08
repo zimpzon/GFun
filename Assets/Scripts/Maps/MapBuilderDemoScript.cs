@@ -53,11 +53,11 @@ public class MapBuilderDemoScript : MonoBehaviour
             float clarity = mapScript_.GetWallClarity();
             mapScript_.SetWallClarity(clarity - 0.1f);
         }
-    }
 
-    public void AddWallTiles()
-    {
-        MapBuilder.BuildWallTiles(mapScript_, MapStyle);
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            mapScript_.BuildCollisionMapFromFloorTilemap(mapScript_.FloorTileMap);
+        }
     }
 
     public void DoToggleBackground(bool active)
@@ -67,10 +67,6 @@ public class MapBuilderDemoScript : MonoBehaviour
 
     public void GenerateNewMap()
     {
-        mapScript_.FloorTileMap.ClearAllTiles();
-        mapScript_.WallTileMap.ClearAllTiles();
-        mapScript_.TopTileMap.ClearAllTiles();
-
         string strAlgo = DropdownAlgo.options[DropdownAlgo.value].text;
         var algo = (MapFloorAlgorithm)System.Enum.Parse(typeof(MapFloorAlgorithm), strAlgo);
         int w = 50;
@@ -89,7 +85,6 @@ public class MapBuilderDemoScript : MonoBehaviour
         }
 
         MapBuilder.GenerateMapFloor(w, h, algo);
-        MapBuilder.ApplyFloorTiles(mapScript_, MapStyle);
-        MapBuilder.BuildWallTiles(mapScript_, MapStyle);
+        MapBuilder.BuildMapTiles(MapBuilder.MapSource, mapScript_, MapStyle);
     }
 }
