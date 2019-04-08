@@ -26,6 +26,8 @@ public class CampScript : MonoBehaviour
         mapAccess_ = SceneGlobals.Instance.MapAccess;
         mapScript_ = SceneGlobals.Instance.MapScript;
 
+        mapAccess_.BuildCollisionMapFromFloorTilemap(mapScript_.FloorTileMap);
+
         camPos_.SetTarget(playerScript_.transform.position);
         camPos_.SetPosition(playerScript_.transform.position);
 

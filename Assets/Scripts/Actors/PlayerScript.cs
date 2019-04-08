@@ -182,6 +182,14 @@ public class PlayerScript : MonoBehaviour
     {
         bulletTime_ = !bulletTime_;
         bulletTimeTarget_ = bulletTime_ ? 1.0f : 0.0f;
+
+        LightingEffectSettings lightSettings = new LightingEffectSettings();
+        lightSettings.SetDefaults();
+        lightSettings.Brightness = 1.8f;
+        lightSettings.MonochromeDisplayR = 0.6f;
+        lightSettings.MonochromeDisplayB = 0.8f;
+        lightSettings.MonochromeAmount = bulletTime_ ? 1.5f : 0.0f;
+        lightingImageEffect_.SetBaseColorTarget(lightSettings);
     }
 
     void UpdateBulletTime()
@@ -195,7 +203,6 @@ public class PlayerScript : MonoBehaviour
         float diff = bulletTimeTarget_ - bulletTimeValue_;
         bulletTimeValue_ += diff * Time.unscaledDeltaTime * 30;
         bulletTimeValue_ = Mathf.Clamp01(bulletTimeValue_);
-        lightingImageEffect_.MonochromeAmount = 2.0f * bulletTimeValue_;
     }
 
     void Fire(Vector3 direction)
