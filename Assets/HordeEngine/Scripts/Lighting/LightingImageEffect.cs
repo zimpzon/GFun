@@ -1,28 +1,29 @@
 ﻿using System;
 using UnityEngine;
 
-public struct LightingEffectSettings
+[Serializable]
+public class LightingEffectSettings
 {
     public void SetDefaults()
     {
         Brightness = 1.2f;
         MonochromeAmount = 0.0f;
-        MonochromeFactorR = 0.22f;
-        MonochromeFactorG = 0.67f;
+        MonochromeFactorR = 0.23f;
+        MonochromeFactorG = 0.66f;
         MonochromeFactorB = 0.11f;
         MonochromeDisplayR = 1.0f;
         MonochromeDisplayG = 1.0f;
         MonochromeDisplayB = 1.0f;
     }
 
-    public float Brightness;
-    public float MonochromeAmount;
-    public float MonochromeFactorR;
-    public float MonochromeFactorG;
-    public float MonochromeFactorB;
-    public float MonochromeDisplayR;
-    public float MonochromeDisplayG;
-    public float MonochromeDisplayB;
+    public float Brightness = 1.2f;
+    public float MonochromeAmount = 0.0f;
+    public float MonochromeFactorR = 0.23f;
+    public float MonochromeFactorG = 0.66f;
+    public float MonochromeFactorB = 0.11f;
+    public float MonochromeDisplayR = 1.0f;
+    public float MonochromeDisplayG = 1.0f;
+    public float MonochromeDisplayB = 1.0f;
 }
 
 public class LightingImageEffect : MonoBehaviour

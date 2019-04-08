@@ -249,7 +249,7 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
             RandomizeWeapon();
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.T))
             ToggleBulletTime();
 
         if (Input.GetKeyDown(KeyCode.E))
