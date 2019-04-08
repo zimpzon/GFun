@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using GFun;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +14,8 @@ public class CampScript : MonoBehaviour
     CameraPositioner camPos_;
     CameraShake camShake_;
     LightingImageEffect lightingImageEffect_;
+    IMapAccess mapAccess_;
+    MapScript mapScript_;
 
     void Start()
     {
@@ -20,6 +23,8 @@ public class CampScript : MonoBehaviour
         camPos_ = SceneGlobals.Instance.CameraPositioner;
         camShake_ = SceneGlobals.Instance.CameraShake;
         lightingImageEffect_ = SceneGlobals.Instance.LightingImageEffect;
+        mapAccess_ = SceneGlobals.Instance.MapAccess;
+        mapScript_ = SceneGlobals.Instance.MapScript;
 
         camPos_.SetTarget(playerScript_.transform.position);
         camPos_.SetPosition(playerScript_.transform.position);
