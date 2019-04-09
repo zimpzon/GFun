@@ -22,6 +22,11 @@ public class LightingCamera : MonoBehaviour
         lightingImageEffect_ = ParentCamera.GetComponent<LightingImageEffect>();
     }
 
+    private void Update()
+    {
+        lightingCam_.backgroundColor = lightingImageEffect_.CurrentValues.AmbientLight;    
+    }
+
     private void OnEnable()
     {
         AlignWithParentCamera(ParentCamera);

@@ -1,7 +1,7 @@
 ﻿using GFun;
 using UnityEngine;
 
-public class PlayerScript : MonoBehaviour
+public class PlayableCharacterScript : MonoBehaviour
 {
     public float Speed = 10;
     public SpriteAnimationFrames_IdleRun Anim;
@@ -184,7 +184,6 @@ public class PlayerScript : MonoBehaviour
         bulletTimeTarget_ = bulletTime_ ? 1.0f : 0.0f;
 
         LightingEffectSettings lightSettings = new LightingEffectSettings();
-        lightSettings.SetDefaults();
         lightSettings.Brightness = 1.8f;
         lightSettings.MonochromeDisplayR = 0.6f;
         lightSettings.MonochromeDisplayB = 0.8f;
@@ -249,7 +248,7 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
             RandomizeWeapon();
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.T))
             ToggleBulletTime();
 
         if (Input.GetKeyDown(KeyCode.E))

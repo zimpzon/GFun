@@ -1,4 +1,4 @@
-﻿Shader "GFun/ClaritySolidShader"
+﻿Shader "GFun/ClaritySolidShaderVertexColor"
 {
     Properties
     {
