@@ -37,6 +37,7 @@ public class NPCScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // trigger talk bubble
     }
 
     void UpdatePlayer(float dt)
