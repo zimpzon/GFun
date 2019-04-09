@@ -10120,7 +10120,7 @@ GameObject:
   m_Component:
   - component: {fileID: 417871980}
   - component: {fileID: 417871981}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Shadow (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19732,7 +19732,7 @@ GameObject:
   - component: {fileID: 1404226382}
   - component: {fileID: 1404226384}
   - component: {fileID: 1404226383}
-  m_Layer: 14
+  m_Layer: 12
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30352,7 +30352,8 @@ GameObject:
   - component: {fileID: 6194186372753936286}
   - component: {fileID: 6194186372753936287}
   - component: {fileID: 6194186372753936284}
-  m_Layer: 9
+  - component: {fileID: 6194186372753936285}
+  m_Layer: 12
   m_Name: Reaper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30422,6 +30423,34 @@ MonoBehaviour:
   Speed: 10
   Anim: {fileID: 11400000, guid: 3a80570032a9534469043474c5c2d0d6, type: 2}
   LookAtOffset: 10
+--- !u!114 &6194186372753936285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6194186372753936282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0fe7dff5c126cb4680aab2777e6f60c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnTriggerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6194186372753936284}
+        m_MethodName: TalkToMe
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!50 &6194186372753936286
 Rigidbody2D:
   serializedVersion: 4

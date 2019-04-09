@@ -1,5 +1,6 @@
 ﻿using GFun;
 using UnityEngine;
+using VikingCrewTools.UI;
 
 public class NPCScript : MonoBehaviour
 {
@@ -35,9 +36,9 @@ public class NPCScript : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void TalkToMe()
     {
-        // trigger talk bubble
+        SpeechBubbleManager.Instance.AddSpeechBubble(transform, "Come to relive your past lives?");
     }
 
     void UpdatePlayer(float dt)
