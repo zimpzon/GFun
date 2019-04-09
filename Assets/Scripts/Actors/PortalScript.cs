@@ -13,16 +13,18 @@ public class PortalScript : MonoBehaviour
     Vector3 basePosition_;
     CircleCollider2D collider_;
     Vector3 entryPoint_;
-    PlayerScript playerScript_;
+    PlayableCharacterScript playerScript_;
     LayerMask playerLayer_;
     float colliderRadius_;
     CameraShake cameraShake_;
     bool enterTriggered_;
+    AudioSource enterSound_;
 
     private void Awake()
     {
         renderer_ = GetComponent<SpriteRenderer>();
         transform_ = transform;
+        enterSound_ = GetComponent<AudioSource>();
         collider_ = GetComponent<CircleCollider2D>();
         colliderRadius_ = collider_.radius;
     }
@@ -47,6 +49,12 @@ public class PortalScript : MonoBehaviour
             float strength = -(relativeDistance * relativeDistance * PullForce * sign);
             cameraShake_.SetMinimumShake(strength);
             playerScript_.SetForce(dir * strength);
+
+            // Point of no return
+            if (!enterTriggered_ && relativeDistance > 0.5f)
+            {
+                enterSound_.Play();
+            }
 
             if (!enterTriggered_ && relativeDistance > 0.95f)
             {

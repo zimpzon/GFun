@@ -5,7 +5,7 @@ public class SceneGlobals : MonoBehaviour
 {
     public static SceneGlobals Instance;
 
-    public PlayerScript PlayerScript;
+    public PlayableCharacterScript PlayerScript;
     public CameraPositioner CameraPositioner;
     public CameraShake CameraShake;
     public MapScript MapScript;
@@ -36,7 +36,7 @@ public class SceneGlobals : MonoBehaviour
         EnemyLayer = LayerMask.NameToLayer("Enemy");
         EnemyDamageLayer = LayerMask.NameToLayer("EnemyDamage");
 
-        PlayerScript = FindObjectOfType<PlayerScript>();
+        PlayerScript = FindObjectOfType<PlayableCharacterScript>();
         CameraPositioner = FindObjectOfType<CameraPositioner>();
         CameraShake = FindObjectOfType<CameraShake>();
         AudioManager = FindObjectOfType<AudioManager>();

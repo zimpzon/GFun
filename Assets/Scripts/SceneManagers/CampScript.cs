@@ -9,8 +9,15 @@ public class CampScript : MonoBehaviour
     public Canvas IntroCanvas;
     public Canvas LoadingCanvas;
     public AudioClip IntroMusicClip;
+    public LightingEffectSettings CampLightingSettings;
+    public LightingEffectSettings EnterPortalLightingSettings;
+    public LightingEffectSettings GraveyardLightingSettings;
+    public LightingEffectSettings MenuLightingSettings;
+    public AudioSource CampfireSoundSource;
 
-    PlayerScript playerScript_;
+    LightingEffectSettings activeLightingSettings_;
+    bool isInGraveyard_;
+    PlayableCharacterScript playerScript_;
     CameraPositioner camPos_;
     CameraShake camShake_;
     LightingImageEffect lightingImageEffect_;
@@ -31,7 +38,14 @@ public class CampScript : MonoBehaviour
         camPos_.SetTarget(playerScript_.transform.position);
         camPos_.SetPosition(playerScript_.transform.position);
 
+        SetLighting(MenuLightingSettings);
+
         StartCoroutine(InMenu());
+    }
+
+    private void Update()
+    {
+        SceneGlobals.Instance.DebugLinesScript.SetLine("IsInGraveyard", isInGraveyard_);
     }
 
     public void OnPlayerEnterStartPortal()
@@ -40,21 +54,43 @@ public class CampScript : MonoBehaviour
         StartCoroutine(PlayerEnteredPortal());
     }
 
+    public void OnGraveyardEnter()
+    {
+        LightingFadeTo(GraveyardLightingSettings, transitionSpeed: 5);
+        isInGraveyard_ = true;
+    }
+
+    public void OnGraveyardLeave()
+    {
+        LightingFadeTo(CampLightingSettings, transitionSpeed: 5);
+        isInGraveyard_ = false;
+    }
+
+    void LightingFadeTo(LightingEffectSettings settings, float transitionSpeed = 30)
+    {
+        activeLightingSettings_ = settings;
+        lightingImageEffect_.SetBaseColorTarget(activeLightingSettings_, transitionSpeed: transitionSpeed);
+    }
+
+    void SetLighting(LightingEffectSettings settings)
+    {
+        activeLightingSettings_ = settings;
+        lightingImageEffect_.SetBaseColor(activeLightingSettings_);
+    }
+
     IEnumerator InCamp()
     {
-        var lightingSettings = new LightingEffectSettings();
-        lightingSettings.SetDefaults();
-        lightingImageEffect_.SetBaseColorTarget(lightingSettings);
+        Time.timeScale = 1.0f;
 
+
+        CampfireSoundSource.enabled = true;
+        LightingFadeTo(isInGraveyard_ ? GraveyardLightingSettings : CampLightingSettings, transitionSpeed: 20);
         IntroCanvas.enabled = false;
         playerScript_.CanMove = true;
         SceneGlobals.Instance.AudioManager.StopMusic();
 
         while (true)
         {
-            // Just an example of easy debug info. Can be deleted.
-            SceneGlobals.Instance.DebugLinesScript.SetLine("Example debug info", "In camp, deltatime: " + Time.unscaledDeltaTime);
-
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 StartCoroutine(InMenu());
@@ -66,25 +102,17 @@ public class CampScript : MonoBehaviour
 
     IEnumerator InMenu()
     {
+        CampfireSoundSource.enabled = false;
+        Time.timeScale = 0.25f;
+
         playerScript_.CanMove = false;
         IntroCanvas.enabled = true;
 
-        var lightingSettings = new LightingEffectSettings();
-        lightingSettings.SetDefaults();
-        lightingSettings.MonochromeAmount = 1.0f;
-        lightingSettings.MonochromeDisplayR = 1.0f;
-        lightingSettings.MonochromeDisplayG = 1.0f;
-        lightingSettings.MonochromeDisplayB = 1.0f;
-        lightingSettings.Brightness = 0.75f;
-        lightingImageEffect_.SetBaseColorTarget(lightingSettings, 30);
-
+        LightingFadeTo(MenuLightingSettings, transitionSpeed: 20);
         SceneGlobals.Instance.AudioManager.PlayMusic(IntroMusicClip);
 
         while (true)
         {
-            // Just an example of easy debug info. Can be deleted.
-            SceneGlobals.Instance.DebugLinesScript.SetLine("Example debug info", "In menu, deltatime: " + Time.unscaledDeltaTime);
-
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 StartCoroutine(InCamp());
@@ -98,13 +126,7 @@ public class CampScript : MonoBehaviour
     {
         playerScript_.CanMove = false;
 
-        var lightingSettings = new LightingEffectSettings();
-        lightingSettings.SetDefaults();
-        lightingSettings.MonochromeAmount = 1.0f;
-        lightingSettings.MonochromeDisplayR = 0.33f;
-        lightingSettings.MonochromeDisplayG = 0.33f;
-        lightingSettings.MonochromeDisplayB = 0.33f;
-        lightingImageEffect_.SetBaseColorTarget(lightingSettings, 10);
+        LightingFadeTo(EnterPortalLightingSettings, transitionSpeed: 2);
 
         float fade = 0.0f;
         while (fade < 1.0f)
@@ -120,9 +142,6 @@ public class CampScript : MonoBehaviour
             camShake_.SetMinimumShake(1);
             yield return null;
         }
-
-        lightingSettings.Brightness = 0.0f;
-        lightingImageEffect_.SetBaseColor(lightingSettings);
 
         LoadingCanvas.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.1f);

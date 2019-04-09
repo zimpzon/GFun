@@ -4,18 +4,20 @@ using UnityEngine;
 [Serializable]
 public class LightingEffectSettings
 {
-    public void SetDefaults()
+    public void CopyTo(LightingEffectSettings other)
     {
-        Brightness = 1.2f;
-        MonochromeAmount = 0.0f;
-        MonochromeFactorR = 0.23f;
-        MonochromeFactorG = 0.66f;
-        MonochromeFactorB = 0.11f;
-        MonochromeDisplayR = 1.0f;
-        MonochromeDisplayG = 1.0f;
-        MonochromeDisplayB = 1.0f;
+        other.AmbientLight = AmbientLight;
+        other.Brightness = Brightness;
+        other.MonochromeAmount = MonochromeAmount;
+        other.MonochromeFactorR = MonochromeFactorR;
+        other.MonochromeFactorG = MonochromeFactorG;
+        other.MonochromeFactorB = MonochromeFactorB;
+        other.MonochromeDisplayR = MonochromeDisplayR;
+        other.MonochromeDisplayG = MonochromeDisplayG;
+        other.MonochromeDisplayB = MonochromeDisplayB;
     }
 
+    public Color AmbientLight = new Color(0.9f, 0.9f, 0.9f);
     public float Brightness = 1.2f;
     public float MonochromeAmount = 0.0f;
     public float MonochromeFactorR = 0.23f;
@@ -31,10 +33,10 @@ public class LightingImageEffect : MonoBehaviour
     public Material EffectMaterial;
 
     [NonSerialized] public RenderTexture LightingTexture;
+    public LightingEffectSettings CurrentValues = new LightingEffectSettings();
 
     LightingEffectSettings flash_;
     LightingEffectSettings target_;
-    LightingEffectSettings current_;
 
     float baseTransitionSpeed_;
     float flashTimeMs_;
@@ -43,13 +45,14 @@ public class LightingImageEffect : MonoBehaviour
 
     public void SetBaseColorTarget(LightingEffectSettings target, float transitionSpeed = 30)
     {
-        target_ = target;
+        target_ = target ?? throw new NullReferenceException();
         baseTransitionSpeed_ = transitionSpeed;
     }
 
-    public void SetBaseColor(LightingEffectSettings target)
+    public void SetBaseColor(LightingEffectSettings baseColor)
     {
-        current_ = target;
+        target_ = baseColor;
+        target_.CopyTo(CurrentValues);
     }
 
     public void FlashColor(LightingEffectSettings flashTarget, AnimationCurve flashCurve, float flashTimeMs)
@@ -72,8 +75,7 @@ public class LightingImageEffect : MonoBehaviour
 
     private void Awake()
     {
-        current_ = new LightingEffectSettings();
-        current_.SetDefaults();
+        CurrentValues = new LightingEffectSettings();
     }
 
     void MoveToTarget(float target, float dt, ref float value)
@@ -84,16 +86,23 @@ public class LightingImageEffect : MonoBehaviour
 
     void MoveCurrentToTarget(float dt)
     {
-        MoveToTarget(target_.Brightness, dt, ref current_.Brightness);
-        MoveToTarget(target_.MonochromeAmount, dt, ref current_.MonochromeAmount);
+        if (target_ == null || CurrentValues == null)
+            return;
 
-        MoveToTarget(target_.MonochromeFactorR, dt, ref current_.MonochromeFactorR);
-        MoveToTarget(target_.MonochromeFactorG, dt, ref current_.MonochromeFactorG);
-        MoveToTarget(target_.MonochromeFactorB, dt, ref current_.MonochromeFactorB);
+        MoveToTarget(target_.AmbientLight.r, dt, ref CurrentValues.AmbientLight.r);
+        MoveToTarget(target_.AmbientLight.g, dt, ref CurrentValues.AmbientLight.g);
+        MoveToTarget(target_.AmbientLight.b, dt, ref CurrentValues.AmbientLight.b);
 
-        MoveToTarget(target_.MonochromeDisplayR, dt, ref current_.MonochromeDisplayR);
-        MoveToTarget(target_.MonochromeDisplayG, dt, ref current_.MonochromeDisplayG);
-        MoveToTarget(target_.MonochromeDisplayB, dt, ref current_.MonochromeDisplayB);
+        MoveToTarget(target_.Brightness, dt, ref CurrentValues.Brightness);
+        MoveToTarget(target_.MonochromeAmount, dt, ref CurrentValues.MonochromeAmount);
+
+        MoveToTarget(target_.MonochromeFactorR, dt, ref CurrentValues.MonochromeFactorR);
+        MoveToTarget(target_.MonochromeFactorG, dt, ref CurrentValues.MonochromeFactorG);
+        MoveToTarget(target_.MonochromeFactorB, dt, ref CurrentValues.MonochromeFactorB);
+
+        MoveToTarget(target_.MonochromeDisplayR, dt, ref CurrentValues.MonochromeDisplayR);
+        MoveToTarget(target_.MonochromeDisplayG, dt, ref CurrentValues.MonochromeDisplayG);
+        MoveToTarget(target_.MonochromeDisplayB, dt, ref CurrentValues.MonochromeDisplayB);
     }
 
     private void Update()
@@ -105,14 +114,14 @@ public class LightingImageEffect : MonoBehaviour
     void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
         EffectMaterial.SetTexture("_LightingTex", LightingTexture);
-        EffectMaterial.SetFloat("_Brightness", current_.Brightness);
-        EffectMaterial.SetFloat("_MonochromeAmount", current_.MonochromeAmount);
-        EffectMaterial.SetFloat("_MonochromeFactorR", current_.MonochromeFactorR);
-        EffectMaterial.SetFloat("_MonochromeFactorG", current_.MonochromeFactorG);
-        EffectMaterial.SetFloat("_MonochromeFactorB", current_.MonochromeFactorB);
-        EffectMaterial.SetFloat("_MonochromeDisplayR", current_.MonochromeDisplayR);
-        EffectMaterial.SetFloat("_MonochromeDisplayG", current_.MonochromeDisplayG);
-        EffectMaterial.SetFloat("_MonochromeDisplayB", current_.MonochromeDisplayB);
+        EffectMaterial.SetFloat("_Brightness", CurrentValues.Brightness);
+        EffectMaterial.SetFloat("_MonochromeAmount", CurrentValues.MonochromeAmount);
+        EffectMaterial.SetFloat("_MonochromeFactorR", CurrentValues.MonochromeFactorR);
+        EffectMaterial.SetFloat("_MonochromeFactorG", CurrentValues.MonochromeFactorG);
+        EffectMaterial.SetFloat("_MonochromeFactorB", CurrentValues.MonochromeFactorB);
+        EffectMaterial.SetFloat("_MonochromeDisplayR", CurrentValues.MonochromeDisplayR);
+        EffectMaterial.SetFloat("_MonochromeDisplayG", CurrentValues.MonochromeDisplayG);
+        EffectMaterial.SetFloat("_MonochromeDisplayB", CurrentValues.MonochromeDisplayB);
 
         Graphics.Blit(source, destination, EffectMaterial);
     }
