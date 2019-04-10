@@ -1,7 +1,7 @@
 ﻿using GFun;
 using UnityEngine;
 
-public class PlayableCharacterScript : MonoBehaviour
+public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsActor
 {
     public float Speed = 10;
     public SpriteAnimationFrames_IdleRun Anim;
