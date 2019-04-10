@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class MapCamera : MonoBehaviour
+public class MiniMapCamera : MonoBehaviour
 {
     public float Z;
 
@@ -22,7 +22,7 @@ public class MapCamera : MonoBehaviour
 
         if (camera_.enabled)
         {
-            var pos = SceneGlobals.Instance.PlayerScript.transform.position;
+            var pos = PlayableCharacters.GetPlayerInScene().transform.position;
             pos.z = Z;
             transform.position = pos;
         }

@@ -6,7 +6,6 @@ public class SceneGlobals : MonoBehaviour
 {
     public static SceneGlobals Instance;
 
-    public PlayableCharacterScript PlayerScript;
     public CameraPositioner CameraPositioner;
     public CameraShake CameraShake;
     public MapScript MapScript;
@@ -16,7 +15,7 @@ public class SceneGlobals : MonoBehaviour
     public DebugLinesScript DebugLinesScript;
     public LightingImageEffect LightingImageEffect;
     public LightingCamera LightingCamera;
-    public MapCamera MapCamera;
+    public MiniMapCamera MapCamera;
     public LayerMask MapLayer;
     public LayerMask PlayerLayer;
     public LayerMask PlayerDamageLayer;
@@ -38,7 +37,6 @@ public class SceneGlobals : MonoBehaviour
         EnemyLayer = LayerMask.NameToLayer("Enemy");
         EnemyDamageLayer = LayerMask.NameToLayer("EnemyDamage");
 
-        PlayerScript = FindObjectOfType<PlayableCharacterScript>();
         CameraPositioner = FindObjectOfType<CameraPositioner>();
         CameraShake = FindObjectOfType<CameraShake>();
         AudioManager = FindObjectOfType<AudioManager>();
@@ -48,7 +46,7 @@ public class SceneGlobals : MonoBehaviour
         DebugLinesScript = FindObjectOfType<DebugLinesScript>();
         LightingImageEffect = FindObjectOfType<LightingImageEffect>();
         LightingCamera = FindObjectOfType<LightingCamera>();
-        MapCamera = FindObjectOfType<MapCamera>();
+        MapCamera = FindObjectOfType<MiniMapCamera>();
         AiBlackboard = FindObjectOfType<AiBlackboard>();
         WeaponPrefabs = FindObjectOfType<WeaponPrefabs>();
         PlayableCharacters = FindObjectOfType<PlayableCharacters>();

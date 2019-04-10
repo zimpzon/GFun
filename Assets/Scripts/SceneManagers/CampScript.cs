@@ -34,17 +34,25 @@ public class CampScript : MonoBehaviour
         mapAccess_.BuildCollisionMapFromFloorTilemap(mapScript_.FloorTileMap);
         SetLighting(MenuLightingSettings);
 
-        SceneGlobals.Instance.PlayableCharacters.SwitchToCharacter(PlayableCharacters.DefaultCharacter, showChangeEffect: false);
+        Helpers.ActivateSelectedCharacter();
 
         StartCoroutine(InMenu());
+    }
+
+    void SelectCharacter(PlayableCharacterData character)
+    {
+        PlayerPrefs.SetString(PlayerPrefsNames.SelectedCharacterTag, character.Tag);
+        SceneGlobals.Instance.PlayableCharacters.SwitchToCharacter(character, showChangeEffect: true);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
-            SceneGlobals.Instance.PlayableCharacters.SwitchToCharacter(PlayableCharacters.PhilBeans, showChangeEffect: true);
+            SelectCharacter(PlayableCharacters.Character1);
         if (Input.GetKeyDown(KeyCode.Alpha2))
-            SceneGlobals.Instance.PlayableCharacters.SwitchToCharacter(PlayableCharacters.PhilBeans2, showChangeEffect: true);
+            SelectCharacter(PlayableCharacters.Character2);
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            SelectCharacter(PlayableCharacters.Character3);
     }
 
     public void OnPlayerEnterStartPortal()

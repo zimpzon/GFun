@@ -4,8 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - PhilBeans
-  - PhilBeans2
+  - Character1
+  - Character2
+  - Character3
   layers:
   - Default
   - TransparentFX

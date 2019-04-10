@@ -19,15 +19,15 @@ public class MapBuilderDemoScript : MonoBehaviour
 
         GenerateNewMap();
 
-        SceneGlobals.Instance.PlayableCharacters.SwitchToCharacter(PlayableCharacters.DefaultCharacter, showChangeEffect: false);
-   }
+        Helpers.ActivateSelectedCharacter();
+    }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
-            SceneGlobals.Instance.PlayableCharacters.SwitchToCharacter(PlayableCharacters.PhilBeans, showChangeEffect: true);
+            SceneGlobals.Instance.PlayableCharacters.SwitchToCharacter(PlayableCharacters.Character1, showChangeEffect: true);
         if (Input.GetKeyDown(KeyCode.Alpha2))
-            SceneGlobals.Instance.PlayableCharacters.SwitchToCharacter(PlayableCharacters.PhilBeans2, showChangeEffect: true);
+            SceneGlobals.Instance.PlayableCharacters.SwitchToCharacter(PlayableCharacters.Character2, showChangeEffect: true);
 
         float z = Camera.main.transform.localPosition.z;
         if (Input.GetKeyDown(KeyCode.Z))

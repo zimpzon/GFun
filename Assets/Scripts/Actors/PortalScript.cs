@@ -11,7 +11,6 @@ public class PortalScript : MonoBehaviour
     SpriteRenderer renderer_;
     Transform transform_;
     Vector3 basePosition_;
-    CircleCollider2D collider_;
     Vector3 entryPoint_;
     LayerMask playerLayer_;
     float colliderRadius_;
@@ -24,8 +23,6 @@ public class PortalScript : MonoBehaviour
         renderer_ = GetComponent<SpriteRenderer>();
         transform_ = transform;
         enterSound_ = GetComponent<AudioSource>();
-        collider_ = GetComponent<CircleCollider2D>();
-        colliderRadius_ = collider_.radius;
     }
 
     private void Start()

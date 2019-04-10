@@ -11,15 +11,52 @@ public class PlayableCharacterData
 
 public class PlayableCharacters : MonoBehaviour
 {
+    public static PlayableCharacters Instance;
+
     List<PlayableCharacterData> All = new List<PlayableCharacterData>();
-    public static readonly PlayableCharacterData PhilBeans = new PlayableCharacterData { Tag = "PhilBeans", DisplayName = "Phil Beans" };
-    public static readonly PlayableCharacterData PhilBeans2 = new PlayableCharacterData { Tag = "PhilBeans2", DisplayName = "Phil Beans2" };
-    public static readonly PlayableCharacterData DefaultCharacter = PhilBeans;
+
+    public static readonly PlayableCharacterData Character1 = new PlayableCharacterData { Tag = "Character1", DisplayName = "Phil Beans" };
+    public static readonly PlayableCharacterData Character2 = new PlayableCharacterData { Tag = "Character2", DisplayName = "Character Two" };
+    public static readonly PlayableCharacterData Character3 = new PlayableCharacterData { Tag = "Character3", DisplayName = "Character Three" };
+
+    public static readonly PlayableCharacterData DefaultCharacter = Character1;
 
     PlayableCharacterData defaultCharacter_;
     PlayableCharacterData currentCharacter_;
 
-    public PlayableCharacterData GetCurrentCharacter() => currentCharacter_;
+    PlayableCharacterScript playerInScene_;
+
+    public static PlayableCharacterData GetCurrentCharacter() => Instance.currentCharacter_;
+    public static PlayableCharacterScript GetPlayerInScene() => Instance.playerInScene_;
+
+    private void Awake()
+    {
+        Instance = this;
+
+        All.Clear();
+        All.Add(Character1);
+        All.Add(Character2);
+        All.Add(Character3);
+
+        defaultCharacter_ = Character1;
+    }
+
+    public void SetNoActiveCharacter()
+    {
+        if (currentCharacter_ != null)
+        {
+            GameObject.FindWithTag(currentCharacter_.Tag).GetComponent<PlayableCharacterScript>().SetIsHumanControlled(false, showChangeEffect: false);
+            currentCharacter_ = null;
+        }
+    }
+
+    public PlayableCharacterData GetFromTagOrDefault(string tag)
+    {
+        var data = All.Where(d => d.Tag == tag).FirstOrDefault();
+        if (data == null)
+            data = defaultCharacter_;
+        return data;
+    }
 
     public bool SwitchToCharacter(PlayableCharacterData newCharacter, bool showChangeEffect)
     {
@@ -34,21 +71,12 @@ public class PlayableCharacters : MonoBehaviour
             if (noChange)
                 return false;
 
-            GameObject.FindWithTag(currentCharacter_.Tag).GetComponent<PlayableCharacterScript>().SetIsHumanControlled(false, showChangeEffect);
-            currentCharacter_ = null;
+            SetNoActiveCharacter();
         }
 
         characterScript.SetIsHumanControlled(true, showChangeEffect);
+        playerInScene_ = characterScript;
         currentCharacter_ = newCharacter;
         return true;
-    }
-
-    private void Awake()
-    {
-        All.Clear();
-        All.Add(PhilBeans);
-        All.Add(PhilBeans2);
-
-        defaultCharacter_ = PhilBeans;
     }
 }
