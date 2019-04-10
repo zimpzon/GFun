@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DefaultAnimationFramesPerSecond: 1
   Idle:
-  - {fileID: 21300000, guid: 62b3583dd1d725f4ab236869f3ae6c60, type: 3}
-  - {fileID: 21300004, guid: 62b3583dd1d725f4ab236869f3ae6c60, type: 3}
+  - {fileID: 21300000, guid: 77e2a6dc8b0c6134cb60f37f7adb0f43, type: 3}
+  - {fileID: 21300002, guid: 77e2a6dc8b0c6134cb60f37f7adb0f43, type: 3}
+  - {fileID: 21300004, guid: 77e2a6dc8b0c6134cb60f37f7adb0f43, type: 3}
+  - {fileID: 21300006, guid: 77e2a6dc8b0c6134cb60f37f7adb0f43, type: 3}
   Run:
   - {fileID: 21300000, guid: 62b3583dd1d725f4ab236869f3ae6c60, type: 3}
   - {fileID: 21300002, guid: 62b3583dd1d725f4ab236869f3ae6c60, type: 3}
