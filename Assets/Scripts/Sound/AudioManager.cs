@@ -112,7 +112,11 @@ public class AudioManager : MonoBehaviour
     IEnumerator PlayMusicCo(AudioClip clip)
     {
         if (musicIsPlaying_)
-            yield return Fade(musicSource_.volume, 0.0f);
+        {
+            StopFadeCo();
+            musicFadeCo_ = Fade(musicSource_.volume, 0.0f);
+            yield return musicFadeCo_;
+        }
 
         musicSource_.clip = clip;
         musicSource_.loop = true;
@@ -122,9 +126,21 @@ public class AudioManager : MonoBehaviour
         musicSource_.volume = musicVolume_;
     }
 
+    void StopFadeCo()
+    {
+        if (musicFadeCo_ != null)
+        {
+            StopCoroutine(musicFadeCo_);
+            musicFadeCo_ = null;
+        }
+    }
+
+    IEnumerator musicFadeCo_;
     public void StopMusic()
     {
-        StartCoroutine(Fade(musicSource_.volume, 0.0f));
+        StopFadeCo();
+        musicFadeCo_ = Fade(musicSource_.volume, 0.0f);
+        StartCoroutine(musicFadeCo_);
     }
 
     public void PlayMusic(AudioClip clip)

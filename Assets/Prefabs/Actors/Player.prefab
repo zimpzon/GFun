@@ -46,7 +46,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &987113158
 Transform:
   m_ObjectHideFlags: 0
@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 987113157}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.64, z: 0}
-  m_LocalScale: {x: 1, y: 1.5000001, z: 1}
+  m_LocalScale: {x: 2, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 6194186374522397827}
   m_RootOrder: 2
@@ -99,7 +99,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 30
   m_Sprite: {fileID: 21300000, guid: b0b471c1f44cc2a4e81613274f102186, type: 3}
-  m_Color: {r: 1, g: 0.9683403, b: 0.9481132, a: 1}
+  m_Color: {r: 0.38679248, g: 0.33534178, b: 0.3010413, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -277,12 +277,14 @@ GameObject:
   m_Component:
   - component: {fileID: 6194186374522397827}
   - component: {fileID: 6194186374522397826}
+  - component: {fileID: 763148100}
   - component: {fileID: 6194186374522397824}
   - component: {fileID: 6194186374522397829}
   - component: {fileID: 6194186374522397828}
+  - component: {fileID: 6839771946764407034}
   m_Layer: 9
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: PhilBeans
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -317,19 +319,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e5b6558bd35e534191721139ca5130b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 5
+  Speed: 6
   Anim: {fileID: 11400000, guid: 861a36bbdedb0854188e5cddd67508d5, type: 2}
   LookAtOffset: 2
-  ShootOrigin: {fileID: 0}
   Drag: 20
-  CanAttack: 1
-  CanMove: 1
-  DefaultWeapon: {fileID: 2816594798548844389, guid: 93f7520515ec14549b113c862ca8dd12,
-    type: 3}
-  ActiveWeapon: {fileID: 2816594798548844389, guid: 75629717ed50bee4b882e365553ebde3,
-    type: 3}
-  WeaponPositionRight: {fileID: 857486997}
   Blip: {fileID: 1020257938}
+  ShowCollisionDebug: 0
+  ShowCollisionDebugSize: 10
+--- !u!114 &763148100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6194186374522397825}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79556526f69b2334aa820dc44e376dad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BulletTimeLight:
+    AmbientLight: {r: 0.9, g: 0.9, b: 0.9, a: 1}
+    Brightness: 1.2
+    MonochromeAmount: 0
+    MonochromeFactorR: 0.23
+    MonochromeFactorG: 0.66
+    MonochromeFactorB: 0.11
+    MonochromeDisplayR: 1
+    MonochromeDisplayG: 1
+    MonochromeDisplayB: 1
 --- !u!212 &6194186374522397824
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -367,7 +385,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 30
-  m_Sprite: {fileID: 21300030, guid: e581986085c9dd647877a7d33643e276, type: 3}
+  m_Sprite: {fileID: 21300018, guid: e581986085c9dd647877a7d33643e276, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -416,7 +434,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 1.125, y: 1.1875}
+    oldSize: {x: 1, y: 1.25}
     newSize: {x: 1, y: 1.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -425,3 +443,29 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 0.3}
   m_EdgeRadius: 0
+--- !u!114 &6839771946764407034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6194186374522397825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f06bde2b3e7810f4288edc4601d730d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FireSound: {fileID: 8300000, guid: 810c97943c369fe43876f64b287305f2, type: 3}
+  GunSettings:
+    Level: 1
+    AmmoCount: 100
+    FiringSpread: 0
+    FiringMode: 1
+    BurstCount: 1
+    TimeBetweenShots: 500
+  BulletSettings:
+    Speed: 1
+    Range: 10
+    Size: 1
+    BounceWalls: 0
+    Damage: 10

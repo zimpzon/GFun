@@ -17,7 +17,6 @@ public class CampScript : MonoBehaviour
 
     LightingEffectSettings activeLightingSettings_;
     bool isInGraveyard_;
-    PlayableCharacterScript playerScript_;
     CameraPositioner camPos_;
     CameraShake camShake_;
     LightingImageEffect lightingImageEffect_;
@@ -26,7 +25,6 @@ public class CampScript : MonoBehaviour
 
     void Start()
     {
-        playerScript_ = SceneGlobals.Instance.PlayerScript;
         camPos_ = SceneGlobals.Instance.CameraPositioner;
         camShake_ = SceneGlobals.Instance.CameraShake;
         lightingImageEffect_ = SceneGlobals.Instance.LightingImageEffect;
@@ -34,18 +32,19 @@ public class CampScript : MonoBehaviour
         mapScript_ = SceneGlobals.Instance.MapScript;
 
         mapAccess_.BuildCollisionMapFromFloorTilemap(mapScript_.FloorTileMap);
-
-        camPos_.SetTarget(playerScript_.transform.position);
-        camPos_.SetPosition(playerScript_.transform.position);
-
         SetLighting(MenuLightingSettings);
+
+        SceneGlobals.Instance.PlayableCharacters.SwitchToCharacter(PlayableCharacters.DefaultCharacter, showChangeEffect: false);
 
         StartCoroutine(InMenu());
     }
 
     private void Update()
     {
-        SceneGlobals.Instance.DebugLinesScript.SetLine("IsInGraveyard", isInGraveyard_);
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            SceneGlobals.Instance.PlayableCharacters.SwitchToCharacter(PlayableCharacters.PhilBeans, showChangeEffect: true);
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            SceneGlobals.Instance.PlayableCharacters.SwitchToCharacter(PlayableCharacters.PhilBeans2, showChangeEffect: true);
     }
 
     public void OnPlayerEnterStartPortal()
@@ -82,11 +81,9 @@ public class CampScript : MonoBehaviour
     {
         Time.timeScale = 1.0f;
 
-
         CampfireSoundSource.enabled = true;
         LightingFadeTo(isInGraveyard_ ? GraveyardLightingSettings : CampLightingSettings, transitionSpeed: 20);
         IntroCanvas.enabled = false;
-        playerScript_.CanMove = true;
         SceneGlobals.Instance.AudioManager.StopMusic();
 
         while (true)
@@ -105,7 +102,6 @@ public class CampScript : MonoBehaviour
         CampfireSoundSource.enabled = false;
         Time.timeScale = 0.25f;
 
-        playerScript_.CanMove = false;
         IntroCanvas.enabled = true;
 
         LightingFadeTo(MenuLightingSettings, transitionSpeed: 20);
@@ -124,20 +120,14 @@ public class CampScript : MonoBehaviour
 
     IEnumerator PlayerEnteredPortal()
     {
-        playerScript_.CanMove = false;
-
         LightingFadeTo(EnterPortalLightingSettings, transitionSpeed: 2);
 
         float fade = 0.0f;
         while (fade < 1.0f)
         {
-            // Just an example of easy debug info. Can be deleted.
-            SceneGlobals.Instance.DebugLinesScript.SetLine("Example debug info", "In portal, deltatime: " + Time.unscaledDeltaTime);
-
             fade += Time.unscaledDeltaTime * 0.75f;
 
             float scale = Mathf.Max(0.2f, 1.0f - fade);
-            playerScript_.gameObject.transform.localScale = new Vector3(scale, scale, 1);
 
             camShake_.SetMinimumShake(1);
             yield return null;

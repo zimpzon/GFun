@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PlayerSpriteMat
-  m_Shader: {fileID: 4800000, guid: 1b8e4108a8a58b24a94e8eb3f67e7534, type: 3}
+  m_Shader: {fileID: 4800000, guid: 5f0dca79a70b5c740900dbcf0f97a9e7, type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0

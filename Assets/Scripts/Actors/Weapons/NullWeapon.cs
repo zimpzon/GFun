@@ -1,5 +1,4 @@
-﻿using System;
-using GFun;
+﻿using GFun;
 using UnityEngine;
 
 public class NullWeapon : MonoBehaviour, IWeapon
@@ -10,5 +9,5 @@ public class NullWeapon : MonoBehaviour, IWeapon
     public int AmmoMax => 0;
     public void OnTriggerUp() { }
     public void OnTriggerDown() { }
-    public void SetForceCallback(Action<Vector3> forceCallback){ }
+    public void SetOwnerPhysics(IPhysicsActor actor){  }
 }

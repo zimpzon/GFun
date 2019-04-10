@@ -1,7 +1,4 @@
-﻿using System;
-using UnityEngine;
-
-namespace GFun
+﻿namespace GFun
 {
     public interface IWeapon
     {
@@ -12,6 +9,6 @@ namespace GFun
 
         void OnTriggerDown();
         void OnTriggerUp();
-        void SetForceCallback(Action<Vector3> forceCallback);
+        void SetOwnerPhysics(IPhysicsActor actor);
     }
 }

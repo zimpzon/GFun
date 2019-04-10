@@ -1,4 +1,5 @@
 ﻿using GFun;
+using System;
 using UnityEngine;
 
 public class SceneGlobals : MonoBehaviour
@@ -26,6 +27,7 @@ public class SceneGlobals : MonoBehaviour
     public WeaponPrefabs WeaponPrefabs;
     public GameObjectPool PlainBulletPool;
     public GameObjectPool ElongatedBulletPool;
+    public PlayableCharacters PlayableCharacters;
 
     void Awake()
     {
@@ -49,6 +51,14 @@ public class SceneGlobals : MonoBehaviour
         MapCamera = FindObjectOfType<MapCamera>();
         AiBlackboard = FindObjectOfType<AiBlackboard>();
         WeaponPrefabs = FindObjectOfType<WeaponPrefabs>();
+        PlayableCharacters = FindObjectOfType<PlayableCharacters>();
+
+        NullCheck(MapLayer);
+        NullCheck(PlayerLayer);
+        NullCheck(PlayerDamageLayer);
+        NullCheck(PlayerInteractionLayer);
+        NullCheck(EnemyLayer);
+        NullCheck(EnemyDamageLayer);
 
         Instance = this;
     }
@@ -56,5 +66,14 @@ public class SceneGlobals : MonoBehaviour
     void OnDestroy()
     {
         Instance = null;
+    }
+
+    public static void NullCheck(object o)
+    {
+        if (o == null)
+        {
+            Instance.DebugLinesScript.SetLine("Null check failed, see console", Time.time);
+            throw new ArgumentNullException();
+        }
     }
 }

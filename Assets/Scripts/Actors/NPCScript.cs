@@ -1,5 +1,4 @@
-﻿using GFun;
-using UnityEngine;
+﻿using UnityEngine;
 using VikingCrewTools.UI;
 
 public class NPCScript : MonoBehaviour
@@ -11,7 +10,6 @@ public class NPCScript : MonoBehaviour
     Transform transform_;
     SpriteRenderer renderer_;
     Rigidbody2D body_;
-    CameraPositioner camPositioner_;
     MapScript map_;
     LightingImageEffect lightingImageEffect_;
     bool flipX_;
@@ -29,11 +27,6 @@ public class NPCScript : MonoBehaviour
     {
         map_ = SceneGlobals.Instance.MapScript;
         lookAt_ = transform_.position;
-        camPositioner_ = SceneGlobals.Instance.CameraPositioner;
-        camPositioner_.Target = lookAt_;
-        camPositioner_.SetPosition(lookAt_);
-        lightingImageEffect_ = SceneGlobals.Instance.LightingImageEffect;
-
     }
 
     public void TalkToMe()
@@ -47,8 +40,6 @@ public class NPCScript : MonoBehaviour
 
         renderer_.sprite = SimpleSpriteAnimator.GetAnimationSprite(Anim.Idle, Anim.DefaultAnimationFramesPerSecond);
         renderer_.flipX = flipX_;
-
-        camPositioner_.Target = lookAt_;
     }
 
     void FixedUpdate()

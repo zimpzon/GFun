@@ -7,9 +7,11 @@ public class ParticleScript : MonoBehaviour
     public ParticleSystem BulletFizzleParticles;
     public ParticleSystem MuzzleFlashParticles;
     public ParticleSystem MuzzleSmokeParticles;
+    public ParticleSystem CharacterSelectedParticles;
 
     public void Start()
     {
+        // ?
         SetUnscaledTime(WallDestructionParticles, ParticlesUseUnscaledTime);
         SetUnscaledTime(BulletFizzleParticles, ParticlesUseUnscaledTime);
     }

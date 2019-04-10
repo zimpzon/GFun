@@ -1,5 +1,4 @@
 ﻿using GFun;
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -23,7 +22,7 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
 
     GameObjectPool bulletPool_;
     AudioManager audioManager_;
-    Action<Vector3> forceCallback_;
+    IPhysicsActor ownerPhysics_;
     CameraShake cameraShake_;
     bool triggerIsDown_;
     bool awaitingRelease_;
@@ -39,8 +38,8 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         shotDelay_ = new WaitForSecondsRealtime(GunSettings.TimeBetweenShots);
     }
 
-    public void SetForceCallback(Action<Vector3> forceCallback)
-        => forceCallback_ = forceCallback;
+    public void SetOwnerPhysics(IPhysicsActor actor)
+        => ownerPhysics_ = actor;
 
     public void OnTriggerDown()
     {
@@ -107,7 +106,7 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         {
             audioManager_.PlaySfxClip(FireSound, 1, 0.1f);
             cameraShake_.SetMinimumShake(0.75f);
-            forceCallback_?.Invoke(-direction * 2);
+            ownerPhysics_.SetMinimumForce(-direction * 2);
 
             var particleCenter = position + direction * 0.3f;
             ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.MuzzleFlashParticles, particleCenter, 1);

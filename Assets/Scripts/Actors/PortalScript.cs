@@ -13,7 +13,6 @@ public class PortalScript : MonoBehaviour
     Vector3 basePosition_;
     CircleCollider2D collider_;
     Vector3 entryPoint_;
-    PlayableCharacterScript playerScript_;
     LayerMask playerLayer_;
     float colliderRadius_;
     CameraShake cameraShake_;
@@ -32,7 +31,6 @@ public class PortalScript : MonoBehaviour
     private void Start()
     {
         basePosition_ = transform_.position;
-        playerScript_ = SceneGlobals.Instance.PlayerScript;
         playerLayer_ = SceneGlobals.Instance.PlayerLayer;
         cameraShake_ = SceneGlobals.Instance.CameraShake;
         entryPoint_ = EntryPoint.position;
@@ -48,7 +46,6 @@ public class PortalScript : MonoBehaviour
             float sign = Mathf.Sign(relativeDistance);
             float strength = -(relativeDistance * relativeDistance * PullForce * sign);
             cameraShake_.SetMinimumShake(strength);
-            playerScript_.SetForce(dir * strength);
 
             // Point of no return
             if (!enterTriggered_ && relativeDistance > 0.5f)
