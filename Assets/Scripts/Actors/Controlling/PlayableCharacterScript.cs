@@ -21,6 +21,8 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
     Vector3 force_;
     Vector3 moveVec_;
     bool isHumanControlled_;
+    PlayableCharacterData playerData_;
+    InteractableTrigger switchPlayerInteract_;
 
     public void SetIsHumanControlled(bool isHumanControlled, bool showChangeEffect)
     {
@@ -34,6 +36,8 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
         {
             ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.CharacterSelectedParticles, transform_.position + Vector3.up * 0.5f, 30);
         }
+
+        UpdatePlayerData();
     }
 
     public void SetMinimumForce(Vector3 force)
@@ -47,13 +51,29 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
         force_ = force;
     }
 
+    public void OnPlayerSwitchSelected()
+    {
+        PlayableCharacters.Instance.SwitchToCharacter(playerData_, showChangeEffect: true);
+    }
+
+    public void UpdatePlayerData()
+    {
+        playerData_ = PlayableCharacters.Instance.GetFromTagOrDefault(tag);
+        switchPlayerInteract_.Message = $"Take Over {playerData_.DisplayName}";
+        switchPlayerInteract_.OnAccept.AddListener(OnPlayerSwitchSelected);
+        switchPlayerInteract_.gameObject.SetActive(!isHumanControlled_);
+    }
+
     void Awake()
     {
         transform_ = transform;
         humanPlayerController_ = GetComponent<HumanPlayerController>();
         renderer_ = GetComponent<SpriteRenderer>();
         body_ = GetComponent<Rigidbody2D>();
+        switchPlayerInteract_ = transform_.Find("SwitchPlayerInteract").GetComponent<InteractableTrigger>();
         Blip.SetActive(true);
+
+        UpdatePlayerData();
     }
 
     private void Start()

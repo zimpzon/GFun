@@ -9,7 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 263753251}
-  m_Layer: 9
+  - component: {fileID: 263753253}
+  - component: {fileID: 263753252}
+  m_Layer: 12
   m_Name: SwitchPlayerInteract
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,6 +32,41 @@ Transform:
   m_Father: {fileID: 6194186374522397827}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &263753253
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263753250}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.63}
+  serializedVersion: 2
+  m_Radius: 1.5
+--- !u!114 &263753252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263753250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc627f483379e5f47b5c74f416757352, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Message: 
+  MessageOffset: {x: 0, y: 1.5, z: 0}
+  OnAccept:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &857486996
 GameObject:
   m_ObjectHideFlags: 0
