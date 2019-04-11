@@ -15,12 +15,14 @@ public class NPCScript : MonoBehaviour
     bool flipX_;
     Vector3 lookAt_;
     Vector3 moveVec_;
+    AudioSource audioSource_;
 
     void Awake()
     {
         transform_ = transform;
         renderer_ = GetComponent<SpriteRenderer>();
         body_ = GetComponent<Rigidbody2D>();
+        audioSource_ = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -31,6 +33,7 @@ public class NPCScript : MonoBehaviour
 
     public void TalkToMe()
     {
+        audioSource_.Play();
         SpeechBubbleManager.Instance.AddSpeechBubble(transform, "Come to relive your past lives?");
     }
 

@@ -7,7 +7,17 @@ public class InteractableTrigger : MonoBehaviour
     public Vector3 MessageOffset;
     public UnityEvent OnAccept;
 
-    public PortalScript PortalScript;
+    Collider2D collider_;
+
+    private void Awake()
+    {
+        collider_ = GetComponent<Collider2D>();
+    }
+
+    public void EnableTrigger(bool enable)
+    {
+        collider_.enabled = enable;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
