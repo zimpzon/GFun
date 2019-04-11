@@ -10,7 +10,6 @@ public class CampScript : MonoBehaviour
     public Canvas LoadingCanvas;
     public AudioClip IntroMusicClip;
     public LightingEffectSettings CampLightingSettings;
-    public LightingEffectSettings EnterPortalLightingSettings;
     public LightingEffectSettings GraveyardLightingSettings;
     public LightingEffectSettings MenuLightingSettings;
     public AudioSource CampfireSoundSource;
@@ -128,19 +127,6 @@ public class CampScript : MonoBehaviour
 
     IEnumerator PlayerEnteredPortal()
     {
-        LightingFadeTo(EnterPortalLightingSettings, transitionSpeed: 2);
-
-        float fade = 0.0f;
-        while (fade < 1.0f)
-        {
-            fade += Time.unscaledDeltaTime * 0.75f;
-
-            float scale = Mathf.Max(0.2f, 1.0f - fade);
-
-            camShake_.SetMinimumShake(1);
-            yield return null;
-        }
-
         LoadingCanvas.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.1f);
 

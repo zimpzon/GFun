@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class PortalScript : MonoBehaviour
@@ -8,54 +9,54 @@ public class PortalScript : MonoBehaviour
     public float PullForce = 10;
     public UnityEvent OnPlayerEnter;
 
+    Collider2D collider_;
     SpriteRenderer renderer_;
-    Transform transform_;
-    Vector3 basePosition_;
-    Vector3 entryPoint_;
-    LayerMask playerLayer_;
-    float colliderRadius_;
     CameraShake cameraShake_;
-    bool enterTriggered_;
     AudioSource enterSound_;
 
     private void Awake()
     {
         renderer_ = GetComponent<SpriteRenderer>();
-        transform_ = transform;
         enterSound_ = GetComponent<AudioSource>();
-    }
-
-    private void Start()
-    {
-        basePosition_ = transform_.position;
-        playerLayer_ = SceneGlobals.Instance.PlayerLayer;
         cameraShake_ = SceneGlobals.Instance.CameraShake;
-        entryPoint_ = EntryPoint.position;
+        collider_ = GetComponent<Collider2D>();
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    public void EnterPortal()
     {
-        if (collision.gameObject.layer == playerLayer_)
+        StartCoroutine(EnterPortalCo());
+    }
+
+    IEnumerator EnterPortalCo()
+    {
+        var player = PlayableCharacters.GetPlayerInScene();
+        player.SetIsHumanControlled(false, showChangeEffect: false);
+
+        float effectTime = 1.0f;
+        float timeEnd = Time.unscaledTime + effectTime;
+        Vector3 portalCenter = transform.position + Vector3.up * 1.5f;
+
+        collider_.enabled = false;
+        enterSound_.Play();
+
+        var baseScale = player.transform.localScale;
+
+        while (Time.unscaledTime < timeEnd)
         {
-            Vector3 vec = collision.gameObject.transform.position - entryPoint_;
-            Vector3 dir = vec.normalized;
-            float relativeDistance = (colliderRadius_ - vec.magnitude) / colliderRadius_;
-            float sign = Mathf.Sign(relativeDistance);
-            float strength = -(relativeDistance * relativeDistance * PullForce * sign);
-            cameraShake_.SetMinimumShake(strength);
+            float t = Mathf.Clamp01(1.0f - ((timeEnd - Time.unscaledTime) / effectTime));
+            float negT = 1.0f - t;
+            cameraShake_.SetMinimumShake(1);
 
-            // Point of no return
-            if (!enterTriggered_ && relativeDistance > 0.5f)
-            {
-                enterSound_.Play();
-            }
+            var playerPos = player.transform.position;
+            var direction = portalCenter - playerPos;
+            player.SetForce(direction * 20);
+            player.transform.localScale = baseScale * negT;
+            player.transform.localRotation = Quaternion.Euler(0, 0, t * 360 * 5);
 
-            if (!enterTriggered_ && relativeDistance > 0.95f)
-            {
-                enterTriggered_ = true;
-                OnPlayerEnter.Invoke();
-            }
+            yield return null;
         }
+
+        OnPlayerEnter.Invoke();
     }
 
     void Update()
