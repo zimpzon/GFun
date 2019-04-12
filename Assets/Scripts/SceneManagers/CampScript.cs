@@ -65,7 +65,6 @@ public class CampScript : MonoBehaviour
     void CreateCharacter(string characterTag, Vector3 position)
     {
         var character = PlayableCharacters.Instance.InstantiateCharacter(characterTag, position);
-        character.transform.position = position;
     }
 
     void CreateGhost(string characterTag, Vector3 position)
@@ -95,7 +94,7 @@ public class CampScript : MonoBehaviour
         PlayerPrefs.SetString(PlayerPrefsNames.SelectedCharacterTag, characterTag);
         PlayerPrefs.Save();
 
-        PlayableCharacters.Instance.SetCharacterToHumanControlled(characterTag);
+        PlayableCharacters.Instance.SetCharacterToHumanControlled(characterTag, showChangeEffect: true);
     }
 
     private void Update()

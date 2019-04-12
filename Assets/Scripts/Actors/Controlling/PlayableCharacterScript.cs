@@ -70,11 +70,11 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
         renderer_ = GetComponent<SpriteRenderer>();
         body_ = GetComponent<Rigidbody2D>();
         switchPlayerInteract_ = transform_.Find("SwitchPlayerInteract").GetComponent<InteractableTrigger>();
-        Blip.SetActive(true);
     }
 
     private void Start()
     {
+        Blip.SetActive(true);
         map_ = SceneGlobals.Instance.MapScript;
         lookAt_ = transform_.position;
         camPositioner_ = SceneGlobals.Instance.CameraPositioner;

@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class DebugLinesScript : MonoBehaviour
 {
+    public static void Show(string key, object value)
+    {
+        SceneGlobals.Instance.DebugLinesScript.SetLine(key, value);
+    }
+
     Dictionary<string, string> lines_ = new Dictionary<string, string>();
     TextMeshProUGUI text_;
 

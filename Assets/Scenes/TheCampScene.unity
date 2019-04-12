@@ -9293,7 +9293,7 @@ GameObject:
   m_Component:
   - component: {fileID: 291341695}
   - component: {fileID: 291341696}
-  m_Layer: 12
+  m_Layer: 8
   m_Name: Shadow (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9913,7 +9913,7 @@ GameObject:
   m_Component:
   - component: {fileID: 417871980}
   - component: {fileID: 417871981}
-  m_Layer: 12
+  m_Layer: 8
   m_Name: Shadow (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10487,6 +10487,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46465be444b5f8e418f4a955f735f2c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &905374271
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 905374272}
+  m_Layer: 0
+  m_Name: Character1DefaultPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &905374272
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905374271}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.5, y: -7.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1174650703}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &949506680
 GameObject:
   m_ObjectHideFlags: 0
@@ -10591,7 +10621,7 @@ GameObject:
   - component: {fileID: 976853185}
   - component: {fileID: 976853183}
   - component: {fileID: 976853184}
-  m_Layer: 12
+  m_Layer: 8
   m_Name: SkelatalDog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10845,12 +10875,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1030620502752953379}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1153629821 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2998776084999831439, guid: f6439424608acdb4b95ec951538a9d38,
-    type: 3}
-  m_PrefabInstance: {fileID: 2998776085886892384}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1174650700
 GameObject:
   m_ObjectHideFlags: 0
@@ -10920,9 +10944,9 @@ Transform:
   - {fileID: 1346282107}
   - {fileID: 1179353111}
   - {fileID: 6194186372753936280}
-  - {fileID: 1920389263}
-  - {fileID: 166538655}
-  - {fileID: 1828213119}
+  - {fileID: 905374272}
+  - {fileID: 1433814164}
+  - {fileID: 1667644409}
   - {fileID: 976853182}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -11147,18 +11171,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1264617200 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2998776084999831440, guid: f6439424608acdb4b95ec951538a9d38,
-    type: 3}
-  m_PrefabInstance: {fileID: 2998776085886892384}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7fd81be29d7d4c40a9ec00f4496e177, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1298272539
 GameObject:
   m_ObjectHideFlags: 0
@@ -20568,7 +20580,7 @@ GameObject:
   - component: {fileID: 1404226382}
   - component: {fileID: 1404226384}
   - component: {fileID: 1404226383}
-  m_Layer: 12
+  m_Layer: 14
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20759,7 +20771,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1174650703}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1457961988
 PrefabInstance:
@@ -21278,7 +21290,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1174650703}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1676626831
 GameObject:
@@ -21618,7 +21630,7 @@ GameObject:
   - component: {fileID: 1789840603}
   - component: {fileID: 1789840605}
   - component: {fileID: 1789840604}
-  m_Layer: 12
+  m_Layer: 14
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26882,7 +26894,7 @@ MonoBehaviour:
     MonochromeDisplayB: 1
   CampfireSoundSource: {fileID: 1179353114}
   CharacterDefaultPositions:
-  - {fileID: 1232480800}
+  - {fileID: 905374272}
   - {fileID: 1433814164}
   - {fileID: 1667644409}
 --- !u!1 &2075110695
@@ -32127,6 +32139,10 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 240782684, guid: cbfbd48ce630deb47a44268e336816e8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbfbd48ce630deb47a44268e336816e8, type: 3}
 --- !u!4 &6194186372753936280
@@ -32144,7 +32160,7 @@ Transform:
   - {fileID: 417871980}
   - {fileID: 1623453233}
   m_Father: {fileID: 1174650703}
-  m_RootOrder: 12
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6194186372753936282
 GameObject:
@@ -32160,7 +32176,7 @@ GameObject:
   - component: {fileID: 6194186372753936287}
   - component: {fileID: 6194186372753936284}
   - component: {fileID: 6194186372753936288}
-  m_Layer: 12
+  m_Layer: 8
   m_Name: Reaper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
