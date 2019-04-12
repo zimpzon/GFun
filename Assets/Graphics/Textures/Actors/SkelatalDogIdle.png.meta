@@ -1,11 +1,10 @@
 fileFormatVersion: 2
-guid: 77e2a6dc8b0c6134cb60f37f7adb0f43
+guid: f0a2eb23c890ca84eaab3cad0e366984
 TextureImporter:
   fileIDToRecycleName:
-    21300000: ReaperIdle_0
-    21300002: ReaperIdle_1
-    21300004: ReaperIdle_2
-    21300006: ReaperIdle_3
+    21300000: SkelatalDogIdle_0
+    21300002: SkelatalDogIdle_1
+    21300004: SkelatalDogIdle_2
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -35,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: -1
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -64,7 +63,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 2
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 128
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -75,18 +74,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Standalone
-    maxTextureSize: 128
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-  - serializedVersion: 2
-    buildTarget: WebGL
-    maxTextureSize: 128
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -99,12 +87,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ReaperIdle_0
+      name: SkelatalDogIdle_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
+        width: 48
         height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -113,18 +101,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f2ba99dd60560d74aaa497d109cbfc8f
+      spriteID: 4f9bf51322570b948b033ad9e9ae0ef1
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ReaperIdle_1
+      name: SkelatalDogIdle_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 48
         y: 0
-        width: 32
+        width: 48
         height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -133,38 +121,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e9c4013ccafd724458d65af0a0cc48a2
+      spriteID: bdf35a37dbbe2b24a9a2dcbde6e2d507
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ReaperIdle_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 40
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fc9f693f8d610184db50a93e8aa6ed54
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ReaperIdle_3
+      name: SkelatalDogIdle_2
       rect:
         serializedVersion: 2
         x: 96
         y: 0
-        width: 32
+        width: 48
         height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -173,7 +141,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 14761ab3e78934c4fa5f1367e56b1a80
+      spriteID: 5a5ade823bd0e1b418707e1aba8dfef0
       vertices: []
       indices: 
       edges: []
@@ -181,7 +149,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 72955ca80a2343c43b71e54920697d48
+    spriteID: 088eae78bf393744a9455bdf5e4f7ec8
     vertices: []
     indices: 
     edges: []
