@@ -22,6 +22,12 @@ public class CampScript : MonoBehaviour
     IMapAccess mapAccess_;
     MapScript mapScript_;
 
+    private void Awake()
+    {
+        GameProgressData.LoadProgress();
+        GameProgressData.EnableSave = true;
+    }
+
     void Start()
     {
         camPos_ = SceneGlobals.Instance.CameraPositioner;
@@ -41,6 +47,8 @@ public class CampScript : MonoBehaviour
     void SelectCharacter(PlayableCharacterData character)
     {
         PlayerPrefs.SetString(PlayerPrefsNames.SelectedCharacterTag, character.Tag);
+        PlayerPrefs.Save();
+
         SceneGlobals.Instance.PlayableCharacters.SwitchToCharacter(character, showChangeEffect: true);
     }
 
@@ -125,11 +133,19 @@ public class CampScript : MonoBehaviour
         }
     }
 
+    void StartGame()
+    {
+        StartGameParameters.Instance = new StartGameParameters();
+        StartGameParameters.Instance.SelectedCharacterTag = PlayableCharacters.GetCurrentCharacter().Tag;
+
+        SceneManager.LoadScene(EnterPortalSceneName, LoadSceneMode.Single);
+    }
+
     IEnumerator PlayerEnteredPortal()
     {
         LoadingCanvas.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.1f);
 
-        SceneManager.LoadScene(EnterPortalSceneName, LoadSceneMode.Single);
+        StartGame();
     }
 }

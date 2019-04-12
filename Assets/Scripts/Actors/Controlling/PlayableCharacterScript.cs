@@ -37,7 +37,7 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
             ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.CharacterSelectedParticles, transform_.position + Vector3.up * 0.5f, 30);
         }
 
-        UpdatePlayerData();
+        RefreshPlayerData();
     }
 
     public void SetMinimumForce(Vector3 force)
@@ -56,7 +56,7 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
         PlayableCharacters.Instance.SwitchToCharacter(playerData_, showChangeEffect: true);
     }
 
-    public void UpdatePlayerData()
+    public void RefreshPlayerData()
     {
         playerData_ = PlayableCharacters.Instance.GetFromTagOrDefault(tag);
         switchPlayerInteract_.Message = $"Take Over {playerData_.DisplayName}";
@@ -72,8 +72,6 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
         body_ = GetComponent<Rigidbody2D>();
         switchPlayerInteract_ = transform_.Find("SwitchPlayerInteract").GetComponent<InteractableTrigger>();
         Blip.SetActive(true);
-
-        UpdatePlayerData();
     }
 
     private void Start()
@@ -83,6 +81,8 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
         camPositioner_ = SceneGlobals.Instance.CameraPositioner;
         camPositioner_.Target = lookAt_;
         camPositioner_.SetPosition(lookAt_);
+
+        RefreshPlayerData();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
