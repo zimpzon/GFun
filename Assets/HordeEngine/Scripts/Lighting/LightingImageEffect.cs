@@ -76,6 +76,7 @@ public class LightingImageEffect : MonoBehaviour
     private void Awake()
     {
         CurrentValues = new LightingEffectSettings();
+        target_ = new LightingEffectSettings();
     }
 
     void MoveToTarget(float target, float dt, ref float value)

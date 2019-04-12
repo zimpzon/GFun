@@ -10,10 +10,10 @@ public class CampScript : MonoBehaviour
     public Canvas LoadingCanvas;
     public AudioClip IntroMusicClip;
     public LightingEffectSettings CampLightingSettings;
-    public LightingEffectSettings EnterPortalLightingSettings;
     public LightingEffectSettings GraveyardLightingSettings;
     public LightingEffectSettings MenuLightingSettings;
     public AudioSource CampfireSoundSource;
+    public Transform[] CharacterDefaultPositions;
 
     LightingEffectSettings activeLightingSettings_;
     bool isInGraveyard_;
@@ -22,6 +22,13 @@ public class CampScript : MonoBehaviour
     LightingImageEffect lightingImageEffect_;
     IMapAccess mapAccess_;
     MapScript mapScript_;
+
+    private void Awake()
+    {
+        GameProgressData.LoadProgress();
+        GameProgressData.EnableSave = true;
+        GameProgressData.CurrentProgress.UnlockedCharacters.Add("Character3");
+    }
 
     void Start()
     {
@@ -34,25 +41,70 @@ public class CampScript : MonoBehaviour
         mapAccess_.BuildCollisionMapFromFloorTilemap(mapScript_.FloorTileMap);
         SetLighting(MenuLightingSettings);
 
-        Helpers.ActivateSelectedCharacter();
+        CreateCharacters();
+        ActivateLatestSelectedCharacter();
 
         StartCoroutine(InMenu());
     }
 
-    void SelectCharacter(PlayableCharacterData character)
+    void CreateCharacters()
     {
-        PlayerPrefs.SetString(PlayerPrefsNames.SelectedCharacterTag, character.Tag);
-        SceneGlobals.Instance.PlayableCharacters.SwitchToCharacter(character, showChangeEffect: true);
+        for (int i = 0; i < PlayableCharacters.Instance.CharacterPrefabList.CharacterPrefabs.Length; ++i)
+        {
+            var characterPrefab = PlayableCharacters.Instance.CharacterPrefabList.CharacterPrefabs[i];
+            var position = CharacterDefaultPositions[i].position;
+
+            bool isUnlocked = GameProgressData.CharacterIsUnlocked(characterPrefab.tag);
+            if (isUnlocked)
+                CreateCharacter(characterPrefab.tag, position);
+            else
+                CreateGhost(characterPrefab.tag, position);
+        }
+    }
+
+    void CreateCharacter(string characterTag, Vector3 position)
+    {
+        var character = PlayableCharacters.Instance.InstantiateCharacter(characterTag, position);
+    }
+
+    void CreateGhost(string characterTag, Vector3 position)
+    {
+        // TODO
+    }
+
+    void ActivateLatestSelectedCharacter()
+    {
+        string startCharacterTag = PlayerPrefs.GetString(PlayerPrefsNames.SelectedCharacterTag);
+
+        // When developing we might experience the selected characer is no longer unlocked. Revert to default.
+        bool isUnlocked = GameProgressData.CharacterIsUnlocked(startCharacterTag);
+        if (!isUnlocked)
+            startCharacterTag = PlayableCharacters.Instance.CharacterPrefabList.CharacterPrefabs[0].tag;
+
+        PlayableCharacters.Instance.SetCharacterToHumanControlled(startCharacterTag);
+        Helpers.SetCameraPositionToActivePlayer();
+    }
+
+    void SelectCharacter(string characterTag)
+    {
+        bool isUnLocked = GameProgressData.CharacterIsUnlocked(characterTag);
+        if (!isUnLocked)
+            return;
+
+        PlayerPrefs.SetString(PlayerPrefsNames.SelectedCharacterTag, characterTag);
+        PlayerPrefs.Save();
+
+        PlayableCharacters.Instance.SetCharacterToHumanControlled(characterTag, showChangeEffect: true);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
-            SelectCharacter(PlayableCharacters.Character1);
+            SelectCharacter(PlayableCharacters.Instance.CharacterPrefabList.CharacterPrefabs[0].tag);
         if (Input.GetKeyDown(KeyCode.Alpha2))
-            SelectCharacter(PlayableCharacters.Character2);
+            SelectCharacter(PlayableCharacters.Instance.CharacterPrefabList.CharacterPrefabs[1].tag);
         if (Input.GetKeyDown(KeyCode.Alpha3))
-            SelectCharacter(PlayableCharacters.Character3);
+            SelectCharacter(PlayableCharacters.Instance.CharacterPrefabList.CharacterPrefabs[2].tag);
     }
 
     public void OnPlayerEnterStartPortal()
@@ -107,6 +159,8 @@ public class CampScript : MonoBehaviour
 
     IEnumerator InMenu()
     {
+        HumanPlayerController.Disabled = true;
+
         CampfireSoundSource.enabled = false;
         Time.timeScale = 0.25f;
 
@@ -119,6 +173,8 @@ public class CampScript : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                HumanPlayerController.Disabled = false;
+
                 StartCoroutine(InCamp());
                 yield break;
             }
@@ -126,24 +182,19 @@ public class CampScript : MonoBehaviour
         }
     }
 
+    void StartGame()
+    {
+        CurrentRunData.Reset();
+        CurrentRunData.Instance.StartingCharacterTag = PlayableCharacters.GetPlayerInScene().tag;
+
+        SceneManager.LoadScene(EnterPortalSceneName, LoadSceneMode.Single);
+    }
+
     IEnumerator PlayerEnteredPortal()
     {
-        LightingFadeTo(EnterPortalLightingSettings, transitionSpeed: 2);
-
-        float fade = 0.0f;
-        while (fade < 1.0f)
-        {
-            fade += Time.unscaledDeltaTime * 0.75f;
-
-            float scale = Mathf.Max(0.2f, 1.0f - fade);
-
-            camShake_.SetMinimumShake(1);
-            yield return null;
-        }
-
         LoadingCanvas.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.1f);
 
-        SceneManager.LoadScene(EnterPortalSceneName, LoadSceneMode.Single);
+        StartGame();
     }
 }

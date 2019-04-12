@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 882899864}
   - component: {fileID: 882899863}
   m_Layer: 5
-  m_Name: TextFps
+  m_Name: TextTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_firstOverflowCharacterIndex: -1
@@ -367,4 +367,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ToggleKey: 105
-  StartEnabled: 1
+  StartEnabled: 0

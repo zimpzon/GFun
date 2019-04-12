@@ -22,7 +22,6 @@ public class SceneGlobals : MonoBehaviour
     public LayerMask PlayerInteractionLayer;
     public LayerMask EnemyLayer;
     public LayerMask EnemyDamageLayer;
-    public AiBlackboard AiBlackboard;
     public WeaponPrefabs WeaponPrefabs;
     public GameObjectPool PlainBulletPool;
     public GameObjectPool ElongatedBulletPool;
@@ -47,7 +46,6 @@ public class SceneGlobals : MonoBehaviour
         LightingImageEffect = FindObjectOfType<LightingImageEffect>();
         LightingCamera = FindObjectOfType<LightingCamera>();
         MapCamera = FindObjectOfType<MiniMapCamera>();
-        AiBlackboard = FindObjectOfType<AiBlackboard>();
         WeaponPrefabs = FindObjectOfType<WeaponPrefabs>();
         PlayableCharacters = FindObjectOfType<PlayableCharacters>();
 
@@ -66,11 +64,11 @@ public class SceneGlobals : MonoBehaviour
         Instance = null;
     }
 
-    public static void NullCheck(object o)
+    public static void NullCheck(object o, string message = "")
     {
         if (o == null)
         {
-            Instance.DebugLinesScript.SetLine("Null check failed, see console", Time.time);
+            Instance.DebugLinesScript.SetLine($"Null check failed ({message}), see console", Time.time);
             throw new ArgumentNullException();
         }
     }

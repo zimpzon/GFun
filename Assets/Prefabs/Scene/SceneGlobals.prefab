@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3580109083850555886
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3580109083850555885}
+  - component: {fileID: 3580109083850555884}
+  m_Layer: 0
+  m_Name: SceneGlobals
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3580109083850555885
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3580109083850555886}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3580109083850555884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3580109083850555886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4e55d6b126029349bb085e0766158b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraPositioner: {fileID: 0}
+  CameraShake: {fileID: 0}
+  MapScript: {fileID: 0}
+  AudioManager: {fileID: 0}
+  ParticleScript: {fileID: 0}
+  DebugLinesScript: {fileID: 0}
+  LightingImageEffect: {fileID: 0}
+  LightingCamera: {fileID: 0}
+  MapCamera: {fileID: 0}
+  MapLayer:
+    serializedVersion: 2
+    m_Bits: 8192
+  PlayerLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  PlayerDamageLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  PlayerInteractionLayer:
+    serializedVersion: 2
+    m_Bits: 4096
+  EnemyLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  EnemyDamageLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  WeaponPrefabs: {fileID: 0}
+  PlainBulletPool: {fileID: 0}
+  ElongatedBulletPool: {fileID: 0}
+  PlayableCharacters: {fileID: 0}

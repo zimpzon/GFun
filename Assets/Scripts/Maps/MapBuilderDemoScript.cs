@@ -19,16 +19,11 @@ public class MapBuilderDemoScript : MonoBehaviour
 
         GenerateNewMap();
 
-        Helpers.ActivateSelectedCharacter();
+        Helpers.SetCameraPositionToActivePlayer();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            SceneGlobals.Instance.PlayableCharacters.SwitchToCharacter(PlayableCharacters.Character1, showChangeEffect: true);
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            SceneGlobals.Instance.PlayableCharacters.SwitchToCharacter(PlayableCharacters.Character2, showChangeEffect: true);
-
         float z = Camera.main.transform.localPosition.z;
         if (Input.GetKeyDown(KeyCode.Z))
             Camera.main.transform.localPosition = new Vector3(0, 0, z - 5);

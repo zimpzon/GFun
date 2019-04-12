@@ -2,13 +2,16 @@
 
 public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsActor
 {
+    public string Name;
     public float Speed = 10;
+    public int Life;
     public SpriteAnimationFrames_IdleRun Anim;
     public float LookAtOffset = 10;
     public float Drag = 1.0f;
     public GameObject Blip;
     public bool ShowCollisionDebug;
     public int ShowCollisionDebugSize = 10;
+    public bool IsDead = false;
 
     HumanPlayerController humanPlayerController_;
     Transform transform_;
@@ -21,8 +24,9 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
     Vector3 force_;
     Vector3 moveVec_;
     bool isHumanControlled_;
+    InteractableTrigger switchPlayerInteract_;
 
-    public void SetIsHumanControlled(bool isHumanControlled, bool showChangeEffect)
+    public void SetIsHumanControlled(bool isHumanControlled, bool showChangeEffect = false)
     {
         bool noChange = isHumanControlled == isHumanControlled_;
         if (noChange)
@@ -34,6 +38,8 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
         {
             ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.CharacterSelectedParticles, transform_.position + Vector3.up * 0.5f, 30);
         }
+
+        RefreshInteracting();
     }
 
     public void SetMinimumForce(Vector3 force)
@@ -42,9 +48,34 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
             force_ = force;
     }
 
+    public void TakeDamage(int amount, Vector3 damageForce)
+    {
+        Life = Mathf.Min(0, Life - amount);
+        if (Life == 0)
+            Die();
+    }
+
+    public void Die()
+    {
+        IsDead = true;
+        SetIsHumanControlled(false);
+    }
+
     public void SetForce(Vector3 force)
     {
         force_ = force;
+    }
+
+    public void OnPlayerSwitchSelected()
+    {
+        PlayableCharacters.Instance.SetCharacterToHumanControlled(tag, showChangeEffect: true);
+    }
+
+    public void RefreshInteracting()
+    {
+        switchPlayerInteract_.Message = $"Take Over {Name}";
+        switchPlayerInteract_.OnAccept.AddListener(OnPlayerSwitchSelected);
+        switchPlayerInteract_.gameObject.SetActive(!isHumanControlled_);
     }
 
     void Awake()
@@ -53,16 +84,17 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
         humanPlayerController_ = GetComponent<HumanPlayerController>();
         renderer_ = GetComponent<SpriteRenderer>();
         body_ = GetComponent<Rigidbody2D>();
-        Blip.SetActive(true);
+        switchPlayerInteract_ = transform_.Find("SwitchPlayerInteract").GetComponent<InteractableTrigger>();
     }
 
     private void Start()
     {
+        Blip.SetActive(true);
         map_ = SceneGlobals.Instance.MapScript;
         lookAt_ = transform_.position;
         camPositioner_ = SceneGlobals.Instance.CameraPositioner;
-        camPositioner_.Target = lookAt_;
-        camPositioner_.SetPosition(lookAt_);
+
+        RefreshInteracting();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

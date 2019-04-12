@@ -11,26 +11,26 @@ public class NPCScript : MonoBehaviour
     SpriteRenderer renderer_;
     Rigidbody2D body_;
     MapScript map_;
-    LightingImageEffect lightingImageEffect_;
     bool flipX_;
-    Vector3 lookAt_;
     Vector3 moveVec_;
+    AudioSource audioSource_;
 
     void Awake()
     {
         transform_ = transform;
         renderer_ = GetComponent<SpriteRenderer>();
         body_ = GetComponent<Rigidbody2D>();
+        audioSource_ = GetComponent<AudioSource>();
     }
 
     private void Start()
     {
         map_ = SceneGlobals.Instance.MapScript;
-        lookAt_ = transform_.position;
     }
 
     public void TalkToMe()
     {
+        audioSource_.Play();
         SpeechBubbleManager.Instance.AddSpeechBubble(transform, "Come to relive your past lives?");
     }
 
