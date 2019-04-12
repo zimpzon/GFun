@@ -32,3 +32,5 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+/Assets/Graphics/Textures/Actors/ReaperIdleFlipScythe.png.meta
+/Assets/Graphics/Textures/Actors/ReaperIdleFlipScythe.png
