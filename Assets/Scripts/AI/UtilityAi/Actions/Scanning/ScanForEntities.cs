@@ -50,10 +50,7 @@ namespace Apex.Examples.AI
                     continue;
                 }
 
-                if(hitEntity.type == EntityType.Ghost)
-                {
-                    entity.moveTarget = hitEntity.position;
-                }
+               
                 Debug.Log(hitEntity.type);
 
                 // Get visibility by casting ray against obstacle layers

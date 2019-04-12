@@ -88,6 +88,11 @@ namespace Apex.Examples.AI
                     }
                 }
 
+                if (obs.entity.type == this.entityType)
+                {
+                    entity.moveTarget = obs.entity.position;
+                }
+
                 // if none of the filters apply to this specific observation, then return true (unless we are reversing the logic with 'not')
                 return this.not ? 0f : this.score;
             }

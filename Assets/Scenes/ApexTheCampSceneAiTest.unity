@@ -11205,7 +11205,7 @@ GameObject:
   - component: {fileID: 1133836778}
   - component: {fileID: 1133836776}
   - component: {fileID: 1133836777}
-  m_Layer: 8
+  m_Layer: 20
   m_Name: AiDogGhost (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21301,7 +21301,7 @@ GameObject:
   - component: {fileID: 1395031463}
   - component: {fileID: 1395031461}
   - component: {fileID: 1395031462}
-  m_Layer: 8
+  m_Layer: 20
   m_Name: AiDogGhost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28057,7 +28057,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitsLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 1049344
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 524288
