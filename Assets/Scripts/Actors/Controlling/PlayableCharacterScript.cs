@@ -2,6 +2,7 @@
 
 public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsActor
 {
+    public string Name;
     public float Speed = 10;
     public SpriteAnimationFrames_IdleRun Anim;
     public float LookAtOffset = 10;
@@ -21,10 +22,9 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
     Vector3 force_;
     Vector3 moveVec_;
     bool isHumanControlled_;
-    PlayableCharacterData playerData_;
     InteractableTrigger switchPlayerInteract_;
 
-    public void SetIsHumanControlled(bool isHumanControlled, bool showChangeEffect)
+    public void SetIsHumanControlled(bool isHumanControlled, bool showChangeEffect = false)
     {
         bool noChange = isHumanControlled == isHumanControlled_;
         if (noChange)
@@ -37,7 +37,7 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
             ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.CharacterSelectedParticles, transform_.position + Vector3.up * 0.5f, 30);
         }
 
-        RefreshPlayerData();
+        RefreshInteracting();
     }
 
     public void SetMinimumForce(Vector3 force)
@@ -53,13 +53,12 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
 
     public void OnPlayerSwitchSelected()
     {
-        PlayableCharacters.Instance.SwitchToCharacter(playerData_, showChangeEffect: true);
+        PlayableCharacters.Instance.SetCharacterToHumanControlled(tag, showChangeEffect: true);
     }
 
-    public void RefreshPlayerData()
+    public void RefreshInteracting()
     {
-        playerData_ = PlayableCharacters.Instance.GetFromTagOrDefault(tag);
-        switchPlayerInteract_.Message = $"Take Over {playerData_.DisplayName}";
+        switchPlayerInteract_.Message = $"Take Over {Name}";
         switchPlayerInteract_.OnAccept.AddListener(OnPlayerSwitchSelected);
         switchPlayerInteract_.gameObject.SetActive(!isHumanControlled_);
     }
@@ -79,10 +78,8 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
         map_ = SceneGlobals.Instance.MapScript;
         lookAt_ = transform_.position;
         camPositioner_ = SceneGlobals.Instance.CameraPositioner;
-        camPositioner_.Target = lookAt_;
-        camPositioner_.SetPosition(lookAt_);
 
-        RefreshPlayerData();
+        RefreshInteracting();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

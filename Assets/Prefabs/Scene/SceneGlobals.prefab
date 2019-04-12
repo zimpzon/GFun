@@ -70,7 +70,6 @@ MonoBehaviour:
   EnemyDamageLayer:
     serializedVersion: 2
     m_Bits: 1024
-  AiBlackboard: {fileID: 0}
   WeaponPrefabs: {fileID: 0}
   PlainBulletPool: {fileID: 0}
   ElongatedBulletPool: {fileID: 0}

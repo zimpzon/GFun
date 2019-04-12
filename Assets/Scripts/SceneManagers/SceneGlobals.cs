@@ -64,11 +64,11 @@ public class SceneGlobals : MonoBehaviour
         Instance = null;
     }
 
-    public static void NullCheck(object o)
+    public static void NullCheck(object o, string message = "")
     {
         if (o == null)
         {
-            Instance.DebugLinesScript.SetLine("Null check failed, see console", Time.time);
+            Instance.DebugLinesScript.SetLine($"Null check failed ({message}), see console", Time.time);
             throw new ArgumentNullException();
         }
     }

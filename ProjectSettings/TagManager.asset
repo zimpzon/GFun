@@ -7,7 +7,6 @@ TagManager:
   - Character1
   - Character2
   - Character3
-  - PhilBeans
   layers:
   - Default
   - TransparentFX

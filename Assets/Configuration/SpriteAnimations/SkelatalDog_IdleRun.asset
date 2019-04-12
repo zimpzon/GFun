@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1394803210e4a414ebe4a6652d8ee43f, type: 3}
-  m_Name: GrimReaper_IdleRun
+  m_Name: SkelatalDog_IdleRun
   m_EditorClassIdentifier: 
   DefaultAnimationFramesPerSecond: 10
   Idle:

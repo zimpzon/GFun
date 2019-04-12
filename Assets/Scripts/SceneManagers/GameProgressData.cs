@@ -19,6 +19,9 @@ public class GameProgressData
         PlayerPrefs.DeleteKey(PlayerPrefsNames.Progress);
     }
 
+    public static bool CharacterIsUnlocked(string tag)
+        => CurrentProgress.UnlockedCharacters.Contains(tag);
+
     public static void LoadProgress()
     {
         string json = PlayerPrefs.GetString(PlayerPrefsNames.Progress);

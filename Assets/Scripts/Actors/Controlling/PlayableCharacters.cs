@@ -6,77 +6,46 @@ public class PlayableCharacterData
 {
     public string Tag;
     public string DisplayName;
-    public bool IsUnlocked;
 }
 
 public class PlayableCharacters : MonoBehaviour
 {
     public static PlayableCharacters Instance;
-
-    List<PlayableCharacterData> All = new List<PlayableCharacterData>();
-
-    public static readonly PlayableCharacterData Character1 = new PlayableCharacterData { Tag = "Character1", DisplayName = "Phil Beans" };
-    public static readonly PlayableCharacterData Character2 = new PlayableCharacterData { Tag = "Character2", DisplayName = "Character Two" };
-    public static readonly PlayableCharacterData Character3 = new PlayableCharacterData { Tag = "Character3", DisplayName = "Character Three" };
-
-    public static readonly PlayableCharacterData DefaultCharacter = Character1;
-
-    PlayableCharacterData defaultCharacter_;
-    PlayableCharacterData currentCharacter_;
+    public CharacterPrefabList CharacterPrefabList;
 
     PlayableCharacterScript playerInScene_;
-
-    public static PlayableCharacterData GetCurrentCharacter() => Instance.currentCharacter_;
     public static PlayableCharacterScript GetPlayerInScene() => Instance.playerInScene_;
 
     private void Awake()
     {
         Instance = this;
-
-        All.Clear();
-        All.Add(Character1);
-        All.Add(Character2);
-        All.Add(Character3);
-
-        defaultCharacter_ = Character1;
     }
 
-    public void SetNoActiveCharacter()
+    public GameObject InstantiateCharacter(string characterTag, Vector3 position)
     {
-        if (currentCharacter_ != null)
-        {
-            GameObject.FindWithTag(currentCharacter_.Tag).GetComponent<PlayableCharacterScript>().SetIsHumanControlled(false, showChangeEffect: false);
-            currentCharacter_ = null;
-        }
+        var prefab = GetCharacterPrefab(characterTag);
+        var instance = Instantiate(prefab, position, Quaternion.identity);
+        return instance;
     }
 
-    public PlayableCharacterData GetFromTagOrDefault(string tag)
-    {
-        var data = All.Where(d => d.Tag == tag).FirstOrDefault();
-        if (data == null)
-            data = defaultCharacter_;
-        return data;
-    }
+    GameObject GetCharacterPrefab(string characterTag)
+        => CharacterPrefabList.CharacterPrefabs.Where(p => p.tag == characterTag).Single();
 
-    public bool SwitchToCharacter(PlayableCharacterData newCharacter, bool showChangeEffect)
+    public bool SetCharacterToHumanControlled(string characterTag, bool showChangeEffect = false)
     {
-        var characterScript = GameObject.FindWithTag(newCharacter.Tag)?.GetComponent<PlayableCharacterScript>();
-        SceneGlobals.NullCheck(characterScript);
-        if (characterScript == null)
+        var toBeControlled = GameObject.FindWithTag(characterTag)?.GetComponent<PlayableCharacterScript>();
+        SceneGlobals.NullCheck(toBeControlled, "toBeControlled");
+
+        var alreadyControlled = playerInScene_;
+
+        bool noChange = alreadyControlled?.tag == toBeControlled.tag;
+        if (noChange)
             return false;
 
-        if (currentCharacter_ != null)
-        {
-            bool noChange = currentCharacter_.Tag == newCharacter.Tag;
-            if (noChange)
-                return false;
+        alreadyControlled?.SetIsHumanControlled(false);
+        toBeControlled.SetIsHumanControlled(true, showChangeEffect);
+        playerInScene_ = toBeControlled;
 
-            SetNoActiveCharacter();
-        }
-
-        characterScript.SetIsHumanControlled(true, showChangeEffect);
-        playerInScene_ = characterScript;
-        currentCharacter_ = newCharacter;
         return true;
     }
 }
