@@ -85,7 +85,7 @@ public class AudioManager : MonoBehaviour
 
     IEnumerator Fade(float from, float to)
     {
-        const float Speed = 1.0f;
+        const float Speed = 2.0f;
         float vol = from;
         if (from > to)
         {

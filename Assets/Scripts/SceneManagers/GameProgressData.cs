@@ -7,7 +7,7 @@ using UnityEngine;
 [Serializable]
 public class GameProgressData
 {
-    public static GameProgressData CurrentProgress;
+    public static GameProgressData CurrentProgress = new GameProgressData();
     public static bool EnableSave = false; // So we can start at different scenes without overwriting
 
     public long NumberOfDeaths;

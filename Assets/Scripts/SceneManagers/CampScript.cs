@@ -164,6 +164,8 @@ public class CampScript : MonoBehaviour
 
     IEnumerator InMenu()
     {
+        HumanPlayerController.Disabled = true;
+
         CampfireSoundSource.enabled = false;
         Time.timeScale = 0.25f;
 
@@ -176,6 +178,8 @@ public class CampScript : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                HumanPlayerController.Disabled = false;
+
                 StartCoroutine(InCamp());
                 yield break;
             }
