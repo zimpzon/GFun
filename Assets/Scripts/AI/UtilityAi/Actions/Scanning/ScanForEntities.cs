@@ -21,13 +21,17 @@ namespace Apex.Examples.AI
             var entityManager = EntityManager.instance;
 
             // Use OverlapSphere for getting all relevant colliders within scan range, filtered by the scanning layer
-            var hits = Physics.OverlapSphere(entity.position, entity.scanRange, LayersManagerComponent.instance.unitsLayer);
+
+
+            var hits = Physics2D.OverlapCircleAll(entity.position, entity.scanRange, LayersManagerComponent.instance.unitsLayer);
+
             for (int i = 0; i < hits.Length; i++)
             {
                 var hit = hits[i];
 
                 // Get the IEntity from the hit game object
                 var hitEntity = entityManager.GetEntity(hit.gameObject);
+
                 if (hitEntity == null)
                 {
                     // entity is not scannable (it has not been registered)
@@ -46,13 +50,21 @@ namespace Apex.Examples.AI
                     continue;
                 }
 
+                if(hitEntity.type == EntityType.Ghost)
+                {
+                    entity.moveTarget = hitEntity.position;
+                }
+                Debug.Log(hitEntity.type);
+
                 // Get visibility by casting ray against obstacle layers
                 var visibility = Utilities.IsVisible(entity.position, hitEntity.position, entity.scanRange);
-
+                Debug.DrawRay(entity.position, hitEntity.position, Color.black);
                 // create and add (or update) the observation
                 var observation = new Observation(hitEntity, visibility);
                 c.memory.AddOrUpdateObservation(observation);
             }
         }
+        
+
     }
 }

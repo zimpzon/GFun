@@ -9,6 +9,7 @@ namespace Apex.Examples.AI
         Drone = 2,
         Marine = 5,
         Ghost = 6,
+        Reaper = 7,
         Any = 500,
     }
 }

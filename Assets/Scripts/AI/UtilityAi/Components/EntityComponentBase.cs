@@ -15,8 +15,8 @@ namespace Apex.Examples.AI.Game
     {
         public ParticleSystem bulletParticleSystem;
 
-        public float defaultAttackRange = 15f;
-        public float defaultScanRange = 30f;
+        public float defaultAttackRange = 1f;
+        public float defaultScanRange = 5f;
 
         public float defaultMinimumDamage = 1f;
         public float defaultMaximumDamage = 10f;
@@ -187,6 +187,8 @@ namespace Apex.Examples.AI.Game
                 return;
             }
 
+            this.transform.position = destination;
+            /*
             UnityEngine.AI.NavMeshHit hit;
             int mask = _navMeshAgent.areaMask;
 
@@ -194,6 +196,7 @@ namespace Apex.Examples.AI.Game
             {
                 _navMeshAgent.SetDestination(hit.position);
             }
+            */
         }
 
         public void Reload()

@@ -18,20 +18,19 @@ MonoBehaviour:
   configuration: '{"@type":"Apex.AI.UtilityAI, ApexAI","_rootSelectorId":70c498e2a5394b87acee7d0f515a0c0f,"_id":84848038b286432c9ef28f5a2ddca23d,"_selectors":[{"@type":"Apex.AI.ScoreSelector,
     ApexAI","_id":70c498e2a5394b87acee7d0f515a0c0f,"_qualifiers":[{"@type":"Apex.AI.CompositeAllOrNothingQualifier,
     ApexAI","action":{"@type":"Apex.AI.SelectorAction, ApexAI","_selectorId":f77a5fe681124e5d848445e03e6f2ef1},"_scorers":[{"@type":"Apex.Examples.AI.HasMoveTarget,
-    Assembly-CSharp","not":false}]},{"@type":"Apex.AI.CompositeScoreQualifier, ApexAI","action":{"@type":"Apex.AI.SelectorAction,
-    ApexAI","_selectorId":07d9887dd12e4288859f5b7922494af3},"_scorers":[]}],"_defaultQualifier":{"@type":"Apex.AI.DefaultQualifier,
-    ApexAI","action":{"@type":"Apex.Examples.AI.ScanForEntities, Assembly-CSharp"}}},{"@type":"Apex.AI.ScoreSelector,
-    ApexAI","_id":f77a5fe681124e5d848445e03e6f2ef1,"_qualifiers":[{"@type":"Apex.AI.CompositeScoreQualifier,
+    Assembly-CSharp","not":false,"score":10}]},{"@type":"Apex.AI.CompositeScoreQualifier,
+    ApexAI","action":{"@type":"Apex.AI.SelectorAction, ApexAI","_selectorId":07d9887dd12e4288859f5b7922494af3},"_scorers":[{"@type":"Apex.Examples.AI.HasMoveTarget,
+    Assembly-CSharp","not":true,"score":10}]}],"_defaultQualifier":{"@type":"Apex.AI.DefaultQualifier,
+    ApexAI"}},{"@type":"Apex.AI.ScoreSelector, ApexAI","_id":f77a5fe681124e5d848445e03e6f2ef1,"_qualifiers":[{"@type":"Apex.AI.CompositeScoreQualifier,
     ApexAI","action":{"@type":"Apex.AI.SelectorAction, ApexAI","_selectorId":5306ef6d04b549d88acdf26aa51d43cb},"_scorers":[{"@type":"Apex.Examples.AI.CheckMoveTargetRange,
     Assembly-CSharp","operatorType":LessThanOrEquals,"range":0.5,"score":20}]}],"_defaultQualifier":{"@type":"Apex.AI.DefaultQualifier,
     ApexAI","action":{"@type":"Apex.Examples.AI.MoveToMoveTarget, Assembly-CSharp"}}},{"@type":"Apex.AI.ScoreSelector,
     ApexAI","_id":5306ef6d04b549d88acdf26aa51d43cb,"_qualifiers":[],"_defaultQualifier":{"@type":"Apex.AI.DefaultQualifier,
     ApexAI","action":{"@type":"Apex.Examples.AI.SetMoveTargetToNull, Assembly-CSharp"}}},{"@type":"Apex.AI.ScoreSelector,
-    ApexAI","_id":07d9887dd12e4288859f5b7922494af3,"_qualifiers":[{"@type":"Apex.AI.CompositeAllOrNothingQualifier,
-    ApexAI","action":{"@type":"Apex.Examples.AI.SetBestMoveTarget, Assembly-CSharp","_scorers":[]},"_scorers":[{"@type":"Apex.Examples.AI.HasEntityInMemory,
-    Assembly-CSharp","entityType":Any,"customRange":0,"useScanRange":true,"useAttackRange":false,"onlyVisible":false,"skipAllies":false,"not":false,"score":10}]}],"_defaultQualifier":{"@type":"Apex.AI.DefaultQualifier,
+    ApexAI","_id":07d9887dd12e4288859f5b7922494af3,"_qualifiers":[{"@type":"Apex.AI.CompositeScoreQualifier,
+    ApexAI","_scorers":[{"@type":"Apex.Examples.AI.HasEntityInMemory, Assembly-CSharp","entityType":Ghost,"customRange":0,"useScanRange":true,"useAttackRange":false,"onlyVisible":false,"skipAllies":false,"not":false,"score":10}]}],"_defaultQualifier":{"@type":"Apex.AI.DefaultQualifier,
     ApexAI","action":{"@type":"Apex.Examples.AI.ScanForEntities, Assembly-CSharp"}}}]}'
-  editorConfiguration: '{"offset":{"@x":0,"@y":0},"zoom":1,"SelectorView":{"ViewArea":{"@left":100,"@top":140,"@width":200,"@height":220},"Name":"What
+  editorConfiguration: '{"offset":{"@x":4,"@y":8},"zoom":1,"SelectorView":{"ViewArea":{"@left":104,"@top":148,"@width":200,"@height":220},"Name":"What
     should I do?","QualifierView":{"Name":"Has Move Target","ActionView":{"@connectorType":"Selector"}},"QualifierView":{"Name":"Has
-    No Move Target","ActionView":{"@connectorType":"Selector"}},"DefaultQualifier":{"ActionView":{}}},"SelectorView":{"ViewArea":{"@left":440,"@top":100,"@width":200,"@height":160},"QualifierView":{"Name":"Is
-    move target within","ActionView":{"@connectorType":"Selector"}},"DefaultQualifier":{"ActionView":{}}},"SelectorView":{"ViewArea":{"@left":760,"@top":100,"@width":200,"@height":100},"DefaultQualifier":{"ActionView":{}}},"SelectorView":{"ViewArea":{"@left":420,"@top":300,"@width":200,"@height":160},"QualifierView":{"ActionView":{}},"DefaultQualifier":{"ActionView":{}}}}'
+    No Move Target","ActionView":{"@connectorType":"Selector"}},"DefaultQualifier":{}},"SelectorView":{"ViewArea":{"@left":444,"@top":108,"@width":200,"@height":160},"QualifierView":{"Name":"Is
+    move target within","ActionView":{"@connectorType":"Selector"}},"DefaultQualifier":{"ActionView":{}}},"SelectorView":{"ViewArea":{"@left":764,"@top":108,"@width":200,"@height":100},"DefaultQualifier":{"ActionView":{}}},"SelectorView":{"ViewArea":{"@left":424,"@top":328,"@width":200,"@height":160},"QualifierView":{},"DefaultQualifier":{"ActionView":{}}}}'
