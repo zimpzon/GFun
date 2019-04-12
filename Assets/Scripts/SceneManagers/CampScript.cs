@@ -8,6 +8,7 @@ public class CampScript : MonoBehaviour
     public string EnterPortalSceneName;
     public Canvas IntroCanvas;
     public Canvas LoadingCanvas;
+    public Canvas OptionsCanvas;
     public AudioClip IntroMusicClip;
     public LightingEffectSettings CampLightingSettings;
     public LightingEffectSettings GraveyardLightingSettings;
@@ -105,6 +106,10 @@ public class CampScript : MonoBehaviour
             SelectCharacter(PlayableCharacters.Instance.CharacterPrefabList.CharacterPrefabs[1].tag);
         if (Input.GetKeyDown(KeyCode.Alpha3))
             SelectCharacter(PlayableCharacters.Instance.CharacterPrefabList.CharacterPrefabs[2].tag);
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+
+        }
     }
 
     public void OnPlayerEnterStartPortal()
