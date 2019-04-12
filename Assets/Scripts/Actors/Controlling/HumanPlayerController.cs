@@ -4,6 +4,8 @@ public class HumanPlayerController : MonoBehaviour
 {
     public LightingEffectSettings BulletTimeLight;
 
+    public static bool Disabled = false;
+
     LightingEffectSettings bulletTimeLight_ = new LightingEffectSettings();
     IMovableActor movable_;
     MapScript map_;
@@ -58,6 +60,9 @@ public class HumanPlayerController : MonoBehaviour
 
     void Update()
     {
+        if (Disabled)
+            return;
+
         CheckInput();
         UpdateBulletTime();
     }

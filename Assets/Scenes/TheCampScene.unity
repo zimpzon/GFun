@@ -26858,7 +26858,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8add7301f3ba2434b97ef744fb20d97e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnterPortalSceneName: MapBuildingDemoScene
+  EnterPortalSceneName: GameScene
   IntroCanvas: {fileID: 1676626834}
   LoadingCanvas: {fileID: 1802530377}
   IntroMusicClip: {fileID: 8300000, guid: 0b4a983e54723df4ebbf28867b2ee79c, type: 3}
@@ -32138,10 +32138,6 @@ PrefabInstance:
     - target: {fileID: 480943395, guid: cbfbd48ce630deb47a44268e336816e8, type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 240782684, guid: cbfbd48ce630deb47a44268e336816e8, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbfbd48ce630deb47a44268e336816e8, type: 3}

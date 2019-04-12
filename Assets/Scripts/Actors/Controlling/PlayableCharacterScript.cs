@@ -4,12 +4,14 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
 {
     public string Name;
     public float Speed = 10;
+    public int Life;
     public SpriteAnimationFrames_IdleRun Anim;
     public float LookAtOffset = 10;
     public float Drag = 1.0f;
     public GameObject Blip;
     public bool ShowCollisionDebug;
     public int ShowCollisionDebugSize = 10;
+    public bool IsDead = false;
 
     HumanPlayerController humanPlayerController_;
     Transform transform_;
@@ -44,6 +46,19 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
     {
         if (force.sqrMagnitude > force_.sqrMagnitude)
             force_ = force;
+    }
+
+    public void TakeDamage(int amount, Vector3 damageForce)
+    {
+        Life = Mathf.Min(0, Life - amount);
+        if (Life == 0)
+            Die();
+    }
+
+    public void Die()
+    {
+        IsDead = true;
+        SetIsHumanControlled(false);
     }
 
     public void SetForce(Vector3 force)

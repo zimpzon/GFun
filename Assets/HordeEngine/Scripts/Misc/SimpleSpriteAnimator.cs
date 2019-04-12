@@ -19,9 +19,9 @@ public class SimpleSpriteAnimator : MonoBehaviour
         renderer_.sprite = GetAnimationSprite(AnimationSprites, AnimationFramesPerSecond);
     }
 
-    public static Sprite GetAnimationSprite(Sprite[] sprites, float animationFramesPerSecond)
+    public static Sprite GetAnimationSprite(Sprite[] sprites, float animationFramesPerSecond, float offset = 0)
     {
-        int id = (int)(Time.unscaledTime * animationFramesPerSecond) % sprites.Length;
+        int id = (int)(Time.unscaledTime * animationFramesPerSecond + offset * sprites.Length) % sprites.Length;
         return sprites[id];
     }
 
