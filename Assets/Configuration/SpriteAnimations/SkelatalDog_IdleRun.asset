@@ -12,42 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1394803210e4a414ebe4a6652d8ee43f, type: 3}
   m_Name: SkelatalDog_IdleRun
   m_EditorClassIdentifier: 
-  DefaultAnimationFramesPerSecond: 10
+  DefaultAnimationFramesPerSecond: 6
   Idle:
-  - {fileID: 21300000, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300002, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300004, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300006, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300008, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300010, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300012, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300014, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300016, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300018, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300020, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300022, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300024, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300026, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300028, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300030, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300032, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300034, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300036, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300038, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300040, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300042, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300044, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  - {fileID: 21300046, guid: 3cf042600ac8de0439327e80964c514b, type: 3}
-  Run:
-  - {fileID: 21300000, guid: 62b3583dd1d725f4ab236869f3ae6c60, type: 3}
-  - {fileID: 21300002, guid: 62b3583dd1d725f4ab236869f3ae6c60, type: 3}
-  - {fileID: 21300004, guid: 62b3583dd1d725f4ab236869f3ae6c60, type: 3}
-  - {fileID: 21300006, guid: 62b3583dd1d725f4ab236869f3ae6c60, type: 3}
-  - {fileID: 21300008, guid: 62b3583dd1d725f4ab236869f3ae6c60, type: 3}
-  - {fileID: 21300010, guid: 62b3583dd1d725f4ab236869f3ae6c60, type: 3}
-  - {fileID: 21300012, guid: 62b3583dd1d725f4ab236869f3ae6c60, type: 3}
-  - {fileID: 21300014, guid: 62b3583dd1d725f4ab236869f3ae6c60, type: 3}
-  - {fileID: 21300016, guid: 62b3583dd1d725f4ab236869f3ae6c60, type: 3}
-  - {fileID: 21300018, guid: 62b3583dd1d725f4ab236869f3ae6c60, type: 3}
-  - {fileID: 21300020, guid: 62b3583dd1d725f4ab236869f3ae6c60, type: 3}
-  - {fileID: 21300022, guid: 62b3583dd1d725f4ab236869f3ae6c60, type: 3}
+  - {fileID: 21300000, guid: f0a2eb23c890ca84eaab3cad0e366984, type: 3}
+  - {fileID: 21300002, guid: f0a2eb23c890ca84eaab3cad0e366984, type: 3}
+  - {fileID: 21300004, guid: f0a2eb23c890ca84eaab3cad0e366984, type: 3}
+  Run: []
