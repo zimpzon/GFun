@@ -171,10 +171,9 @@ public class CampScript : MonoBehaviour
         Time.timeScale = 0.25f;
 
         OptionsCanvas.gameObject.SetActive(true);
-
         while (true)
         {
-            if (Input.GetKeyDown(KeyCode.M))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 HumanPlayerController.Disabled = false;
                 OptionsCanvas.gameObject.SetActive(false);
