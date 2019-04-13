@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1374797004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 2816594798548844391}
   m_RootOrder: 0
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 2816594798548844391}
   - component: {fileID: 677534294}
   m_Layer: 0
-  m_Name: Shotgun
+  m_Name: Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,17 +123,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f06bde2b3e7810f4288edc4601d730d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WeaponId: 1
+  DisplayName: Rifle
   FireSound: {fileID: 8300000, guid: 810c97943c369fe43876f64b287305f2, type: 3}
   GunSettings:
     Level: 1
     AmmoCount: 100
-    FiringSpread: 1
-    FiringMode: 2
+    FiringSpread: 0
+    FiringMode: 1
     BurstCount: 1
     TimeBetweenShots: 0.1
   BulletSettings:
     Speed: 20
-    Range: 10
+    Range: 15
     Size: 0.25
     BounceWalls: 0
     Damage: 10
