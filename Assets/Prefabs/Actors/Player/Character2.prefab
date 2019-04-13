@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 0.50000006, y: 0.29999998, z: 1}
   m_Children: []
   m_Father: {fileID: 5622511689116748215}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2013398375539506837
 SpriteRenderer:
@@ -108,7 +108,7 @@ Transform:
   m_LocalScale: {x: 0.4, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 5622511689116748215}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2013398375724469235
 SpriteRenderer:
@@ -237,36 +237,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &2013398375880055712
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2013398375880055713}
-  m_Layer: 9
-  m_Name: WeaponPositionRight
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2013398375880055713
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2013398375880055712}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.199, y: 0.464, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5622511689116748215}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2013398376607474454
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,7 +267,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5622511689116748215}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &2013398376607474449
 CircleCollider2D:
@@ -368,7 +338,6 @@ Transform:
   m_LocalScale: {x: 0.59999996, y: 0.59999996, z: 1}
   m_Children:
   - {fileID: 2013398375826590631}
-  - {fileID: 2013398375880055713}
   - {fileID: 2013398375724469234}
   - {fileID: 2013398375539506836}
   - {fileID: 2013398376607474455}
@@ -389,12 +358,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Character 2
   Speed: 6
+  Life: 0
   Anim: {fileID: 11400000, guid: 861a36bbdedb0854188e5cddd67508d5, type: 2}
   LookAtOffset: 2
   Drag: 20
   Blip: {fileID: 2013398375826590630}
   ShowCollisionDebug: 0
   ShowCollisionDebugSize: 10
+  IsDead: 0
+  WeaponOffsetRight: {x: 0.25, y: 0.5, z: 0}
+  CurrentWeaponGo: {fileID: 0}
 --- !u!114 &2013398376117000816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -524,6 +497,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f06bde2b3e7810f4288edc4601d730d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WeaponId: 0
+  DisplayName: 
   FireSound: {fileID: 8300000, guid: 810c97943c369fe43876f64b287305f2, type: 3}
   GunSettings:
     Level: 1

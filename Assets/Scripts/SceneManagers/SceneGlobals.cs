@@ -22,7 +22,6 @@ public class SceneGlobals : MonoBehaviour
     public LayerMask PlayerInteractionLayer;
     public LayerMask EnemyLayer;
     public LayerMask EnemyDamageLayer;
-    public WeaponPrefabs WeaponPrefabs;
     public GameObjectPool PlainBulletPool;
     public GameObjectPool ElongatedBulletPool;
     public PlayableCharacters PlayableCharacters;
@@ -46,7 +45,6 @@ public class SceneGlobals : MonoBehaviour
         LightingImageEffect = FindObjectOfType<LightingImageEffect>();
         LightingCamera = FindObjectOfType<LightingCamera>();
         MapCamera = FindObjectOfType<MiniMapCamera>();
-        WeaponPrefabs = FindObjectOfType<WeaponPrefabs>();
         PlayableCharacters = FindObjectOfType<PlayableCharacters>();
 
         NullCheck(MapLayer);

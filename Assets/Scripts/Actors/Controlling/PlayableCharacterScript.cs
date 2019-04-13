@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GFun;
+using UnityEngine;
 
 public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsActor
 {
@@ -12,6 +13,12 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
     public bool ShowCollisionDebug;
     public int ShowCollisionDebugSize = 10;
     public bool IsDead = false;
+    public Vector3 WeaponOffsetRight;
+
+    public IWeapon CurrentWeapon;
+    public GameObject CurrentWeaponGo;
+    Transform weaponTransform_;
+    SpriteRenderer weaponRenderer_;
 
     HumanPlayerController humanPlayerController_;
     Transform transform_;
@@ -22,7 +29,9 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
     bool flipX_;
     Vector3 lookAt_;
     Vector3 force_;
-    Vector3 moveVec_;
+    Vector3 moveRequest_;
+    Vector3 latestFixedMovenent_;
+
     bool isHumanControlled_;
     InteractableTrigger switchPlayerInteract_;
 
@@ -38,8 +47,21 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
         {
             ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.CharacterSelectedParticles, transform_.position + Vector3.up * 0.5f, 30);
         }
-
+        
         RefreshInteracting();
+    }
+
+    public void AttachWeapon(GameObject weapon)
+    {
+        if (CurrentWeaponGo != null)
+            Destroy(CurrentWeaponGo);
+
+        CurrentWeaponGo = weapon;
+        CurrentWeapon = weapon.GetComponent<IWeapon>();
+        weaponRenderer_ = CurrentWeaponGo.GetComponentInChildren<SpriteRenderer>();
+        weaponTransform_ = weapon.transform;
+        weaponTransform_.localPosition = Vector3.zero;
+        weapon.transform.SetParent(transform_, worldPositionStays: false);
     }
 
     public void SetMinimumForce(Vector3 force)
@@ -85,6 +107,8 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
         renderer_ = GetComponent<SpriteRenderer>();
         body_ = GetComponent<Rigidbody2D>();
         switchPlayerInteract_ = transform_.Find("SwitchPlayerInteract").GetComponent<InteractableTrigger>();
+
+        AttachWeapon(Weapons.Instance.CreateWeapon(WeaponIds.Rifle));
     }
 
     private void Start()
@@ -104,13 +128,14 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
 
     public void SetMovementVector(Vector3 vector, bool isNormalized = true)
     {
-        moveVec_ = isNormalized ? vector : vector.normalized;
+        moveRequest_ = isNormalized ? vector : vector.normalized;
     }
 
-    void UpdateInternal(float dt)
+    void FixedUpdateInternal(float dt)
     {
-        Vector3 movement = moveVec_ * Speed * dt + force_ * dt;
-        moveVec_ = Vector3.zero;
+        Vector3 movement = moveRequest_ * Speed * dt + force_ * dt;
+        latestFixedMovenent_ = movement;
+        moveRequest_ = Vector3.zero;
 
         if (force_.sqrMagnitude > 0.0f)
         {
@@ -121,14 +146,35 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
 
         bool isRunning = movement != Vector3.zero;
         if (isRunning)
-        {
             body_.MovePosition(transform_.position + movement);
-            flipX_ = movement.x < 0;
-            lookAt_ = transform_.position + movement * LookAtOffset;
+    }
+
+    void UpdateInternal(float dt)
+    {
+        bool isRunning = latestFixedMovenent_ != Vector3.zero;
+        if (isRunning)
+        {
+            flipX_ = latestFixedMovenent_.x < 0;
+            lookAt_ = transform_.position + latestFixedMovenent_ * LookAtOffset;
+            weaponTransform_.localPosition = WeaponOffsetRight;
         }
 
+        // TODO: Facing = shooting dir if newer than X seconds, else movement dir. Backwards speed slower?
         renderer_.sprite = SimpleSpriteAnimator.GetAnimationSprite(isRunning ? Anim.Run : Anim.Idle, Anim.DefaultAnimationFramesPerSecond);
         renderer_.flipX = flipX_;
+
+        // Weapon positioning
+        var weaponOffset = WeaponOffsetRight;
+        weaponOffset.x *= flipX_ ? -1 : 1;
+        weaponTransform_.localPosition = weaponOffset;
+        weaponRenderer_.flipX = flipX_;
+        float weaponRotation = 0;
+        if (latestFixedMovenent_.y < 0)
+            weaponRotation = -90;
+        else if (latestFixedMovenent_.y > 0)
+            weaponRotation = 90;
+
+        weaponTransform_.rotation = Quaternion.Euler(0, 0, weaponRotation);
 
         if (isHumanControlled_)
             camPositioner_.Target = lookAt_;
@@ -154,8 +200,13 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
         }
     }
 
+    void Update()
+    {
+        UpdateInternal(Time.unscaledDeltaTime);
+    }
+
     void FixedUpdate()
     {
-        UpdateInternal(Time.fixedUnscaledDeltaTime);
+        FixedUpdateInternal(Time.fixedUnscaledDeltaTime);
     }
 }

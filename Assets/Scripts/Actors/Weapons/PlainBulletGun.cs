@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class PlainBulletGun : MonoBehaviour, IWeapon
 {
+    public WeaponIds WeaponId;
+    public string DisplayName;
     public AudioClip FireSound;
     public AmmoType AmmoType => AmmoType.Bullets;
     public int Level => GunSettings.Level;
     public int AmmoCount => GunSettings.AmmoCount;
     public int AmmoMax => GunSettings.AmmoMax;
+    public string Name => DisplayName;
+    public WeaponIds Id => WeaponId;
 
     public PlainBulletGunSettings GunSettings;
     public PlainBulletSettings BulletSettings;
