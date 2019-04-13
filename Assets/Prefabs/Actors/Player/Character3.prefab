@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 312595025454632440}
   - component: {fileID: 312595025454632445}
   - component: {fileID: 312595025454632444}
-  - component: {fileID: 1102084950060759426}
   m_Layer: 9
   m_Name: Character3
   m_TagString: Character3
@@ -181,34 +180,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 0.3}
   m_EdgeRadius: 0
---- !u!114 &1102084950060759426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 312595025454632441}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f06bde2b3e7810f4288edc4601d730d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WeaponId: 0
-  DisplayName: 
-  FireSound: {fileID: 8300000, guid: 810c97943c369fe43876f64b287305f2, type: 3}
-  GunSettings:
-    Level: 1
-    AmmoCount: 100
-    FiringSpread: 0
-    FiringMode: 1
-    BurstCount: 1
-    TimeBetweenShots: 500
-  BulletSettings:
-    Speed: 1
-    Range: 10
-    Size: 1
-    BounceWalls: 0
-    Damage: 10
 --- !u!1 &5881881658881697626
 GameObject:
   m_ObjectHideFlags: 0

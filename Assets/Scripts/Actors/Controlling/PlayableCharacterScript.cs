@@ -64,6 +64,8 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
         weaponTransform_ = weapon.transform;
         weaponTransform_.localPosition = Vector3.zero;
         weapon.transform.SetParent(transform_, worldPositionStays: false);
+
+        humanPlayerController_.UpdateWeapon();
     }
 
     public void SetMinimumForce(Vector3 force)
@@ -153,7 +155,7 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
 
     void UpdateInternal(float dt)
     {
-        bool hasRecentlyFiredWeapon = CurrentWeapon.LatestFiringTime > Time.time - 1.5f;
+        bool hasRecentlyFiredWeapon = CurrentWeapon.LatestFiringTimeUnscaled > Time.unscaledTime - 0.70f;
         Vector3 facingDirection = hasRecentlyFiredWeapon ? CurrentWeapon.LatestFiringDirection : latestFixedMovenent_;
 
         bool isRunning = latestFixedMovenent_ != Vector3.zero;

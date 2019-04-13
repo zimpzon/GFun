@@ -14,7 +14,7 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
     public string Name => DisplayName;
     public WeaponIds Id => WeaponId;
     public Vector3 LatestFiringDirection => latestFiringDirection_;
-    public float LatestFiringTime => latestFiringTime_;
+    public float LatestFiringTimeUnscaled => latestFiringTime_;
 
     public PlainBulletGunSettings GunSettings;
     public PlainBulletSettings BulletSettings;
@@ -37,7 +37,7 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
     Vector3 latestFiringDirection_;
     float latestFiringTime_ = float.MinValue;
 
-    private void Start()
+    private void Awake()
     {
         bulletPool_ = SceneGlobals.Instance.ElongatedBulletPool;
         audioManager_ = SceneGlobals.Instance.AudioManager;
@@ -46,8 +46,8 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         shotDelay_ = new WaitForSecondsRealtime(GunSettings.TimeBetweenShots);
     }
 
-    public void SetForceReceiver(IPhysicsActor actor)
-        => forceReceiver_ = actor;
+    public void SetForceReceiver(IPhysicsActor forceReceiver)
+        => forceReceiver_ = forceReceiver;
 
     public void OnTriggerDown(Vector3 firingDirection)
     {
@@ -85,7 +85,7 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
 
         for (int i = 0; i < GunSettings.BurstCount; ++i)
         {
-            var direction = transform.right;
+            var direction = latestFiringDirection_;
             var position = transform.position + direction * 0.5f;
 
             var angleOffsets = GetFiringAngleOffsets(GunSettings.FiringSpread, 1.0f);

@@ -14,7 +14,7 @@ namespace GFun
         void OnTriggerDown(Vector3 firingDirection);
         void OnTriggerUp();
         Vector3 LatestFiringDirection { get; }
-        float LatestFiringTime { get; }
-        void SetForceReceiver(IPhysicsActor actor);
+        float LatestFiringTimeUnscaled { get; }
+        void SetForceReceiver(IPhysicsActor forceReceiver);
     }
 }

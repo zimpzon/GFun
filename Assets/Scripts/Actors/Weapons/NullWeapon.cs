@@ -11,10 +11,10 @@ public class NullWeapon : MonoBehaviour, IWeapon
     public int AmmoMax => 0;
 
     public Vector3 LatestFiringDirection => Vector3.zero;
-    public float LatestFiringTime => float.MinValue;
+    public float LatestFiringTimeUnscaled => float.MinValue;
 
     public void OnTriggerDown(Vector3 firingDirection) { }
     public void OnTriggerUp() { }
 
-    public void SetForceReceiver(IPhysicsActor actor) { }
+    public void SetForceReceiver(IPhysicsActor forceReceiver) { }
 }
