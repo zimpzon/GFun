@@ -1,12 +1,18 @@
-﻿using System.Collections;
+﻿using GFun;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
     public AudioClips AudioClips;
     public int SfxSourceCount = 20;
     public bool ShowDebugOutput = false;
+    public AudioMixerGroup MusicMixerGroup;
+    public AudioMixerGroup SfxMixerGroup;
+    public AudioMixerGroup AmbianceMixerGroup;
 
     AudioSource musicSource_;
     AudioSource ambienceSource_;
@@ -21,10 +27,15 @@ public class AudioManager : MonoBehaviour
     {
         musicSource_ = gameObject.AddComponent<AudioSource>();
         ambienceSource_ = gameObject.AddComponent<AudioSource>();
+        musicSource_.outputAudioMixerGroup = MusicMixerGroup;
+        ambienceSource_.outputAudioMixerGroup = AmbianceMixerGroup;
+        SetMusicVolume(PlayerPrefs.GetFloat(PlayerPrefsNames.MusicVolume, 1));
+        SetSfxVolume(PlayerPrefs.GetFloat(PlayerPrefsNames.SfxVolume, 1));
 
         for (int i = 0; i < SfxSourceCount; ++i)
         {
             var sfxSource = gameObject.AddComponent<AudioSource>();
+            sfxSource.outputAudioMixerGroup = SfxMixerGroup;
             sfxSources_.Add(sfxSource);
         }
     }
@@ -53,7 +64,7 @@ public class AudioManager : MonoBehaviour
         }
 
         // No sources were available, replace a random existing if requested, else return null
-        return replaceIfNoneAvailable ? sfxSources_[Random.Range(0, sfxSources_.Count)] : null;
+        return replaceIfNoneAvailable ? sfxSources_[UnityEngine.Random.Range(0, sfxSources_.Count)] : null;
     }
 
     public void PlaySfxClip(AudioClip clip, int maxInstances, float pitchRandomVariation = 0.0f)
@@ -67,15 +78,25 @@ public class AudioManager : MonoBehaviour
             // Replace an existing source
             selectedSource.Stop();
             selectedSource.clip = clip;
-            selectedSource.pitch = 1.0f + (pitchRandomVariation * Random.value - pitchRandomVariation * 0.5f);
+            selectedSource.pitch = 1.0f + (pitchRandomVariation * UnityEngine.Random.value - pitchRandomVariation * 0.5f);
             selectedSource.Play();
         }
+    }
+
+    public float GetMusicVolume()
+    {
+        return musicVolume_;
     }
 
     public void SetMusicVolume(float volume)
     {
         musicVolume_ = volume;
         musicSource_.volume = volume;
+    }
+
+    public float GetSfxVolume()
+    {
+        return sfxVolume_;
     }
 
     public void SetSfxVolume(float volume)

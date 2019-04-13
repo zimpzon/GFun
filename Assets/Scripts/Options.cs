@@ -7,19 +7,21 @@ public class Options : MonoBehaviour
 {
     public Slider MusicVolumeControl;
     public Slider SFxVolumeControl;
-    public float MusicVolume;
-    public float SFxVolume;
 
+    private float MusicVolume;
+    private float SFxVolume;
     private SceneGlobals globals;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         MusicVolume = PlayerPrefs.GetFloat(PlayerPrefsNames.MusicVolume);
         SFxVolume = PlayerPrefs.GetFloat(PlayerPrefsNames.SfxVolume);
         MusicVolumeControl.value = MusicVolume;
         SFxVolumeControl.value = SFxVolume;
         globals = SceneGlobals.Instance;
+        globals.AudioManager.SetMusicVolume(MusicVolume);
+        globals.AudioManager.SetSfxVolume(SFxVolume);
     }
 
     public void AdjustMusicVolume(Single volume)
