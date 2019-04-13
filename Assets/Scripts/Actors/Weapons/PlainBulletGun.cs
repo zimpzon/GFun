@@ -14,7 +14,7 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
     public string Name => DisplayName;
     public WeaponIds Id => WeaponId;
     public Vector3 LatestFiringDirection => latestFiringDirection_;
-    public float LatestFiringTime => latestFiringTime_;
+    public float LatestFiringTimeUnscaled => latestFiringTime_;
 
     public PlainBulletGunSettings GunSettings;
     public PlainBulletSettings BulletSettings;

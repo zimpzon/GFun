@@ -155,7 +155,7 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
 
     void UpdateInternal(float dt)
     {
-        bool hasRecentlyFiredWeapon = CurrentWeapon.LatestFiringTime > Time.time - 1.5f;
+        bool hasRecentlyFiredWeapon = CurrentWeapon.LatestFiringTimeUnscaled > Time.unscaledTime - 0.70f;
         Vector3 facingDirection = hasRecentlyFiredWeapon ? CurrentWeapon.LatestFiringDirection : latestFixedMovenent_;
 
         bool isRunning = latestFixedMovenent_ != Vector3.zero;
