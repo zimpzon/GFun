@@ -106,10 +106,6 @@ public class CampScript : MonoBehaviour
             SelectCharacter(PlayableCharacters.Instance.CharacterPrefabList.CharacterPrefabs[1].tag);
         if (Input.GetKeyDown(KeyCode.Alpha3))
             SelectCharacter(PlayableCharacters.Instance.CharacterPrefabList.CharacterPrefabs[2].tag);
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-
-        }
     }
 
     public void OnPlayerEnterStartPortal()
@@ -156,6 +152,33 @@ public class CampScript : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 StartCoroutine(InMenu());
+                yield break;
+            }
+            else if(Input.GetKeyDown(KeyCode.M))
+            {
+                StartCoroutine(ShowOptions());
+                yield break;
+            }
+            yield return null;
+        }
+    }
+
+    IEnumerator ShowOptions()
+    {
+        HumanPlayerController.Disabled = true;
+
+        CampfireSoundSource.enabled = false;
+        Time.timeScale = 0.25f;
+
+        OptionsCanvas.gameObject.SetActive(true);
+
+        while (true)
+        {
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                HumanPlayerController.Disabled = false;
+                OptionsCanvas.gameObject.SetActive(false);
+                StartCoroutine(InCamp());
                 yield break;
             }
             yield return null;
