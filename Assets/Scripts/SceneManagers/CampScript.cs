@@ -8,6 +8,7 @@ public class CampScript : MonoBehaviour
     public string EnterPortalSceneName;
     public Canvas IntroCanvas;
     public Canvas LoadingCanvas;
+    public Canvas OptionsCanvas;
     public AudioClip IntroMusicClip;
     public LightingEffectSettings CampLightingSettings;
     public LightingEffectSettings GraveyardLightingSettings;
@@ -151,6 +152,32 @@ public class CampScript : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 StartCoroutine(InMenu());
+                yield break;
+            }
+            else if(Input.GetKeyDown(KeyCode.M))
+            {
+                StartCoroutine(ShowOptions());
+                yield break;
+            }
+            yield return null;
+        }
+    }
+
+    IEnumerator ShowOptions()
+    {
+        HumanPlayerController.Disabled = true;
+
+        CampfireSoundSource.enabled = false;
+        Time.timeScale = 0.25f;
+
+        OptionsCanvas.gameObject.SetActive(true);
+        while (true)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                HumanPlayerController.Disabled = false;
+                OptionsCanvas.gameObject.SetActive(false);
+                StartCoroutine(InCamp());
                 yield break;
             }
             yield return null;
