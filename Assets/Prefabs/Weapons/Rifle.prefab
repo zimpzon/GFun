@@ -131,6 +131,7 @@ MonoBehaviour:
     AmmoCount: 100
     FiringSpread: 0
     FiringMode: 1
+    Precision: 0.8
     BurstCount: 1
     TimeBetweenShots: 0.1
   BulletSettings:

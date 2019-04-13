@@ -19,6 +19,13 @@ public class MapBuilderDemoScript : MonoBehaviour
 
         GenerateNewMap();
 
+        CreatePlayer();
+    }
+
+    void CreatePlayer()
+    {
+        PlayableCharacters.Instance.InstantiateCharacter("Character1", new Vector3(100, 50, 0));
+        PlayableCharacters.GetPlayerInScene().SetIsHumanControlled(true);
         Helpers.SetCameraPositionToActivePlayer();
     }
 
