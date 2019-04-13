@@ -16,5 +16,5 @@ public class NullWeapon : MonoBehaviour, IWeapon
     public void OnTriggerDown(Vector3 firingDirection) { }
     public void OnTriggerUp() { }
 
-    public void SetForceReceiver(IPhysicsActor actor) { }
+    public void SetForceReceiver(IPhysicsActor forceReceiver) { }
 }

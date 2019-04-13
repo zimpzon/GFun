@@ -64,6 +64,8 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
         weaponTransform_ = weapon.transform;
         weaponTransform_.localPosition = Vector3.zero;
         weapon.transform.SetParent(transform_, worldPositionStays: false);
+
+        humanPlayerController_.UpdateWeapon();
     }
 
     public void SetMinimumForce(Vector3 force)

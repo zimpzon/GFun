@@ -26,10 +26,16 @@ public class HumanPlayerController : MonoBehaviour
         BulletTimeLight.CopyTo(bulletTimeLight_);
 
         movable_ = GetComponent<PlayableCharacterScript>();
-        weapon_ = GetComponentInChildren<IWeapon>();
+        SceneGlobals.NullCheck(movable_);
         map_ = SceneGlobals.Instance.MapScript;
         lightingImageEffect_ = SceneGlobals.Instance.LightingImageEffect;
-        SceneGlobals.NullCheck(movable_);
+
+        UpdateWeapon();
+    }
+
+    public void UpdateWeapon()
+    {
+        weapon_ = GetComponentInChildren<IWeapon>();
     }
 
     // Value changed in editor
