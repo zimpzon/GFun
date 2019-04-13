@@ -9,7 +9,12 @@ public class NullWeapon : MonoBehaviour, IWeapon
     public AmmoType AmmoType => AmmoType.None;
     public int AmmoCount => 0;
     public int AmmoMax => 0;
+
+    public Vector3 LatestFiringDirection => Vector3.zero;
+    public float LatestFiringTime => float.MinValue;
+
+    public void OnTriggerDown(Vector3 firingDirection) { }
     public void OnTriggerUp() { }
-    public void OnTriggerDown() { }
-    public void SetOwnerPhysics(IPhysicsActor actor) { }
+
+    public void SetForceReceiver(IPhysicsActor actor) { }
 }

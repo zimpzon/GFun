@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GFun;
+using UnityEngine;
 
 public class HumanPlayerController : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class HumanPlayerController : MonoBehaviour
 
     LightingEffectSettings bulletTimeLight_ = new LightingEffectSettings();
     IMovableActor movable_;
+    IWeapon weapon_;
     MapScript map_;
     bool bulletTime_;
     float bulletTimeValue_;
@@ -24,6 +26,7 @@ public class HumanPlayerController : MonoBehaviour
         BulletTimeLight.CopyTo(bulletTimeLight_);
 
         movable_ = GetComponent<PlayableCharacterScript>();
+        weapon_ = GetComponentInChildren<IWeapon>();
         map_ = SceneGlobals.Instance.MapScript;
         lightingImageEffect_ = SceneGlobals.Instance.LightingImageEffect;
         SceneGlobals.NullCheck(movable_);
@@ -69,12 +72,12 @@ public class HumanPlayerController : MonoBehaviour
 
     void Fire(Vector3 direction)
     {
-
+        weapon_.OnTriggerDown(direction);
     }
 
     void ReleaseFire()
     {
-
+        weapon_.OnTriggerUp();
     }
 
     void CheckInput()
