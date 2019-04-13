@@ -1,4 +1,6 @@
-﻿namespace GFun
+﻿using UnityEngine;
+
+namespace GFun
 {
     public interface IWeapon
     {
@@ -9,8 +11,10 @@
         int AmmoCount { get; }
         int Level { get; }
 
-        void OnTriggerDown();
+        void OnTriggerDown(Vector3 firingDirection);
         void OnTriggerUp();
-        void SetOwnerPhysics(IPhysicsActor actor);
+        Vector3 LatestFiringDirection { get; }
+        float LatestFiringTime { get; }
+        void SetForceReceiver(IPhysicsActor actor);
     }
 }

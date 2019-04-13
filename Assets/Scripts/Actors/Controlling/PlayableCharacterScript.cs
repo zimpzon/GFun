@@ -58,6 +58,8 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
 
         CurrentWeaponGo = weapon;
         CurrentWeapon = weapon.GetComponent<IWeapon>();
+        CurrentWeapon.SetForceReceiver(this);
+
         weaponRenderer_ = CurrentWeaponGo.GetComponentInChildren<SpriteRenderer>();
         weaponTransform_ = weapon.transform;
         weaponTransform_.localPosition = Vector3.zero;
@@ -151,15 +153,17 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
 
     void UpdateInternal(float dt)
     {
+        bool hasRecentlyFiredWeapon = CurrentWeapon.LatestFiringTime > Time.time - 1.5f;
+        Vector3 facingDirection = hasRecentlyFiredWeapon ? CurrentWeapon.LatestFiringDirection : latestFixedMovenent_;
+
         bool isRunning = latestFixedMovenent_ != Vector3.zero;
         if (isRunning)
         {
-            flipX_ = latestFixedMovenent_.x < 0;
+            flipX_ = facingDirection.x < 0;
             lookAt_ = transform_.position + latestFixedMovenent_ * LookAtOffset;
             weaponTransform_.localPosition = WeaponOffsetRight;
         }
 
-        // TODO: Facing = shooting dir if newer than X seconds, else movement dir. Backwards speed slower?
         renderer_.sprite = SimpleSpriteAnimator.GetAnimationSprite(isRunning ? Anim.Run : Anim.Idle, Anim.DefaultAnimationFramesPerSecond);
         renderer_.flipX = flipX_;
 
@@ -169,9 +173,9 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
         weaponTransform_.localPosition = weaponOffset;
         weaponRenderer_.flipX = flipX_;
         float weaponRotation = 0;
-        if (latestFixedMovenent_.y < 0)
+        if (facingDirection.y < 0)
             weaponRotation = -90;
-        else if (latestFixedMovenent_.y > 0)
+        else if (facingDirection.y > 0)
             weaponRotation = 90;
 
         weaponTransform_.rotation = Quaternion.Euler(0, 0, weaponRotation);

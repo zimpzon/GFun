@@ -13,6 +13,8 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
     public int AmmoMax => GunSettings.AmmoMax;
     public string Name => DisplayName;
     public WeaponIds Id => WeaponId;
+    public Vector3 LatestFiringDirection => latestFiringDirection_;
+    public float LatestFiringTime => latestFiringTime_;
 
     public PlainBulletGunSettings GunSettings;
     public PlainBulletSettings BulletSettings;
@@ -26,12 +28,14 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
 
     GameObjectPool bulletPool_;
     AudioManager audioManager_;
-    IPhysicsActor ownerPhysics_;
+    IPhysicsActor forceReceiver_;
     CameraShake cameraShake_;
     bool triggerIsDown_;
     bool awaitingRelease_;
     bool isFiring_;
     WaitForSecondsRealtime shotDelay_;
+    Vector3 latestFiringDirection_;
+    float latestFiringTime_ = float.MinValue;
 
     private void Start()
     {
@@ -42,16 +46,17 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         shotDelay_ = new WaitForSecondsRealtime(GunSettings.TimeBetweenShots);
     }
 
-    public void SetOwnerPhysics(IPhysicsActor actor)
-        => ownerPhysics_ = actor;
+    public void SetForceReceiver(IPhysicsActor actor)
+        => forceReceiver_ = actor;
 
-    public void OnTriggerDown()
+    public void OnTriggerDown(Vector3 firingDirection)
     {
         if (awaitingRelease_ || GunSettings.FiringMode == FiringMode.None)
             return;
 
         triggerIsDown_ = true;
         awaitingRelease_ = GunSettings.FiringMode == FiringMode.Single;
+        latestFiringDirection_ = firingDirection;
 
         if (!isFiring_)
             StartCoroutine(FireCo());
@@ -106,11 +111,13 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         bulletScript.Init(position, direction, BulletSettings);
         bullet.SetActive(true);
 
+        latestFiringTime_ = Time.unscaledTime;
+
         if (EffectsOn)
         {
             audioManager_.PlaySfxClip(FireSound, 1, 0.1f);
             cameraShake_.SetMinimumShake(0.75f);
-            ownerPhysics_.SetMinimumForce(-direction * 2);
+            forceReceiver_.SetMinimumForce(-direction * 2);
 
             var particleCenter = position + direction * 0.3f;
             ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.MuzzleFlashParticles, particleCenter, 1);
