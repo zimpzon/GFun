@@ -32,7 +32,7 @@ public class Weapons : MonoBehaviour
         return instance;
     }
 
-    private void Start()
+    private void Awake()
     {
         Instance = this;
         WeaponLookup = WeaponPrefabList.WeaponPrefabs.Select(prefab =>

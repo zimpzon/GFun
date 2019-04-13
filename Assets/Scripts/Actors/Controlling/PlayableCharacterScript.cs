@@ -5,7 +5,7 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
 {
     public string Name;
     public float Speed = 10;
-    public int Life;
+    public int Life = 1;
     public SpriteAnimationFrames_IdleRun Anim;
     public float LookAtOffset = 10;
     public float Drag = 1.0f;
@@ -156,15 +156,14 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
     void UpdateInternal(float dt)
     {
         bool hasRecentlyFiredWeapon = CurrentWeapon.LatestFiringTimeUnscaled > Time.unscaledTime - 0.70f;
-        Vector3 facingDirection = hasRecentlyFiredWeapon ? CurrentWeapon.LatestFiringDirection : latestFixedMovenent_;
+        Vector3 latestHorizontalMovement = new Vector3(latestFixedMovenent_.x, 0, 0);
+        Vector3 facingDirection = hasRecentlyFiredWeapon ? CurrentWeapon.LatestFiringDirection : latestHorizontalMovement;
+        flipX_ = facingDirection.x < 0;
+        weaponTransform_.localPosition = WeaponOffsetRight;
 
         bool isRunning = latestFixedMovenent_ != Vector3.zero;
         if (isRunning)
-        {
-            flipX_ = facingDirection.x < 0;
             lookAt_ = transform_.position + latestFixedMovenent_ * LookAtOffset;
-            weaponTransform_.localPosition = WeaponOffsetRight;
-        }
 
         renderer_.sprite = SimpleSpriteAnimator.GetAnimationSprite(isRunning ? Anim.Run : Anim.Idle, Anim.DefaultAnimationFramesPerSecond);
         renderer_.flipX = flipX_;

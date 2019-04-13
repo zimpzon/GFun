@@ -10,6 +10,7 @@ namespace GFun
         public int AmmoMax => 100;
         public FiringSpread FiringSpread = FiringSpread.Single;
         public FiringMode FiringMode = FiringMode.Single;
+        public float Precision = 1.0f;
         public int BurstCount = 1;
         public float TimeBetweenShots = 500;
     }
