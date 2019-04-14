@@ -81,9 +81,10 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
         IsDead = true;
         this.gameObject.layer = SceneGlobals.Instance.DeadEnemyLayer;
         body_.bodyType = RigidbodyType2D.Dynamic;
-        body_.AddForce(force_ * 2000);
+        body_.AddForceAtPosition(force_ * 2000, Vector2.zero);
         body_.freezeRotation = false;
         BlipRenderer.enabled = false;
+        LightRenderer.enabled = false;
         ShadowRenderer.enabled = false;
 
         StartCoroutine(DieCo());
@@ -92,7 +93,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
     IEnumerator DieCo()
     {
         SceneGlobals.Instance.CameraShake.SetMinimumShake(0.2f);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.5f);
         //var particles = SceneGlobals.Instance.ParticleScript.WallDestructionParticles;
         //ParticleScript.EmitAtPosition(particles, transform_.position, 20);
         this.gameObject.SetActive(false);

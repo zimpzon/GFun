@@ -99,7 +99,7 @@ public class HumanPlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
             map_.ExplodeWalls(transform.position, 5f);
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.P))
             PlainBulletGun.EffectsOn = !PlainBulletGun.EffectsOn;
 
         if (Input.GetKey(KeyCode.DownArrow))
