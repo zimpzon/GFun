@@ -12,6 +12,8 @@ public class PlainBulletScript : MonoBehaviour
     Vector3 baseScale_;
     LayerMask enemyLayer_;
     PlainBulletSettings settings_;
+    int remainingDamage_;
+
 
     public void Init(Vector3 position, Vector3 direction, PlainBulletSettings settings)
     {
@@ -19,6 +21,7 @@ public class PlainBulletScript : MonoBehaviour
         Direction = direction;
         settings_ = settings;
         distanceMoved_ = 0;
+        remainingDamage_ = settings.Damage;
 
         float rotationDegrees = Mathf.Atan2(Direction.x, -Direction.y) * Mathf.Rad2Deg;
         rotation_ = Quaternion.Euler(0, 0, rotationDegrees);
@@ -36,10 +39,11 @@ public class PlainBulletScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == enemyLayer_.value)
+        if (collision.gameObject.layer == enemyLayer_.value && remainingDamage_ > 0)
         {
             var enemy = collision.gameObject.GetComponent<EnemyScript>();
             enemy.TakeDamage(settings_.Damage, Direction * settings_.DamageForce);
+            remainingDamage_ = 0;
         }
 
         Die();

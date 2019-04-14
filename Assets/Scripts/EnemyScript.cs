@@ -1,5 +1,4 @@
 ﻿using GFun;
-using System.Collections;
 using UnityEngine;
 
 public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
@@ -11,6 +10,8 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
     public SpriteRenderer BlipRenderer;
     public SpriteRenderer ShadowRenderer;
     public SpriteRenderer LightRenderer;
+    public AudioClip DamageSound;
+    public AudioClip DeathSound;
 
     bool checkPlayerLos_;
     float playerLosTime_;
@@ -70,33 +71,28 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
     {
         DoFlash(2, 0.1f);
         SetForce(damageForce);
-        Life = Mathf.Min(0, Life - amount);
+        Life = Mathf.Max(0, Life - amount);
         if (Life == 0)
             Die();
+        else
+            AudioManager.Instance.PlaySfxClip(DamageSound, maxInstances: 2, pitchRandomVariation: 0.1f);
     }
 
     public void Die()
     {
-        DoFlash(-0.5f, 1.0f);
+        DoFlash(-0.25f, 100.0f);
         IsDead = true;
-        this.gameObject.layer = SceneGlobals.Instance.DeadEnemyLayer;
-        body_.bodyType = RigidbodyType2D.Dynamic;
-        body_.AddForceAtPosition(force_ * 2000, Vector2.zero);
+        gameObject.layer = SceneGlobals.Instance.DeadEnemyLayer;
+        renderer_.sortingOrder = SceneGlobals.Instance.OnTheFloorSortingValue;
         body_.freezeRotation = false;
+        body_.AddForce(force_ * 3000);
+        body_.angularVelocity = (force_.x > 0 ? -100 : 100) * force_.magnitude;
         BlipRenderer.enabled = false;
         LightRenderer.enabled = false;
         ShadowRenderer.enabled = false;
 
-        StartCoroutine(DieCo());
-    }
-
-    IEnumerator DieCo()
-    {
+        AudioManager.Instance.PlaySfxClip(DeathSound, maxInstances: 2, pitchRandomVariation: 0.1f);
         SceneGlobals.Instance.CameraShake.SetMinimumShake(0.2f);
-        yield return new WaitForSeconds(1.5f);
-        //var particles = SceneGlobals.Instance.ParticleScript.WallDestructionParticles;
-        //ParticleScript.EmitAtPosition(particles, transform_.position, 20);
-        this.gameObject.SetActive(false);
     }
 
     public void SetForce(Vector3 force)
@@ -117,8 +113,8 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
             force_ = force_.normalized * forceLen;
         }
 
-        bool isRunning = movement != Vector3.zero;
-        if (isRunning)
+        bool isMoving = movement != Vector3.zero;
+        if (isMoving)
             body_.MovePosition(transform_.position + movement);
     }
 
@@ -143,12 +139,13 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
 
     void Update()
     {
-        UpdateFlash();
         if (!IsDead)
         {
             UpdateLos();
-            spriteAnimator_.UpdateAnimation(latestFixedMovenentDirection_);
         }
+
+        UpdateFlash();
+        spriteAnimator_.UpdateAnimation(latestFixedMovenentDirection_, IsDead);
     }
 
     private void FixedUpdate()

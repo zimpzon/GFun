@@ -1,18 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BatController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    IMovableActor movable_;
+    float nextMove_;
+    Vector3 dir_;
+
     void Start()
     {
-        
+        movable_ = GetComponent<IMovableActor>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if(Time.time > nextMove_)
+        {
+            nextMove_ = Time.time + Random.value * 2 + 1;
+            dir_ = Random.insideUnitCircle;
+        }
+        movable_.SetMovementVector(dir_);
     }
 }

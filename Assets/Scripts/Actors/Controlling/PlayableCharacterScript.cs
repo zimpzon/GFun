@@ -76,7 +76,7 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
 
     public void TakeDamage(int amount, Vector3 damageForce)
     {
-        Life = Mathf.Min(0, Life - amount);
+        Life = Mathf.Max(0, Life - amount);
         if (Life == 0)
             Die();
     }
@@ -125,10 +125,10 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
         RefreshInteracting();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        force_ = Vector3.zero;
-    }
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    force_ = Vector3.zero;
+    //}
 
     public Vector3 GetPosition()
         => transform_.position;

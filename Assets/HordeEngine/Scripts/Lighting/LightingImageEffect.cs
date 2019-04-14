@@ -30,9 +30,12 @@ public class LightingEffectSettings
 
 public class LightingImageEffect : MonoBehaviour
 {
+    public static LightingImageEffect Instance;
+
     public Material EffectMaterial;
 
     [NonSerialized] public RenderTexture LightingTexture;
+    public LightingEffectSettings StartValues = new LightingEffectSettings();
     public LightingEffectSettings CurrentValues = new LightingEffectSettings();
 
     LightingEffectSettings flash_;
@@ -75,8 +78,12 @@ public class LightingImageEffect : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
+
         CurrentValues = new LightingEffectSettings();
         target_ = new LightingEffectSettings();
+
+        SetBaseColor(StartValues);
     }
 
     void MoveToTarget(float target, float dt, ref float value)

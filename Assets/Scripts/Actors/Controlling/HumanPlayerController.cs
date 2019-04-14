@@ -50,8 +50,14 @@ public class HumanPlayerController : MonoBehaviour
         bulletTime_ = !bulletTime_;
         bulletTimeTarget_ = bulletTime_ ? 1.0f : 0.0f;
 
-        bulletTimeLight_.MonochromeAmount = bulletTime_ ? BulletTimeLight.MonochromeAmount : 0.0f;
-        lightingImageEffect_.SetBaseColorTarget(bulletTimeLight_);
+        if (bulletTime_)
+        {
+            lightingImageEffect_.SetBaseColorTarget(bulletTimeLight_);
+        }
+        else
+        {
+            lightingImageEffect_.SetBaseColorTarget(lightingImageEffect_.StartValues);
+        }
     }
 
     void UpdateBulletTime()

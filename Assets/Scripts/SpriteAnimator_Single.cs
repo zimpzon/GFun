@@ -3,13 +3,17 @@
 public class SpriteAnimator_Single : MonoBehaviour, ISpriteAnimator
 {
     public SpriteAnimationFrames_Single Anim;
+    public Sprite SpriteWhenDead;
 
     SpriteRenderer renderer_;
     float randomOffset_;
 
-    public void UpdateAnimation(Vector3 latestMovementDirection)
+    public void UpdateAnimation(Vector3 latestMovementDirection, bool isDead = false)
     {
-        renderer_.sprite = SimpleSpriteAnimator.GetAnimationSprite(Anim.Sprites, Anim.DefaultAnimationFramesPerSecond, randomOffset_);
+        if (isDead)
+            renderer_.sprite = SpriteWhenDead;
+        else
+            renderer_.sprite = SimpleSpriteAnimator.GetAnimationSprite(Anim.Sprites, Anim.DefaultAnimationFramesPerSecond, randomOffset_);
     }
 
     private void Awake()

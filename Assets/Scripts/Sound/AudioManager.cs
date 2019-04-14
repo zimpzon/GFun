@@ -1,5 +1,4 @@
 ﻿using GFun;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +6,8 @@ using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
+    public static AudioManager Instance;
+
     public AudioClips AudioClips;
     public int SfxSourceCount = 20;
     public bool ShowDebugOutput = false;
@@ -25,6 +26,8 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
+        Instance = this;
+
         musicSource_ = gameObject.AddComponent<AudioSource>();
         ambienceSource_ = gameObject.AddComponent<AudioSource>();
         musicSource_.outputAudioMixerGroup = MusicMixerGroup;
@@ -71,7 +74,6 @@ public class AudioManager : MonoBehaviour
     {
         AudioSource selectedSource = null;
         int count = CountPlayingInstancesOfClip(clip, out AudioSource existingPlayingSource);
-
         selectedSource = count >= maxInstances ? existingPlayingSource : GetSourceForNewSound(replaceIfNoneAvailable: true);
         if (selectedSource != null)
         {
