@@ -93,7 +93,7 @@ public class HumanPlayerController : MonoBehaviour
         var moveVec = new Vector3(horz, vert);
         movable_.SetMovementVector(moveVec);
 
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.Q))
             ToggleBulletTime();
 
         if (Input.GetKeyDown(KeyCode.F))

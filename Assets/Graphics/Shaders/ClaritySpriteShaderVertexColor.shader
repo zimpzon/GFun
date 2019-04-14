@@ -5,6 +5,7 @@
         _MainTex("Sprite Texture", 2D) = "white" {}
         _Clarity("Clarity", float) = 1.0
         _Color("Color", Color) = (1,1,1,1)
+		_FlashAmount("Flash Amount", float) = 0.0
     }
         SubShader
     {
@@ -31,6 +32,7 @@
         sampler2D _MainTex;
         float _Clarity;
         fixed4 _Color;
+        float _FlashAmount;
 
     struct Vertex
     {
@@ -61,7 +63,7 @@
     {
         half4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
         if (c.a < 0.5) discard; // Fixed cut-off at 0.5
-		c.rgb *= IN.color.rgb;
+		c.rgb *= IN.color.rgb + _FlashAmount;
         c.a = _Clarity;
 		return c;
     }

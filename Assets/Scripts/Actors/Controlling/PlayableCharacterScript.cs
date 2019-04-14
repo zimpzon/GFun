@@ -30,7 +30,7 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
     Vector3 lookAt_;
     Vector3 force_;
     Vector3 moveRequest_;
-    Vector3 latestFixedMovenent_;
+    Vector3 latestFixedMovenentDirection_;
 
     bool isHumanControlled_;
     InteractableTrigger switchPlayerInteract_;
@@ -130,6 +130,9 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
         force_ = Vector3.zero;
     }
 
+    public Vector3 GetPosition()
+        => transform_.position;
+
     public void SetMovementVector(Vector3 vector, bool isNormalized = true)
     {
         moveRequest_ = isNormalized ? vector : vector.normalized;
@@ -138,7 +141,7 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
     void FixedUpdateInternal(float dt)
     {
         Vector3 movement = moveRequest_ * Speed * dt + force_ * dt;
-        latestFixedMovenent_ = movement;
+        latestFixedMovenentDirection_ = movement.normalized;
         moveRequest_ = Vector3.zero;
 
         if (force_.sqrMagnitude > 0.0f)
@@ -156,14 +159,14 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
     void UpdateInternal(float dt)
     {
         bool hasRecentlyFiredWeapon = CurrentWeapon.LatestFiringTimeUnscaled > Time.unscaledTime - 0.70f;
-        Vector3 latestHorizontalMovement = new Vector3(latestFixedMovenent_.x, 0, 0);
+        Vector3 latestHorizontalMovement = new Vector3(latestFixedMovenentDirection_.x, 0, 0);
         Vector3 facingDirection = hasRecentlyFiredWeapon ? CurrentWeapon.LatestFiringDirection : latestHorizontalMovement;
         flipX_ = facingDirection.x < 0;
         weaponTransform_.localPosition = WeaponOffsetRight;
 
-        bool isRunning = latestFixedMovenent_ != Vector3.zero;
+        bool isRunning = latestFixedMovenentDirection_ != Vector3.zero;
         if (isRunning)
-            lookAt_ = transform_.position + latestFixedMovenent_ * LookAtOffset;
+            lookAt_ = transform_.position + latestFixedMovenentDirection_ * LookAtOffset;
 
         renderer_.sprite = SimpleSpriteAnimator.GetAnimationSprite(isRunning ? Anim.Run : Anim.Idle, Anim.DefaultAnimationFramesPerSecond);
         renderer_.flipX = flipX_;

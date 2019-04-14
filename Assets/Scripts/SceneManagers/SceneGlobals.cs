@@ -22,9 +22,11 @@ public class SceneGlobals : MonoBehaviour
     public LayerMask PlayerInteractionLayer;
     public LayerMask EnemyLayer;
     public LayerMask EnemyDamageLayer;
+    public LayerMask DeadEnemyLayer;
     public GameObjectPool PlainBulletPool;
     public GameObjectPool ElongatedBulletPool;
     public PlayableCharacters PlayableCharacters;
+    public int OnTheFloorSortingValue = 15;
 
     void Awake()
     {
@@ -34,6 +36,7 @@ public class SceneGlobals : MonoBehaviour
         PlayerInteractionLayer = LayerMask.NameToLayer("PlayerInteraction");
         EnemyLayer = LayerMask.NameToLayer("Enemy");
         EnemyDamageLayer = LayerMask.NameToLayer("EnemyDamage");
+        DeadEnemyLayer = LayerMask.NameToLayer("DeadEnemy");
 
         CameraPositioner = FindObjectOfType<CameraPositioner>();
         CameraShake = FindObjectOfType<CameraShake>();
@@ -53,6 +56,7 @@ public class SceneGlobals : MonoBehaviour
         NullCheck(PlayerInteractionLayer);
         NullCheck(EnemyLayer);
         NullCheck(EnemyDamageLayer);
+        NullCheck(DeadEnemyLayer);
 
         Instance = this;
     }

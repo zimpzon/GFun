@@ -29,7 +29,7 @@ TagManager:
   - Unlighted
   - Obstacle
   - NPC
-  - 
+  - DeadEnemy
   - 
   - 
   - 
@@ -41,6 +41,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: OnTheFloor
+    uniqueID: 13697185
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

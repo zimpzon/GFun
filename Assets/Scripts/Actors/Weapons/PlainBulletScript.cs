@@ -10,7 +10,7 @@ public class PlainBulletScript : MonoBehaviour
     Quaternion rotation_;
     float distanceMoved_;
     Vector3 baseScale_;
-
+    LayerMask enemyLayer_;
     PlainBulletSettings settings_;
 
     public void Init(Vector3 position, Vector3 direction, PlainBulletSettings settings)
@@ -31,10 +31,17 @@ public class PlainBulletScript : MonoBehaviour
     {
         transform_ = transform;
         baseScale_ = transform.localScale;
+        enemyLayer_ = SceneGlobals.Instance.EnemyLayer;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.layer == enemyLayer_.value)
+        {
+            var enemy = collision.gameObject.GetComponent<EnemyScript>();
+            enemy.TakeDamage(settings_.Damage, Direction * settings_.DamageForce);
+        }
+
         Die();
     }
 

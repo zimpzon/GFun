@@ -359,7 +359,7 @@ MonoBehaviour:
   Speed: 6
   Life: 0
   Anim: {fileID: 11400000, guid: 861a36bbdedb0854188e5cddd67508d5, type: 2}
-  LookAtOffset: 2
+  LookAtOffset: 1
   Drag: 20
   Blip: {fileID: 2013398375826590630}
   ShowCollisionDebug: 0
