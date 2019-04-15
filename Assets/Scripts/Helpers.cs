@@ -1,7 +1,4 @@
-﻿using GFun;
-using UnityEngine;
-
-public static class Helpers
+﻿public static class Helpers
 {
     public static void SetCameraPositionToActivePlayer()
     {

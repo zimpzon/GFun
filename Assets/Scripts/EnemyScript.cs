@@ -86,7 +86,8 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
         renderer_.sortingOrder = SceneGlobals.Instance.OnTheFloorSortingValue;
         body_.freezeRotation = false;
         body_.AddForce(force_ * 3000);
-        body_.angularVelocity = (force_.x > 0 ? -100 : 100) * force_.magnitude;
+        float angularVelocityVariation = 1.2f - Random.value * 0.4f;
+        body_.angularVelocity = (force_.x > 0 ? -100 : 100) * force_.magnitude * angularVelocityVariation;
         BlipRenderer.enabled = false;
         LightRenderer.enabled = false;
         ShadowRenderer.enabled = false;

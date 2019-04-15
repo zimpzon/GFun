@@ -125,11 +125,6 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
         RefreshInteracting();
     }
 
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    force_ = Vector3.zero;
-    //}
-
     public Vector3 GetPosition()
         => transform_.position;
 

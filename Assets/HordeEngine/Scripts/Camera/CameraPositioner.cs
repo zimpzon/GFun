@@ -26,6 +26,7 @@ public class CameraPositioner : MonoBehaviour
     public void SetPosition(Vector3 pos)
     {
         currentPos_ = pos;
+        Target = currentPos_;
     }
 
     private void Update()
