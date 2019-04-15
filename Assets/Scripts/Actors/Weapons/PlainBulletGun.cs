@@ -96,9 +96,8 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
                 angleOffset += (Random.value - 0.5f) * (1.0f - GunSettings.Precision) * MaxDegreesOffsetAtLowestPrecision;
                 var offsetDirection = Quaternion.AngleAxis(angleOffset, Vector3.forward) * direction;
                 Fire(position, offsetDirection);
-
-                yield return shotDelay_;
             }
+            yield return shotDelay_;
         }
 
         if (GunSettings.FiringMode == FiringMode.Auto && triggerIsDown_)

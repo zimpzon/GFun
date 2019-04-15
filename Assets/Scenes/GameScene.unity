@@ -349,7 +349,7 @@ MonoBehaviour:
   BlipRenderer: {fileID: 1393530264}
   ShadowRenderer: {fileID: 203150872}
   LightRenderer: {fileID: 645916044}
-  DamageSound: {fileID: 8300000, guid: a52e976e744360244b414bd52ab0143b, type: 3}
+  DamageSound: {fileID: 8300000, guid: 23ba2dc4b30d32b449cf360211e1583c, type: 3}
   DeathSound: {fileID: 8300000, guid: 96d23fa085cbb924e9eceb46fd5559af, type: 3}
 --- !u!4 &111631418
 Transform:
@@ -1958,9 +1958,9 @@ RectTransform:
   m_Father: {fileID: 1434325039}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -32.80005}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 123.00003, y: -32.80005}
   m_SizeDelta: {x: 200, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &902150654
@@ -2551,7 +2551,7 @@ MonoBehaviour:
   BlipRenderer: {fileID: 1649061892}
   ShadowRenderer: {fileID: 702696595}
   LightRenderer: {fileID: 902150655}
-  DamageSound: {fileID: 8300000, guid: a52e976e744360244b414bd52ab0143b, type: 3}
+  DamageSound: {fileID: 8300000, guid: 23ba2dc4b30d32b449cf360211e1583c, type: 3}
   DeathSound: {fileID: 8300000, guid: 96d23fa085cbb924e9eceb46fd5559af, type: 3}
 --- !u!4 &1002083312
 Transform:
@@ -2801,7 +2801,7 @@ MonoBehaviour:
   BlipRenderer: {fileID: 1582743943}
   ShadowRenderer: {fileID: 188894584}
   LightRenderer: {fileID: 909711597}
-  DamageSound: {fileID: 8300000, guid: a52e976e744360244b414bd52ab0143b, type: 3}
+  DamageSound: {fileID: 8300000, guid: 23ba2dc4b30d32b449cf360211e1583c, type: 3}
   DeathSound: {fileID: 8300000, guid: 96d23fa085cbb924e9eceb46fd5559af, type: 3}
 --- !u!4 &1018571016
 Transform:
@@ -3431,7 +3431,7 @@ MonoBehaviour:
   BlipRenderer: {fileID: 274606079}
   ShadowRenderer: {fileID: 2019987885}
   LightRenderer: {fileID: 1865387994}
-  DamageSound: {fileID: 8300000, guid: a52e976e744360244b414bd52ab0143b, type: 3}
+  DamageSound: {fileID: 8300000, guid: 23ba2dc4b30d32b449cf360211e1583c, type: 3}
   DeathSound: {fileID: 8300000, guid: 96d23fa085cbb924e9eceb46fd5559af, type: 3}
 --- !u!4 &1117811415
 Transform:
@@ -3881,7 +3881,7 @@ MonoBehaviour:
   BlipRenderer: {fileID: 841933118}
   ShadowRenderer: {fileID: 920876618}
   LightRenderer: {fileID: 1212366254}
-  DamageSound: {fileID: 8300000, guid: a52e976e744360244b414bd52ab0143b, type: 3}
+  DamageSound: {fileID: 8300000, guid: 23ba2dc4b30d32b449cf360211e1583c, type: 3}
   DeathSound: {fileID: 8300000, guid: 96d23fa085cbb924e9eceb46fd5559af, type: 3}
 --- !u!4 &1217408867
 Transform:
@@ -4190,7 +4190,7 @@ MonoBehaviour:
   BlipRenderer: {fileID: 1433619106}
   ShadowRenderer: {fileID: 683207336}
   LightRenderer: {fileID: 933709678}
-  DamageSound: {fileID: 8300000, guid: a52e976e744360244b414bd52ab0143b, type: 3}
+  DamageSound: {fileID: 8300000, guid: 23ba2dc4b30d32b449cf360211e1583c, type: 3}
   DeathSound: {fileID: 8300000, guid: 96d23fa085cbb924e9eceb46fd5559af, type: 3}
 --- !u!4 &1305064273
 Transform:
@@ -4846,7 +4846,7 @@ MonoBehaviour:
   BlipRenderer: {fileID: 1576860562}
   ShadowRenderer: {fileID: 28265255}
   LightRenderer: {fileID: 1357958438}
-  DamageSound: {fileID: 8300000, guid: a52e976e744360244b414bd52ab0143b, type: 3}
+  DamageSound: {fileID: 8300000, guid: 23ba2dc4b30d32b449cf360211e1583c, type: 3}
   DeathSound: {fileID: 8300000, guid: 96d23fa085cbb924e9eceb46fd5559af, type: 3}
 --- !u!4 &1519354828
 Transform:
@@ -5730,7 +5730,7 @@ MonoBehaviour:
   BlipRenderer: {fileID: 2084744578}
   ShadowRenderer: {fileID: 412766156}
   LightRenderer: {fileID: 1824000519}
-  DamageSound: {fileID: 8300000, guid: a52e976e744360244b414bd52ab0143b, type: 3}
+  DamageSound: {fileID: 8300000, guid: 23ba2dc4b30d32b449cf360211e1583c, type: 3}
   DeathSound: {fileID: 8300000, guid: 96d23fa085cbb924e9eceb46fd5559af, type: 3}
 --- !u!4 &1867390290
 Transform:
@@ -6388,9 +6388,9 @@ RectTransform:
   m_Father: {fileID: 1434325039}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 239}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 123, y: -61}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2084744577
@@ -6513,7 +6513,7 @@ MonoBehaviour:
   BlipRenderer: {fileID: 1012998482}
   ShadowRenderer: {fileID: 1063008228}
   LightRenderer: {fileID: 1874292837}
-  DamageSound: {fileID: 8300000, guid: a52e976e744360244b414bd52ab0143b, type: 3}
+  DamageSound: {fileID: 8300000, guid: 23ba2dc4b30d32b449cf360211e1583c, type: 3}
   DeathSound: {fileID: 8300000, guid: 96d23fa085cbb924e9eceb46fd5559af, type: 3}
 --- !u!4 &2095013370
 Transform:
@@ -6604,7 +6604,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 5
+  m_Mass: 1
   m_LinearDrag: 5
   m_AngularDrag: 3
   m_GravityScale: 0
@@ -6728,12 +6728,17 @@ PrefabInstance:
     - target: {fileID: 1030620504238268359, guid: 46bd76d6b3d875b4b9dbdd1aa11b2b3d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: -12
       objectReference: {fileID: 0}
     - target: {fileID: 1030620504238268352, guid: 46bd76d6b3d875b4b9dbdd1aa11b2b3d,
         type: 3}
       propertyPath: CurrentValues.MonochromeAmount
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030620503267616650, guid: 46bd76d6b3d875b4b9dbdd1aa11b2b3d,
+        type: 3}
+      propertyPath: Scale
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46bd76d6b3d875b4b9dbdd1aa11b2b3d, type: 3}

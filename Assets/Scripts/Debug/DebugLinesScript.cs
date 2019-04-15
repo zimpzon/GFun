@@ -21,7 +21,7 @@ public class DebugLinesScript : MonoBehaviour
 
     public void SetLine(string key, object value)
     {
-        lines_[key] = value.ToString();
+        lines_[key] = value?.ToString() ?? "<null>";
     }
 
     void Awake()

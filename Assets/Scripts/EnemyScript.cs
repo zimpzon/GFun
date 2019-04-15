@@ -1,4 +1,5 @@
 ﻿using GFun;
+using System.Collections;
 using UnityEngine;
 
 public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
@@ -69,31 +70,44 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
 
     public void TakeDamage(int amount, Vector3 damageForce)
     {
-        DoFlash(2, 0.1f);
-        SetForce(damageForce);
+        DoFlash(3, 0.3f);
         Life = Mathf.Max(0, Life - amount);
         if (Life == 0)
-            Die();
+        {
+            StartCoroutine(Die(damageForce));
+        }
         else
-            AudioManager.Instance.PlaySfxClip(DamageSound, maxInstances: 2, pitchRandomVariation: 0.1f);
+        {
+            AudioManager.Instance.PlaySfxClip(DamageSound, maxInstances: 3, pitchRandomVariation: 0.3f);
+            SetForce(damageForce * 10 / body_.mass);
+        }
     }
 
-    public void Die()
+    static WaitForSeconds DisableDelay = new WaitForSeconds(3.0f);
+
+    IEnumerator Die(Vector3 damageForce)
     {
         DoFlash(-0.25f, 100.0f);
         IsDead = true;
         gameObject.layer = SceneGlobals.Instance.DeadEnemyLayer;
         renderer_.sortingOrder = SceneGlobals.Instance.OnTheFloorSortingValue;
         body_.freezeRotation = false;
-        body_.AddForce(force_ * 3000);
-        float angularVelocityVariation = 1.2f - Random.value * 0.4f;
-        body_.angularVelocity = (force_.x > 0 ? -100 : 100) * force_.magnitude * angularVelocityVariation;
+        body_.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        body_.AddForce(damageForce * 5000);
+        float angularVelocityVariation = 1.4f - Random.value * 0.8f;
+        body_.angularVelocity = (force_.x > 0 ? -100 : 100) * damageForce.magnitude * angularVelocityVariation;
         BlipRenderer.enabled = false;
         LightRenderer.enabled = false;
         ShadowRenderer.enabled = false;
 
-        AudioManager.Instance.PlaySfxClip(DeathSound, maxInstances: 2, pitchRandomVariation: 0.1f);
+        AudioManager.Instance.PlaySfxClip(DeathSound, maxInstances: 3, pitchRandomVariation: 0.3f);
         SceneGlobals.Instance.CameraShake.SetMinimumShake(0.2f);
+
+        yield return DisableDelay;
+
+        body_.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
+        body_.isKinematic = true;
+        collider_.enabled = false;
     }
 
     public void SetForce(Vector3 force)
