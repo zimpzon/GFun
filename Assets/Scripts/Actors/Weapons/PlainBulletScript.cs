@@ -12,13 +12,14 @@ public class PlainBulletScript : MonoBehaviour
     Vector3 baseScale_;
     LayerMask enemyLayer_;
     PlainBulletSettings settings_;
+    MapScript map_;
     int remainingDamage_;
 
 
     public void Init(Vector3 position, Vector3 direction, PlainBulletSettings settings)
     {
         position_ = position;
-        Direction = direction;
+        Direction = direction.normalized;
         settings_ = settings;
         distanceMoved_ = 0;
         remainingDamage_ = settings.Damage;
@@ -35,22 +36,19 @@ public class PlainBulletScript : MonoBehaviour
         transform_ = transform;
         baseScale_ = transform.localScale;
         enemyLayer_ = SceneGlobals.Instance.EnemyLayer;
+        map_ = SceneGlobals.Instance.MapScript;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == enemyLayer_.value && remainingDamage_ > 0)
         {
+
             var enemy = collision.gameObject.GetComponent<EnemyScript>();
             enemy.TakeDamage(settings_.Damage, Direction * settings_.DamageForce);
             remainingDamage_ = 0;
         }
 
-        Die();
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
         Die();
     }
 
@@ -71,6 +69,11 @@ public class PlainBulletScript : MonoBehaviour
         float distance = settings_.Speed * Time.fixedDeltaTime;
         position_ += Direction * distance;
         distanceMoved_ += distance;
+        if (map_.GetCollisionTileValue(position_) != MapBuilder.TileWalkable)
+        {
+            Die();
+            return;
+        }
 
         transform_.SetPositionAndRotation(position_, rotation_);
     }

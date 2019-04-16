@@ -83,6 +83,7 @@ public class GameSceneLogic : MonoBehaviour
         int h = 50;
 
         MapBuilder.GenerateMapFloor(w, h, MapFloorAlgorithm.RandomWalkers);
+        MapBuilder.Fillrect(new Vector2Int(90, 55), 15, 3, 1);
         MapBuilder.BuildMapTiles(MapBuilder.MapSource, mapScript_, MapStyle);
     }
 }

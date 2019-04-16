@@ -129,7 +129,7 @@ MonoBehaviour:
   GunSettings:
     Level: 1
     AmmoCount: 100
-    FiringSpread: 2
+    FiringSpread: 0
     FiringMode: 2
     Precision: 0.8
     BurstCount: 1
