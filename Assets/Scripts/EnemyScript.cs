@@ -13,18 +13,26 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
     public SpriteRenderer LightRenderer;
     public AudioClip DamageSound;
     public AudioClip DeathSound;
+    public float WallAvoidancePower = 0.2f;
 
-    bool checkPlayerLos_;
-    float playerLosTime_;
+    bool lookForPlayerLos_;
+    float playerLoSMaxDistance_;
+    float playerLatestKnownPositionTime_;
     Vector3 playerLatestKnownPosition_;
+    int mapLayerMask_;
+    int mapLayer_;
 
     Transform transform_;
     Rigidbody2D body_;
     IMapAccess map_;
     ISpriteAnimator spriteAnimator_;
     Vector3 force_;
-    Vector3 moveRequest_;
-    Vector3 latestFixedMovenentDirection_;
+    Vector3 moveTo_;
+    Vector3 wallAvoidanceDirection_;
+    float wallAvoidanceAmount_;
+    bool hasMoveTotarget_;
+    bool moveTargetReached_;
+    Vector3 latestMovenentDirection_;
     float flashAmount_;
     float flashEndTime_;
     Material renderMaterial_;
@@ -36,31 +44,45 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
         transform_ = transform;
         body_ = GetComponent<Rigidbody2D>();
         map_ = SceneGlobals.Instance.MapAccess;
-        spriteAnimator_ = GetComponent<ISpriteAnimator>();
-        renderer_ = GetComponent<SpriteRenderer>();
+        spriteAnimator_ = GetComponentInChildren<ISpriteAnimator>();
+        renderer_ = GetComponentInChildren<SpriteRenderer>();
         renderMaterial_ = renderer_.material;
         collider_ = GetComponent<Collider2D>();
         BlipRenderer.enabled = true;
+        mapLayer_ = SceneGlobals.Instance.MapLayer;
+        mapLayerMask_ = 1 << SceneGlobals.Instance.MapLayer;
+        playerLatestKnownPosition_ = transform_.position; // Better than having last known position = 0,0
     }
 
     // ISensingActor
-    public void SetCheckPlayerLoS(bool doCheck)
-        => checkPlayerLos_ = doCheck;
+    public void LookForPlayerLoS(bool doCheck, float maxDistance)
+    {
+        lookForPlayerLos_ = doCheck;
+        playerLoSMaxDistance_ = maxDistance;
+    }
 
     public Vector3 GetPlayerLatestKnownPosition()
         => playerLatestKnownPosition_;
 
-    public float GetPlayerLoSAge()
-        => Time.time - playerLosTime_;
+    public float GetPlayerLatestKnownPositionAge()
+        => Time.time - playerLatestKnownPositionTime_;
 
     // IMovableActor
     public Vector3 GetPosition()
         => transform_.position;
 
-    public void SetMovementVector(Vector3 vector, bool isNormalized = true)
+    public void MoveTo(Vector3 destination)
     {
-        moveRequest_ = isNormalized ? vector : vector.normalized;
+        moveTo_ = destination;
+        hasMoveTotarget_ = true;
+        moveTargetReached_ = false;
     }
+
+    public void StopMove()
+        => hasMoveTotarget_ = false;
+
+    public bool MoveTargetReached()
+        => moveTargetReached_;
 
     public void SetMinimumForce(Vector3 force)
     {
@@ -93,7 +115,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
         renderer_.sortingOrder = SceneGlobals.Instance.OnTheFloorSortingValue;
         body_.freezeRotation = false;
         body_.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-        body_.AddForce(damageForce * 5000);
+        body_.AddForce(damageForce * 2000);
         float angularVelocityVariation = 1.4f - Random.value * 0.8f;
         body_.angularVelocity = (force_.x > 0 ? -100 : 100) * damageForce.magnitude * angularVelocityVariation;
         BlipRenderer.enabled = false;
@@ -115,11 +137,35 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
         force_ = force;
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == mapLayer_)
+        {
+            wallAvoidanceDirection_ = ((Vector3)collision.contacts[0].normal + latestMovenentDirection_).normalized;
+            wallAvoidanceAmount_ = 1.0f;
+        }
+    }
+
     void FixedUpdateInternal(float dt)
     {
-        Vector3 movement = moveRequest_ * Speed * dt + force_ * dt;
-        latestFixedMovenentDirection_ = movement.normalized;
-        moveRequest_ = Vector3.zero;
+        if (hasMoveTotarget_ && !moveTargetReached_)
+        {
+            var direction = (moveTo_ - transform_.position);
+            bool targetReached = direction.sqrMagnitude < 0.1f;
+            if (targetReached)
+                moveTargetReached_ = true;
+
+            direction.Normalize();
+
+            latestMovenentDirection_ = direction;
+
+            var wallAvoidance = (wallAvoidanceDirection_ * wallAvoidanceAmount_ * WallAvoidancePower).normalized;
+            wallAvoidanceAmount_ = Mathf.Max(0.0f, wallAvoidanceAmount_ - 4.0f * dt);
+
+            direction = (direction + wallAvoidance).normalized; 
+            var step = direction * Speed * dt + force_;
+            body_.MovePosition(transform_.position + step);
+        }
 
         if (force_.sqrMagnitude > 0.0f)
         {
@@ -127,10 +173,6 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
             forceLen = Mathf.Clamp(forceLen - Drag * dt, 0.0f, float.MaxValue);
             force_ = force_.normalized * forceLen;
         }
-
-        bool isMoving = movement != Vector3.zero;
-        if (isMoving)
-            body_.MovePosition(transform_.position + movement);
     }
 
     static int LosThrottleCounter = 0;
@@ -156,11 +198,11 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
     {
         if (!IsDead)
         {
-            UpdateLos();
+            UpdatePlayerLoS();
         }
 
         UpdateFlash();
-        spriteAnimator_.UpdateAnimation(latestFixedMovenentDirection_, IsDead);
+        spriteAnimator_.UpdateAnimation(latestMovenentDirection_, IsDead);
     }
 
     private void FixedUpdate()
@@ -171,8 +213,35 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
         }
     }
 
-    private void UpdateLos()
+    static readonly RaycastHit2D[] MapRaycastHit = new RaycastHit2D[1];
+
+    private void UpdatePlayerLoS()
     {
         bool checkNow = (Time.frameCount + myLosThrottleId_) % AiBlackboard.LosThrottleModulus == 0;
+        checkNow = true;
+        if (checkNow && !AiBlackboard.Instance.BulletTimeActive)
+        {
+            var playerPos = AiBlackboard.Instance.PlayerPosition;
+            var myPos = transform_.position;
+            myPos.x += collider_.offset.x;
+            myPos.y += collider_.offset.y;
+
+            float sqrMaxDistance = playerLoSMaxDistance_ * playerLoSMaxDistance_;
+            var vec = playerPos - myPos;
+            if (vec.sqrMagnitude <= sqrMaxDistance)
+            {
+                float distanceToPlayer = vec.magnitude;
+                var direction = vec.normalized;
+                int hitCount = Physics2D.RaycastNonAlloc(myPos, direction, MapRaycastHit, distanceToPlayer, mapLayerMask_);
+                bool hasLoS = hitCount == 0;
+                if (hasLoS)
+                {
+                    playerLatestKnownPosition_ = playerPos;
+                    playerLatestKnownPositionTime_ = Time.time;
+                }
+
+            }
+            Debug.DrawLine(myPos, playerLatestKnownPosition_, Color.grey);
+        }
     }
 }

@@ -6,6 +6,7 @@ public class AiBlackboard : MonoBehaviour
     public const int LosThrottleModulus = 30;
 
     public Vector3 PlayerPosition;
+    public bool BulletTimeActive;
 
     void Awake()
     {

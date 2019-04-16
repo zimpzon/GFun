@@ -2,7 +2,7 @@
 
 public interface ISensingActor
 {
-    void SetCheckPlayerLoS(bool doCheck);
-    float GetPlayerLoSAge();
+    void LookForPlayerLoS(bool enabled, float maxDistance);
+    float GetPlayerLatestKnownPositionAge();
     Vector3 GetPlayerLatestKnownPosition();
 }

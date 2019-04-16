@@ -8,7 +8,8 @@ public class HumanPlayerController : MonoBehaviour
     public static bool Disabled = false;
 
     LightingEffectSettings bulletTimeLight_ = new LightingEffectSettings();
-    IMovableActor movable_;
+    PlayableCharacterScript player_;
+    Transform transform_;
     IWeapon weapon_;
     MapScript map_;
     bool bulletTime_;
@@ -25,8 +26,9 @@ public class HumanPlayerController : MonoBehaviour
         BulletTimeLight.MonochromeAmount = 1.5f;
         BulletTimeLight.CopyTo(bulletTimeLight_);
 
-        movable_ = GetComponent<PlayableCharacterScript>();
-        SceneGlobals.NullCheck(movable_);
+        transform_ = transform;
+        player_ = GetComponent<PlayableCharacterScript>();
+        SceneGlobals.NullCheck(player_);
         map_ = SceneGlobals.Instance.MapScript;
         lightingImageEffect_ = SceneGlobals.Instance.LightingImageEffect;
 
@@ -48,6 +50,7 @@ public class HumanPlayerController : MonoBehaviour
     void ToggleBulletTime()
     {
         bulletTime_ = !bulletTime_;
+        AiBlackboard.Instance.BulletTimeActive = bulletTime_;
         bulletTimeTarget_ = bulletTime_ ? 1.0f : 0.0f;
 
         if (bulletTime_)
@@ -80,6 +83,8 @@ public class HumanPlayerController : MonoBehaviour
 
         CheckInput();
         UpdateBulletTime();
+
+        AiBlackboard.Instance.PlayerPosition = transform_.position;
     }
 
     void Fire(Vector3 direction)
@@ -97,7 +102,7 @@ public class HumanPlayerController : MonoBehaviour
         var horz = Input.GetAxisRaw("Horizontal");
         var vert = Input.GetAxisRaw("Vertical");
         var moveVec = new Vector3(horz, vert);
-        movable_.SetMovementVector(moveVec);
+        player_.Move(moveVec);
 
         if (Input.GetKeyDown(KeyCode.Q))
             ToggleBulletTime();

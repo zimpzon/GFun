@@ -1,29 +1,31 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class BatController : MonoBehaviour
 {
     IMovableActor movable_;
-    float nextMove_;
+    ISensingActor senses_;
     Vector3 dir_;
 
     void Start()
     {
         movable_ = GetComponent<IMovableActor>();
+        senses_ = GetComponent<ISensingActor>();
+        senses_.LookForPlayerLoS(true, 10);
+
+        StartCoroutine(AI());
     }
 
-    void Update()
+    static readonly WaitForSeconds Wait = new WaitForSeconds(1.0f);
+
+    IEnumerator AI()
     {
-        // TODO:
-        // if recent player LoS set move target
-        //    if reached, clear player LoS
-        // else if has no target
-        //    set target to random close position in sight
-        // if target reached clear target
-        if(Time.time > nextMove_)
+        while (true)
         {
-            nextMove_ = Time.time + Random.value * 2 + 1;
-            dir_ = Random.insideUnitCircle;
+            yield return Wait;
+            var myPos = movable_.GetPosition();
+            var target = senses_.GetPlayerLatestKnownPosition();
+            movable_.MoveTo(target);
         }
-        movable_.SetMovementVector(dir_);
     }
 }

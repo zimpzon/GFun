@@ -1,7 +1,7 @@
 ﻿using GFun;
 using UnityEngine;
 
-public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsActor
+public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
 {
     public string Name;
     public float Speed = 10;
@@ -128,9 +128,9 @@ public class PlayableCharacterScript : MonoBehaviour, IMovableActor, IPhysicsAct
     public Vector3 GetPosition()
         => transform_.position;
 
-    public void SetMovementVector(Vector3 vector, bool isNormalized = true)
+    public void Move(Vector3 step)
     {
-        moveRequest_ = isNormalized ? vector : vector.normalized;
+        moveRequest_ = step;
     }
 
     void FixedUpdateInternal(float dt)
