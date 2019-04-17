@@ -6,4 +6,5 @@ public class AudioClips : ScriptableObject
     public AudioClip IntroMusic;
     public AudioClip LargeExplosion1;
     public AudioClip ShotgunShot;
+    public AudioClip PlayerLand;
 }

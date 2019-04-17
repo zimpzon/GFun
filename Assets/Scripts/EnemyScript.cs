@@ -3,11 +3,14 @@ using System.Collections;
 using UnityEngine;
 
 // Maybe not suitable for enemies larger than 1 tile?
-public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
+public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy
 {
-    public float Speed = 1;
+    public EnemyIds EnemyId;
+    public string EnemyName;
+    public int EnemyLevel = 1;
+    public float EnemyMoveSpeed = 1;
     public float SpeedVariation = 0.2f;
-    public float Life = 50;
+    public float EnemyLife = 50;
     public SpriteRenderer BlipRenderer;
     public SpriteRenderer ShadowRenderer;
     public SpriteRenderer LightRenderer;
@@ -16,6 +19,14 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
     public float WallAvoidancePower = 0.2f;
     public SpriteRenderer SpriteRenderer;
 
+    public EnemyIds Id => EnemyId;
+    public string Name => EnemyName;
+    public float Life => EnemyLife;
+    public int Level => EnemyLevel;
+
+    public bool IsDead { get; set; }
+
+    float life_;
     float speedVariation_;
     bool lookForPlayerLos_;
     float playerLoSMaxDistance_;
@@ -23,8 +34,6 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
     Vector3 playerLatestKnownPosition_;
     int mapLayerMask_;
     int mapLayer_;
-
-    bool isDead_;
 
     Transform transform_;
     Rigidbody2D body_;
@@ -70,9 +79,8 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
         => Time.time - playerLatestKnownPositionTime_;
 
     // IMovableActor
-    public float GetSpeed() => Speed;
-    public void SetSpeed(float speed) => Speed = speed;
-    public bool IsDead() => isDead_;
+    public float GetSpeed() => EnemyMoveSpeed;
+    public void SetSpeed(float speed) => EnemyMoveSpeed = speed;
     public Vector3 GetPosition() => transform_.position;
 
     public void MoveTo(Vector3 destination)
@@ -87,12 +95,12 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
 
     public void TakeDamage(int amount, Vector3 damageForce)
     {
-        if (isDead_)
+        if (IsDead)
             return;
          
         DoFlash(3, 0.3f);
-        Life = Mathf.Max(0, Life - amount);
-        if (Life == 0)
+        EnemyLife = Mathf.Max(0, EnemyLife - amount);
+        if (EnemyLife == 0)
         {
             StartCoroutine(Die(damageForce));
         }
@@ -108,7 +116,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
     IEnumerator Die(Vector3 damageForce)
     {
         DoFlash(-0.25f, 100.0f);
-        isDead_ = true;
+        IsDead = true;
         gameObject.layer = SceneGlobals.Instance.DeadEnemyLayer;
         SpriteRenderer.sortingOrder = SceneGlobals.Instance.OnTheFloorSortingValue;
         body_.freezeRotation = false;
@@ -161,7 +169,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
             wallAvoidanceAmount_ = Mathf.Max(0.0f, wallAvoidanceAmount_ - 4.0f * dt);
 
             direction = (direction + wallAvoidance).normalized;
-            var step = direction * (Speed * speedVariation_) * dt;
+            var step = direction * (EnemyMoveSpeed * speedVariation_) * dt;
             body_.AddForce(step * 10, ForceMode2D.Impulse);
         }
     }
@@ -190,12 +198,12 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
         UpdatePlayerLoS();
         UpdateFlash();
 
-        spriteAnimator_.UpdateAnimation(latestMovementDirection_, isDead_);
+        spriteAnimator_.UpdateAnimation(latestMovementDirection_, IsDead);
     }
 
     private void FixedUpdate()
     {
-        if (!isDead_)
+        if (!IsDead)
         {
             FixedUpdateInternal(Time.fixedDeltaTime);
         }
@@ -205,7 +213,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
 
     private void UpdatePlayerLoS()
     {
-        if (isDead_)
+        if (IsDead)
             return;
 
         bool checkNow = (Time.frameCount + myLosThrottleId_) % AiBlackboard.LosThrottleModulus == 0;

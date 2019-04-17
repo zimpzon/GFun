@@ -3,6 +3,8 @@
 // Object to shake will be forced at 0, 0, 0
 public class CameraShake : MonoBehaviour
 {
+    public static CameraShake Instance;
+
     public bool ShakeRotation = true;
     public bool ShakePosition = true;
     public float Dampening = 4.0f;
@@ -12,6 +14,7 @@ public class CameraShake : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
         trans_ = transform;
     }
 

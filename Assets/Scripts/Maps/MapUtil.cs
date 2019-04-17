@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public static class MapUtil
 {
@@ -47,5 +46,33 @@ public static class MapUtil
         }
 
         return LatestResultPositions.Count;
+    }
+
+    public static Vector3 GetLeftmostFreeCell()
+    {
+        for (int y = 0; y < MapBuilder.MapMaxHeight; ++y)
+        {
+            for (int x = 0; x < MapBuilder.MapMaxWidth; ++x)
+            {
+                if (MapBuilder.CollisionMap[x, y] == MapBuilder.TileWalkable)
+                    return new Vector3(x + 0.5f, y + 0.5f);
+            }
+        }
+
+        return Vector3.zero;
+    }
+
+    public static Vector3 GetmostFreeCell()
+    {
+        for (int y = 0; y < MapBuilder.MapMaxHeight; ++y)
+        {
+            for (int x = 0; x < MapBuilder.MapMaxWidth; ++x)
+            {
+                if (MapBuilder.CollisionMap[x, y] == MapBuilder.TileWalkable)
+                    return new Vector3(x + 0.5f, y + 0.5f);
+            }
+        }
+
+        return Vector3.zero;
     }
 }

@@ -2,11 +2,6 @@
 
 public interface IMovableActor
 {
-    /// <summary>
-    /// Is the actor dead?
-    /// </summary>
-    bool IsDead();
-
     float GetSpeed();
     void SetSpeed(float speed);
 

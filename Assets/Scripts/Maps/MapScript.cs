@@ -116,6 +116,11 @@ public class MapScript : MonoBehaviour, IMapAccess
         Debug.DrawRay(worldPos, Vector3.right * 0.25f, col);
     }
 
+    public Vector3 GetPlayerStartPosition()
+    {
+        return MapUtil.GetLeftmostFreeCell();
+    }
+
     public Vector3 GetTileBottomMid(Vector3 worldPos)
         => new Vector3((int)worldPos.x + 0.5f, (int)worldPos.y);
 

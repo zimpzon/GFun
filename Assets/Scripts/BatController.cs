@@ -5,13 +5,15 @@ public class BatController : MonoBehaviour
 {
     IMovableActor movable_;
     ISensingActor senses_;
+    IEnemy enemy_;
     Vector3 dir_;
 
     void Start()
     {
         movable_ = GetComponent<IMovableActor>();
         senses_ = GetComponent<ISensingActor>();
-        senses_.LookForPlayerLoS(true, 10);
+        senses_.LookForPlayerLoS(true, maxDistance: 10);
+        enemy_ = GetComponent<IEnemy>();
 
         StartCoroutine(AI());
     }
@@ -24,7 +26,7 @@ public class BatController : MonoBehaviour
         {
             while (true)
             {
-                if (movable_.IsDead())
+                if (enemy_.IsDead)
                     yield break;
 
                 bool hasRecentlySeenPlayer = senses_.GetPlayerLatestKnownPositionAge() < 2.0f;
