@@ -49,7 +49,7 @@ public class GameSceneLogic : MonoBehaviour
         PlayableCharacters.Instance.SetCharacterToHumanControlled(playerScript_.tag);
         Helpers.SetCameraPositionToActivePlayer();
 
-        const float MinimumShowTime = 0.5f;
+        const float MinimumShowTime = 1.5f;
         float timeLeft = (startTime - Time.time) + MinimumShowTime;
         yield return Timing.WaitForSeconds(timeLeft);
 

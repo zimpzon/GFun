@@ -50,10 +50,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0f198733d6af2b4f8e383e70dae94ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyId: 0
+  EnemyName: 
+  EnemyLevel: 1
   EnemyMoveSpeed: 1
   SpeedVariation: 0.2
-  EnemyLife: 50
-  EnemyLevel: 1
+  EnemyLife: 20
   BlipRenderer: {fileID: 1921782252298801372}
   ShadowRenderer: {fileID: 1921782252247090794}
   LightRenderer: {fileID: 1921782251431772651}

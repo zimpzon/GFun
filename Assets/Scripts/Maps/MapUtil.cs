@@ -50,9 +50,9 @@ public static class MapUtil
 
     public static Vector3 GetLeftmostFreeCell()
     {
-        for (int y = 0; y < MapBuilder.MapMaxHeight; ++y)
+        for (int x = 0; x < MapBuilder.MapMaxWidth; ++x)
         {
-            for (int x = 0; x < MapBuilder.MapMaxWidth; ++x)
+            for (int y = 0; y < MapBuilder.MapMaxHeight; ++y)
             {
                 if (MapBuilder.CollisionMap[x, y] == MapBuilder.TileWalkable)
                     return new Vector3(x + 0.5f, y + 0.5f);
@@ -62,11 +62,11 @@ public static class MapUtil
         return Vector3.zero;
     }
 
-    public static Vector3 GetmostFreeCell()
+    public static Vector3 GetRightmostFreeCell()
     {
-        for (int y = 0; y < MapBuilder.MapMaxHeight; ++y)
+        for (int x = MapBuilder.MapMaxWidth - 1; x > 0; --x)
         {
-            for (int x = 0; x < MapBuilder.MapMaxWidth; ++x)
+            for (int y = 0; y < MapBuilder.MapMaxHeight; ++y)
             {
                 if (MapBuilder.CollisionMap[x, y] == MapBuilder.TileWalkable)
                     return new Vector3(x + 0.5f, y + 0.5f);

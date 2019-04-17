@@ -156,7 +156,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
         bool hasRecentlyFiredWeapon = CurrentWeapon.LatestFiringTimeUnscaled > Time.unscaledTime - 0.70f;
         Vector3 latestHorizontalMovement = new Vector3(latestFixedMovenentDirection_.x, 0, 0);
         Vector3 facingDirection = hasRecentlyFiredWeapon ? CurrentWeapon.LatestFiringDirection : latestHorizontalMovement;
-        flipX_ = facingDirection.x < 0;
+        flipX_ = facingDirection.x < 0; // NB: This makes the gun always face right when player is idle (x is 0)
         weaponTransform_.localPosition = WeaponOffsetRight;
 
         bool isRunning = latestFixedMovenentDirection_ != Vector3.zero;

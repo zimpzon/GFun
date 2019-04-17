@@ -118,7 +118,7 @@ public class MapScript : MonoBehaviour, IMapAccess
 
     public Vector3 GetPlayerStartPosition()
     {
-        return MapUtil.GetLeftmostFreeCell();
+        return MapUtil.GetRightmostFreeCell();
     }
 
     public Vector3 GetTileBottomMid(Vector3 worldPos)
