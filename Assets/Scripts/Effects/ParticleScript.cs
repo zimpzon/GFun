@@ -2,12 +2,20 @@
 
 public class ParticleScript : MonoBehaviour
 {
+    public static ParticleScript Instance;
+
     public bool ParticlesUseUnscaledTime = false;
     public ParticleSystem WallDestructionParticles;
     public ParticleSystem BulletFizzleParticles;
     public ParticleSystem MuzzleFlashParticles;
     public ParticleSystem MuzzleSmokeParticles;
     public ParticleSystem CharacterSelectedParticles;
+    public ParticleSystem PlayerLandParticles;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public void Start()
     {

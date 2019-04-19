@@ -86,6 +86,9 @@ public class MapScript : MonoBehaviour, IMapAccess
         TouchMap();
     }
 
+    public int GetCollisionTileValue(Vector3 worldPos, int valueIfOutsideBounds = 1)
+        => GetCollisionTileValue((int)worldPos.x, (int)worldPos.y, valueIfOutsideBounds);
+
     public int GetCollisionTileValue(int tileX, int tileY, int valueIfOutsideBounds = 1)
     {
         if (tileX < 0 || tileX >= MapBuilder.MapMaxWidth || tileY < 0 || tileY >= MapBuilder.MapMaxHeight)
@@ -112,6 +115,14 @@ public class MapScript : MonoBehaviour, IMapAccess
         Debug.DrawRay(worldPos, Vector3.left * 0.25f, col);
         Debug.DrawRay(worldPos, Vector3.right * 0.25f, col);
     }
+
+    public Vector3 GetPlayerStartPosition()
+    {
+        return MapUtil.GetRightmostFreeCell();
+    }
+
+    public Vector3 GetTileBottomMid(Vector3 worldPos)
+        => new Vector3((int)worldPos.x + 0.5f, (int)worldPos.y);
 
     public Vector2Int GetCollisionTilePosFromWorldPos(Vector3 worldPos)
         => new Vector2Int((int)worldPos.x, (int)worldPos.y);

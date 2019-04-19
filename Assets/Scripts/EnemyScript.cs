@@ -2,19 +2,32 @@
 using System.Collections;
 using UnityEngine;
 
-public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
+// Maybe not suitable for enemies larger than 1 tile?
+public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy
 {
-    public float Speed = 1;
-    public float Life = 50;
-    public float Drag = 1.0f;
-    public bool IsDead = false;
+    public EnemyIds EnemyId;
+    public string EnemyName;
+    public int EnemyLevel = 1;
+    public float EnemyMoveSpeed = 1;
+    public float SpeedVariation = 0.2f;
+    public float EnemyLife = 50;
     public SpriteRenderer BlipRenderer;
     public SpriteRenderer ShadowRenderer;
     public SpriteRenderer LightRenderer;
     public AudioClip DamageSound;
     public AudioClip DeathSound;
     public float WallAvoidancePower = 0.2f;
+    public SpriteRenderer SpriteRenderer;
 
+    public EnemyIds Id => EnemyId;
+    public string Name => EnemyName;
+    public float Life => EnemyLife;
+    public int Level => EnemyLevel;
+
+    public bool IsDead { get; set; }
+
+    float life_;
+    float speedVariation_;
     bool lookForPlayerLos_;
     float playerLoSMaxDistance_;
     float playerLatestKnownPositionTime_;
@@ -26,17 +39,15 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
     Rigidbody2D body_;
     IMapAccess map_;
     ISpriteAnimator spriteAnimator_;
-    Vector3 force_;
     Vector3 moveTo_;
     Vector3 wallAvoidanceDirection_;
     float wallAvoidanceAmount_;
     bool hasMoveTotarget_;
     bool moveTargetReached_;
-    Vector3 latestMovenentDirection_;
+    Vector3 latestMovementDirection_;
     float flashAmount_;
     float flashEndTime_;
     Material renderMaterial_;
-    SpriteRenderer renderer_;
     Collider2D collider_;
 
     void Awake()
@@ -45,13 +56,13 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
         body_ = GetComponent<Rigidbody2D>();
         map_ = SceneGlobals.Instance.MapAccess;
         spriteAnimator_ = GetComponentInChildren<ISpriteAnimator>();
-        renderer_ = GetComponentInChildren<SpriteRenderer>();
-        renderMaterial_ = renderer_.material;
+        renderMaterial_ = SpriteRenderer.material;
         collider_ = GetComponent<Collider2D>();
         BlipRenderer.enabled = true;
         mapLayer_ = SceneGlobals.Instance.MapLayer;
         mapLayerMask_ = 1 << SceneGlobals.Instance.MapLayer;
         playerLatestKnownPosition_ = transform_.position; // Better than having last known position = 0,0
+        speedVariation_ = 1.0f - ((Random.value * SpeedVariation) - SpeedVariation * 0.5f);
     }
 
     // ISensingActor
@@ -68,8 +79,9 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
         => Time.time - playerLatestKnownPositionTime_;
 
     // IMovableActor
-    public Vector3 GetPosition()
-        => transform_.position;
+    public float GetSpeed() => EnemyMoveSpeed;
+    public void SetSpeed(float speed) => EnemyMoveSpeed = speed;
+    public Vector3 GetPosition() => transform_.position;
 
     public void MoveTo(Vector3 destination)
     {
@@ -78,30 +90,24 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
         moveTargetReached_ = false;
     }
 
-    public void StopMove()
-        => hasMoveTotarget_ = false;
-
-    public bool MoveTargetReached()
-        => moveTargetReached_;
-
-    public void SetMinimumForce(Vector3 force)
-    {
-        if (force.sqrMagnitude > force_.sqrMagnitude)
-            force_ = force;
-    }
+    public void StopMove() => hasMoveTotarget_ = false;
+    public bool MoveTargetReached() => moveTargetReached_;
 
     public void TakeDamage(int amount, Vector3 damageForce)
     {
+        if (IsDead)
+            return;
+         
         DoFlash(3, 0.3f);
-        Life = Mathf.Max(0, Life - amount);
-        if (Life == 0)
+        EnemyLife = Mathf.Max(0, EnemyLife - amount);
+        if (EnemyLife == 0)
         {
             StartCoroutine(Die(damageForce));
         }
         else
         {
             AudioManager.Instance.PlaySfxClip(DamageSound, maxInstances: 3, pitchRandomVariation: 0.3f);
-            SetForce(damageForce * 10 / body_.mass);
+            body_.AddForce(damageForce * 5, ForceMode2D.Impulse);
         }
     }
 
@@ -112,12 +118,13 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
         DoFlash(-0.25f, 100.0f);
         IsDead = true;
         gameObject.layer = SceneGlobals.Instance.DeadEnemyLayer;
-        renderer_.sortingOrder = SceneGlobals.Instance.OnTheFloorSortingValue;
+        SpriteRenderer.sortingOrder = SceneGlobals.Instance.OnTheFloorSortingValue;
         body_.freezeRotation = false;
         body_.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-        body_.AddForce(damageForce * 2000);
+        body_.velocity = Vector3.zero;
+        body_.AddForce(damageForce * 20, ForceMode2D.Impulse);
         float angularVelocityVariation = 1.4f - Random.value * 0.8f;
-        body_.angularVelocity = (force_.x > 0 ? -100 : 100) * damageForce.magnitude * angularVelocityVariation;
+        body_.angularVelocity = (damageForce.x > 0 ? -300 : 300) * damageForce.magnitude * angularVelocityVariation;
         BlipRenderer.enabled = false;
         LightRenderer.enabled = false;
         ShadowRenderer.enabled = false;
@@ -127,22 +134,18 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
 
         yield return DisableDelay;
 
-        body_.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
-        body_.isKinematic = true;
+        body_.simulated = false;
         collider_.enabled = false;
-    }
-
-    public void SetForce(Vector3 force)
-    {
-        force_ = force;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == mapLayer_)
         {
-            wallAvoidanceDirection_ = ((Vector3)collision.contacts[0].normal + latestMovenentDirection_).normalized;
-            wallAvoidanceAmount_ = 1.0f;
+            // If this event relevant anymore? Hard to tell the difference on/off.
+            var targetDir = (moveTo_ - transform_.position).normalized;
+            wallAvoidanceDirection_ = ((Vector3)collision.contacts[0].normal + targetDir).normalized;
+            wallAvoidanceAmount_ = 1.0f + Random.value * 0.2f;
         }
     }
 
@@ -151,27 +154,23 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
         if (hasMoveTotarget_ && !moveTargetReached_)
         {
             var direction = (moveTo_ - transform_.position);
-            bool targetReached = direction.sqrMagnitude < 0.1f;
+            bool targetReached = direction.sqrMagnitude < 0.05f;
             if (targetReached)
+            {
                 moveTargetReached_ = true;
+                return;
+            }
 
             direction.Normalize();
 
-            latestMovenentDirection_ = direction;
+            latestMovementDirection_ = direction;
 
             var wallAvoidance = (wallAvoidanceDirection_ * wallAvoidanceAmount_ * WallAvoidancePower).normalized;
             wallAvoidanceAmount_ = Mathf.Max(0.0f, wallAvoidanceAmount_ - 4.0f * dt);
 
-            direction = (direction + wallAvoidance).normalized; 
-            var step = direction * Speed * dt + force_;
-            body_.MovePosition(transform_.position + step);
-        }
-
-        if (force_.sqrMagnitude > 0.0f)
-        {
-            float forceLen = force_.magnitude;
-            forceLen = Mathf.Clamp(forceLen - Drag * dt, 0.0f, float.MaxValue);
-            force_ = force_.normalized * forceLen;
+            direction = (direction + wallAvoidance).normalized;
+            var step = direction * (EnemyMoveSpeed * speedVariation_) * dt;
+            body_.AddForce(step * 10, ForceMode2D.Impulse);
         }
     }
 
@@ -196,13 +195,10 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
 
     void Update()
     {
-        if (!IsDead)
-        {
-            UpdatePlayerLoS();
-        }
-
+        UpdatePlayerLoS();
         UpdateFlash();
-        spriteAnimator_.UpdateAnimation(latestMovenentDirection_, IsDead);
+
+        spriteAnimator_.UpdateAnimation(latestMovementDirection_, IsDead);
     }
 
     private void FixedUpdate()
@@ -217,8 +213,10 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
 
     private void UpdatePlayerLoS()
     {
+        if (IsDead)
+            return;
+
         bool checkNow = (Time.frameCount + myLosThrottleId_) % AiBlackboard.LosThrottleModulus == 0;
-        checkNow = true;
         if (checkNow && !AiBlackboard.Instance.BulletTimeActive)
         {
             var playerPos = AiBlackboard.Instance.PlayerPosition;
@@ -236,12 +234,12 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor
                 bool hasLoS = hitCount == 0;
                 if (hasLoS)
                 {
-                    playerLatestKnownPosition_ = playerPos;
+                    playerLatestKnownPosition_ = map_.GetTileBottomMid(playerPos);
                     playerLatestKnownPositionTime_ = Time.time;
                 }
-
             }
-            Debug.DrawLine(myPos, playerLatestKnownPosition_, Color.grey);
+
+//            Debug.DrawLine(myPos, playerLatestKnownPosition_, Color.grey);
         }
     }
 }

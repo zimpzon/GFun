@@ -6,10 +6,16 @@ namespace GFun
     public interface IMapAccess
     {
         /// <summary>
+        /// Get center of the tile containing worldPos
+        /// </summary>
+        Vector3 GetTileBottomMid(Vector3 worldPos);
+
+        /// <summary>
         /// 0 = walkable
         /// > 0 = not walkable
         /// </summary>
         int GetCollisionTileValue(int tileX, int tileY, int valueIfOutsideBounds = 1);
+        int GetCollisionTileValue(Vector3 worldPos, int valueIfOutsideBounds = 1);
 
         Vector2Int GetCollisionTilePosFromWorldPos(Vector3 worldPos);
 

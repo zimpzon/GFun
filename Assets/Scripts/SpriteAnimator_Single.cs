@@ -14,6 +14,8 @@ public class SpriteAnimator_Single : MonoBehaviour, ISpriteAnimator
             renderer_.sprite = SpriteWhenDead;
         else
             renderer_.sprite = SimpleSpriteAnimator.GetAnimationSprite(Anim.Sprites, Anim.DefaultAnimationFramesPerSecond, randomOffset_);
+
+        renderer_.flipX = latestMovementDirection.x < 0;
     }
 
     private void Awake()

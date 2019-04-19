@@ -2,6 +2,9 @@
 
 public interface IMovableActor
 {
+    float GetSpeed();
+    void SetSpeed(float speed);
+
     Vector3 GetPosition();
 
     /// <summary>
