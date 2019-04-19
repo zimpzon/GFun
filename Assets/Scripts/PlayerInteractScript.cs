@@ -73,7 +73,7 @@ public class PlayerInteractScript : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 Hide();
-                onAccept_.Invoke();
+                onAccept_?.Invoke();
             }
         }
     }

@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyId: 0
-  EnemyName: 
+  EnemyName: Bat
   EnemyLevel: 1
   EnemyMoveSpeed: 1
   SpeedVariation: 0.2
@@ -181,7 +181,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 30
   m_Sprite: {fileID: 21300000, guid: b0b471c1f44cc2a4e81613274f102186, type: 3}
-  m_Color: {r: 0.5943396, g: 0.26630008, b: 0.16540584, a: 1}
+  m_Color: {r: 0.7169812, g: 0.697156, b: 0.4565682, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -339,7 +339,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 40
   m_Sprite: {fileID: 21300000, guid: 1e5741dfac622ca41ab01d812a7a412d, type: 3}
-  m_Color: {r: 1, g: 0.96448624, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.019191265, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -441,5 +441,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad974ab402097bc40b0a300315f4c5af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Anim: {fileID: 11400000, guid: cdbe3eab8a83f9e4bbd65e43fe3b21a0, type: 2}
-  SpriteWhenDead: {fileID: 21300006, guid: aff0e86a4febd424cb1672d6572e016e, type: 3}
+  Anim: {fileID: 11400000, guid: 2a951802aa277604b8d67bffea3981d7, type: 2}
+  SpriteWhenDead: {fileID: 21300024, guid: aff0e86a4febd424cb1672d6572e016e, type: 3}

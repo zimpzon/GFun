@@ -5,4 +5,5 @@
     int Level { get; }
     float Life { get; }
     bool IsDead { get; }
+    void DoFlash(float amount, float ms);
 }

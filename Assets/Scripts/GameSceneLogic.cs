@@ -11,8 +11,13 @@ public class GameSceneLogic : MonoBehaviour
     public string CampSceneName = "TheCampScene";
     public string GameSceneName = "GameScene";
     public Transform DynamicObjectRoot;
-    public AudioClip PlayerLandSound;
-   
+    public AudioClip PlayerDeadSound;
+
+    int enemyAliveCount_;
+    int enemyDeadCount_;
+    Vector3 latestEnemyDeathPosition_;
+
+    PortalScript nextLevelPortal_;
     MapScript map_;
     PlayableCharacterScript playerScript_;
 
@@ -21,28 +26,79 @@ public class GameSceneLogic : MonoBehaviour
         string characterTag = CurrentRunData.Instance.StartingCharacterTag;
         var player = PlayableCharacters.Instance.InstantiateCharacter(characterTag, position);
         player.transform.SetParent(DynamicObjectRoot);
-
         playerScript_ = player.GetComponent<PlayableCharacterScript>();
-        playerScript_.Life = CurrentRunData.Instance.Life;
+
+        if (!CurrentRunData.Instance.IsInitialized)
+        {
+            CurrentRunData.Instance.IsInitialized = true;
+            UpdateCurrentRunWithPlayerData(CurrentRunData.Instance, playerScript_);
+        }
+        else
+        {
+            InitializePlayerWithCurrentRunData(playerScript_, CurrentRunData.Instance);
+        }
     }
+
+    void UpdateCurrentRunWithPlayerData(CurrentRunData run, PlayableCharacterScript player)
+    {
+        print("Updating current run with player data");
+        run.MaxLife = player.MaxLife;
+        run.Life = player.Life;
+    }
+
+    void InitializePlayerWithCurrentRunData(PlayableCharacterScript player, CurrentRunData run)
+    {
+        print("Initializing player from current run data");
+        player.MaxLife = run.MaxLife;
+        player.Life = run.Life;
+    }
+
+    void OnEnemyKilled(IEnemy enemy, Vector3 position)
+    {
+        latestEnemyDeathPosition_ = position;
+        CurrentRunData.Instance.EnemiesKilled++;
+        enemyAliveCount_--;
+        enemyDeadCount_++;
+    }
+
+    void OnEnemySpawned(IEnemy enemy, Vector3 position)
+    {
+        enemyAliveCount_++;
+    }
+
+    void UpdateHealthWidget() => HealthWidget.Instance.ShowLife(playerScript_.Life, playerScript_.MaxLife);
+    void OnPlayerDamaged(IEnemy enemy) => UpdateHealthWidget();
 
     private void Awake()
     {
+        GameEvents.ClearListeners();
+        GameEvents.OnEnemyKilled += OnEnemyKilled;
+        GameEvents.OnEnemySpawned += OnEnemySpawned;
+        GameEvents.OnPlayerDamaged += OnPlayerDamaged;
+
         map_ = SceneGlobals.Instance.MapScript;
+        nextLevelPortal_ = FindObjectOfType<PortalScript>();
+        nextLevelPortal_.gameObject.SetActive(false);
     }
 
     private void Start()
     {
+        TerminalCommands.RegisterCommands();
+
         Timing.RunCoroutine(EnterLevelLoop());
     }
 
     IEnumerator<float> EnterLevelLoop()
     {
-        InitCanvas.enabled = true;
+        InitCanvas.gameObject.SetActive(true);
         yield return 0;
 
         float startTime = Time.time;
         GenerateMap();
+
+        var enemiesAtMapStart = FindObjectsOfType<EnemyScript>();
+        foreach (var enemy in enemiesAtMapStart)
+            GameEvents.RaiseEnemySpawned(enemy, enemy.transform.position);
 
         CreatePlayer(map_.GetPlayerStartPosition());
 
@@ -53,7 +109,7 @@ public class GameSceneLogic : MonoBehaviour
         float timeLeft = (startTime - Time.time) + MinimumShowTime;
         yield return Timing.WaitForSeconds(timeLeft);
 
-        InitCanvas.enabled = false;
+        InitCanvas.gameObject.SetActive(false);
 
         var playerInScene = PlayableCharacters.GetPlayerInScene();
         var targetPos = playerInScene.transform.position;
@@ -72,7 +128,7 @@ public class GameSceneLogic : MonoBehaviour
         }
 
         playerInScene.transform.SetPositionAndRotation(targetPos, Quaternion.identity);
-        map_.ExplodeWalls(targetPos, 3);
+        map_.ExplodeWalls(targetPos, 2);
 
         var playerCenter = targetPos + Vector3.up * 0.5f;
         ParticleScript.EmitAtPosition(ParticleScript.Instance.PlayerLandParticles, playerCenter, 15);
@@ -105,27 +161,94 @@ public class GameSceneLogic : MonoBehaviour
                 yield break;
             }
 
+            if (enemyAliveCount_ <= 0 && !nextLevelPortal_.gameObject.activeInHierarchy)
+                OnAllEnemiesDead();
+
             yield return 0;
         }
     }
 
-    IEnumerator<float> DeadLoop()
+    void OnAllEnemiesDead()
     {
-        DeadCanvas.gameObject.SetActive(true);
+        Timing.RunCoroutine(ActivatePortalLoop().CancelWith(gameObject));
+    }
 
+    public void OnPlayerEnterPortal()
+    {
+        UpdateCurrentRunWithPlayerData(CurrentRunData.Instance, playerScript_);
+
+        LoadNextLevel();
+    }
+
+    IEnumerator<float> ActivatePortalLoop()
+    {
+        nextLevelPortal_.gameObject.SetActive(true);
+
+        float t = 0;
+        while (t < 1)
+        {
+            CameraShake.Instance.SetMinimumShake(0.2f + t);
+            t += Time.unscaledDeltaTime;
+            yield return 0;
+        }
+
+        var pos = latestEnemyDeathPosition_;
+        nextLevelPortal_.transform.position = pos;
+        nextLevelPortal_.OnPlayerEnter.AddListener(OnPlayerEnterPortal);
+        map_.ExplodeWalls(pos, 3);
+        var portalCenter = pos + Vector3.up * 1.5f;
+        ParticleScript.EmitAtPosition(ParticleScript.Instance.PlayerLandParticles, portalCenter, 25);
+        ParticleScript.EmitAtPosition(ParticleScript.Instance.MuzzleFlashParticles, portalCenter, 1);
+        ParticleScript.EmitAtPosition(ParticleScript.Instance.WallDestructionParticles, portalCenter, 10);
+
+        yield return 0;
+    }
+
+    void OnRunEnded()
+    {
+        GameProgressData.CurrentProgress.EnemiesKilled += CurrentRunData.Instance.EnemiesKilled;
         GameProgressData.CurrentProgress.NumberOfDeaths++;
         GameProgressData.SaveProgress();
 
+        CurrentRunData.Reset();
+    }
+
+    IEnumerator<float> DeadLoop()
+    {
+        GameEvents.ClearListeners();
+        SceneGlobals.Instance.AudioManager.PlaySfxClip(PlayerDeadSound, 1);
+        DeadCanvas.gameObject.SetActive(true);
+        MiniMapCamera.Instance.Show(false);
+
+        OnRunEnded();
+
+        float timeScale = Time.timeScale;
+
         while (true)
         {
+            timeScale = Mathf.Max(0.001f, timeScale - Time.unscaledDeltaTime);
+            Time.timeScale = timeScale;
+
             if (Input.GetKeyDown(KeyCode.R))
-                SceneManager.LoadScene(GameSceneName, LoadSceneMode.Single);
+                LoadNextLevel();
 
             if (Input.GetKeyDown(KeyCode.Space))
-                SceneManager.LoadScene(CampSceneName, LoadSceneMode.Single);
+                LoadTheCamp();
 
             yield return 0;
         }
+    }
+
+    void LoadTheCamp()
+    {
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene(CampSceneName, LoadSceneMode.Single);
+    }
+
+    void LoadNextLevel()
+    {
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene(GameSceneName, LoadSceneMode.Single);
     }
 
     public void GenerateMap()

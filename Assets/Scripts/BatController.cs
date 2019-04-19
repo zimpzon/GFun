@@ -6,6 +6,7 @@ public class BatController : MonoBehaviour
     IMovableActor movable_;
     ISensingActor senses_;
     IEnemy enemy_;
+    IPhysicsActor physicsActor_;
     Vector3 dir_;
 
     void Start()
@@ -14,6 +15,7 @@ public class BatController : MonoBehaviour
         senses_ = GetComponent<ISensingActor>();
         senses_.LookForPlayerLoS(true, maxDistance: 10);
         enemy_ = GetComponent<IEnemy>();
+        physicsActor_ = GetComponent<IPhysicsActor>();
 
         StartCoroutine(AI());
     }
@@ -35,7 +37,7 @@ public class BatController : MonoBehaviour
 
                 movable_.SetSpeed(baseSpeed * 2);
 
-                var target = senses_.GetPlayerLatestKnownPosition();
+                var target = senses_.GetPlayerLatestKnownPosition(PlayerPositionType.Tile);
                 movable_.MoveTo(target);
 
                 yield return null;

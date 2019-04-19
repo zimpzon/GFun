@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 // Maybe not suitable for enemies larger than 1 tile?
-public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy
+public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, IPhysicsActor
 {
     public EnemyIds EnemyId;
     public string EnemyName;
@@ -11,6 +11,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy
     public float EnemyMoveSpeed = 1;
     public float SpeedVariation = 0.2f;
     public float EnemyLife = 50;
+    public int TouchPlayerDamage = 1;
     public SpriteRenderer BlipRenderer;
     public SpriteRenderer ShadowRenderer;
     public SpriteRenderer LightRenderer;
@@ -26,14 +27,17 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy
 
     public bool IsDead { get; set; }
 
+    float width_ = 1;
+    float height_ = 1;
     float life_;
     float speedVariation_;
     bool lookForPlayerLos_;
     float playerLoSMaxDistance_;
-    float playerLatestKnownPositionTime_;
+    float playerLatestKnownPositionTime_ = float.MinValue;
     Vector3 playerLatestKnownPosition_;
     int mapLayerMask_;
     int mapLayer_;
+    int playerLayer_;
 
     Transform transform_;
     Rigidbody2D body_;
@@ -61,9 +65,17 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy
         BlipRenderer.enabled = true;
         mapLayer_ = SceneGlobals.Instance.MapLayer;
         mapLayerMask_ = 1 << SceneGlobals.Instance.MapLayer;
-        playerLatestKnownPosition_ = transform_.position; // Better than having last known position = 0,0
+        playerLayer_ = SceneGlobals.Instance.PlayerLayer;
         speedVariation_ = 1.0f - ((Random.value * SpeedVariation) - SpeedVariation * 0.5f);
     }
+
+    // IPhysicsActor
+    public void SetMinimumForce(Vector3 force) => throw new System.NotImplementedException();
+
+    public void SetForce(Vector3 force) => throw new System.NotImplementedException();
+
+    public void AddForce(Vector3 force)
+        => body_.AddForce(force, ForceMode2D.Impulse);
 
     // ISensingActor
     public void LookForPlayerLoS(bool doCheck, float maxDistance)
@@ -72,8 +84,17 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy
         playerLoSMaxDistance_ = maxDistance;
     }
 
-    public Vector3 GetPlayerLatestKnownPosition()
-        => playerLatestKnownPosition_;
+    public Vector3 GetPlayerLatestKnownPosition(PlayerPositionType type)
+    {
+        if (type == PlayerPositionType.Feet)
+            return playerLatestKnownPosition_;
+        else if (type == PlayerPositionType.Center)
+            return playerLatestKnownPosition_ + Vector3.up * 0.5f;
+        else if (type == PlayerPositionType.Tile)
+            return map_.GetTileBottomMid(playerLatestKnownPosition_);
+
+        throw new System.ArgumentException($"Unknown position type: {type}");
+    }
 
     public float GetPlayerLatestKnownPositionAge()
         => Time.time - playerLatestKnownPositionTime_;
@@ -82,9 +103,13 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy
     public float GetSpeed() => EnemyMoveSpeed;
     public void SetSpeed(float speed) => EnemyMoveSpeed = speed;
     public Vector3 GetPosition() => transform_.position;
+    public Vector3 GetCenter() => transform_.position + transform_.rotation * (Vector3.up * height_ * 0.5f);
 
     public void MoveTo(Vector3 destination)
     {
+        if (IsDead)
+            return;
+
         moveTo_ = destination;
         hasMoveTotarget_ = true;
         moveTargetReached_ = false;
@@ -102,7 +127,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy
         EnemyLife = Mathf.Max(0, EnemyLife - amount);
         if (EnemyLife == 0)
         {
-            StartCoroutine(Die(damageForce));
+            Die(damageForce);
         }
         else
         {
@@ -113,7 +138,13 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy
 
     static WaitForSeconds DisableDelay = new WaitForSeconds(3.0f);
 
-    IEnumerator Die(Vector3 damageForce)
+    void Die(Vector3 damageForce)
+    {
+        GameEvents.RaiseEnemyKilled(this, transform_.position);
+        StartCoroutine(DieCo(damageForce));
+    }
+
+    IEnumerator DieCo(Vector3 damageForce)
     {
         DoFlash(-0.25f, 100.0f);
         IsDead = true;
@@ -140,6 +171,12 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.layer == playerLayer_)
+        {
+            var player = PlayableCharacters.GetPlayerInScene();
+            player.TakeDamage(this, TouchPlayerDamage, latestMovementDirection_);
+        }
+
         if (collision.gameObject.layer == mapLayer_)
         {
             // If this event relevant anymore? Hard to tell the difference on/off.
@@ -177,7 +214,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy
     static int LosThrottleCounter = 0;
     int myLosThrottleId_ = LosThrottleCounter++;
 
-    void DoFlash(float amount, float ms)
+    public void DoFlash(float amount, float ms)
     {
         flashEndTime_ = Time.unscaledTime + ms;
         flashAmount_ = amount;
@@ -234,12 +271,10 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy
                 bool hasLoS = hitCount == 0;
                 if (hasLoS)
                 {
-                    playerLatestKnownPosition_ = map_.GetTileBottomMid(playerPos);
+                    playerLatestKnownPosition_ = playerPos;
                     playerLatestKnownPositionTime_ = Time.time;
                 }
             }
-
-//            Debug.DrawLine(myPos, playerLatestKnownPosition_, Color.grey);
         }
     }
 }

@@ -15,7 +15,6 @@ public class PlainBulletScript : MonoBehaviour
     MapScript map_;
     int remainingDamage_;
 
-
     public void Init(Vector3 position, Vector3 direction, PlainBulletSettings settings)
     {
         position_ = position;
@@ -43,7 +42,6 @@ public class PlainBulletScript : MonoBehaviour
     {
         if (collision.gameObject.layer == enemyLayer_.value && remainingDamage_ > 0)
         {
-
             var enemy = collision.gameObject.GetComponent<EnemyScript>();
             enemy.TakeDamage(settings_.Damage, Direction * settings_.DamageForce);
             remainingDamage_ = 0;
