@@ -4,6 +4,8 @@ using UnityEngine.Tilemaps;
 
 public class MapScript : MonoBehaviour, IMapAccess
 {
+    public static MapScript Instance;
+
     public Tilemap FloorTileMap;
     public Tilemap WallTileMap;
     public Tilemap TopTileMap;
@@ -46,7 +48,7 @@ public class MapScript : MonoBehaviour, IMapAccess
 
     // When destroying walls some colliders are left behind. Fix should be incoming:
     // https://github.com/Unity-Technologies/2d-extras/issues/34
-    public void ExplodeWalls(Vector3 worldPosition, float worldRadius)
+    public void ExplodeWalls(Vector3 worldPosition, float worldRadius, bool particlesAtDestroyedWallsOnly = true)
     {
         int tilesChecked = MapUtil.ClearCircle(this, MapStyle, worldPosition, worldRadius);
         var particles = SceneGlobals.Instance.ParticleScript.WallDestructionParticles;
@@ -56,14 +58,17 @@ public class MapScript : MonoBehaviour, IMapAccess
         int tilesCleared = 0;
         for (int i = 0; i < tilesChecked; ++i)
         {
-            if (MapUtil.LatestResultFlags[i])
+            bool wasDestroyed = MapUtil.LatestResultFlags[i];
+            if (wasDestroyed)
+                tilesCleared++;
+
+            if (wasDestroyed || !particlesAtDestroyedWallsOnly)
             {
                 var tile = MapUtil.LatestResultPositions[i];
                 // Show effect a bit above wall tile center since they also have a top
                 const float EffectOffset = 0.5f;
                 var tileWorldPos = WallTileMap.GetCellCenterWorld(tile) + Vector3.up * EffectOffset;
                 ParticleScript.EmitAtPosition(particles, tileWorldPos, 10);
-                tilesCleared++;
             }
         }
 
@@ -75,6 +80,8 @@ public class MapScript : MonoBehaviour, IMapAccess
 
     void Awake()
     {
+        Instance = this;
+
         wallRenderer_ = WallTileMap.GetComponent<Renderer>();
         topRenderer_ = TopTileMap.GetComponent<Renderer>();
         backgroundRenderer_ = BackgroundQuad?.GetComponent<Renderer>();

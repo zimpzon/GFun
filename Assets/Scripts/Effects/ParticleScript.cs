@@ -11,6 +11,7 @@ public class ParticleScript : MonoBehaviour
     public ParticleSystem MuzzleSmokeParticles;
     public ParticleSystem CharacterSelectedParticles;
     public ParticleSystem PlayerLandParticles;
+    public ParticleSystem GoldParticles;
 
     private void Awake()
     {

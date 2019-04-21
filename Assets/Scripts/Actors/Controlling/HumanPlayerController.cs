@@ -46,7 +46,6 @@ public class HumanPlayerController : MonoBehaviour
         BulletTimeLight.CopyTo(bulletTimeLight_);
     }
 
-    // Abilities? Shoot (arrows), time (space), active ability (q), reload (r), interact (e), bomb (f)
     void ToggleBulletTime()
     {
         bulletTime_ = !bulletTime_;
@@ -76,6 +75,11 @@ public class HumanPlayerController : MonoBehaviour
         bulletTimeValue_ = Mathf.Clamp01(bulletTimeValue_);
     }
 
+    private void OnDisable()
+    {
+        weapon_.OnTriggerUp();    
+    }
+
     void Update()
     {
         if (Disabled)
@@ -99,6 +103,9 @@ public class HumanPlayerController : MonoBehaviour
 
     void CheckInput()
     {
+        if (MiniMapCamera.Instance.IsShown)
+            return;
+
         var horz = Input.GetAxisRaw("Horizontal");
         var vert = Input.GetAxisRaw("Vertical");
         var moveVec = new Vector3(horz, vert);
@@ -108,7 +115,7 @@ public class HumanPlayerController : MonoBehaviour
             ToggleBulletTime();
 
         if (Input.GetKeyDown(KeyCode.F))
-            map_.ExplodeWalls(transform.position, 5f);
+            map_.ExplodeWalls(transform.position, 3f);
 
         if (Input.GetKeyDown(KeyCode.P))
             PlainBulletGun.EffectsOn = !PlainBulletGun.EffectsOn;

@@ -56,7 +56,7 @@ public class PortalScript : MonoBehaviour
             yield return null;
         }
 
-        OnPlayerEnter.Invoke();
+        OnPlayerEnter?.Invoke();
     }
 
     void Update()

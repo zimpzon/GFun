@@ -5,7 +5,8 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
 {
     public string Name;
     public float Speed = 10;
-    public int Life = 1;
+    public int MaxLife = 5;
+    public int Life = 5;
     public SpriteAnimationFrames_IdleRun Anim;
     public float LookAtOffset = 10;
     public float Drag = 1.0f;
@@ -14,12 +15,16 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
     public int ShowCollisionDebugSize = 10;
     public bool IsDead = false;
     public Vector3 WeaponOffsetRight;
+    public AudioClip TakeDamageSound;
 
     public IWeapon CurrentWeapon;
     public GameObject CurrentWeaponGo;
     Transform weaponTransform_;
     SpriteRenderer weaponRenderer_;
+    Material renderMaterial_;
 
+    float flashAmount_;
+    float flashEndTime_;
     HumanPlayerController humanPlayerController_;
     Transform transform_;
     SpriteRenderer renderer_;
@@ -74,15 +79,54 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
             force_ = force;
     }
 
-    public void TakeDamage(int amount, Vector3 damageForce)
+    public void AddForce(Vector3 force)
+        => body_.AddForce(force, ForceMode2D.Impulse);
+
+    void DoFlash(float amount, float ms)
     {
+        flashEndTime_ = Time.unscaledTime + ms;
+        flashAmount_ = amount;
+        renderMaterial_.SetFloat("_FlashAmount", flashAmount_);
+    }
+
+    void UpdateFlash()
+    {
+        if (flashAmount_ > 0.0f && Time.unscaledTime > flashEndTime_)
+        {
+            flashAmount_ = 0.0f;
+            renderMaterial_.SetFloat("_FlashAmount", 0.0f);
+        }
+    }
+
+    void UpdateHealth()
+    {
+        if (HealthWidget.Instance != null)
+            HealthWidget.Instance.ShowLife(Life, MaxLife);
+    }
+
+    static int count = 0;
+    public void TakeDamage(IEnemy enemy, int amount, Vector3 damageForce)
+    {
+        if (IsDead)
+            return;
+
+        AudioManager.Instance.PlaySfxClip(TakeDamageSound, 1);
+        DoFlash(2, 0.3f);
+
         Life = Mathf.Max(0, Life - amount);
+        GameEvents.RaisePlayerDamaged(enemy);
+
+        UpdateHealth();
         if (Life == 0)
+        {
             Die();
+            GameEvents.RaisePlayerKilled(enemy);
+        }
     }
 
     public void Die()
     {
+        DoFlash(0, 0);
         IsDead = true;
         SetIsHumanControlled(false);
     }
@@ -109,6 +153,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
         transform_ = transform;
         humanPlayerController_ = GetComponent<HumanPlayerController>();
         renderer_ = GetComponent<SpriteRenderer>();
+        renderMaterial_ = renderer_.material;
         body_ = GetComponent<Rigidbody2D>();
         switchPlayerInteract_ = transform_.Find("SwitchPlayerInteract").GetComponent<InteractableTrigger>();
 
@@ -121,6 +166,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
         map_ = SceneGlobals.Instance.MapScript;
         lookAt_ = transform_.position;
         camPositioner_ = SceneGlobals.Instance.CameraPositioner;
+        UpdateHealth();
 
         RefreshInteracting();
     }
@@ -153,6 +199,8 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
 
     void UpdateInternal(float dt)
     {
+        UpdateFlash();
+
         bool hasRecentlyFiredWeapon = CurrentWeapon.LatestFiringTimeUnscaled > Time.unscaledTime - 0.70f;
         Vector3 latestHorizontalMovement = new Vector3(latestFixedMovenentDirection_.x, 0, 0);
         Vector3 facingDirection = hasRecentlyFiredWeapon ? CurrentWeapon.LatestFiringDirection : latestHorizontalMovement;
