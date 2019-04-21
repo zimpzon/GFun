@@ -1,5 +1,4 @@
-﻿using HordeEngine;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class SimpleSpriteAnimator : MonoBehaviour
@@ -7,16 +6,19 @@ public class SimpleSpriteAnimator : MonoBehaviour
     public Sprite[] AnimationSprites;
     public float AnimationFramesPerSecond = 5.0f;
 
+    float randomOffset_;
+
     SpriteRenderer renderer_;
 
     private void Awake()
     {
         renderer_ = GetComponent<SpriteRenderer>();
+        randomOffset_ = Random.value * AnimationSprites.Length;
     }
 
     private void Update()
     {
-        renderer_.sprite = GetAnimationSprite(AnimationSprites, AnimationFramesPerSecond);
+        renderer_.sprite = GetAnimationSprite(AnimationSprites, AnimationFramesPerSecond, randomOffset_);
     }
 
     public static Sprite GetAnimationSprite(Sprite[] sprites, float animationFramesPerSecond, float offset01 = 0)

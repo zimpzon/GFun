@@ -175,6 +175,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         {
             var player = PlayableCharacters.GetPlayerInScene();
             player.TakeDamage(this, TouchPlayerDamage, latestMovementDirection_);
+            AddForce(latestMovementDirection_ * -1);
         }
 
         if (collision.gameObject.layer == mapLayer_)

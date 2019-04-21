@@ -13,8 +13,10 @@ public class CurrentRunData
     public int CurrentDifficulty = 1;
     public int EnemiesKilled;
 
+    public int Coins;
     public int Life;
     public int MaxLife;
+    public float PlayerAttractDistance = 3.0f;
 
     public List<string> NewUnlockedCharacters = new List<string>();
 

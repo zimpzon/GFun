@@ -12,6 +12,7 @@ public class GameSceneLogic : MonoBehaviour
     public string GameSceneName = "GameScene";
     public Transform DynamicObjectRoot;
     public AudioClip PlayerDeadSound;
+    public GameObjectPool CoinPool;
 
     int enemyAliveCount_;
     int enemyDeadCount_;
@@ -59,6 +60,19 @@ public class GameSceneLogic : MonoBehaviour
         CurrentRunData.Instance.EnemiesKilled++;
         enemyAliveCount_--;
         enemyDeadCount_++;
+
+        int count = Random.Range(0, 5 + enemy.Level);
+        for (int i = 0; i < count; ++i)
+        {
+            var coin = CoinPool.GetFromPool();
+            coin.transform.position = position;
+            var coinScript = coin.GetComponent<AutoPickUpActorScript>();
+            var randomDirection = Random.insideUnitCircle.normalized;
+            float randomForce = (Random.value * 0.5f + 0.5f) * 3;
+            coinScript.ObjectPool = CoinPool;
+            coin.gameObject.SetActive(true);
+            coinScript.Throw(randomDirection * randomForce);
+        }
     }
 
     void OnEnemySpawned(IEnemy enemy, Vector3 position)
@@ -66,8 +80,23 @@ public class GameSceneLogic : MonoBehaviour
         enemyAliveCount_++;
     }
 
+    void OnAutoPickUp(AutoPickUpType type, int value, Vector3 position)
+    {
+        if (type == AutoPickUpType.Coin)
+        {
+            CurrentRunData.Instance.Coins += value;
+            UpdateCoinWidget();
+        }
+    }
+
     void UpdateHealthWidget() => HealthWidget.Instance.ShowLife(playerScript_.Life, playerScript_.MaxLife);
     void OnPlayerDamaged(IEnemy enemy) => UpdateHealthWidget();
+
+    void UpdateCoinWidget()
+    {
+        if (CoinWidgetScript.Instance != null)
+            CoinWidgetScript.Instance.SetAmount(CurrentRunData.Instance.Coins);
+    }
 
     private void Awake()
     {
@@ -75,6 +104,7 @@ public class GameSceneLogic : MonoBehaviour
         GameEvents.OnEnemyKilled += OnEnemyKilled;
         GameEvents.OnEnemySpawned += OnEnemySpawned;
         GameEvents.OnPlayerDamaged += OnPlayerDamaged;
+        GameEvents.OnAutoPickUp += OnAutoPickUp;
 
         map_ = SceneGlobals.Instance.MapScript;
         nextLevelPortal_ = FindObjectOfType<PortalScript>();
@@ -101,6 +131,7 @@ public class GameSceneLogic : MonoBehaviour
             GameEvents.RaiseEnemySpawned(enemy, enemy.transform.position);
 
         CreatePlayer(map_.GetPlayerStartPosition());
+        UpdateCoinWidget();
 
         PlayableCharacters.Instance.SetCharacterToHumanControlled(playerScript_.tag);
         Helpers.SetCameraPositionToActivePlayer();
@@ -257,7 +288,7 @@ public class GameSceneLogic : MonoBehaviour
         int h = 50;
 
         MapBuilder.GenerateMapFloor(w, h, MapFloorAlgorithm.RandomWalkers);
-        MapBuilder.Fillrect(new Vector2Int(90, 55), 15, 3, 1);
+        MapBuilder.Fillrect(new Vector2Int(90, 55), 20, 4, 1);
         MapBuilder.BuildMapTiles(MapBuilder.MapSource, map_, MapStyle);
     }
 }

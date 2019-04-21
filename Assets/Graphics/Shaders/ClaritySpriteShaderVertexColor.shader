@@ -63,7 +63,8 @@
     {
         half4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
         if (c.a < 0.5) discard; // Fixed cut-off at 0.5
-		c.rgb *= IN.color.rgb + _FlashAmount;
+		c.rgb *= IN.color.rgb;
+		c.rgb += _FlashAmount;
         c.a = _Clarity;
 		return c;
     }
