@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameSceneLogic : MonoBehaviour
 {
+    public static GameSceneLogic Instance;
+
     public MapStyle MapStyle;
     public Canvas DeadCanvas;
     public Canvas InitCanvas;
@@ -87,12 +89,16 @@ public class GameSceneLogic : MonoBehaviour
             CurrentRunData.Instance.Coins += value;
             UpdateCoinWidget();
         }
+        else if (type == AutoPickUpType.Health)
+        {
+            playerScript_.AddHealth(value);
+        }
     }
 
     void UpdateHealthWidget() => HealthWidget.Instance.ShowLife(playerScript_.Life, playerScript_.MaxLife);
     void OnPlayerDamaged(IEnemy enemy) => UpdateHealthWidget();
 
-    void UpdateCoinWidget()
+    public void UpdateCoinWidget()
     {
         if (CoinWidgetScript.Instance != null)
             CoinWidgetScript.Instance.SetAmount(CurrentRunData.Instance.Coins);
@@ -100,6 +106,8 @@ public class GameSceneLogic : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
+
         GameEvents.ClearListeners();
         GameEvents.OnEnemyKilled += OnEnemyKilled;
         GameEvents.OnEnemySpawned += OnEnemySpawned;
@@ -289,6 +297,11 @@ public class GameSceneLogic : MonoBehaviour
 
         MapBuilder.GenerateMapFloor(w, h, MapFloorAlgorithm.RandomWalkers);
         MapBuilder.Fillrect(new Vector2Int(90, 55), 20, 4, 1);
+
+        var plugins = FindObjectsOfType<MapPluginScript>();
+        foreach (var plugin in plugins)
+            plugin.ApplyToMap();
+
         MapBuilder.BuildMapTiles(MapBuilder.MapSource, map_, MapStyle);
     }
 }

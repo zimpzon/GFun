@@ -29,7 +29,7 @@ public class PlayerInteractScript : MonoBehaviour
 
     public void Show(Transform target, Vector3 offset, string message, UnityEvent onAccept)
     {
-        string msg = $"{message}{Environment.NewLine}(<color=#00ff00>E</color>)";
+        string msg = $"{message}{Environment.NewLine}(<color=#00ff00>E</color>)".Replace("\\n", "\n");
         text_.text = msg;
         target_ = target;
         offset_ = offset;

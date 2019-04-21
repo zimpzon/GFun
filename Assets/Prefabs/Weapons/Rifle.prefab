@@ -136,7 +136,7 @@ MonoBehaviour:
     TimeBetweenShots: 0.1
   BulletSettings:
     Speed: 20
-    Range: 15
+    Range: 4
     Size: 0.25
     BounceWalls: 0
     Damage: 10

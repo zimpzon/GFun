@@ -9,7 +9,7 @@ public class CoinWidgetScript : MonoBehaviour
 
     public void SetAmount(int amount)
     {
-        text_.text = amount.ToString("000");
+        text_.text = $"${amount}";
     }
 
     private void Awake()

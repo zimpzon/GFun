@@ -104,7 +104,24 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
             HealthWidget.Instance.ShowLife(Life, MaxLife);
     }
 
-    static int count = 0;
+    public void AddHealth(int amount)
+    {
+        if (IsDead)
+            return;
+
+        Life = Mathf.Min(MaxLife, Life + amount);
+        UpdateHealth();
+    }
+
+    public void AddMaxHealth(int amount)
+    {
+        if (IsDead)
+            return;
+
+        MaxLife += amount;
+        UpdateHealth();
+    }
+
     public void TakeDamage(IEnemy enemy, int amount, Vector3 damageForce)
     {
         if (IsDead)
