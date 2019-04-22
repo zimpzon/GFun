@@ -256,7 +256,7 @@ MonoBehaviour:
   Type: 3
   Value: 1
   TimeToLive: 20
-  AttractDistanceMul: 1
+  AttractDistanceMul: 0.5
   PickupDistance: 0.8
   AttractPower: -10
   FlashSeconds: 3

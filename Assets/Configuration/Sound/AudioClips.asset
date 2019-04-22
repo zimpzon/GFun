@@ -16,3 +16,4 @@ MonoBehaviour:
   LargeExplosion1: {fileID: 8300000, guid: 152962d8dfb98ba49a9cd3b9525ec614, type: 3}
   ShotgunShot: {fileID: 8300000, guid: 810c97943c369fe43876f64b287305f2, type: 3}
   PlayerLand: {fileID: 8300000, guid: 97357a486cac1a143ad3917cd4805f60, type: 3}
+  Campfire: {fileID: 8300000, guid: 99826330ac083c04a9b1ef82ccd426df, type: 3}
