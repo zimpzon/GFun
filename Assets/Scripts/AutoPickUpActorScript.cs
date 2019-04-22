@@ -7,10 +7,11 @@ public class AutoPickUpActorScript : MonoBehaviour
     public AutoPickUpType Type;
     public int Value = 1;
     public float TimeToLive = 10;
+    public float AttractDistanceMul = 1.0f;
     public float PickupDistance = 0.8f;
-    float AttractPower = 20.0f;
+    public float AttractPower = 20.0f;
+    public float FlashSeconds = 3;
     float FlashAmount = 100.0f;
-    float FlashSeconds = 3;
     public AudioClip PickUpSound;
     public GameObjectPool ObjectPool;
 
@@ -75,7 +76,8 @@ public class AutoPickUpActorScript : MonoBehaviour
 
         var playerPos = AiBlackboard.Instance.PlayerPosition + Vector3.up * 0.5f;
         var diff = playerPos - myPos;
-        float sqrDistance = CurrentRunData.Instance.PlayerAttractDistance * CurrentRunData.Instance.PlayerAttractDistance;
+        float attractDistance = CurrentRunData.Instance.PlayerAttractDistance * AttractDistanceMul;
+        float sqrDistance =  attractDistance * attractDistance;
         if (diff.sqrMagnitude < sqrDistance && time > throwEndTime_)
         {
             var direction = diff.normalized;

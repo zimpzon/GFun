@@ -14,7 +14,6 @@ public class GameSceneLogic : MonoBehaviour
     public string GameSceneName = "GameScene";
     public Transform DynamicObjectRoot;
     public AudioClip PlayerDeadSound;
-    public GameObjectPool CoinPool;
 
     int enemyAliveCount_;
     int enemyDeadCount_;
@@ -63,18 +62,7 @@ public class GameSceneLogic : MonoBehaviour
         enemyAliveCount_--;
         enemyDeadCount_++;
 
-        int count = Random.Range(0, 5 + enemy.Level);
-        for (int i = 0; i < count; ++i)
-        {
-            var coin = CoinPool.GetFromPool();
-            coin.transform.position = position;
-            var coinScript = coin.GetComponent<AutoPickUpActorScript>();
-            var randomDirection = Random.insideUnitCircle.normalized;
-            float randomForce = (Random.value * 0.5f + 0.5f) * 3;
-            coinScript.ObjectPool = CoinPool;
-            coin.gameObject.SetActive(true);
-            coinScript.Throw(randomDirection * randomForce);
-        }
+        EnemyDropScript.Instance.SpawnDrops(enemy, position);
     }
 
     void OnEnemySpawned(IEnemy enemy, Vector3 position)

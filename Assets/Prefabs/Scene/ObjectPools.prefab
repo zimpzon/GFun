@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: {fileID: 7154584249229889461, guid: 7676bb7a24554304faf59e9266708717, type: 3}
-  StartCount: 100
+  StartCount: 50
   ExpandCount: 10
   PoolCount: 0
   InFlightCount: 0
@@ -93,6 +93,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Prefab: {fileID: 6462519186071445375, guid: 89efd538584e9624fbf98a1ee95eb458, type: 3}
   StartCount: 100
+  ExpandCount: 10
+  PoolCount: 0
+  InFlightCount: 0
+--- !u!1 &1250768377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1250768378}
+  - component: {fileID: 1250768379}
+  m_Layer: 0
+  m_Name: HealthPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1250768378
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250768377}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6710576160537641272}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1250768379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250768377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6933e99cec5c14f4dbd74c8f2b72527d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Prefab: {fileID: 7154584249229889461, guid: a8fd4123184872a46aee930d0c064846, type: 3}
+  StartCount: 50
   ExpandCount: 10
   PoolCount: 0
   InFlightCount: 0
@@ -175,6 +223,7 @@ Transform:
   - {fileID: 6710576160680676698}
   - {fileID: 1240762025}
   - {fileID: 468808154}
+  - {fileID: 1250768378}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
