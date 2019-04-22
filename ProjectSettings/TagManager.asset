@@ -50,3 +50,6 @@ TagManager:
   - name: Particles
     uniqueID: 2335825369
     locked: 0
+  - name: Lighting
+    uniqueID: 3604034227
+    locked: 0

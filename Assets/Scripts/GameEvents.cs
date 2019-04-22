@@ -24,5 +24,6 @@ public static class GameEvents
         OnPlayerDamaged = null;
         OnEnemyKilled = null;
         OnEnemySpawned = null;
+        OnAutoPickUp = null;
     }
 }
