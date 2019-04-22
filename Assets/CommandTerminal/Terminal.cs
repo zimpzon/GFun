@@ -257,6 +257,12 @@ namespace CommandTerminal
                 CompleteCommand();
                 move_cursor = true; // Wait till next draw call
             }
+            // TODO: Add code to open the options pop-up window
+            //else if(Event.current.Equals(Event.KeyboardEvent("m")) || Event.current.Equals(Event.KeyboardEvent("M")))
+            //{
+            //    StartCoroutine(ShowOptions());
+            //}
+
 
             GUILayout.BeginHorizontal();
 

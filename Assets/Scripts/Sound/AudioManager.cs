@@ -1,4 +1,5 @@
 ﻿using GFun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,27 +14,35 @@ public class AudioManager : MonoBehaviour
     public bool ShowDebugOutput = false;
     public AudioMixerGroup MusicMixerGroup;
     public AudioMixerGroup SfxMixerGroup;
-    public AudioMixerGroup AmbianceMixerGroup;
+    public AudioMixerGroup AmbientMixerGroup;
+
+    private AudioMixerSnapshot IntroScreenSnapshot;
+    private AudioMixerSnapshot InGameSnapshot;
+
+    private bool IsMusicPlaying;
 
     AudioSource musicSource_;
     AudioSource ambienceSource_;
     List<AudioSource> sfxSources_ = new List<AudioSource>();
 
     bool debugIsShown_;
-    bool musicIsPlaying_;
-    float musicVolume_ = 1;
-    float sfxVolume_ = 1;
 
     void Awake()
     {
         Instance = this;
 
         musicSource_ = gameObject.AddComponent<AudioSource>();
+        musicSource_.loop = true;
         ambienceSource_ = gameObject.AddComponent<AudioSource>();
         musicSource_.outputAudioMixerGroup = MusicMixerGroup;
-        ambienceSource_.outputAudioMixerGroup = AmbianceMixerGroup;
-        SetMusicVolume(PlayerPrefs.GetFloat(PlayerPrefsNames.MusicVolume, 1));
-        SetSfxVolume(PlayerPrefs.GetFloat(PlayerPrefsNames.SfxVolume, 1));
+        ambienceSource_.outputAudioMixerGroup = AmbientMixerGroup;
+
+        IntroScreenSnapshot = MusicMixerGroup.audioMixer.FindSnapshot("IntroScreen");
+        InGameSnapshot = MusicMixerGroup.audioMixer.FindSnapshot("InGame");
+
+        SetMusicVolume(PlayerPrefs.GetFloat(PlayerPrefsNames.MaxMusicVolume, 0));
+        SetSfxVolume(PlayerPrefs.GetFloat(PlayerPrefsNames.SfxVolume, 0));
+        SetAmbientVolume(PlayerPrefs.GetFloat(PlayerPrefsNames.AmbientVolume, 0));
 
         for (int i = 0; i < SfxSourceCount; ++i)
         {
@@ -70,6 +79,24 @@ public class AudioManager : MonoBehaviour
         return replaceIfNoneAvailable ? sfxSources_[UnityEngine.Random.Range(0, sfxSources_.Count)] : null;
     }
 
+    #region Coroutines
+    private IEnumerator PlayMusicCo(AudioClip clip)
+    {
+        musicSource_.clip = clip;
+        musicSource_.loop = true;
+        musicSource_.Play();
+
+        yield return null;
+    }
+
+    private IEnumerator StopMusicCo()
+    {
+        musicSource_.Stop();
+        yield return null;
+    }
+
+    #endregion  
+
     public void PlaySfxClip(AudioClip clip, int maxInstances, float pitchRandomVariation = 0.0f)
     {
         AudioSource selectedSource = null;
@@ -85,90 +112,21 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public float GetMusicVolume()
-    {
-        return musicVolume_;
-    }
-
-    public void SetMusicVolume(float volume)
-    {
-        musicVolume_ = volume;
-        musicSource_.volume = volume;
-    }
-
-    public float GetSfxVolume()
-    {
-        return sfxVolume_;
-    }
-
-    public void SetSfxVolume(float volume)
-    {
-        sfxVolume_ = volume;
-    }
-
-    IEnumerator Fade(float from, float to)
-    {
-        const float Speed = 2.0f;
-        float vol = from;
-        if (from > to)
-        {
-            while (vol > to)
-            {
-                vol -= Time.unscaledDeltaTime * Speed;
-                musicSource_.volume = vol;
-                yield return null;
-            }
-        }
-        else
-        {
-            while (vol < to)
-            {
-                vol += Time.unscaledDeltaTime * Speed;
-                musicSource_.volume = vol;
-                yield return null;
-            }
-        }
-
-        musicSource_.volume = to;
-    }
-
-    IEnumerator PlayMusicCo(AudioClip clip)
-    {
-        if (musicIsPlaying_)
-        {
-            StopFadeCo();
-            musicFadeCo_ = Fade(musicSource_.volume, 0.0f);
-            yield return musicFadeCo_;
-        }
-
-        musicSource_.clip = clip;
-        musicSource_.loop = true;
-        musicSource_.Play();
-        musicIsPlaying_ = true;
-
-        musicSource_.volume = musicVolume_;
-    }
-
-    void StopFadeCo()
-    {
-        if (musicFadeCo_ != null)
-        {
-            StopCoroutine(musicFadeCo_);
-            musicFadeCo_ = null;
-        }
-    }
-
-    IEnumerator musicFadeCo_;
     public void StopMusic()
     {
-        StopFadeCo();
-        musicFadeCo_ = Fade(musicSource_.volume, 0.0f);
-        StartCoroutine(musicFadeCo_);
+        IsMusicPlaying = false;
+        InGameSnapshot.TransitionTo(2.0f);
+        StartCoroutine(StopMusicCo());
     }
 
     public void PlayMusic(AudioClip clip)
     {
-        StartCoroutine(PlayMusicCo(clip));
+        if (!IsMusicPlaying)
+        {
+            IsMusicPlaying = true;
+            IntroScreenSnapshot.TransitionTo(0.5f);
+            StartCoroutine(PlayMusicCo(clip));
+        }
     }
 
     public void StopAmbience()
@@ -206,4 +164,42 @@ public class AudioManager : MonoBehaviour
             }
         }
     }
+
+    #region Volume Getters and Setters
+    public float GetMusicVolume()
+    {
+        float volume;
+        MusicMixerGroup.audioMixer.GetFloat("MusicVolume", out volume);
+        return volume;
+    }
+
+    public void SetMusicVolume(float volume)
+    {
+        MusicMixerGroup.audioMixer.SetFloat("MusicVolume", volume);
+    }
+
+    public float GetSfxVolume()
+    {
+        float volume;
+        SfxMixerGroup.audioMixer.GetFloat("SFXVolume", out volume);
+        return volume;
+    }
+
+    public void SetSfxVolume(float volume)
+    {
+        SfxMixerGroup.audioMixer.SetFloat("SFXVolume", volume);
+    }
+
+    public float GetAmbientVolume()
+    {
+        float volume;
+        AmbientMixerGroup.audioMixer.GetFloat("AmbientVolume", out volume);
+        return volume;
+    }
+
+    public void SetAmbientVolume(float volume)
+    {
+        AmbientMixerGroup.audioMixer.SetFloat("AmbientVolume", volume);
+    }
+    #endregion
 }
