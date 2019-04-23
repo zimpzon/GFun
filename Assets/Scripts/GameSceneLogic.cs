@@ -1,5 +1,6 @@
 ﻿using MEC;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +15,8 @@ public class GameSceneLogic : MonoBehaviour
     public string GameSceneName = "GameScene";
     public Transform DynamicObjectRoot;
     public AudioClip PlayerDeadSound;
+    public MapPlugins MapPlugins;
+    public TextMeshProUGUI LoadingText;
 
     int enemyAliveCount_;
     int enemyDeadCount_;
@@ -114,32 +117,53 @@ public class GameSceneLogic : MonoBehaviour
         Timing.RunCoroutine(EnterLevelLoop());
     }
 
+    void UpdateInitCanvas()
+    {
+        LoadingText.text = $"Entering Floor {CurrentRunData.Instance.CurrentFloor}";
+    }
+
     IEnumerator<float> EnterLevelLoop()
     {
+        if (CurrentRunData.Instance.NextMapType == MapType.Normal)
+            CurrentRunData.Instance.CurrentFloor++;
+
+        UpdateInitCanvas();
         InitCanvas.gameObject.SetActive(true);
         yield return 0;
 
+        // Prepare map
         float startTime = Time.time;
-        GenerateMap();
+        if (CurrentRunData.Instance.NextMapType == MapType.Shop)
+            GenerateShop();
+        else
+            GenerateMap();
+
+        // Prepare player
+        CreatePlayer(map_.GetPlayerStartPosition(CurrentRunData.Instance.NextMapType));
+        PlayableCharacters.Instance.SetCharacterToHumanControlled(playerScript_.tag);
+        Helpers.SetCameraPositionToActivePlayer();
+        var playerInScene = PlayableCharacters.GetPlayerInScene();
+        var playerPos = playerInScene.transform.position;
+
+        // Prepare enemies
+        if (CurrentRunData.Instance.NextMapType == MapType.Normal)
+        {
+            EnemySpawner.Instance.AddEnemiesForFloor(DynamicObjectRoot, CurrentRunData.Instance.CurrentFloor, playerPos, playerMinDistance: 15);
+        }
 
         var enemiesAtMapStart = FindObjectsOfType<EnemyScript>();
         foreach (var enemy in enemiesAtMapStart)
             GameEvents.RaiseEnemySpawned(enemy, enemy.transform.position);
 
-        CreatePlayer(map_.GetPlayerStartPosition());
-        UpdateCoinWidget();
-
-        PlayableCharacters.Instance.SetCharacterToHumanControlled(playerScript_.tag);
-        Helpers.SetCameraPositionToActivePlayer();
-
         const float MinimumShowTime = 1.5f;
         float timeLeft = (startTime - Time.time) + MinimumShowTime;
         yield return Timing.WaitForSeconds(timeLeft);
 
+        // Show what we created
+        UpdateCoinWidget();
         InitCanvas.gameObject.SetActive(false);
 
-        var playerInScene = PlayableCharacters.GetPlayerInScene();
-        var targetPos = playerInScene.transform.position;
+        var targetPos = playerPos;
         var startOffset = new Vector3(0, 1, -12);
         float t = 1;
         SceneGlobals.Instance.AudioManager.PlaySfxClip(SceneGlobals.Instance.AudioManager.AudioClips.PlayerLand, 1, 0.1f);
@@ -169,12 +193,18 @@ public class GameSceneLogic : MonoBehaviour
             yield return 0;
         }
 
-        Timing.RunCoroutine(GameLoop().CancelWith(gameObject));
+        if (CurrentRunData.Instance.NextMapType == MapType.Shop)
+            Timing.RunCoroutine(ShopLoop().CancelWith(gameObject));
+        else
+            Timing.RunCoroutine(GameLoop().CancelWith(gameObject));
+
         yield return 0;
     }
 
     IEnumerator<float> GameLoop()
     {
+        CurrentRunData.Instance.NextMapType = MapType.Shop;
+
         while (true)
         {
             if (Input.GetKeyDown(KeyCode.X))
@@ -190,6 +220,26 @@ public class GameSceneLogic : MonoBehaviour
 
             if (enemyAliveCount_ <= 0 && !nextLevelPortal_.gameObject.activeInHierarchy)
                 OnAllEnemiesDead();
+
+            yield return 0;
+        }
+    }
+
+    IEnumerator<float> ShopLoop()
+    {
+        CurrentRunData.Instance.NextMapType = MapType.Normal;
+        var shopScript = FindObjectOfType<ShopPluginScript>();
+        nextLevelPortal_.gameObject.SetActive(true);
+        nextLevelPortal_.transform.position = shopScript.PortalPosition.position;
+        nextLevelPortal_.OnPlayerEnter.AddListener(OnPlayerEnterPortal);
+
+        while (true)
+        {
+            if (playerScript_.IsDead)
+            {
+                StartCoroutine(DeadLoop());
+                yield break;
+            }
 
             yield return 0;
         }
@@ -278,17 +328,24 @@ public class GameSceneLogic : MonoBehaviour
         SceneManager.LoadScene(GameSceneName, LoadSceneMode.Single);
     }
 
+    public void GenerateShop()
+    {
+        MapBuilder.ZeroMap();
+        var shop = Instantiate(MapPlugins.ShopPlugin);
+        shop.GetComponent<MapPluginScript>().ApplyToMap(MapBuilder.Center);
+        MapBuilder.BuildMapTiles(MapBuilder.MapSource, map_, MapStyle);
+    }
+
     public void GenerateMap()
     {
-        int w = 100;
-        int h = 50;
+        int w = 60;
+        int h = 30;
 
         MapBuilder.GenerateMapFloor(w, h, MapFloorAlgorithm.RandomWalkers);
-        MapBuilder.Fillrect(new Vector2Int(90, 55), 20, 4, 1);
 
         var plugins = FindObjectsOfType<MapPluginScript>();
         foreach (var plugin in plugins)
-            plugin.ApplyToMap();
+            plugin.ApplyToMap(new Vector3Int((int)plugin.transform.position.x, (int)plugin.transform.position.x, 0));
 
         MapBuilder.BuildMapTiles(MapBuilder.MapSource, map_, MapStyle);
     }

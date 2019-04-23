@@ -1,6 +1,6 @@
 ﻿public interface IEnemy
 {
-    EnemyIds Id { get; }
+    EnemyId Id { get; }
     string Name { get; }
     int Level { get; }
     float Life { get; }

@@ -21,7 +21,7 @@ public class SeekerScytheScript : MonoBehaviour, IEnemy
     bool isCharging_;
     float nextChargeSoundCd_;
 
-    public EnemyIds Id => EnemyIds.SeekerScythe;
+    public EnemyId Id => EnemyId.SeekerScythe;
     public string Name => "Scythe";
     public int Level => 2;
     public float Life => 1;

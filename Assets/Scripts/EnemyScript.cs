@@ -5,7 +5,7 @@ using UnityEngine;
 // Maybe not suitable for enemies larger than 1 tile?
 public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, IPhysicsActor
 {
-    public EnemyIds EnemyId;
+    public EnemyId EnemyId;
     public string EnemyName;
     public int EnemyLevel = 1;
     public float EnemyMoveSpeed = 1;
@@ -20,7 +20,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
     public float WallAvoidancePower = 0.2f;
     public SpriteRenderer SpriteRenderer;
 
-    public EnemyIds Id => EnemyId;
+    public EnemyId Id => EnemyId;
     public string Name => EnemyName;
     public float Life => EnemyLife;
     public int Level => EnemyLevel;

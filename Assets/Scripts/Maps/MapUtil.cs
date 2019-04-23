@@ -47,6 +47,31 @@ public static class MapUtil
         return LatestResultPositions.Count;
     }
 
+    public static Vector3 GetRandomEdgePosition(out Vector3 directionToMapCenter)
+    {
+        float rnd = Random.value;
+        if (rnd < 0.25f)
+        {
+            directionToMapCenter = Vector3.right;
+            return GetLeftmostFreeCell();
+        }
+
+        if (rnd < 0.5f)
+        {
+            directionToMapCenter = Vector3.down;
+            return GetTopmostFreeCell();
+        }
+
+        if (rnd < 0.75f)
+        {
+            directionToMapCenter = Vector3.left;
+            return GetRightmostFreeCell();
+        }
+
+        directionToMapCenter = Vector3.up;
+        return GetBottommostFreeCell();
+    }
+
     public static Vector3 GetLeftmostFreeCell()
     {
         for (int x = 0; x < MapBuilder.MapMaxWidth; ++x)
@@ -66,6 +91,34 @@ public static class MapUtil
         for (int x = MapBuilder.MapMaxWidth - 1; x > 0; --x)
         {
             for (int y = 0; y < MapBuilder.MapMaxHeight; ++y)
+            {
+                if (MapBuilder.CollisionMap[x, y] == MapBuilder.TileWalkable)
+                    return new Vector3(x + 0.5f, y + 0.5f);
+            }
+        }
+
+        return Vector3.zero;
+    }
+
+    public static Vector3 GetBottommostFreeCell()
+    {
+        for (int y = 0; y < MapBuilder.MapMaxHeight; ++y)
+        {
+            for (int x = MapBuilder.MapMaxWidth - 1; x > 0; --x)
+            {
+                if (MapBuilder.CollisionMap[x, y] == MapBuilder.TileWalkable)
+                    return new Vector3(x + 0.5f, y + 0.5f);
+            }
+        }
+
+        return Vector3.zero;
+    }
+
+    public static Vector3 GetTopmostFreeCell()
+    {
+        for (int y = MapBuilder.MapMaxHeight - 1; y > 0 ; --y)
+        {
+            for (int x = 0; x < MapBuilder.MapMaxWidth; ++x)
             {
                 if (MapBuilder.CollisionMap[x, y] == MapBuilder.TileWalkable)
                     return new Vector3(x + 0.5f, y + 0.5f);

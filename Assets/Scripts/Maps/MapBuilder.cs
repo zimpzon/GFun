@@ -9,7 +9,8 @@ public static class MapBuilder
     public const int MapMaxWidth = 200;
     public const int MapMaxHeight = 100;
     public static readonly RectInt Rect = new RectInt(0, 0, MapMaxWidth, MapMaxHeight);
-    public static readonly Vector2Int Center = new Vector2Int((int)Rect.center.x, (int)Rect.center.y);
+    public static readonly Vector3Int Center = new Vector3Int((int)Rect.center.x, (int)Rect.center.y, 0);
+    public static readonly Vector3 WorldCenter = new Vector3(Rect.center.x, Rect.center.y);
 
     public static readonly byte[,] CollisionMap = new byte[MapMaxWidth, MapMaxHeight];
     public static readonly byte[,] MapSource = new byte[MapMaxWidth, MapMaxHeight];
@@ -178,6 +179,8 @@ public static class MapBuilder
         }
     }
 
-    static void ZeroMap()
+    public static void MarkAsFloor(Vector3Int pos) => MapSource[pos.x, pos.y] = 1;
+
+    public static void ZeroMap()
         => Fillrect(Rect, 0);
 }

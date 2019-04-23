@@ -123,9 +123,12 @@ public class MapScript : MonoBehaviour, IMapAccess
         Debug.DrawRay(worldPos, Vector3.right * 0.25f, col);
     }
 
-    public Vector3 GetPlayerStartPosition()
+    public Vector3 GetPlayerStartPosition(MapType mapType)
     {
-        return MapUtil.GetRightmostFreeCell();
+        if (mapType == MapType.Shop)
+            return MapUtil.GetLeftmostFreeCell();
+
+        return MapUtil.GetRandomEdgePosition(out Vector3 directionToMapCenter);
     }
 
     public Vector3 GetTileBottomMid(Vector3 worldPos)

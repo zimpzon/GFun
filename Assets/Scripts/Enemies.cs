@@ -11,6 +11,7 @@ public class EnemyLookup
 public class Enemies : MonoBehaviour
 {
     public static Enemies Instance;
+
     public EnemyPrefabList EnemyPrefabList;
     public List<EnemyLookup> EnemyLookup;
 
@@ -19,7 +20,7 @@ public class Enemies : MonoBehaviour
         return EnemyLookup.Where(l => l.Enemy.Level >= minLevel && l.Enemy.Level <= maxLevel).ToList();
     }
 
-    public GameObject CreateEnemy(EnemyIds EnemyId)
+    public GameObject CreateEnemy(EnemyId EnemyId)
     {
         var lookup = EnemyLookup.Where(l => l.Enemy.Id == EnemyId).Single();
         return CreateEnemy(lookup.Prefab);

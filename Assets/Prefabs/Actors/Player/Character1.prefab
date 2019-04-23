@@ -53,6 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Phil Beans
   Speed: 6
+  MaxLife: 5
   Life: 5
   Anim: {fileID: 11400000, guid: 861a36bbdedb0854188e5cddd67508d5, type: 2}
   LookAtOffset: 1

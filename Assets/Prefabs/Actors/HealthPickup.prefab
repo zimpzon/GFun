@@ -256,9 +256,9 @@ MonoBehaviour:
   Type: 3
   Value: 1
   TimeToLive: 20
-  AttractDistanceMul: 0.5
+  AttractDistanceMul: 0.1
   PickupDistance: 0.8
-  AttractPower: -10
+  AttractPower: 1
   FlashSeconds: 3
   PickUpSound: {fileID: 8300000, guid: 5150396c9ef64f943a18c907719ea354, type: 3}
   ObjectPool: {fileID: 0}
