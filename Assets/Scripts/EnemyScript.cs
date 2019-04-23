@@ -27,6 +27,8 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
 
     public bool IsDead { get; set; }
 
+    public float MaxLife { get; private set; }
+
     float width_ = 1;
     float height_ = 1;
     float life_;
@@ -67,6 +69,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         mapLayerMask_ = 1 << SceneGlobals.Instance.MapLayer;
         playerLayer_ = SceneGlobals.Instance.PlayerLayer;
         speedVariation_ = 1.0f - ((Random.value * SpeedVariation) - SpeedVariation * 0.5f);
+        MaxLife = EnemyLife;
     }
 
     // IPhysicsActor

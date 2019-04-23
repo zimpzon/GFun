@@ -21,9 +21,11 @@ namespace Apex.Examples.AI.Game
 
         public Vector3 position => transform.position;
 
+        public abstract float CurrentNormalizedHealth { get; }
+
         #endregion IEntity properties
 
-        private void Awake()
+        public void Awake()
         {
             _context = new AIContext(this);
         }
@@ -61,6 +63,9 @@ namespace Apex.Examples.AI.Game
 
         public IAIContext GetContext(System.Guid id)
         {
+            if (_context == null)
+                throw new System.InvalidOperationException("Did you forget to call base.Awake in your AI controller?");
+
             return _context;
         }
     }

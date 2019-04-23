@@ -10,12 +10,20 @@ public class SmartBatController : EntityComponentBase
 
     public override EntityType type => EntityType.SmartBat;
 
-    private void Awake()
+    public override float CurrentNormalizedHealth => (me_.Life / me_.MaxLife) * 100;
+
+    private new void Awake()
     {
         myMovement_ = GetComponent<IMovableActor>();
         mySenses_ = GetComponent<ISensingActor>();
         mySenses_.LookForPlayerLoS(true, maxDistance: 10);
         me_ = GetComponent<IEnemy>();
         myPhysics_ = GetComponent<IPhysicsActor>();
+
+        base.Awake();
+    }
+
+    private void Update()
+    {
     }
 }

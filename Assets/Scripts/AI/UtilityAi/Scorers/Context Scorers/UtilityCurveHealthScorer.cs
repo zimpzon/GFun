@@ -12,7 +12,7 @@ namespace Apex.Examples.AI
         public override float Score(IAIContext context)
         {
             var c = (AIContext)context;
-            return this.GetScore(c.entity.currentHealth);
+            return this.GetScore(c.entity.CurrentNormalizedHealth);
         }
     }
 }

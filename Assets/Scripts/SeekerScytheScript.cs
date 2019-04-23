@@ -26,6 +26,7 @@ public class SeekerScytheScript : MonoBehaviour, IEnemy
     public int Level => 2;
     public float Life => 1;
     public bool IsDead => false;
+    public float MaxLife => 1;
 
     private void Awake()
     {

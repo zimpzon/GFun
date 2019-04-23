@@ -7,6 +7,8 @@ namespace Apex.Examples.AI.Game
 
     public interface IAIEntity : IEntity
     {
+        float CurrentNormalizedHealth { get; }
+
         /// <summary>
         /// Receives a list of communicated memory observations and adds newer observations to own memory.
         /// </summary>
