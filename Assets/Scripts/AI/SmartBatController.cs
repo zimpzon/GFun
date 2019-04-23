@@ -8,9 +8,7 @@ public class SmartBatController : EntityComponentBase
     IEnemy me_;
     IPhysicsActor myPhysics_;
 
-    public override EntityType type => EntityType.SmartBat;
-
-    public override float CurrentNormalizedHealth => (me_.Life / me_.MaxLife) * 100;
+    public override EntityType AiType => EntityType.SmartBat;
 
     private new void Awake()
     {

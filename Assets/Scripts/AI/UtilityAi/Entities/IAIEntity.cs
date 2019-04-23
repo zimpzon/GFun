@@ -4,10 +4,14 @@ namespace Apex.Examples.AI.Game
 {
     using System.Collections.Generic;
     using Memory;
+    using UnityEngine;
 
     public interface IAIEntity : IEntity
     {
         float CurrentNormalizedHealth { get; }
+        bool HasLOSToPlayer(float maxAge);
+        Vector3 PlayerLatestSeenPosition { get; }
+        Vector3 PlayerPosition { get; }
 
         /// <summary>
         /// Receives a list of communicated memory observations and adds newer observations to own memory.

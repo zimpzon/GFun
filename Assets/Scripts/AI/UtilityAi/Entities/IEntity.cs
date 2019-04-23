@@ -6,7 +6,7 @@ namespace Apex.Examples.AI.Game
 {
     public interface IEntity
     {
-        EntityType type { get; }
-        Vector3 position { get; }
+        EntityType AiType { get; }
+        Vector3 Position { get; }
     }
 }

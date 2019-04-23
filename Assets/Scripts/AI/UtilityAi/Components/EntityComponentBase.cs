@@ -8,31 +8,38 @@ namespace Apex.Examples.AI.Game
     using Memory;
     using UnityEngine;
 
+    [RequireComponent(typeof(EnemyScript))]
     public abstract class EntityComponentBase : MonoBehaviour, IAIEntity, IContextProvider
     {
-        private AIContext _context;
+        AIContext context_;
+        EnemyScript me_;
+        ISensingActor mySenses_;
 
         #region IEntity properties
 
-        public abstract EntityType type
+        public abstract EntityType AiType
         {
             get;
         }
 
-        public Vector3 position => transform.position;
-
-        public abstract float CurrentNormalizedHealth { get; }
+        public float CurrentNormalizedHealth => (me_.Life / me_.MaxLife) * 100;
+        public bool HasLOSToPlayer(float maxAge) => mySenses_.GetPlayerLatestKnownPositionAge() < maxAge;
+        public Vector3 Position => me_.GetPosition();
+        public Vector3 PlayerLatestSeenPosition => mySenses_.GetPlayerLatestKnownPosition(PlayerPositionType.Tile);
+        public Vector3 PlayerPosition => AiBlackboard.Instance.PlayerPosition;
 
         #endregion IEntity properties
 
         public void Awake()
         {
-            _context = new AIContext(this);
+            context_ = new AIContext(this);
+            me_ = GetComponent<EnemyScript>();
+            mySenses_ = GetComponent<ISensingActor>();
         }
 
         protected void Start()
         {
-            this.name = string.Concat(this.type, " ", this.transform.parent != null ? this.transform.parent.childCount - 1 : 0);
+            this.name = string.Concat(this.AiType, " ", this.transform.parent != null ? this.transform.parent.childCount - 1 : 0);
 
             // Register this game object and entity so that others can identify it as part of the scanning
             EntityManager.instance.Register(this.gameObject, this);
@@ -57,16 +64,16 @@ namespace Apex.Examples.AI.Game
 
                 // make new observation so that isVisible can be set to false (because this entity is not actaully seeing the other one)
                 var newObs = new Observation(observations[i], false);
-                _context.memory.AddOrUpdateObservation(newObs, true);
+                context_.memory.AddOrUpdateObservation(newObs, true);
             }
         }
 
         public IAIContext GetContext(System.Guid id)
         {
-            if (_context == null)
+            if (context_ == null)
                 throw new System.InvalidOperationException("Did you forget to call base.Awake in your AI controller?");
 
-            return _context;
+            return context_;
         }
     }
 }
