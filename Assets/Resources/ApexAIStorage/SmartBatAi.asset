@@ -17,6 +17,9 @@ MonoBehaviour:
   aiId: fcfd9e6c-6717-47ab-80c6-b5bb882604f4
   configuration: '{"@type":"Apex.AI.UtilityAI, ApexAI","_rootSelectorId":d0a38a02ed52423a98b7c0f4f3d0bcb8,"_id":fcfd9e6c671747ab80c6b5bb882604f4,"_selectors":[{"@type":"Apex.AI.ScoreSelector,
     ApexAI","_id":d0a38a02ed52423a98b7c0f4f3d0bcb8,"_qualifiers":[{"@type":"Apex.AI.CompositeScoreQualifier,
-    ApexAI","_scorers":[{"@type":"Apex.Examples.AI.UtilityCurveHealthScorer, Assembly-CSharp","linearSlope":1,"max":100,"scoreMultiplier":100,"reversed":false}]}],"_defaultQualifier":{"@type":"Apex.AI.DefaultQualifier,
+    ApexAI","action":{"@type":"Apex.AI.CompositeAction, ApexAI","_actions":[]},"_scorers":[{"@type":"Apex.Examples.AI.UtilityCurveHealthScorer,
+    Assembly-CSharp","linearSlope":1,"max":100,"scoreMultiplier":100,"reversed":false},{"@type":"Apex.Examples.AI.LOSToPlayerScorer,
+    Assembly-CSharp","MaxAge":1,"linearSlope":1,"max":100,"scoreMultiplier":1,"reversed":false}]},{"@type":"Apex.AI.CompositeAllOrNothingQualifier,
+    ApexAI","_scorers":[]}],"_defaultQualifier":{"@type":"Apex.AI.DefaultQualifier,
     ApexAI"}}]}'
-  editorConfiguration: '{"offset":{"@x":0,"@y":0},"zoom":1,"SelectorView":{"ViewArea":{"@left":100,"@top":100,"@width":200,"@height":160},"QualifierView":{},"DefaultQualifier":{}}}'
+  editorConfiguration: '{"offset":{"@x":0,"@y":0},"zoom":1,"SelectorView":{"ViewArea":{"@left":320,"@top":280,"@width":200,"@height":220},"QualifierView":{"ActionView":{"@connectorType":"Composite"}},"QualifierView":{},"DefaultQualifier":{}}}'

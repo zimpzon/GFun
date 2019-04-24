@@ -119,7 +119,18 @@ public class GameSceneLogic : MonoBehaviour
 
     void UpdateInitCanvas()
     {
-        LoadingText.text = $"Entering Floor {CurrentRunData.Instance.CurrentFloor}";
+        if (CurrentRunData.Instance.NextMapType == MapType.Floor)
+        {
+            LoadingText.text = $"Floor {CurrentRunData.Instance.CurrentFloor}";
+        }
+        else if (CurrentRunData.Instance.NextMapType == MapType.Shop)
+        {
+            LoadingText.text = $"The Shop";
+        }
+        else
+        {
+            LoadingText.text = $"Missing text: {CurrentRunData.Instance.NextMapType}";
+        }
     }
 
     IEnumerator<float> EnterLevelLoop()

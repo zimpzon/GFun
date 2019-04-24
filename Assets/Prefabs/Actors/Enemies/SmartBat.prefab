@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5810316746256121280}
   - component: {fileID: 1921782251215252595}
   - component: {fileID: 1921782251215252592}
+  - component: {fileID: 1356337385}
   m_Layer: 8
   m_Name: SmartBat
   m_TagString: Untagged
@@ -113,6 +114,25 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.5}
   serializedVersion: 2
   m_Radius: 0.3
+--- !u!114 &1356337385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921782251215252598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 939582531, guid: 6012f3241c1c1f7409c44769fc0a1db7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aiConfigs:
+  - aiId: fcfd9e6c-6717-47ab-80c6-b5bb882604f4
+    intervalMin: 1
+    intervalMax: 1
+    startDelayMin: 0
+    startDelayMax: 0
+    isActive: 1
 --- !u!1 &1921782251431772653
 GameObject:
   m_ObjectHideFlags: 0
