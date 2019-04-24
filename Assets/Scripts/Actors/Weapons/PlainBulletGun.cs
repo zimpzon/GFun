@@ -1,5 +1,6 @@
 ﻿using GFun;
-using System.Collections;
+using MEC;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlainBulletGun : MonoBehaviour, IWeapon
@@ -18,6 +19,7 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
 
     public PlainBulletGunSettings GunSettings;
     public PlainBulletSettings BulletSettings;
+    public PlainBulletSettings PowerBulletSettings;
 
     public static bool EffectsOn = true;
 
@@ -33,7 +35,6 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
     bool triggerIsDown_;
     bool awaitingRelease_;
     bool isFiring_;
-    WaitForSecondsRealtime shotDelay_;
     Vector3 latestFiringDirection_;
     float latestFiringTime_ = float.MinValue;
 
@@ -42,8 +43,6 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         bulletPool_ = SceneGlobals.Instance.ElongatedBulletPool;
         audioManager_ = SceneGlobals.Instance.AudioManager;
         cameraShake_ = SceneGlobals.Instance.CameraShake;
-
-        shotDelay_ = new WaitForSecondsRealtime(GunSettings.TimeBetweenShots);
     }
 
     public void SetForceReceiver(IPhysicsActor forceReceiver)
@@ -58,8 +57,33 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         awaitingRelease_ = GunSettings.FiringMode == FiringMode.Single;
         latestFiringDirection_ = firingDirection;
 
+        CheckCombo(firingDirection);
         if (!isFiring_)
-            StartCoroutine(FireCo());
+            Timing.RunCoroutine(FireCo());
+    }
+
+    List<float> comboDegrees = new List<float> { 0, 180 };
+    int idx;
+
+    Vector3 prevComboDir;
+    void CheckCombo(Vector3 direction)
+    {
+        float angle = Vector3.Angle(prevComboDir, direction);
+        prevComboDir = direction;
+        if (angle == comboDegrees[idx])
+        {
+            idx++;
+            if (idx == comboDegrees.Count)
+            {
+                idx = 0;
+                var position = transform.position + direction * 0.5f;
+                Fire(position, direction, powerShot: true);
+            }
+        }
+        else
+        {
+            idx = 0;
+        }
     }
 
     public void OnTriggerUp()
@@ -79,38 +103,46 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         }
     }
 
-    IEnumerator FireCo()
+    IEnumerator<float> FireCo()
     {
         isFiring_ = true;
 
-        for (int i = 0; i < GunSettings.BurstCount; ++i)
+        while (true)
         {
-            var direction = latestFiringDirection_;
-            var position = transform.position + direction * 0.5f;
-
-            var angleOffsets = GetFiringAngleOffsets(GunSettings.FiringSpread, 1.0f);
-            for (int j = 0; j < angleOffsets.Length; ++j)
+            for (int i = 0; i < GunSettings.BurstCount; ++i)
             {
-                float angleOffset = angleOffsets[j];
-                const float MaxDegreesOffsetAtLowestPrecision = 30.0f;
-                angleOffset += (Random.value - 0.5f) * (1.0f - GunSettings.Precision) * MaxDegreesOffsetAtLowestPrecision;
-                var offsetDirection = Quaternion.AngleAxis(angleOffset, Vector3.forward) * direction;
-                Fire(position, offsetDirection);
+                var direction = latestFiringDirection_;
+                var position = transform.position + direction * 0.5f;
+
+                var angleOffsets = GetFiringAngleOffsets(GunSettings.FiringSpread, 1.0f);
+                for (int j = 0; j < angleOffsets.Length; ++j)
+                {
+                    float angleOffset = angleOffsets[j];
+                    const float MaxDegreesOffsetAtLowestPrecision = 30.0f;
+                    angleOffset += (Random.value - 0.5f) * (1.0f - GunSettings.Precision) * MaxDegreesOffsetAtLowestPrecision;
+                    var offsetDirection = Quaternion.AngleAxis(angleOffset, Vector3.forward) * direction;
+                    Fire(position, offsetDirection);
+                }
+
+                // This must be realtime seconds and I'm not sure free version of MEC support realtime. So wait manually.
+                float waitEndTime = Time.realtimeSinceStartup + GunSettings.TimeBetweenShots;
+                while (Time.realtimeSinceStartup < waitEndTime)
+                    yield return 0;
             }
-            yield return shotDelay_;
+
+            bool continueFiring = GunSettings.FiringMode == FiringMode.Auto && triggerIsDown_;
+            if (!continueFiring)
+                break;
         }
 
-        if (GunSettings.FiringMode == FiringMode.Auto && triggerIsDown_)
-            StartCoroutine(FireCo());
-        else
-            isFiring_ = false;
+        isFiring_ = false;
     }
 
-    void Fire(Vector3 position, Vector3 direction)
+    void Fire(Vector3 position, Vector3 direction, bool powerShot = false)
     {
         var bullet = bulletPool_.GetFromPool();
         var bulletScript = (PlainBulletScript)bullet.GetComponent(typeof(PlainBulletScript));
-        bulletScript.Init(position, direction, BulletSettings);
+        bulletScript.Init(position, direction, powerShot ? PowerBulletSettings : BulletSettings);
         bullet.SetActive(true);
 
         latestFiringTime_ = Time.unscaledTime;
