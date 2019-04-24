@@ -124,7 +124,7 @@ public class GameSceneLogic : MonoBehaviour
 
     IEnumerator<float> EnterLevelLoop()
     {
-        if (CurrentRunData.Instance.NextMapType == MapType.Normal)
+        if (CurrentRunData.Instance.NextMapType == MapType.Floor)
             CurrentRunData.Instance.CurrentFloor++;
 
         UpdateInitCanvas();
@@ -146,9 +146,9 @@ public class GameSceneLogic : MonoBehaviour
         var playerPos = playerInScene.transform.position;
 
         // Prepare enemies
-        if (CurrentRunData.Instance.NextMapType == MapType.Normal)
+        if (CurrentRunData.Instance.NextMapType == MapType.Floor)
         {
-            EnemySpawner.Instance.AddEnemiesForFloor(DynamicObjectRoot, CurrentRunData.Instance.CurrentFloor, playerPos, playerMinDistance: 15);
+            EnemySpawner.Instance.AddEnemiesForFloor(DynamicObjectRoot, CurrentRunData.Instance.CurrentFloor, playerPos, playerMinDistance: 10);
         }
 
         var enemiesAtMapStart = FindObjectsOfType<EnemyScript>();
@@ -227,7 +227,7 @@ public class GameSceneLogic : MonoBehaviour
 
     IEnumerator<float> ShopLoop()
     {
-        CurrentRunData.Instance.NextMapType = MapType.Normal;
+        CurrentRunData.Instance.NextMapType = MapType.Floor;
         var shopScript = FindObjectOfType<ShopPluginScript>();
         nextLevelPortal_.gameObject.SetActive(true);
         nextLevelPortal_.transform.position = shopScript.PortalPosition.position;
