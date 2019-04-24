@@ -118,6 +118,8 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         moveTargetReached_ = false;
     }
 
+    public Vector3 GetMoveDestination() => moveTo_;
+
     public void StopMove() => hasMoveTotarget_ = false;
     public bool MoveTargetReached() => moveTargetReached_;
 

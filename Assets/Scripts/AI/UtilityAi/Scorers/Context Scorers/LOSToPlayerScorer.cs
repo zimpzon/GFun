@@ -5,7 +5,7 @@ namespace Apex.Examples.AI
     using Apex.AI;
     using Apex.Serialization;
 
-    public sealed class LOSToPlayerScorer : UtilityCurveLinearBaseScorer
+    public sealed class RecentLOSToPlayerScorer : UtilityCurveLinearBaseScorer
     {
         [ApexSerialization, FriendlyName("Max age", "Max age in seconds to be considered valid")]
         public float MaxAge = 5;
@@ -15,8 +15,8 @@ namespace Apex.Examples.AI
             var c = (AIContext)context;
             var entity = c.entity;
 
-            var visibility = c.entity.HasLOSToPlayer(MaxAge);
-            return this.GetScore(c.entity.CurrentNormalizedHealth);
+            bool hasLOS = c.entity.HasLOSToPlayer(MaxAge);
+            return this.GetScore(hasLOS ? 100 : 0);
         }
     }
 }

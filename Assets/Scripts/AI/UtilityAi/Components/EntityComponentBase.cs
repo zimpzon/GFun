@@ -14,19 +14,21 @@ namespace Apex.Examples.AI.Game
         AIContext context_;
         EnemyScript me_;
         ISensingActor mySenses_;
+        IMovableActor movable_;
 
         #region IEntity properties
 
-        public abstract EntityType AiType
-        {
-            get;
-        }
+        public abstract EntityType AiType { get; }
 
         public float CurrentNormalizedHealth => (me_.Life / me_.MaxLife) * 100;
         public bool HasLOSToPlayer(float maxAge) => mySenses_.GetPlayerLatestKnownPositionAge() < maxAge;
         public Vector3 Position => me_.GetPosition();
         public Vector3 PlayerLatestSeenPosition => mySenses_.GetPlayerLatestKnownPosition(PlayerPositionType.Tile);
         public Vector3 PlayerPosition => AiBlackboard.Instance.PlayerPosition;
+        public Vector3 MoveTarget => movable_.GetMoveDestination();
+        public bool MoveTargetReached => movable_.MoveTargetReached();
+        public void MoveTo(Vector3 target) => movable_.MoveTo(target);
+        public void StopMove() => movable_.StopMove();
 
         #endregion IEntity properties
 
@@ -35,6 +37,7 @@ namespace Apex.Examples.AI.Game
             context_ = new AIContext(this);
             me_ = GetComponent<EnemyScript>();
             mySenses_ = GetComponent<ISensingActor>();
+            movable_ = GetComponent<IMovableActor>();
         }
 
         protected void Start()

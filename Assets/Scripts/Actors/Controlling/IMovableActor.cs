@@ -20,6 +20,8 @@ public interface IMovableActor
     /// </summary>
     void MoveTo(Vector3 destination);
 
+    Vector3 GetMoveDestination();
+
     /// <summary>
     /// Cancels destination set with MoveTo
     /// </summary>
