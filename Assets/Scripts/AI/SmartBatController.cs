@@ -1,8 +1,12 @@
-﻿using Apex.Examples.AI;
+﻿using Apex.AI.Components;
+using Apex.Examples.AI;
 using Apex.Examples.AI.Game;
+using TMPro;
 
 public class SmartBatController : EntityComponentBase
 {
+    public TextMeshPro TextDebug;
+
     IMovableActor myMovement_;
     ISensingActor mySenses_;
     IEnemy me_;
@@ -14,7 +18,7 @@ public class SmartBatController : EntityComponentBase
     {
         myMovement_ = GetComponent<IMovableActor>();
         mySenses_ = GetComponent<ISensingActor>();
-        mySenses_.LookForPlayerLoS(true, maxDistance: 10);
+        mySenses_.SetLookForPlayerLoS(true, maxDistance: 10);
         me_ = GetComponent<IEnemy>();
         myPhysics_ = GetComponent<IPhysicsActor>();
 

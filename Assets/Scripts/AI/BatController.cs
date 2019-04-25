@@ -13,7 +13,7 @@ public class BatController : MonoBehaviour
     {
         myMovement_ = GetComponent<IMovableActor>();
         mySenses_ = GetComponent<ISensingActor>();
-        mySenses_.LookForPlayerLoS(true, maxDistance: 10);
+        mySenses_.SetLookForPlayerLoS(true, maxDistance: 10);
         me_ = GetComponent<IEnemy>();
         myPhysics_ = GetComponent<IPhysicsActor>();
 

@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: {fileID: 7154584249229889461, guid: a8fd4123184872a46aee930d0c064846, type: 3}
-  StartCount: 50
+  StartCount: 20
   ExpandCount: 10
   PoolCount: 0
   InFlightCount: 0

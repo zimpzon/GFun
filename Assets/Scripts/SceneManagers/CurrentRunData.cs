@@ -9,7 +9,7 @@ public class CurrentRunData
     public static CurrentRunData Instance = new CurrentRunData();
     public bool IsInitialized;
 
-    public MapType NextMapType = MapType.Shop;
+    public MapType NextMapType = MapType.Floor;
     public string StartingCharacterTag = "Character1";
     public int StartingDifficulty = 1;
     public int CurrentFloor = 0;

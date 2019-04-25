@@ -47,6 +47,9 @@ public static class MapUtil
         return LatestResultPositions.Count;
     }
 
+    public static int GetCollisionValue(Vector3 pos)
+        => MapBuilder.CollisionMap[(int)pos.x, (int)pos.y];
+
     public static Vector3 GetRandomEdgePosition(out Vector3 directionToMapCenter)
     {
         float rnd = Random.value;

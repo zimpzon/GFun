@@ -21,14 +21,34 @@ namespace Apex.Examples.AI.Game
         public abstract EntityType AiType { get; }
 
         public float CurrentNormalizedHealth => (me_.Life / me_.MaxLife) * 100;
-        public bool HasLOSToPlayer(float maxAge) => mySenses_.GetPlayerLatestKnownPositionAge() < maxAge;
-        public Vector3 Position => me_.GetPosition();
-        public Vector3 PlayerLatestSeenPosition => mySenses_.GetPlayerLatestKnownPosition(PlayerPositionType.Tile);
-        public Vector3 PlayerPosition => AiBlackboard.Instance.PlayerPosition;
+
         public Vector3 MoveTarget => movable_.GetMoveDestination();
         public bool MoveTargetReached => movable_.MoveTargetReached();
         public void MoveTo(Vector3 target) => movable_.MoveTo(target);
         public void StopMove() => movable_.StopMove();
+
+        public bool HasLOSToPlayer(float maxAge) => mySenses_.GetPlayerLatestKnownPositionAge() < maxAge;
+        public Vector3 Position => me_.GetPosition();
+        public Vector3 PlayerLatestSeenPosition => mySenses_.GetPlayerLatestKnownPosition(PlayerPositionType.Tile);
+        public Vector3 PlayerPosition => AiBlackboard.Instance.PlayerPosition;
+
+        public bool HasNearbyCover => mySenses_.HasNearbyCover;
+        public Vector3 NearbyCoverPosition => mySenses_.NearbyCoverPosition;
+
+        public Vector3 GetRandomFreePosition()
+        {
+            var myPos = movable_.GetPosition();
+            var direction = CollisionUtil.GetRandomFreeDirection(myPos) * (Random.value * 0.8f + 0.1f);
+            return myPos + direction;
+        }
+
+        public Vector3 GetFleeFromPlayerPosition()
+        {
+            var myPos = movable_.GetPosition();
+            var generelDirectionToPlayer = Util.GetGenerelDirection(myPos, PlayerPosition);
+            var direction = CollisionUtil.GetRandomFreeDirectionExcept(myPos, excludeDirection: generelDirectionToPlayer) * (Random.value * 0.8f + 0.1f);
+            return myPos + direction;
+        }
 
         #endregion IEntity properties
 

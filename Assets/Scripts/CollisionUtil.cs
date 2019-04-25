@@ -24,14 +24,27 @@ public static class CollisionUtil
         }
     }
 
-    public static Vector3 GetRandomFreeDirection(Vector3 start)
+    public static void RemoveDirectionFromLatestResult(Vector3 direction)
+    {
+        for (int i = LatestResult.Count - 1; i >= 0; i--)
+        {
+            if (LatestResult[i] == direction)
+                LatestResult.RemoveAt(i);
+        }
+    }
+
+    public static Vector3 GetRandomFreeDirectionExcept(Vector3 start, Vector3 excludeDirection)
     {
         Scan4Directions(start);
         RemoveZeroVectorsFromLatestResult();
+        RemoveDirectionFromLatestResult(excludeDirection);
         if (LatestResult.Count == 0)
             return Vector3.zero;
         return LatestResult[Random.Range(0, LatestResult.Count)];
     }
+
+    public static Vector3 GetRandomFreeDirection(Vector3 start)
+        => GetRandomFreeDirectionExcept(start, Vector3.zero);
 
     public static void CountFreeTiles(Vector3 start, out int up, out int down, out int left, out int right, int max = 8)
     {

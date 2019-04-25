@@ -2,6 +2,19 @@
 
 public static class Util
 {
+    /// <summary>
+    /// Returns the closest of Up, Down, Left or Right.
+    /// </summary>
+    public static Vector3 GetGenerelDirection(Vector3 from, Vector3 to)
+    {
+        var diff = to - from;
+
+        if (Mathf.Abs(diff.y) > Mathf.Abs(diff.x))
+            return diff.y > 0 ? Vector3.up : Vector3.down;
+        else
+            return diff.x > 0 ? Vector3.right : Vector3.left;
+    }
+
     public static void DebugDrawRect(float x, float y, float w, float h, Color color, float time = 0)
     {
         var bl = new Vector3(x, y);

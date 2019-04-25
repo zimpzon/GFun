@@ -66,12 +66,14 @@ public class EnemySpawner : MonoBehaviour
 
         // if enemy is large just clear some space around it
 
-        int batCount = 3 + floor * 2;
-        int fireBatCount = 2 + floor * 2;
+        int batCount = 1 + floor * 2;
+        int fireBatCount = 1 + floor * 2;
         int scytheCount = 1 + floor / 4;
+        int smartBatCount = 5;
 
-        AddEnemiesOfType(parent, EnemyId.Bat, batCount, openPositions);
-        AddEnemiesOfType(parent, EnemyId.FireBat, fireBatCount, openPositions);
-        AddEnemiesOfType(parent, EnemyId.SeekerScythe, scytheCount, openPositions);
+        //AddEnemiesOfType(parent, EnemyId.Bat, batCount, openPositions);
+        //AddEnemiesOfType(parent, EnemyId.FireBat, fireBatCount, openPositions);
+        //AddEnemiesOfType(parent, EnemyId.SeekerScythe, scytheCount, openPositions);
+        AddEnemiesOfType(parent, EnemyId.Smartbat, smartBatCount, openPositions);
     }
 }

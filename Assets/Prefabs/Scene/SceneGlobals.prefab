@@ -70,7 +70,11 @@ MonoBehaviour:
   EnemyDamageLayer:
     serializedVersion: 2
     m_Bits: 1024
-  WeaponPrefabs: {fileID: 0}
+  DeadEnemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
   PlainBulletPool: {fileID: 0}
   ElongatedBulletPool: {fileID: 0}
+  EnemyBullet1Pool: {fileID: 0}
   PlayableCharacters: {fileID: 0}
+  OnTheFloorSortingValue: 15

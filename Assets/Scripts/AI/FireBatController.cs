@@ -21,7 +21,7 @@ public class FireBatController : MonoBehaviour
     {
         movable_ = GetComponent<IMovableActor>();
         senses_ = GetComponent<ISensingActor>();
-        senses_.LookForPlayerLoS(true, maxDistance: 6);
+        senses_.SetLookForPlayerLoS(true, maxDistance: 6);
         me_ = GetComponent<IEnemy>();
         physicsActor_ = GetComponent<IPhysicsActor>();
         bulletPool_ = SceneGlobals.Instance.EnemyBullet1Pool;

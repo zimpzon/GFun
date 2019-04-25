@@ -46,3 +46,9 @@ MonoBehaviour:
   AudioClips: {fileID: 11400000, guid: a88b7dc5d874ec14cbd256b469efd106, type: 2}
   SfxSourceCount: 20
   ShowDebugOutput: 0
+  MusicMixerGroup: {fileID: 243287746366484798, guid: a0f88eba81b45d84e9b3e352f0602b67,
+    type: 2}
+  SfxMixerGroup: {fileID: 243113692463124104, guid: a0f88eba81b45d84e9b3e352f0602b67,
+    type: 2}
+  AmbientMixerGroup: {fileID: 243347228789799692, guid: a0f88eba81b45d84e9b3e352f0602b67,
+    type: 2}
