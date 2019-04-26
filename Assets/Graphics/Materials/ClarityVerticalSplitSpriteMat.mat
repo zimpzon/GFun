@@ -58,8 +58,8 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _Clarity: 0
-    - _ClarityBottom: 0.4
-    - _ClarityTop: 0.2
+    - _ClarityBottom: 0.8
+    - _ClarityTop: 0.6
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0

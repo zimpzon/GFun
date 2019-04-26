@@ -4,17 +4,12 @@ namespace Apex.Examples.AI
 {
     using Apex.AI;
 
-    public sealed class MoveToMoveTarget : ActionBase
+    public sealed class MoveToPlayer : ActionBase
     {
         public override void Execute(IAIContext context)
         {
             var c = (AIContext)context;
-            var entity = c.entity;
-
-            if (entity.MoveTarget == null)
-                return;
-
-            entity.MoveTo(entity.MoveTarget);
+            c.entity.MoveToPlayer();
         }
     }
 }

@@ -129,7 +129,7 @@ MonoBehaviour:
   GunSettings:
     Level: 1
     AmmoCount: 100
-    FiringSpread: 2
+    FiringSpread: 0
     FiringMode: 2
     Precision: 0.8
     BurstCount: 1
@@ -141,6 +141,7 @@ MonoBehaviour:
     BounceWalls: 0
     Damage: 10
     DamageForce: 1
+    EnergyCost: 50
   PowerBulletSettings:
     Speed: 15
     Range: 15
@@ -148,3 +149,4 @@ MonoBehaviour:
     BounceWalls: 0
     Damage: 20
     DamageForce: 10
+    EnergyCost: 50

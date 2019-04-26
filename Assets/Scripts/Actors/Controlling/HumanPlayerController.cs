@@ -8,6 +8,7 @@ public class HumanPlayerController : MonoBehaviour
     public static bool Disabled = false;
 
     LightingEffectSettings bulletTimeLight_ = new LightingEffectSettings();
+    LightingEffectSettings defaultLight_ = new LightingEffectSettings();
     PlayableCharacterScript player_;
     Transform transform_;
     IWeapon weapon_;
@@ -16,6 +17,7 @@ public class HumanPlayerController : MonoBehaviour
     float bulletTimeValue_;
     float bulletTimeTarget_;
     LightingImageEffect lightingImageEffect_;
+    bool isMoving_;
     
     private void Start()
     {
@@ -30,7 +32,9 @@ public class HumanPlayerController : MonoBehaviour
         player_ = GetComponent<PlayableCharacterScript>();
         SceneGlobals.NullCheck(player_);
         map_ = SceneGlobals.Instance.MapScript;
+
         lightingImageEffect_ = SceneGlobals.Instance.LightingImageEffect;
+        lightingImageEffect_.StartValues.CopyTo(defaultLight_);
 
         UpdateWeapon();
     }
@@ -67,6 +71,15 @@ public class HumanPlayerController : MonoBehaviour
         if (!bulletTime_ && bulletTimeValue_ == 0.0f)
             return;
 
+        if (bulletTime_)
+        {
+            float cost = isMoving_ ? 800 : 100;
+            if (!player_.TryUseEnergy(cost * Time.unscaledDeltaTime))
+            {
+                ToggleBulletTime();
+            }
+        }
+
         Time.timeScale = 1.0f - bulletTimeValue_ * 0.995f;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
 
@@ -84,6 +97,11 @@ public class HumanPlayerController : MonoBehaviour
     {
         if (Disabled)
             return;
+
+        // Lighting fade test
+        //float f = Mathf.Sin(Time.time) * 0.5f + 0.5f;
+        //defaultLight_.AmbientLight = new Color(f, f, f);
+        //lightingImageEffect_.SetBaseColorTarget(defaultLight_);
 
         CheckInput();
         UpdateBulletTime();
@@ -110,6 +128,7 @@ public class HumanPlayerController : MonoBehaviour
         var vert = Input.GetAxisRaw("Vertical");
         var moveVec = new Vector3(horz, vert);
         player_.Move(moveVec);
+        isMoving_ = moveVec != Vector3.zero;
 
         if (Input.GetKeyDown(KeyCode.Q))
             ToggleBulletTime();

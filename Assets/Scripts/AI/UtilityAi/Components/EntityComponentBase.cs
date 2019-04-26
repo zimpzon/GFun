@@ -8,32 +8,33 @@ namespace Apex.Examples.AI.Game
     using Memory;
     using UnityEngine;
 
-    [RequireComponent(typeof(EnemyScript))]
     public abstract class EntityComponentBase : MonoBehaviour, IAIEntity, IContextProvider
     {
         AIContext context_;
         EnemyScript me_;
         ISensingActor mySenses_;
         IMovableActor movable_;
+        float latestMoveStartTime_;
 
         #region IEntity properties
 
         public abstract EntityType AiType { get; }
 
-        public float CurrentNormalizedHealth => (me_.Life / me_.MaxLife) * 100;
-
-        public Vector3 MoveTarget => movable_.GetMoveDestination();
-        public bool MoveTargetReached => movable_.MoveTargetReached();
-        public void MoveTo(Vector3 target) => movable_.MoveTo(target);
+        // Actions
+        public void MoveToCover() => MoveTo(NearbyCoverPosition);
+        public void MoveToPlayerLatestSeenPosition() => MoveTo(PlayerLatestSeenPosition);
+        public void MoveToPlayer() => MoveTo(PlayerPosition);
+        public void MoveToRandomNearbyPosition() => MoveTo(GetRandomFreePosition());
+        public void FleeFromPlayer() => MoveTo(GetFleeFromPlayerPosition());
         public void StopMove() => movable_.StopMove();
 
+        // Other
+        public float TimeSinceLatestMoveCommand => Time.time - latestMoveStartTime_;
+        public float CurrentNormalizedHealth => (me_.Life / me_.MaxLife) * 100;
+        public bool MoveTargetReached => movable_.MoveTargetReached();
         public bool HasLOSToPlayer(float maxAge) => mySenses_.GetPlayerLatestKnownPositionAge() < maxAge;
-        public Vector3 Position => me_.GetPosition();
-        public Vector3 PlayerLatestSeenPosition => mySenses_.GetPlayerLatestKnownPosition(PlayerPositionType.Tile);
-        public Vector3 PlayerPosition => AiBlackboard.Instance.PlayerPosition;
 
-        public bool HasNearbyCover => mySenses_.HasNearbyCover;
-        public Vector3 NearbyCoverPosition => mySenses_.NearbyCoverPosition;
+        #endregion IEntity properties
 
         public Vector3 GetRandomFreePosition()
         {
@@ -50,7 +51,17 @@ namespace Apex.Examples.AI.Game
             return myPos + direction;
         }
 
-        #endregion IEntity properties
+        public Vector3 Position => me_.GetPosition();
+        public Vector3 PlayerLatestSeenPosition => mySenses_.GetPlayerLatestKnownPosition(PlayerPositionType.Tile);
+        public Vector3 PlayerPosition => AiBlackboard.Instance.PlayerPosition;
+        public bool HasNearbyCover => mySenses_.HasNearbyCover;
+        public Vector3 NearbyCoverPosition => mySenses_.NearbyCoverPosition;
+
+        void MoveTo(Vector3 target)
+        {
+            latestMoveStartTime_ = Time.time;
+            movable_.MoveTo(target);
+        }
 
         public void Awake()
         {

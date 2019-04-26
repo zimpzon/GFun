@@ -4,13 +4,12 @@ namespace Apex.Examples.AI
 {
     using Apex.AI;
 
-    public sealed class SetMoveTargetFleeFromPlayer : ActionBase
+    public sealed class FleeFromPlayer : ActionBase
     {
         public override void Execute(IAIContext context)
         {
             var c = (AIContext)context;
-            var target = c.entity.GetRandomFreePosition();
-            c.entity.MoveTo(target);
+            c.entity.FleeFromPlayer();
         }
     }
 }

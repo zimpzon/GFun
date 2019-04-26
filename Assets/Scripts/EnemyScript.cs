@@ -87,8 +87,8 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
 
         if (EnablePlayerLoSGizmo)
         {
-            //Gizmos.color = latestLOSFoundPlayer_ ? Color.green : Color.red;
-            //Gizmos.DrawLine(latestLOSStart_, latestLOSEnd_);
+            Gizmos.color = latestLOSFoundPlayer_ ? Color.green : Color.grey;
+            Gizmos.DrawLine(latestLOSStart_, latestLOSEnd_);
 
             Gizmos.color = PlayerLOSGizmoColor;
             Gizmos.DrawWireSphere(playerLatestKnownPosition_, 0.15f);
@@ -262,7 +262,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
             latestMovementDirection_ = direction;
 
             var wallAvoidance = (wallAvoidanceDirection_ * wallAvoidanceAmount_ * WallAvoidancePower).normalized;
-            wallAvoidanceAmount_ = Mathf.Max(0.0f, wallAvoidanceAmount_ - 4.0f * dt);
+            wallAvoidanceAmount_ = Mathf.Max(0.0f, wallAvoidanceAmount_ - (4.0f * dt) * WallAvoidancePower);
 
             direction = (direction + wallAvoidance).normalized;
             var step = direction * (EnemyMoveSpeed * speedVariation_) * dt;

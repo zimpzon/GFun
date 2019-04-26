@@ -11,7 +11,7 @@ public class HealthWidget : MonoBehaviour
 
     float lifeBarMaxWidth_;
     float lifeBarMaxHeight_;
-    bool doWarn_;
+
     private void Awake()
     {
         Instance = this;

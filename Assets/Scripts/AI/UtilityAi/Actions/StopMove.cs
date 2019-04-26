@@ -3,11 +3,7 @@
 namespace Apex.Examples.AI
 {
     using Apex.AI;
-    using Memory;
 
-    /// <summary>
-    /// This AI action sets the entity's move target reference to null.
-    /// </summary>
     public sealed class StopMove : ActionBase
     {
         public override void Execute(IAIContext context)

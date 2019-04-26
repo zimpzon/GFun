@@ -4,12 +4,12 @@ namespace Apex.Examples.AI
 {
     using Apex.AI;
 
-    public sealed class SetMoveTargetToPlayerPosition : ActionBase
+    public sealed class MoveToRandomPosition : ActionBase
     {
         public override void Execute(IAIContext context)
         {
             var c = (AIContext)context;
-            c.entity.MoveTo(c.entity.PlayerPosition);
+            c.entity.MoveToRandomNearbyPosition();
         }
     }
 }

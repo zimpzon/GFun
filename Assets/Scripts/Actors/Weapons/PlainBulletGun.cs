@@ -31,6 +31,7 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
     GameObjectPool bulletPool_;
     AudioManager audioManager_;
     IPhysicsActor forceReceiver_;
+    IEnergyProvider energyProvider_;
     CameraShake cameraShake_;
     bool triggerIsDown_;
     bool awaitingRelease_;
@@ -45,8 +46,11 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         cameraShake_ = SceneGlobals.Instance.CameraShake;
     }
 
-    public void SetForceReceiver(IPhysicsActor forceReceiver)
-        => forceReceiver_ = forceReceiver;
+    public void SetOwner(IPhysicsActor forceReceiver, IEnergyProvider energyProvider)
+    {
+        forceReceiver_ = forceReceiver;
+        energyProvider_ = energyProvider;
+    }
 
     public void OnTriggerDown(Vector3 firingDirection)
     {
@@ -57,33 +61,8 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         awaitingRelease_ = GunSettings.FiringMode == FiringMode.Single;
         latestFiringDirection_ = firingDirection;
 
-        CheckCombo(firingDirection);
         if (!isFiring_)
             Timing.RunCoroutine(FireCo());
-    }
-
-    List<float> comboDegrees = new List<float> { 0, 180 };
-    int idx;
-
-    Vector3 prevComboDir;
-    void CheckCombo(Vector3 direction)
-    {
-        float angle = Vector3.Angle(prevComboDir, direction);
-        prevComboDir = direction;
-        if (angle == comboDegrees[idx])
-        {
-            idx++;
-            if (idx == comboDegrees.Count)
-            {
-                idx = 0;
-                var position = transform.position + direction * 0.5f;
-                Fire(position, direction, powerShot: true);
-            }
-        }
-        else
-        {
-            idx = 0;
-        }
     }
 
     public void OnTriggerUp()
@@ -140,9 +119,13 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
 
     void Fire(Vector3 position, Vector3 direction, bool powerShot = false)
     {
+        var bulletSettings = powerShot ? PowerBulletSettings : BulletSettings;
+        if (!energyProvider_.TryUseEnergy(bulletSettings.EnergyCost))
+            return;
+
         var bullet = bulletPool_.GetFromPool();
         var bulletScript = (PlainBulletScript)bullet.GetComponent(typeof(PlainBulletScript));
-        bulletScript.Init(position, direction, powerShot ? PowerBulletSettings : BulletSettings);
+        bulletScript.Init(position, direction, bulletSettings);
         bullet.SetActive(true);
 
         latestFiringTime_ = Time.unscaledTime;

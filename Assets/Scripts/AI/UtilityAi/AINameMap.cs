@@ -9,7 +9,6 @@ namespace Apex.AI
 
     public static class AINameMap
     {
-		public static readonly Guid SmartBatAi = new Guid("fcfd9e6c-6717-47ab-80c6-b5bb882604f4");
 
     }
 }
