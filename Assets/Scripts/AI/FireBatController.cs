@@ -67,7 +67,7 @@ public class FireBatController : MonoBehaviour
 
                 coolDownEnd_ = time + 0.3f;
                 if (--pendingShots_ == 0)
-                    reloadEnd_ = time + 2.0f+ Random.value;
+                    reloadEnd_ = time + 2.0f + Random.value;
             }
         }
     }

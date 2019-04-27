@@ -8,17 +8,22 @@ namespace Apex.Examples.AI.Game
     public interface IAIEntity : IEntity
     {
         void MoveToCover();
+        void MoveToCover_Terminate();
+        void FleeFromPlayer();
+        void FleeFromPlayer_Terminate();
+        void MoveToRandomNearbyPosition();
+        void MoveToRandomNearbyPosition_Terminate();
         void MoveToPlayer();
         void MoveToPlayerLatestSeenPosition();
-        void MoveToRandomNearbyPosition();
-        void FleeFromPlayer();
         void StopMove();
+        void ShootAtPlayer();
 
         float TimeSinceLatestMoveCommand { get; }
         bool HasLOSToPlayer(float maxAge);
         float CurrentNormalizedHealth { get; }
         bool MoveTargetReached { get; }
         bool HasNearbyCover { get; }
+        float ShootCdLeft { get; }
 
         /// <summary>
         /// Receives a list of communicated memory observations and adds newer observations to own memory.

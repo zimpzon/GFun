@@ -1,4 +1,4 @@
 ﻿public enum EnemyId
 {
-    Bat, FireBat, SeekerScythe,
+    Bat, FireBat, SeekerScythe, FleeingBat,
 }

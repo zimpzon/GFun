@@ -26,6 +26,7 @@ public class SceneGlobals : MonoBehaviour
     public GameObjectPool PlainBulletPool;
     public GameObjectPool ElongatedBulletPool;
     public GameObjectPool EnemyBullet1Pool;
+    public GameObjectPool FloatingTextPool;
     public PlayableCharacters PlayableCharacters;
     public int OnTheFloorSortingValue = 15;
 

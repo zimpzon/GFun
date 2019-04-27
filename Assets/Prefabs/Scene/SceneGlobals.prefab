@@ -72,9 +72,10 @@ MonoBehaviour:
     m_Bits: 1024
   DeadEnemyLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2097152
   PlainBulletPool: {fileID: 0}
   ElongatedBulletPool: {fileID: 0}
   EnemyBullet1Pool: {fileID: 0}
+  FloatingTextPool: {fileID: 0}
   PlayableCharacters: {fileID: 0}
   OnTheFloorSortingValue: 15

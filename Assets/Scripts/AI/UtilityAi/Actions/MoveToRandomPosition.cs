@@ -4,12 +4,12 @@ namespace Apex.Examples.AI
 {
     using Apex.AI;
 
-    public sealed class MoveToRandomPosition : ActionBase
+    public sealed class MoveToRandomPosition : ActionBase, IRequireTermination
     {
         public override void Execute(IAIContext context)
-        {
-            var c = (AIContext)context;
-            c.entity.MoveToRandomNearbyPosition();
-        }
+            => ((AIContext)context).entity.MoveToRandomNearbyPosition();
+
+        public void Terminate(IAIContext context)
+            => ((AIContext)context).entity.MoveToRandomNearbyPosition_Terminate();
     }
 }

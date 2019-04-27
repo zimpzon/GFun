@@ -35,19 +35,15 @@ public class BatController : MonoBehaviour
                 if (!hasRecentlySeenPlayer)
                     break;
 
-                myMovement_.SetSpeed(baseSpeed * 2);
-
                 var target = mySenses_.GetPlayerLatestKnownPosition(PlayerPositionType.Tile);
-                myMovement_.MoveTo(target);
+                myMovement_.MoveTo(target, baseSpeed * 2);
 
                 yield return null;
             }
 
-            myMovement_.SetSpeed(baseSpeed);
-
             var pos = myMovement_.GetPosition();
             var direction = CollisionUtil.GetRandomFreeDirection(pos) * (Random.value * 0.8f + 0.1f);
-            myMovement_.MoveTo(pos + direction);
+            myMovement_.MoveTo(pos + direction, baseSpeed);
 
             float endTime = Time.time + 4 + Random.value;
             while (true)

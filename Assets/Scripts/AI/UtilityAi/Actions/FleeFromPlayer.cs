@@ -4,12 +4,12 @@ namespace Apex.Examples.AI
 {
     using Apex.AI;
 
-    public sealed class FleeFromPlayer : ActionBase
+    public sealed class FleeFromPlayer : ActionBase, IRequireTermination
     {
         public override void Execute(IAIContext context)
-        {
-            var c = (AIContext)context;
-            c.entity.FleeFromPlayer();
-        }
+            => ((AIContext)context).entity.FleeFromPlayer();
+
+        public void Terminate(IAIContext context)
+            => ((AIContext)context).entity.FleeFromPlayer_Terminate();
     }
 }

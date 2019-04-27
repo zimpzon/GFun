@@ -7,9 +7,9 @@ namespace Apex.Examples.AI
     public sealed class MoveToCover : ActionBase
     {
         public override void Execute(IAIContext context)
-        {
-            var c = (AIContext)context;
-            c.entity.MoveToCover();
-        }
+            => ((AIContext)context).entity.MoveToCover();
+
+        public void Terminate(IAIContext context)
+            => ((AIContext)context).entity.MoveToCover_Terminate();
     }
 }

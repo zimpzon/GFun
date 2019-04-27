@@ -14,6 +14,7 @@ namespace Apex.Examples.AI.Game
         EnemyScript me_;
         ISensingActor mySenses_;
         IMovableActor movable_;
+        IShootingActor shooter_;
         float latestMoveStartTime_;
 
         #region IEntity properties
@@ -21,11 +22,45 @@ namespace Apex.Examples.AI.Game
         public abstract EntityType AiType { get; }
 
         // Actions
-        public void MoveToCover() => MoveTo(NearbyCoverPosition);
         public void MoveToPlayerLatestSeenPosition() => MoveTo(PlayerLatestSeenPosition);
         public void MoveToPlayer() => MoveTo(PlayerPosition);
-        public void MoveToRandomNearbyPosition() => MoveTo(GetRandomFreePosition());
-        public void FleeFromPlayer() => MoveTo(GetFleeFromPlayerPosition());
+
+        float nextRandomPositionTime_;
+        public void MoveToRandomNearbyPosition_Terminate() => nextRandomPositionTime_ = 0;
+        public void MoveToRandomNearbyPosition()
+        {
+            if (Time.time > nextRandomPositionTime_ || MoveTargetReached)
+            {
+                MoveTo(GetRandomFreePosition());
+                nextRandomPositionTime_ = Time.time + 1 + Random.value;
+            }
+        }
+
+        float nextFleeTime_;
+        public void FleeFromPlayer_Terminate() => nextFleeTime_ = 0;
+        public void FleeFromPlayer()
+        {
+            if (Time.time > nextFleeTime_ || MoveTargetReached)
+            {
+//                FloatingTextSpawner.Instance.Spawn(me_.GetPosition(), "Flee!");
+                MoveTo(GetFleeFromPlayerPosition(), 1.5f);
+                nextFleeTime_ = Time.time + 1 + Random.value;
+            }
+        }
+
+        float nextCoverTime_;
+        public void MoveToCover_Terminate() => nextCoverTime_ = 0;
+        public void MoveToCover()
+        {
+            if (Time.time > nextCoverTime_ && HasNearbyCover)
+            {
+//                FloatingTextSpawner.Instance.Spawn(me_.GetPosition(), "Hide!");
+                if (movable_.GetMoveDestination() != NearbyCoverPosition)
+                    MoveTo(NearbyCoverPosition, 3.0f);
+                nextCoverTime_ = Time.time + 1 + Random.value;
+            }
+        }
+
         public void StopMove() => movable_.StopMove();
 
         // Other
@@ -48,8 +83,17 @@ namespace Apex.Examples.AI.Game
             var myPos = movable_.GetPosition();
             var generelDirectionToPlayer = Util.GetGenerelDirection(myPos, PlayerPosition);
             var direction = CollisionUtil.GetRandomFreeDirectionExcept(myPos, excludeDirection: generelDirectionToPlayer) * (Random.value * 0.8f + 0.1f);
+            // Debug 
+            //Debug.DrawRay(me_.GetPosition(), generelDirectionToPlayer * 4, Color.red, 1.0f);
+            //for (int i = 0; i < CollisionUtil.LatestResult.Count; ++i)
+            //{
+            //    Debug.DrawRay(me_.GetPosition(), CollisionUtil.LatestResult[i] * 3, Color.yellow, 1.0f);
+            //}
             return myPos + direction;
         }
+
+        public void ShootAtPlayer() => shooter_.ShootAtPlayer();
+        public float ShootCdLeft => shooter_.ShootCdLeft;
 
         public Vector3 Position => me_.GetPosition();
         public Vector3 PlayerLatestSeenPosition => mySenses_.GetPlayerLatestKnownPosition(PlayerPositionType.Tile);
@@ -57,10 +101,10 @@ namespace Apex.Examples.AI.Game
         public bool HasNearbyCover => mySenses_.HasNearbyCover;
         public Vector3 NearbyCoverPosition => mySenses_.NearbyCoverPosition;
 
-        void MoveTo(Vector3 target)
+        void MoveTo(Vector3 target, float speedMul = 1.0f)
         {
             latestMoveStartTime_ = Time.time;
-            movable_.MoveTo(target);
+            movable_.MoveTo(target, speedMul);
         }
 
         public void Awake()
@@ -69,6 +113,7 @@ namespace Apex.Examples.AI.Game
             me_ = GetComponent<EnemyScript>();
             mySenses_ = GetComponent<ISensingActor>();
             movable_ = GetComponent<IMovableActor>();
+            shooter_ = GetComponent<IShootingActor>();
         }
 
         protected void Start()

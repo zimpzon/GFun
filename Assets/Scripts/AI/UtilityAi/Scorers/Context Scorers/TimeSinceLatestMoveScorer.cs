@@ -4,7 +4,7 @@ namespace Apex.Examples.AI
 {
     using Apex.AI;
 
-    public sealed class TimeMovingScorer : UtilityCurveLinearBaseScorer
+    public sealed class TimeSinceLatestMoveScorer : UtilityCurveLinearBaseScorer
     {
         public override float Score(IAIContext context)
         {

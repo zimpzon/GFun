@@ -28,7 +28,7 @@ public static class CollisionUtil
     {
         for (int i = LatestResult.Count - 1; i >= 0; i--)
         {
-            if (LatestResult[i] == direction)
+            if (LatestResult[i].normalized == direction)
                 LatestResult.RemoveAt(i);
         }
     }

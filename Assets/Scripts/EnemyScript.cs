@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 // Maybe not suitable for enemies larger than 1 tile?
-public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, IPhysicsActor
+public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, IPhysicsActor, IShootingActor
 {
     [Header("Debug")]
     public bool EnableMoveToGizmo;
@@ -44,6 +44,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
     public bool HasNearbyCover { get; private set; }
     public Vector3 NearbyCoverPosition { get; private set; }
 
+    float speedMul_;
     float width_ = 1;
     float height_ = 1;
     float life_;
@@ -115,9 +116,18 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         playerLayer_ = SceneGlobals.Instance.PlayerLayer;
         speedVariation_ = 1.0f - ((Random.value * SpeedVariation) - SpeedVariation * 0.5f);
         MaxLife = EnemyLife;
-
-        SetLookForNearbyCover(true, 3);
     }
+
+
+    // IShootingActor
+    public void ShootAtPlayer()
+    {
+        FloatingTextSpawner.Instance.Spawn(transform_.position, "Bang!");
+        nextShoot_ = Time.time + 1.0f;
+    }
+
+    float nextShoot_;
+    public float ShootCdLeft => Mathf.Max(0,  Time.time - nextShoot_);
 
     // IPhysicsActor
     public void SetMinimumForce(Vector3 force) => throw new System.NotImplementedException();
@@ -161,11 +171,12 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
     public Vector3 GetPosition() => transform_.position;
     public Vector3 GetCenter() => transform_.position + transform_.rotation * (Vector3.up * height_ * 0.5f);
 
-    public void MoveTo(Vector3 destination)
+    public void MoveTo(Vector3 destination, float speedMul = 1.0f)
     {
         if (IsDead)
             return;
 
+        speedMul_ = speedMul;
         moveTo_ = destination;
         hasMoveTotarget_ = true;
         moveTargetReached_ = false;
@@ -250,7 +261,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         if (hasMoveTotarget_ && !moveTargetReached_)
         {
             var direction = (moveTo_ - transform_.position);
-            bool targetReached = direction.sqrMagnitude < 0.05f;
+            bool targetReached = direction.sqrMagnitude < 0.005f;
             if (targetReached)
             {
                 moveTargetReached_ = true;
@@ -265,7 +276,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
             wallAvoidanceAmount_ = Mathf.Max(0.0f, wallAvoidanceAmount_ - (4.0f * dt) * WallAvoidancePower);
 
             direction = (direction + wallAvoidance).normalized;
-            var step = direction * (EnemyMoveSpeed * speedVariation_) * dt;
+            var step = direction * (EnemyMoveSpeed * speedVariation_ * speedMul_) * dt;
             body_.AddForce(step * 10, ForceMode2D.Impulse);
         }
     }
@@ -317,7 +328,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         int testCellY = (int)testPos.y;
         bool isFree = MapBuilder.CollisionMap[testCellX, testCellY] == MapBuilder.TileWalkable;
         var color = isFree ? Color.green : Color.red;
-        var freeCellWorld = new Vector3(testCellX + 0.5f, testCellY + 0.5f, 0);
+        var freeCellWorld = new Vector3(testCellX + 0.5f, testCellY, 0); // Bottom center of cell
         coverPosition = freeCellWorld;
         //Debug.DrawRay(freeCellWorld, Vector3.up * 0.5f, color, 0.3f);
         //Debug.DrawRay(freeCellWorld, Vector3.right * 0.5f, color, 0.3f);

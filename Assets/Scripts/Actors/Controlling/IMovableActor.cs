@@ -3,7 +3,6 @@
 public interface IMovableActor
 {
     float GetSpeed();
-    void SetSpeed(float speed);
 
     /// <summary>
     /// Position where actor is anchored to the floor (typically feet)
@@ -18,7 +17,7 @@ public interface IMovableActor
     /// <summary>
     /// Actor will try to move to destination
     /// </summary>
-    void MoveTo(Vector3 destination);
+    void MoveTo(Vector3 destination, float speedMul = 1.0f);
 
     Vector3 GetMoveDestination();
 
