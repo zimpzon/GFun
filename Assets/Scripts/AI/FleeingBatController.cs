@@ -15,6 +15,7 @@ public class FleeingBatController : EntityComponentBase
         myMovement_ = GetComponent<IMovableActor>();
         mySenses_ = GetComponent<ISensingActor>();
         mySenses_.SetLookForPlayerLoS(true, maxDistance: 10);
+        mySenses_.SetLookForNearbyCover(true, 3);
         me_ = GetComponent<IEnemy>();
         myPhysics_ = GetComponent<IPhysicsActor>();
 

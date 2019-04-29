@@ -48,7 +48,7 @@ public class MapScript : MonoBehaviour, IMapAccess
 
     // When destroying walls some colliders are left behind. Fix should be incoming:
     // https://github.com/Unity-Technologies/2d-extras/issues/34
-    public void ExplodeWalls(Vector3 worldPosition, float worldRadius, bool particlesAtDestroyedWallsOnly = true)
+    public void TriggerExplosion(Vector3 worldPosition, float worldRadius, bool damageWallsOnly = true, IEnemy explosionSource = null)
     {
         int tilesChecked = MapUtil.ClearCircle(this, MapStyle, worldPosition, worldRadius);
         var particles = SceneGlobals.Instance.ParticleScript.WallDestructionParticles;
@@ -56,15 +56,23 @@ public class MapScript : MonoBehaviour, IMapAccess
         WallCompositeCollider.generationType = CompositeCollider2D.GenerationType.Manual;
 
         int tilesCleared = 0;
+        var player = PlayableCharacters.GetPlayerInScene();
+        var playerPos = player.GetPosition();
+        var playerTilePos = new Vector3Int((int)playerPos.x, (int)playerPos.y, 0);
+
         for (int i = 0; i < tilesChecked; ++i)
         {
             bool wasDestroyed = MapUtil.LatestResultFlags[i];
             if (wasDestroyed)
                 tilesCleared++;
 
-            if (wasDestroyed || !particlesAtDestroyedWallsOnly)
+            if (wasDestroyed || !damageWallsOnly)
             {
                 var tile = MapUtil.LatestResultPositions[i];
+                bool damagePlayer = tile == playerTilePos;
+                if (damagePlayer)
+                    player.TakeDamage(explosionSource, CurrentRunData.Instance.ExplosionDamage, Vector3.zero);
+
                 // Show effect a bit above wall tile center since they also have a top
                 const float EffectOffset = 0.5f;
                 var tileWorldPos = WallTileMap.GetCellCenterWorld(tile) + Vector3.up * EffectOffset;

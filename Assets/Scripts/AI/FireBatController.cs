@@ -99,7 +99,7 @@ public class FireBatController : MonoBehaviour
                     me_.DoFlash(-0.25f, 0);
 
                     var deathPos = movable_.GetCenter();
-                    MapScript.Instance.ExplodeWalls(deathPos, worldRadius: 2, particlesAtDestroyedWallsOnly: false);
+                    MapScript.Instance.TriggerExplosion(deathPos, worldRadius: 2, damageWallsOnly: false, me_);
 
                     ParticleScript.EmitAtPosition(ParticleScript.Instance.WallDestructionParticles, deathPos, 10);
                     ParticleScript.EmitAtPosition(ParticleScript.Instance.MuzzleFlashParticles, deathPos, 1);

@@ -1,4 +1,5 @@
 ﻿using MEC;
+using Pathfinding;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class GameSceneLogic : MonoBehaviour
     public AudioClip PlayerDeadSound;
     public MapPlugins MapPlugins;
     public TextMeshProUGUI LoadingText;
+    public TextMeshProUGUI KilledByText;
 
     int enemyAliveCount_;
     int enemyDeadCount_;
@@ -190,7 +192,7 @@ public class GameSceneLogic : MonoBehaviour
         }
 
         playerInScene.transform.SetPositionAndRotation(targetPos, Quaternion.identity);
-        map_.ExplodeWalls(targetPos, 2);
+        map_.TriggerExplosion(targetPos, 2);
 
         var playerCenter = targetPos + Vector3.up * 0.5f;
         ParticleScript.EmitAtPosition(ParticleScript.Instance.PlayerLandParticles, playerCenter, 15);
@@ -283,7 +285,7 @@ public class GameSceneLogic : MonoBehaviour
         var pos = latestEnemyDeathPosition_;
         nextLevelPortal_.transform.position = pos;
         nextLevelPortal_.OnPlayerEnter.AddListener(OnPlayerEnterPortal);
-        map_.ExplodeWalls(pos, 3);
+        map_.TriggerExplosion(pos, 3);
         var portalCenter = pos + Vector3.up * 1.5f;
         ParticleScript.EmitAtPosition(ParticleScript.Instance.PlayerLandParticles, portalCenter, 25);
         ParticleScript.EmitAtPosition(ParticleScript.Instance.MuzzleFlashParticles, portalCenter, 1);
@@ -306,6 +308,8 @@ public class GameSceneLogic : MonoBehaviour
         GameEvents.ClearListeners();
         SceneGlobals.Instance.AudioManager.PlaySfxClip(PlayerDeadSound, 1);
         DeadCanvas.gameObject.SetActive(true);
+        KilledByText.text = $"Killed By: <color=#ff0000>{playerScript_.KilledBy}</color>";
+
         MiniMapCamera.Instance.Show(false);
 
         OnRunEnded();
@@ -345,12 +349,13 @@ public class GameSceneLogic : MonoBehaviour
         var shop = Instantiate(MapPlugins.ShopPlugin);
         shop.GetComponent<MapPluginScript>().ApplyToMap(MapBuilder.Center);
         MapBuilder.BuildMapTiles(MapBuilder.MapSource, map_, MapStyle);
+        BuildPathingGraph();
     }
 
     public void GenerateMap()
     {
-        int w = 60;
-        int h = 30;
+        int w = 40;
+        int h = 40;
 
         MapBuilder.GenerateMapFloor(w, h, MapFloorAlgorithm.RandomWalkers);
 
@@ -359,5 +364,25 @@ public class GameSceneLogic : MonoBehaviour
             plugin.ApplyToMap(new Vector3Int((int)plugin.transform.position.x, (int)plugin.transform.position.x, 0));
 
         MapBuilder.BuildMapTiles(MapBuilder.MapSource, map_, MapStyle);
+        BuildPathingGraph();
+    }
+
+    void BuildPathingGraph()
+    {
+        AstarPath.active.Scan();
+        AstarPath.active.AddWorkItem(new AstarWorkItem(ctx =>
+        {
+            var graph = AstarPath.active.data.gridGraph;
+            graph.cutCorners = false;
+            for (int y = 0; y < graph.depth; ++y)
+            {
+                for (int x = 0; x < graph.width; ++x)
+                {
+                    var node = graph.GetNode(x, y);
+                    node.Walkable = MapBuilder.CollisionMap[x, y] == 0;
+                }
+            }
+            graph.GetNodes(node => graph.CalculateConnections((GridNodeBase)node));
+        }));
     }
 }

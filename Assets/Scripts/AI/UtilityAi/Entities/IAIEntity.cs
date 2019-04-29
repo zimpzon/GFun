@@ -8,7 +8,6 @@ namespace Apex.Examples.AI.Game
     public interface IAIEntity : IEntity
     {
         void MoveToCover();
-        void MoveToCover_Terminate();
         void FleeFromPlayer();
         void FleeFromPlayer_Terminate();
         void MoveToRandomNearbyPosition();

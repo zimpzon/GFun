@@ -32,7 +32,7 @@ namespace GFun
         /// <summary>
         /// Destroy tiles at worldPosition in a world radius of worldRadius
         /// </summary>
-        void ExplodeWalls(Vector3 worldPosition, float worldRadius, bool particlesAtDestroyedWallsOnly = true);
+        void TriggerExplosion(Vector3 worldPosition, float worldRadius, bool damageWallsOnly = true, IEnemy explosionSource = null);
 
         /// <summary>
         /// Sets how much the map walls should be affected by the lighting effect (0..1)

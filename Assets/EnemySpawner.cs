@@ -55,8 +55,6 @@ public class EnemySpawner : MonoBehaviour
             enemy.transform.position = randomPos;
 
             var vec = new Vector3(randomPos.x, randomPos.y, 0);
-            Debug.DrawRay(vec, Vector3.up * 0.5f, Color.green, 10);
-            Debug.DrawRay(vec, Vector3.right * 0.5f, Color.green, 10);
         }
     }
 
@@ -66,13 +64,14 @@ public class EnemySpawner : MonoBehaviour
 
         // if enemy is large just clear some space around it
 
-        int batCount = 1 + floor * 2;
-        int fireBatCount = 1 + floor * 2;
-        int scytheCount = 5;// 1 + floor / 4;
+        int batCount = floor;
+        int fireBatCount = floor - 1 + 2;
+        int fleeingBatCount = 4;
+        int scytheCount = floor / 4;
 
-        //AddEnemiesOfType(parent, EnemyId.Bat, batCount, openPositions);
-        //AddEnemiesOfType(parent, EnemyId.FireBat, fireBatCount, openPositions);
+        AddEnemiesOfType(parent, EnemyId.Bat, batCount, openPositions);
+        AddEnemiesOfType(parent, EnemyId.FireBat, fireBatCount, openPositions);
         AddEnemiesOfType(parent, EnemyId.SeekerScythe, scytheCount, openPositions);
-        AddEnemiesOfType(parent, EnemyId.FleeingBat, 25, openPositions);
+        AddEnemiesOfType(parent, EnemyId.FleeingBat, fleeingBatCount, openPositions);
     }
 }

@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 1921782251215252592}
   - component: {fileID: 5858678511140378763}
   - component: {fileID: 711082632569833813}
+  - component: {fileID: 1866847542716123366}
+  - component: {fileID: 4109897645051153515}
   m_Layer: 8
   m_Name: FleeingBat
   m_TagString: Untagged
@@ -139,6 +141,70 @@ MonoBehaviour:
     startDelayMin: 0
     startDelayMax: 0.3
     isActive: 1
+--- !u!114 &1866847542716123366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921782251215252598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 1
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: -1
+--- !u!114 &4109897645051153515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921782251215252598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 2
+  radius: 0.5
+  height: 0.01
+  repathRate: 0.5
+  canSearch: 1
+  canMove: 1
+  maxSpeed: 4
+  gravity: {x: NaN, y: NaN, z: NaN}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  centerOffsetCompatibility: NaN
+  orientation: 1
+  enableRotation: 0
+  targetCompatibility: {fileID: 0}
+  maxAcceleration: 50
+  rotationSpeed: 360
+  slowdownDistance: 0.1
+  pickNextWaypointDist: 0.25
+  endReachedDistance: 0.1
+  alwaysDrawGizmos: 1
+  slowWhenNotFacingTarget: 1
+  whenCloseToDestination: 1
+  constrainInsideGraph: 0
 --- !u!1 &1921782251431772653
 GameObject:
   m_ObjectHideFlags: 0

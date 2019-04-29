@@ -134,7 +134,7 @@ public class HumanPlayerController : MonoBehaviour
             ToggleBulletTime();
 
         if (Input.GetKeyDown(KeyCode.F))
-            map_.ExplodeWalls(transform.position, 3f);
+            map_.TriggerExplosion(transform.position, 3f);
 
         if (Input.GetKeyDown(KeyCode.P))
             PlainBulletGun.EffectsOn = !PlainBulletGun.EffectsOn;

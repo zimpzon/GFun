@@ -24,6 +24,8 @@ public static class MapUtil
         int x0 = cellCenter.x - cellRadius;
         int x1 = cellCenter.x + cellRadius;
 
+        var graph = AstarPath.active.data.gridGraph;
+
         var cellPos = new Vector3Int();
         for (int y = y0; y <= y1; ++y)
         {
@@ -39,11 +41,19 @@ public static class MapUtil
                     LatestResultFlags.Add(hasTile);
 
                     if (hasTile)
+                    {
                         MapBuilder.DestroyTile(mapScript, mapStyle, cellPos);
+                        var node = graph.GetNode(x, y);
+                        node.Walkable = true;
+                        graph.CalculateConnections(x + 0, y + 0);
+                        graph.CalculateConnections(x + 1, y + 0);
+                        graph.CalculateConnections(x + 0, y + 1);
+                        graph.CalculateConnections(x - 1, y + 0);
+                        graph.CalculateConnections(x + 0, y - 1);
+                    }
                 }
             }
         }
-
         return LatestResultPositions.Count;
     }
 

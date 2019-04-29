@@ -8,8 +8,5 @@ namespace Apex.Examples.AI
     {
         public override void Execute(IAIContext context)
             => ((AIContext)context).entity.MoveToCover();
-
-        public void Terminate(IAIContext context)
-            => ((AIContext)context).entity.MoveToCover_Terminate();
     }
 }

@@ -39,9 +39,10 @@ public class AudioManager : MonoBehaviour
         IntroScreenSnapshot = MusicMixerGroup.audioMixer.FindSnapshot("IntroScreen");
         InGameSnapshot = MusicMixerGroup.audioMixer.FindSnapshot("InGame");
 
-        SetMusicVolume(PlayerPrefs.GetFloat(PlayerPrefsNames.MaxMusicVolume, 0.8f));
-        SetSfxVolume(PlayerPrefs.GetFloat(PlayerPrefsNames.SfxVolume, 0.8f));
-        SetAmbientVolume(PlayerPrefs.GetFloat(PlayerPrefsNames.AmbientVolume, 0.8f));
+        //// TODO: Removed since sound disappears on reload of scene
+        //SetMusicVolume(PlayerPrefs.GetFloat(PlayerPrefsNames.MaxMusicVolume, 0.8f));
+        //SetSfxVolume(PlayerPrefs.GetFloat(PlayerPrefsNames.SfxVolume, 0.8f));
+        //SetAmbientVolume(PlayerPrefs.GetFloat(PlayerPrefsNames.AmbientVolume, 0.8f));
 
         for (int i = 0; i < SfxSourceCount; ++i)
         {

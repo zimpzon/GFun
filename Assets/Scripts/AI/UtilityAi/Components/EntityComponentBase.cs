@@ -43,22 +43,15 @@ namespace Apex.Examples.AI.Game
             if (Time.time > nextFleeTime_ || MoveTargetReached)
             {
 //                FloatingTextSpawner.Instance.Spawn(me_.GetPosition(), "Flee!");
-                MoveTo(GetFleeFromPlayerPosition(), 1.5f);
+                MoveTo(GetFleeFromPlayerPosition(), 1.0f);
                 nextFleeTime_ = Time.time + 1 + Random.value;
             }
         }
 
-        float nextCoverTime_;
-        public void MoveToCover_Terminate() => nextCoverTime_ = 0;
         public void MoveToCover()
         {
-            if (Time.time > nextCoverTime_ && HasNearbyCover)
-            {
-//                FloatingTextSpawner.Instance.Spawn(me_.GetPosition(), "Hide!");
-                if (movable_.GetMoveDestination() != NearbyCoverPosition)
-                    MoveTo(NearbyCoverPosition, 3.0f);
-                nextCoverTime_ = Time.time + 1 + Random.value;
-            }
+            if (movable_.GetMoveDestination() != NearbyCoverPosition)
+                MoveTo(NearbyCoverPosition, 1.0f);
         }
 
         public void StopMove() => movable_.StopMove();

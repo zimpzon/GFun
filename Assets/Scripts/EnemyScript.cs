@@ -1,5 +1,7 @@
 ﻿using GFun;
+using Pathfinding;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 // Maybe not suitable for enemies larger than 1 tile?
@@ -73,6 +75,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
     float flashEndTime_;
     Material renderMaterial_;
     Collider2D collider_;
+    AIPath aiPath_;
 
     private void OnDrawGizmos()
     {
@@ -110,6 +113,8 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         spriteAnimator_ = GetComponentInChildren<ISpriteAnimator>();
         renderMaterial_ = SpriteRenderer.material;
         collider_ = GetComponent<Collider2D>();
+        aiPath_ = GetComponent<AIPath>();
+
         BlipRenderer.enabled = true;
         mapLayer_ = SceneGlobals.Instance.MapLayer;
         mapLayerMask_ = 1 << SceneGlobals.Instance.MapLayer;
@@ -118,6 +123,14 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         MaxLife = EnemyLife;
     }
 
+    private void Start()
+    {
+        if (aiPath_ != null)
+        {
+            aiPath_.destination = transform_.position;
+            aiPath_.canMove = true;
+        }
+    }
 
     // IShootingActor
     public void ShootAtPlayer()
@@ -180,6 +193,9 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         moveTo_ = destination;
         hasMoveTotarget_ = true;
         moveTargetReached_ = false;
+
+        if (aiPath_ != null)
+            aiPath_.destination = destination;
     }
 
     public Vector3 GetMoveDestination() => moveTo_;
@@ -209,6 +225,9 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
 
     void Die(Vector3 damageForce)
     {
+        if (aiPath_ != null)
+            aiPath_.canMove = false;
+
         GameEvents.RaiseEnemyKilled(this, transform_.position);
         StartCoroutine(DieCo(damageForce));
     }
@@ -256,28 +275,41 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         }
     }
 
+    void MoveStraightToTarget(float dt)
+    {
+        var direction = (moveTo_ - transform_.position);
+        bool targetReached = direction.sqrMagnitude < 0.005f;
+        if (targetReached)
+        {
+            moveTargetReached_ = true;
+            body_.velocity = Vector2.zero;
+            return;
+        }
+
+        direction.Normalize();
+
+        latestMovementDirection_ = direction;
+
+        var wallAvoidance = (wallAvoidanceDirection_ * wallAvoidanceAmount_ * WallAvoidancePower).normalized;
+        wallAvoidanceAmount_ = Mathf.Max(0.0f, wallAvoidanceAmount_ - (4.0f * dt) * WallAvoidancePower);
+
+        direction = (direction + wallAvoidance).normalized;
+        var step = direction * (EnemyMoveSpeed * speedVariation_ * speedMul_) * dt;
+        body_.AddForce(step * 10, ForceMode2D.Impulse);
+    }
+
     void FixedUpdateInternal(float dt)
     {
         if (hasMoveTotarget_ && !moveTargetReached_)
         {
-            var direction = (moveTo_ - transform_.position);
-            bool targetReached = direction.sqrMagnitude < 0.005f;
-            if (targetReached)
+            if (aiPath_ == null)
             {
-                moveTargetReached_ = true;
-                return;
+                MoveStraightToTarget(dt);
             }
-
-            direction.Normalize();
-
-            latestMovementDirection_ = direction;
-
-            var wallAvoidance = (wallAvoidanceDirection_ * wallAvoidanceAmount_ * WallAvoidancePower).normalized;
-            wallAvoidanceAmount_ = Mathf.Max(0.0f, wallAvoidanceAmount_ - (4.0f * dt) * WallAvoidancePower);
-
-            direction = (direction + wallAvoidance).normalized;
-            var step = direction * (EnemyMoveSpeed * speedVariation_ * speedMul_) * dt;
-            body_.AddForce(step * 10, ForceMode2D.Impulse);
+            else
+            {
+                moveTargetReached_ = aiPath_.reachedEndOfPath;
+            }
         }
     }
 
@@ -319,20 +351,87 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
 
     static readonly RaycastHit2D[] MapRaycastHit = new RaycastHit2D[1];
 
-    bool HasCoverBehindWall(int wallX, int wallY, Vector3 fromPosition, out Vector3 coverPosition)
+    bool IsCover(int wallX, int wallY, Vector3 fromPosition)
     {
         Vector3 cellWorld = new Vector3(wallX + 0.5f, wallY + 0.5f);
-        Vector3 dir = (cellWorld - fromPosition).normalized;
-        Vector3 testPos = cellWorld + dir;
-        int testCellX = (int)testPos.x;
-        int testCellY = (int)testPos.y;
-        bool isFree = MapBuilder.CollisionMap[testCellX, testCellY] == MapBuilder.TileWalkable;
-        var color = isFree ? Color.green : Color.red;
-        var freeCellWorld = new Vector3(testCellX + 0.5f, testCellY, 0); // Bottom center of cell
-        coverPosition = freeCellWorld;
-        //Debug.DrawRay(freeCellWorld, Vector3.up * 0.5f, color, 0.3f);
-        //Debug.DrawRay(freeCellWorld, Vector3.right * 0.5f, color, 0.3f);
-        return isFree;
+        int count = Physics2D.LinecastNonAlloc(cellWorld, fromPosition, MapRaycastHit, mapLayerMask_);
+        bool isCover = count != 0;
+        var color = isCover ? Color.cyan : Color.magenta;
+        Debug.DrawRay(cellWorld, Vector3.up * -0.2f, color, 0.3f);
+        Debug.DrawRay(cellWorld, Vector3.right * -0.2f, color, 0.3f);
+        return isCover;
+    }
+
+    bool IsPotentialCover(int x, int y, Vector3 fromPosition)
+    {
+        if (MapBuilder.CollisionMap[x, y] != 0)
+            return false;
+
+        int neighbourCount =
+            MapBuilder.CollisionMap[x + 1, y + 0] +
+            MapBuilder.CollisionMap[x + 0, y + 1] +
+            MapBuilder.CollisionMap[x - 1, y + 0] +
+            MapBuilder.CollisionMap[x + 0, y - 1];
+
+        if (neighbourCount == 0 || neighbourCount == 4)
+            return false;
+
+        int lookX = fromPosition.x > x + 0.5f ? 1 : -1;
+        int lookY = fromPosition.y > y + 0.5f ? 1 : -1;
+        int candidateWallCount = MapBuilder.CollisionMap[x + lookX, y] + MapBuilder.CollisionMap[x, y + lookY];
+        return candidateWallCount != 0;
+    }
+
+    struct CoverNode
+    {
+        public int x;
+        public int y;
+        public int distance;
+    };
+
+    Stack<CoverNode> floodFillStack_ = new Stack<CoverNode>(50);
+    List<CoverNode> reachableNodes_ = new List<CoverNode>(50);
+    List<int> distinctCheck_ = new List<int>(50);
+
+    void FloodNode(int x, int y, int startX, int startY, int radius)
+    {
+        int distanceX = Mathf.Abs(startX - x);
+        int distanceY = Mathf.Abs(startY - y);
+        if (distanceX > radius || distanceY > radius)
+            return;
+
+        if (MapBuilder.CollisionMap[x, y] != 0)
+            return;
+
+        int packed = x + (y << 16);
+        if (!distinctCheck_.Contains(packed))
+        {
+            int distance = distanceX + distanceY;
+            var node = new CoverNode { x = x, y = y, distance = distance };
+            reachableNodes_.Add(node);
+            floodFillStack_.Push(node);
+            distinctCheck_.Add(packed);
+        }
+    }
+
+    void FloodFill(int startX, int startY, int radius)
+    {
+        floodFillStack_.Clear();
+        reachableNodes_.Clear();
+        distinctCheck_.Clear();
+
+        FloodNode(startX, startY, startX, startY, radius);
+
+        while (floodFillStack_.Count > 0)
+        {
+            var node = floodFillStack_.Pop();
+            int x = node.x;
+            int y = node.y;
+            FloodNode(x - 1, y + 0, startX, startY, radius);
+            FloodNode(x + 0, y - 1, startX, startY, radius);
+            FloodNode(x + 1, y + 0, startX, startY, radius);
+            FloodNode(x + 0, y + 1, startX, startY, radius);
+        }
     }
 
     void UpdateNearbyCover()
@@ -343,16 +442,11 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         bool checkNow = (Time.frameCount + myLosThrottleId_) % AiBlackboard.LosThrottleModulus == 0;
         if (checkNow && !AiBlackboard.Instance.BulletTimeActive)
         {
-            // If player is last seen above or below us we scan for cover to the left and right.
-            // If player is last seen left or right of us we scan for cover up and down.
             var myPos = transform_.position;
             myPos.x += collider_.offset.x;
             myPos.y += collider_.offset.y;
 
             HasNearbyCover = false;
-            bool hasRecentlySeenPlayer = Time.time - playerLatestKnownPositionTime_ < 3.0f;
-            if (!hasRecentlySeenPlayer) // Don't look for cover if player wasn't recently seen
-                return;
 
             var playerLOSDir = playerLatestKnownPosition_ - myPos;
             float sqrMaxDistance = playerLoSMaxDistance_ * playerLoSMaxDistance_;
@@ -361,29 +455,42 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
 
             int startX = (int)myPos.x;
             int startY = (int)myPos.y;
-
             int cellRange = (int)coverMaxDistance_;
-            for (int y = startY - cellRange; y <= startY + cellRange; ++y)
+            FloodFill(startX, startY, cellRange);
+
+            int idxClosestCover = -1;
+            int smallestDistance = int.MaxValue;
+
+            for (int i = 0; i < reachableNodes_.Count; ++i)
             {
-                if (HasNearbyCover)
-                    break;
-                for (int x = startX - cellRange; x <= startX + cellRange; ++x)
+                var node = reachableNodes_[i];
+                int x = node.x;
+                int y = node.y;
+                Vector3 cellWorld = new Vector3(x + 0.5f, y + 0.25f);
+
+                bool isPotentialCover = IsPotentialCover(x, y, AiBlackboard.Instance.PlayerPosition);
+                if (isPotentialCover)
                 {
-                    if (MapBuilder.CollisionMap[x, y] != MapBuilder.TileWalkable)
+                    Color color = isPotentialCover ? Color.cyan : Color.magenta;
+                    //Debug.DrawRay(cellWorld, Vector3.up * 0.5f, color, 0.3f);
+                    //Debug.DrawRay(cellWorld, Vector3.right * 0.5f, color, 0.3f);
+                    bool isCover = IsCover(x, y, AiBlackboard.Instance.PlayerPosition);
+                    if (isCover)
                     {
-                        if (HasCoverBehindWall(x, y, playerLatestKnownPosition_, out Vector3 coverPosition))
+                        if (node.distance < smallestDistance)
                         {
-                            var cellWorld = new Vector3(x + 0.5f, x + 0.5f, 0);
-                            int hitCount = Physics2D.LinecastNonAlloc(myPos, coverPosition, MapRaycastHit, mapLayerMask_);
-                            if (hitCount == 0)
-                            {
-                                HasNearbyCover = true;
-                                NearbyCoverPosition = coverPosition;
-                                break;
-                            }
+                            idxClosestCover = i;
+                            smallestDistance = node.distance;
                         }
                     }
                 }
+            }
+
+            if (idxClosestCover != -1)
+            {
+                var node = reachableNodes_[idxClosestCover];
+                NearbyCoverPosition = new Vector3(node.x + 0.5f, node.y + 0.25f);
+                HasNearbyCover = true;
             }
         }
     }

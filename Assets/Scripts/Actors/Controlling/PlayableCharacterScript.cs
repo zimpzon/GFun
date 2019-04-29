@@ -1,6 +1,19 @@
 ﻿using GFun;
 using UnityEngine;
 
+public class PlayerSelfDamage : IEnemy
+{
+    public static readonly PlayerSelfDamage Instance = new PlayerSelfDamage();
+
+    public EnemyId Id => EnemyId.PlayerSelfDamage;
+    public string Name => "Yourself";
+    public int Level => 1;
+    public float Life => 1;
+    public float MaxLife => 1;
+    public bool IsDead => false;
+    public void DoFlash(float amount, float ms) { }
+}
+
 public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProvider
 {
     public string Name;
@@ -18,6 +31,8 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
     public bool IsDead = false;
     public Vector3 WeaponOffsetRight;
     public AudioClip TakeDamageSound;
+
+    [System.NonSerialized]public string KilledBy;
 
     public IWeapon CurrentWeapon;
     public GameObject CurrentWeaponGo;
@@ -173,6 +188,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
         UpdateHealth();
         if (Life == 0)
         {
+            KilledBy = enemy.Name;
             Die();
             GameEvents.RaisePlayerKilled(enemy);
         }
