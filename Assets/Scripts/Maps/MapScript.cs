@@ -61,9 +61,6 @@ public class MapScript : MonoBehaviour, IMapAccess
         WallCompositeCollider.generationType = CompositeCollider2D.GenerationType.Manual;
 
         int tilesCleared = 0;
-        var player = PlayableCharacters.GetPlayerInScene();
-        var playerPos = player.GetPosition();
-        var playerTilePos = new Vector3Int((int)playerPos.x, (int)playerPos.y, 0);
 
         for (int i = 0; i < tilesChecked; ++i)
         {
@@ -74,9 +71,6 @@ public class MapScript : MonoBehaviour, IMapAccess
             if (wasDestroyed || !damageWallsOnly)
             {
                 var tile = MapUtil.LatestResultPositions[i];
-                bool damagePlayer = tile == playerTilePos;
-                if (damagePlayer)
-                    player.TakeDamage(explosionSource, CurrentRunData.Instance.PlayerExplosionDamage, Vector3.zero);
 
                 // Show effect a bit above wall tile center since they also have a top
                 const float EffectOffset = 0.5f;
@@ -85,10 +79,17 @@ public class MapScript : MonoBehaviour, IMapAccess
             }
         }
 
-//        if (!damageWallsOnly)
+        var player = PlayableCharacters.GetPlayerInScene();
+        var playerPos = player.GetPosition();
+        float playerDistanceFromExplosion = (worldPosition - playerPos).magnitude;
+        bool damagePlayer = playerDistanceFromExplosion < worldRadius * 0.8f;
+        if (damagePlayer)
+            player.TakeDamage(explosionSource, CurrentRunData.Instance.PlayerExplosionDamage, Vector3.zero);
+
+        if (!damageWallsOnly)
         {
             int mask = 1 << SceneGlobals.Instance.EnemyLayer | 1 << SceneGlobals.Instance.DeadEnemyLayer;
-            int count = Physics2D.OverlapCircleNonAlloc(worldPosition, worldRadius, TempColliderResult, mask);
+            int count = Physics2D.OverlapCircleNonAlloc(worldPosition, worldRadius * 0.9f, TempColliderResult, mask);
             for (int i = 0; i< count; ++i)
             {
                 var enemyGO = TempColliderResult[i];
@@ -98,7 +99,6 @@ public class MapScript : MonoBehaviour, IMapAccess
                     var diff = enemyGO.transform.position - worldPosition;
                     var direction = diff.normalized;
                     enemy.TakeDamage(ExplosionDamageToEnemies, direction);
-                    DebugLinesScript.Show(enemy.Name, Time.time);
                 }
             }
         }

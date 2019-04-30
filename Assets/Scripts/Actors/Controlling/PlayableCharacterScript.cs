@@ -1,4 +1,5 @@
 ﻿using GFun;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerSelfDamage : IEnemy
@@ -13,6 +14,15 @@ public class PlayerSelfDamage : IEnemy
     public bool IsDead => false;
     public void DoFlash(float amount, float ms) { }
     public void TakeDamage(int amount, Vector3 damageForce) { }
+}
+
+public class PlayerHealthEvent
+{
+    public int MaxHealth;
+    public int HealthBefore;
+    public int HealthChange;
+    public string ChangeSource;
+    public float Time;
 }
 
 public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProvider
@@ -33,7 +43,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
     public Vector3 WeaponOffsetRight;
     public AudioClip TakeDamageSound;
 
-    [System.NonSerialized]public string KilledBy;
+    [System.NonSerialized] public string KilledBy;
 
     public IWeapon CurrentWeapon;
     public GameObject CurrentWeaponGo;
@@ -59,6 +69,11 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
 
     bool isHumanControlled_;
     InteractableTrigger switchPlayerInteract_;
+
+    void AddPlayerHealthEvent(int amount, string source)
+    {
+        CurrentRunData.Instance.AddPlayerHealthEvent(amount, source);
+    }
 
     public void SetIsHumanControlled(bool isHumanControlled, bool showChangeEffect = false)
     {
@@ -158,10 +173,12 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
         }
     }
 
-    public void AddHealth(int amount)
+    public void AddHealth(int amount, string source)
     {
         if (IsDead)
             return;
+
+        AddPlayerHealthEvent(amount, source);
 
         Life = Mathf.Min(MaxLife, Life + amount);
         UpdateHealth();
@@ -183,6 +200,8 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
 
         AudioManager.Instance.PlaySfxClip(TakeDamageSound, 1);
         DoFlash(2, 0.3f);
+
+        AddPlayerHealthEvent(-amount, enemy.Name);
 
         Life = Mathf.Max(0, Life - amount);
         GameEvents.RaisePlayerDamaged(enemy);

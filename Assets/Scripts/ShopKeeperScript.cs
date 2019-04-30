@@ -66,7 +66,7 @@ public class ShopKeeperScript : MonoBehaviour
         switch (id)
         {
             case ShopItemId.Item1Health:
-                player.AddHealth(1);
+                player.AddHealth(1, "Shop Item");
                 break;
             case ShopItemId.IncreaseMaxHp1:
                 player.AddMaxHealth(1);

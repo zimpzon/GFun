@@ -1,6 +1,7 @@
 ﻿using MEC;
 using Pathfinding;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,6 +20,8 @@ public class GameSceneLogic : MonoBehaviour
     public MapPlugins MapPlugins;
     public TextMeshProUGUI LoadingText;
     public TextMeshProUGUI KilledByText;
+    public TextMeshProUGUI StatsText;
+    public TextMeshProUGUI HistoryText;
 
     int enemyAliveCount_;
     int enemyDeadCount_;
@@ -79,12 +82,12 @@ public class GameSceneLogic : MonoBehaviour
     {
         if (type == AutoPickUpType.Coin)
         {
-            CurrentRunData.Instance.Coins += value;
+            CurrentRunData.Instance.AddCoins(value);
             UpdateCoinWidget();
         }
         else if (type == AutoPickUpType.Health)
         {
-            playerScript_.AddHealth(value);
+            playerScript_.AddHealth(value, "Health Pickup");
         }
     }
 
@@ -308,7 +311,29 @@ public class GameSceneLogic : MonoBehaviour
         GameEvents.ClearListeners();
         SceneGlobals.Instance.AudioManager.PlaySfxClip(PlayerDeadSound, 1);
         DeadCanvas.gameObject.SetActive(true);
+
+        float time = Time.unscaledTime - CurrentRunData.Instance.RunStartTime;
+        var timeSpan = System.TimeSpan.FromSeconds(time);
         KilledByText.text = $"Killed By: <color=#ff0000>{playerScript_.KilledBy}</color>";
+
+        var sb = new StringBuilder(100);
+        sb.AppendLine($"Floor Reached: <color=#00ff00>{CurrentRunData.Instance.CurrentFloor}</color>");
+        sb.AppendLine($"Enemies Killed: <color=#00ff00>{CurrentRunData.Instance.EnemiesKilled}</color>");
+        sb.AppendLine($"Coins Collected: <color=#00ff00>{CurrentRunData.Instance.CoinsCollected}</color>");
+        sb.AppendLine($"Time: <color=#00ff00>{timeSpan.ToString("hh\\:mm\\:ss")}</color>");
+        StatsText.text = sb.ToString();
+
+        sb.Clear();
+        for (int i = 0; i < CurrentRunData.Instance.HealthEvents.Count; ++i)
+        {
+            var evt = CurrentRunData.Instance.HealthEvents[i];
+            var span = System.TimeSpan.FromSeconds(evt.Time - CurrentRunData.Instance.RunStartTime);
+            if (evt.HealthChange < 0)
+                sb.AppendLine($"{span.ToString("hh\\:mm\\:ss")}: <color=#ff0000>{evt.HealthChange}</color> from {evt.ChangeSource}");
+            else
+                sb.AppendLine($"{span.ToString("hh\\:mm\\:ss")}: <color=#00ff00>+{evt.HealthChange}</color> from {evt.ChangeSource}");
+        }
+        HistoryText.text = sb.ToString();
 
         MiniMapCamera.Instance.Show(false);
 

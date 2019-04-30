@@ -229,7 +229,11 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
     void Die(Vector3 damageForce)
     {
         if (aiPath_ != null)
+        {
+            aiPath_.destination = transform_.position;
             aiPath_.canMove = false;
+            aiPath_.enabled = false;
+        }
 
         GameEvents.RaiseEnemyKilled(this, transform_.position);
         StartCoroutine(DieCo(damageForce));
@@ -242,7 +246,6 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         gameObject.layer = SceneGlobals.Instance.DeadEnemyLayer;
         SpriteRenderer.sortingOrder = SceneGlobals.Instance.OnTheFloorSortingValue;
         body_.freezeRotation = false;
-//        body_.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         body_.velocity = Vector3.zero;
         body_.AddForce(damageForce * 10, ForceMode2D.Impulse);
         float angularVelocityVariation = 1.4f - Random.value * 0.8f;
@@ -255,9 +258,6 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         SceneGlobals.Instance.CameraShake.SetMinimumShake(0.2f);
 
         yield return DisableDelay;
-
-        //body_.simulated = false;
-        //collider_.enabled = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
