@@ -79,16 +79,16 @@ public class MapScript : MonoBehaviour, IMapAccess
             }
         }
 
-        var player = PlayableCharacters.GetPlayerInScene();
-        var playerPos = player.GetPosition();
-        float playerDistanceFromExplosion = (worldPosition - playerPos).magnitude;
-        bool damagePlayer = playerDistanceFromExplosion < worldRadius * 0.8f;
-        if (damagePlayer)
-            player.TakeDamage(explosionSource, CurrentRunData.Instance.PlayerExplosionDamage, Vector3.zero);
-
         if (!damageWallsOnly)
         {
-            int mask = 1 << SceneGlobals.Instance.EnemyLayer | 1 << SceneGlobals.Instance.DeadEnemyLayer;
+            var player = PlayableCharacters.GetPlayerInScene();
+            var playerPos = player.GetPosition();
+            float playerDistanceFromExplosion = (worldPosition - playerPos).magnitude;
+            bool damagePlayer = playerDistanceFromExplosion < worldRadius * 0.8f;
+            if (damagePlayer)
+                player.TakeDamage(explosionSource, CurrentRunData.Instance.PlayerExplosionDamage, Vector3.zero);
+
+            int mask = SceneGlobals.Instance.EnemyDeadOrAliveMask;
             int count = Physics2D.OverlapCircleNonAlloc(worldPosition, worldRadius * 0.9f, TempColliderResult, mask);
             for (int i = 0; i< count; ++i)
             {

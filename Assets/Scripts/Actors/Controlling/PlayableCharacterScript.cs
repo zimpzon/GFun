@@ -1,5 +1,4 @@
 ﻿using GFun;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerSelfDamage : IEnemy
@@ -73,6 +72,11 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
     void AddPlayerHealthEvent(int amount, string source)
     {
         CurrentRunData.Instance.AddPlayerHealthEvent(amount, source);
+    }
+
+    public void DisableCollider()
+    {
+        GetComponent<Collider2D>().enabled = false;
     }
 
     public void SetIsHumanControlled(bool isHumanControlled, bool showChangeEffect = false)

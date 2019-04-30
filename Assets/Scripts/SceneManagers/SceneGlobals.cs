@@ -16,13 +16,16 @@ public class SceneGlobals : MonoBehaviour
     public LightingImageEffect LightingImageEffect;
     public LightingCamera LightingCamera;
     public MiniMapCamera MapCamera;
-    public LayerMask MapLayer;
-    public LayerMask PlayerLayer;
-    public LayerMask PlayerDamageLayer;
-    public LayerMask PlayerInteractionLayer;
-    public LayerMask EnemyLayer;
-    public LayerMask EnemyDamageLayer;
-    public LayerMask DeadEnemyLayer;
+    public int MapLayer;
+    public int PlayerLayer;
+    public int PlayerDamageLayer;
+    public int PlayerInteractionLayer;
+    public int EnemyLayer;
+    public int EnemyNoWallsLayer;
+    public int EnemyDamageLayer;
+    public int DeadEnemyLayer;
+    public int EnemyDeadOrAliveMask;
+    public int EnemyAliveMask;
     public GameObjectPool PlainBulletPool;
     public GameObjectPool ElongatedBulletPool;
     public GameObjectPool EnemyBullet1Pool;
@@ -37,8 +40,11 @@ public class SceneGlobals : MonoBehaviour
         PlayerDamageLayer = LayerMask.NameToLayer("PlayerDamage");
         PlayerInteractionLayer = LayerMask.NameToLayer("PlayerInteraction");
         EnemyLayer = LayerMask.NameToLayer("Enemy");
+        EnemyNoWallsLayer = LayerMask.NameToLayer("EnemyNoWalls");
         EnemyDamageLayer = LayerMask.NameToLayer("EnemyDamage");
         DeadEnemyLayer = LayerMask.NameToLayer("DeadEnemy");
+        EnemyDeadOrAliveMask = (1 << EnemyLayer) + (1 << EnemyNoWallsLayer) + (1 << DeadEnemyLayer);
+        EnemyAliveMask = (1 << EnemyLayer) + (1 << EnemyNoWallsLayer);
 
         CameraPositioner = FindObjectOfType<CameraPositioner>();
         CameraShake = FindObjectOfType<CameraShake>();

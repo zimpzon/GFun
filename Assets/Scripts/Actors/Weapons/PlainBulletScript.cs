@@ -10,7 +10,7 @@ public class PlainBulletScript : MonoBehaviour
     Quaternion rotation_;
     float distanceMoved_;
     Vector3 baseScale_;
-    LayerMask enemyLayer_;
+    int enemyLayerMask_;
     PlainBulletSettings settings_;
     MapScript map_;
     int remainingDamage_;
@@ -34,13 +34,13 @@ public class PlainBulletScript : MonoBehaviour
     {
         transform_ = transform;
         baseScale_ = transform.localScale;
-        enemyLayer_ = SceneGlobals.Instance.EnemyLayer;
+        enemyLayerMask_ = SceneGlobals.Instance.EnemyAliveMask;
         map_ = SceneGlobals.Instance.MapScript;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == enemyLayer_.value && remainingDamage_ > 0)
+        if (((1 << collision.gameObject.layer) & enemyLayerMask_) != 0 && remainingDamage_ > 0)
         {
             var enemyScript = collision.gameObject.GetComponent<EnemyScript>();
             if (enemyScript != null)

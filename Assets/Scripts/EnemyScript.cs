@@ -211,7 +211,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
             return;
         }
          
-        DoFlash(3, 0.3f);
+        DoFlash(0.5f, 0.3f);
         EnemyLife = Mathf.Max(0, EnemyLife - amount);
         if (EnemyLife == 0)
         {
@@ -311,6 +311,8 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
             }
             else
             {
+                aiPath_.maxSpeed = EnemyMoveSpeed * speedVariation_ * speedMul_;
+                latestMovementDirection_ = aiPath_.desiredVelocity.normalized;
                 moveTargetReached_ = aiPath_.reachedEndOfPath;
             }
         }

@@ -31,6 +31,7 @@ public class PortalScript : MonoBehaviour
     {
         var player = PlayableCharacters.GetPlayerInScene();
         player.SetIsHumanControlled(false, showChangeEffect: false);
+        player.DisableCollider();
 
         float effectTime = 1.0f;
         float timeEnd = Time.unscaledTime + effectTime;

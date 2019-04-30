@@ -134,7 +134,10 @@ public class HumanPlayerController : MonoBehaviour
             ToggleBulletTime();
 
         if (Input.GetKeyDown(KeyCode.F))
+        {
             map_.TriggerExplosion(transform.position, 3f);
+            PlayerInfoScript.Instance.ShowInfo("test", Color.yellow);
+        }
 
         if (Input.GetKeyDown(KeyCode.P))
             PlainBulletGun.EffectsOn = !PlainBulletGun.EffectsOn;

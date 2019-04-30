@@ -164,7 +164,7 @@ public class GameSceneLogic : MonoBehaviour
         // Prepare enemies
         if (CurrentRunData.Instance.NextMapType == MapType.Floor)
         {
-            EnemySpawner.Instance.AddEnemiesForFloor(DynamicObjectRoot, CurrentRunData.Instance.CurrentFloor, playerPos, playerMinDistance: 10);
+            EnemySpawner.Instance.AddEnemiesForFloor(DynamicObjectRoot, CurrentRunData.Instance.CurrentFloor, playerPos, playerMinDistance: 15);
         }
 
         var enemiesAtMapStart = FindObjectsOfType<EnemyScript>();
@@ -329,9 +329,25 @@ public class GameSceneLogic : MonoBehaviour
             var evt = CurrentRunData.Instance.HealthEvents[i];
             var span = System.TimeSpan.FromSeconds(evt.Time - CurrentRunData.Instance.RunStartTime);
             if (evt.HealthChange < 0)
-                sb.AppendLine($"{span.ToString("hh\\:mm\\:ss")}: <color=#ff0000>{evt.HealthChange}</color> from {evt.ChangeSource}");
+            {
+                string append = "";
+                int hpLeft = evt.HealthBefore + evt.HealthChange;
+                if (hpLeft == 0)
+                    append = "(Killed)";
+                else if (hpLeft < 0)
+                    append = $"(Killed, {-hpLeft} Overkill)";
+
+                sb.AppendLine($"{span.ToString("hh\\:mm\\:ss")}: <color=#ff0000>{evt.HealthChange}</color> from {evt.ChangeSource} {append}");
+            }
             else
-                sb.AppendLine($"{span.ToString("hh\\:mm\\:ss")}: <color=#00ff00>+{evt.HealthChange}</color> from {evt.ChangeSource}");
+            {
+                string append = "";
+                int overHeal = (evt.HealthBefore + evt.HealthChange) - evt.MaxHealth;
+                if (overHeal > 0)
+                    append = $"({overHeal} Overheal)";
+
+                sb.AppendLine($"{span.ToString("hh\\:mm\\:ss")}: <color=#00ff00>+{evt.HealthChange}</color> from {evt.ChangeSource} {append}");
+            }
         }
         HistoryText.text = sb.ToString();
 
