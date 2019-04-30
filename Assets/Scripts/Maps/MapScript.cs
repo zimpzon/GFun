@@ -13,11 +13,15 @@ public class MapScript : MonoBehaviour, IMapAccess
     public GameObject BackgroundQuad;
     public CompositeCollider2D WallCompositeCollider;
 
+    const int ExplosionDamageToEnemies = 40;
+
     Renderer wallRenderer_;
     Renderer topRenderer_;
     Renderer backgroundRenderer_;
     float wallClarity_;
     bool shaderHasClarity_;
+
+    static readonly Collider2D[] TempColliderResult = new Collider2D[50];
 
     public float GetWallClarity()
         => wallClarity_;
@@ -46,6 +50,7 @@ public class MapScript : MonoBehaviour, IMapAccess
         var floorbounds = WallTileMap.cellBounds;
     }
 
+
     // When destroying walls some colliders are left behind. Fix should be incoming:
     // https://github.com/Unity-Technologies/2d-extras/issues/34
     public void TriggerExplosion(Vector3 worldPosition, float worldRadius, bool damageWallsOnly = true, IEnemy explosionSource = null)
@@ -71,12 +76,30 @@ public class MapScript : MonoBehaviour, IMapAccess
                 var tile = MapUtil.LatestResultPositions[i];
                 bool damagePlayer = tile == playerTilePos;
                 if (damagePlayer)
-                    player.TakeDamage(explosionSource, CurrentRunData.Instance.ExplosionDamage, Vector3.zero);
+                    player.TakeDamage(explosionSource, CurrentRunData.Instance.PlayerExplosionDamage, Vector3.zero);
 
                 // Show effect a bit above wall tile center since they also have a top
                 const float EffectOffset = 0.5f;
                 var tileWorldPos = WallTileMap.GetCellCenterWorld(tile) + Vector3.up * EffectOffset;
                 ParticleScript.EmitAtPosition(particles, tileWorldPos, 10);
+            }
+        }
+
+//        if (!damageWallsOnly)
+        {
+            int mask = 1 << SceneGlobals.Instance.EnemyLayer | 1 << SceneGlobals.Instance.DeadEnemyLayer;
+            int count = Physics2D.OverlapCircleNonAlloc(worldPosition, worldRadius, TempColliderResult, mask);
+            for (int i = 0; i< count; ++i)
+            {
+                var enemyGO = TempColliderResult[i];
+                var enemy = enemyGO.GetComponent<IEnemy>();
+                if (enemy != null)
+                {
+                    var diff = enemyGO.transform.position - worldPosition;
+                    var direction = diff.normalized;
+                    enemy.TakeDamage(ExplosionDamageToEnemies, direction);
+                    DebugLinesScript.Show(enemy.Name, Time.time);
+                }
             }
         }
 

@@ -12,6 +12,7 @@ public class PlayerSelfDamage : IEnemy
     public float MaxLife => 1;
     public bool IsDead => false;
     public void DoFlash(float amount, float ms) { }
+    public void TakeDamage(int amount, Vector3 damageForce) { }
 }
 
 public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProvider
@@ -132,6 +133,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
         {
             energyDepleted_ = true;
             Energy = 0;
+            FloatingTextSpawner.Instance.Spawn(transform_.position + Vector3.up, "Depleted", 1.0f);
             return false;
         }
 
@@ -145,13 +147,13 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
         if (EnergyWidget.Instance != null)
             EnergyWidget.Instance.ShowEnergy((int)Energy, MaxEnergy);
 
-        if (Time.unscaledTime > timeLatestEnergyUsage_ + 0.2f)
+        if (Time.unscaledTime > timeLatestEnergyUsage_ + 0.3f)
         {
-            float energyPct = Mathf.Min(Energy / MaxEnergy + 0.2f);
+            float energyPct = Mathf.Min(Energy / MaxEnergy);
             if (energyPct > 0.2f)
                 energyDepleted_ = false;
 
-            float gain = Time.unscaledDeltaTime * 500 * energyPct;
+            float gain = Time.unscaledDeltaTime * 500 * (energyPct + 0.2f);
             Energy = Mathf.Min(MaxEnergy, Energy + gain);
         }
     }

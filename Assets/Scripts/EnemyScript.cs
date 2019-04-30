@@ -206,7 +206,10 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
     public void TakeDamage(int amount, Vector3 damageForce)
     {
         if (IsDead)
+        {
+            body_.AddForce(damageForce * 10, ForceMode2D.Impulse);
             return;
+        }
          
         DoFlash(3, 0.3f);
         EnemyLife = Mathf.Max(0, EnemyLife - amount);
@@ -239,9 +242,9 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         gameObject.layer = SceneGlobals.Instance.DeadEnemyLayer;
         SpriteRenderer.sortingOrder = SceneGlobals.Instance.OnTheFloorSortingValue;
         body_.freezeRotation = false;
-        body_.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+//        body_.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         body_.velocity = Vector3.zero;
-        body_.AddForce(damageForce * 20, ForceMode2D.Impulse);
+        body_.AddForce(damageForce * 10, ForceMode2D.Impulse);
         float angularVelocityVariation = 1.4f - Random.value * 0.8f;
         body_.angularVelocity = (damageForce.x > 0 ? -300 : 300) * damageForce.magnitude * angularVelocityVariation;
         BlipRenderer.enabled = false;
@@ -253,8 +256,8 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
 
         yield return DisableDelay;
 
-        body_.simulated = false;
-        collider_.enabled = false;
+        //body_.simulated = false;
+        //collider_.enabled = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

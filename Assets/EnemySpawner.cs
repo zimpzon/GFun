@@ -65,7 +65,7 @@ public class EnemySpawner : MonoBehaviour
         // if enemy is large just clear some space around it
 
         int batCount = floor;
-        int fireBatCount = floor - 1 + 2;
+        int fireBatCount = 10 + floor - 1 + 2;
         int fleeingBatCount = 4;
         int scytheCount = floor / 4;
 

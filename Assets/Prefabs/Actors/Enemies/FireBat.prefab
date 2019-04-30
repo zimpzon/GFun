@@ -50,8 +50,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0f198733d6af2b4f8e383e70dae94ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnableMoveToGizmo: 0
+  MoveToGizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  EnableCoverGizmo: 0
+  CoverGizmoColor: {r: 0, g: 1, b: 1, a: 1}
+  EnablePlayerLoSGizmo: 0
+  PlayerLOSGizmoColor: {r: 0, g: 1, b: 0, a: 1}
   EnemyId: 1
-  EnemyName: Fire Bat
+  EnemyName: A Fire Bat
   EnemyLevel: 1
   EnemyMoveSpeed: 3
   SpeedVariation: 0.2

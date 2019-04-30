@@ -22,7 +22,7 @@ public class SeekerScytheScript : MonoBehaviour, IEnemy
     float nextChargeSoundCd_;
 
     public EnemyId Id => EnemyId.SeekerScythe;
-    public string Name => "Scythe";
+    public string Name => "A Scythe";
     public int Level => 2;
     public float Life => 1;
     public bool IsDead => false;
@@ -39,6 +39,10 @@ public class SeekerScytheScript : MonoBehaviour, IEnemy
     public void AddForce(Vector3 force)
     {
         body_.AddForce(force, ForceMode2D.Impulse);
+    }
+
+    public void TakeDamage(int amount, Vector3 damageForce)
+    {
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

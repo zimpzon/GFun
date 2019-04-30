@@ -87,7 +87,7 @@ public class FireBatController : MonoBehaviour
             {
                 if (me_.IsDead)
                 {
-                    float explosionDelay = Time.time + 2.0f + Random.value * 0.5f;
+                    float explosionDelay = Time.time + 2.0f + Random.value * 0.25f;
                     while (Time.time < explosionDelay)
                     {
                         bool flashOn = ((int)(Time.time * 10) & 1) == 0;

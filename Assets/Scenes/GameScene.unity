@@ -2346,7 +2346,7 @@ CompositeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
+  m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:
@@ -4620,11 +4620,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 743855105, guid: 0cf7bc3918782f34fa3e38a7349bd53b, type: 3}
-      propertyPath: Prefab
-      value: 
-      objectReference: {fileID: 4051562633852486926, guid: 820bb8c9abb1ff24a8cec5762fe8d440,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0cf7bc3918782f34fa3e38a7349bd53b, type: 3}
 --- !u!4 &1904927184 stripped

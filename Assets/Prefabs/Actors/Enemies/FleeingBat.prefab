@@ -60,7 +60,7 @@ MonoBehaviour:
   EnablePlayerLoSGizmo: 0
   PlayerLOSGizmoColor: {r: 0, g: 1, b: 0, a: 1}
   EnemyId: 3
-  EnemyName: Fleeing Bat
+  EnemyName: A Hiding Bat
   EnemyLevel: 1
   EnemyMoveSpeed: 1
   SpeedVariation: 0.2

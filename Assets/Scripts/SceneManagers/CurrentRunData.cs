@@ -18,7 +18,7 @@ public class CurrentRunData
     public int Coins;
     public int Life;
     public int MaxLife;
-    public int ExplosionDamage = 4;
+    public int PlayerExplosionDamage = 4;
     public float PlayerAttractDistance = 3.0f;
 
     public List<string> NewUnlockedCharacters = new List<string>();
