@@ -24,17 +24,25 @@ public class LightingCamera : MonoBehaviour
 
     private void Update()
     {
-        lightingCam_.backgroundColor = lightingImageEffect_.CurrentValues.AmbientLight;    
+        lightingCam_.backgroundColor = lightingImageEffect_.CurrentValues.AmbientLight;
+        EnsureLightingTextureSize();
+    }
+
+    void EnsureLightingTextureSize()
+    {
+        int texW = Mathf.RoundToInt(ParentCamera.pixelWidth * LightingResolution);
+        int texH = Mathf.RoundToInt(ParentCamera.pixelHeight * LightingResolution);
+        if (lightingCam_.targetTexture == null || lightingCam_.targetTexture.width != texW || lightingCam_.targetTexture.height != texH)
+        {
+            lightingCam_.targetTexture = RenderTexture.GetTemporary(texW, texH, 0, LightingTextureFormat);
+            lightingImageEffect_.LightingTexture = lightingCam_.targetTexture;
+        }
     }
 
     private void OnEnable()
     {
         AlignWithParentCamera(ParentCamera);
-
-        int texW = Mathf.RoundToInt(ParentCamera.pixelWidth * LightingResolution);
-        int texH = Mathf.RoundToInt(ParentCamera.pixelHeight * LightingResolution);
-        lightingCam_.targetTexture = RenderTexture.GetTemporary(texW, texH, 0, LightingTextureFormat);
-        lightingImageEffect_.LightingTexture = lightingCam_.targetTexture;
+        EnsureLightingTextureSize();
     }
 
     private void OnDisable()

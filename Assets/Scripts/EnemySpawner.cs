@@ -41,7 +41,11 @@ public class EnemySpawner : MonoBehaviour
     {
         int posIdx = Random.Range(0, openPositions.Count);
         (int cellX, int cellY) = openPositions[posIdx];
-        openPositions.RemoveAt(posIdx);
+        if (openPositions.Count > 1)
+            openPositions.RemoveAt(posIdx);
+        else
+            DebugLinesScript.Show("No more open positions for enemies", Time.time);
+
         return new Vector3(cellX + 1.0f, cellY);
     }
 

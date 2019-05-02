@@ -22,8 +22,13 @@ public class PlayerInfoScript : MonoBehaviour
         Instance = this;
         transform_ = GetComponent<RectTransform>();
         text_ = GetComponentInChildren<TextMeshProUGUI>();
-        transform_.localPosition += Vector3.right * 1000;
+        transform_.localPosition += Vector3.right * 10000;
         Timing.RunCoroutine(QueueCo().CancelWith(this.gameObject));
+    }
+
+    public void ShowInfo(string info)
+    {
+        ShowInfo(info, Color.white);
     }
 
     public void ShowInfo(string info, Color color)
@@ -40,7 +45,7 @@ public class PlayerInfoScript : MonoBehaviour
                 yield return 0;
                 continue;
             }
-            // TODO: Disappears?
+
             var item = queue_.Dequeue();
             text_.text = item.info;
             text_.color = item.color;

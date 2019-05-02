@@ -28,7 +28,7 @@ namespace PlayFab
 
         // RuntimePlatform Enum info:
         // OSXEditor = 0, OSXPlayer = 1, WindowsPlayer = 2, OSXWebPlayer = 3, OSXDashboardPlayer = 4, WindowsWebPlayer = 5, WindowsEditor = 7,
-        // IPhonePlayer = 8, PS3 = 9, XBOX360 = 10, Android = 11, LinuxPlayer = 13, FlashPlayer = 15, WebGLPlayer = 17, MetroPlayerX86 = 18, 
+        // IPhonePlayer = 8, PS3 = 9, XBOX360 = 10, Android = 11, LinuxPlayer = 13, FlashPlayer = 15, WebGLPlayer = 17, MetroPlayerX86 = 18,
         // WSAPlayerX86 = 18, MetroPlayerX64 = 19,WSAPlayerX64 = 19, MetroPlayerARM = 20, WSAPlayerARM = 20, WP8Player = 21,
         // EditorBrowsable(EditorBrowsableState.Never)] BB10Player = 22, BlackBerryPlayer = 22, TizenPlayer = 23, PSP2 = 24, PS4 = 25,
         // PSM = 26, XboxOne = 27, SamsungTVPlayer = 28, WiiU = 30, tvOS = 31
@@ -47,7 +47,6 @@ namespace PlayFab
 
         //DEVICE & OS
         public string DeviceModel;
-        public string DeviceName;
         //public enum DeviceType { Unknown, Handheld, Console, Desktop }
         public DeviceType DeviceType;
         public string DeviceUniqueId;
@@ -85,14 +84,16 @@ namespace PlayFab
 
             //Only Used on iOS & Android
 #if UNITY_5_6_OR_NEWER && UNITY_ANDROID && (UNITY_IOS || UNITY_IPHONE)
-            ProductBundle = Application.identifier; 
+            ProductBundle = Application.identifier;
 #elif UNITY_ANDROID && (UNITY_IOS || UNITY_IPHONE)
             ProductBundle = Application.bundleIdentifier;
 #endif
 
             // Application info
             DataPath = Application.dataPath;
+#if !UNITY_SWITCH
             PersistentDataPath = Application.persistentDataPath;
+#endif
             StreamingAssetsPath = Application.streamingAssetsPath;
             TargetFrameRate = Application.targetFrameRate;
             UnityVersion = Application.unityVersion;
@@ -100,7 +101,6 @@ namespace PlayFab
 
             //DEVICE & OS
             DeviceModel = SystemInfo.deviceModel;
-            DeviceName = SystemInfo.deviceName;
             DeviceType = SystemInfo.deviceType;
 
             DeviceUniqueId = PlayFabSettings.DeviceUniqueIdentifier;
@@ -115,7 +115,9 @@ namespace PlayFab
             //SYSTEM INFO
             SystemMemorySize = SystemInfo.systemMemorySize;
             ProcessorCount = SystemInfo.processorCount;
-            //ProcessorFrequency = SystemInfo.processorFrequency; //Not Supported in PRE Unity 5_2
+#if UNITY_5_3_OR_NEWER
+            ProcessorFrequency = SystemInfo.processorFrequency; // Not Supported in PRE Unity 5_2
+#endif
             ProcessorType = SystemInfo.processorType;
             SupportsAccelerometer = SystemInfo.supportsAccelerometer;
             SupportsGyroscope = SystemInfo.supportsGyroscope;

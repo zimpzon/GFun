@@ -4,24 +4,6 @@ using PlayFab.SharedModels;
 
 namespace PlayFab.Internal
 {
-    public interface IPlayFabHttp
-    {
-        bool SessionStarted { get; set; }
-        string AuthKey { get; set; }
-        string EntityToken { get; set; }
-        void InitializeHttp();
-
-        // Mirroring MonoBehaviour - Relayed from PlayFabHTTP
-        void Update();
-        void OnDestroy();
-
-        void SimpleGetCall(string fullUrl, Action<byte[]> successCallback, Action<string> errorCallback);
-        void SimplePutCall(string fullUrl, byte[] payload, Action successCallback, Action<string> errorCallback);
-        void MakeApiCall(CallRequestContainer reqContainer);
-
-        int GetPendingMessages();
-    }
-
     public enum AuthType
     {
         None,
@@ -30,7 +12,6 @@ namespace PlayFab.Internal
         DevSecretKey, // "X-SecretKey"
         EntityToken, // "X-EntityToken"
     }
-
 
     public enum HttpRequestState
     {
@@ -64,6 +45,9 @@ namespace PlayFab.Internal
         public Action InvokeSuccessCallback;
         public Action<PlayFabError> ErrorCallback;
         public object CustomData = null;
+        public PlayFabApiSettings settings;
+        public PlayFabAuthenticationContext context;
+        public IPlayFabInstanceApi instanceApi;
 
         public CallRequestContainer()
         {

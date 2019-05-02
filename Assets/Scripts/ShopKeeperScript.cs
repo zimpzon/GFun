@@ -66,6 +66,9 @@ public class ShopKeeperScript : MonoBehaviour
         switch (id)
         {
             case ShopItemId.Item1Health:
+                bool isOverheal = player.Life == player.MaxLife;
+                if (isOverheal)
+                    FloatingTextSpawner.Instance.Spawn(transform.position + Vector3.up * 0.5f, "Hah!");
                 player.AddHealth(1, "Shop Item");
                 break;
             case ShopItemId.IncreaseMaxHp1:
@@ -75,6 +78,8 @@ public class ShopKeeperScript : MonoBehaviour
                 print("Not implemented: " + id);
                 break;
         }
+
+        CurrentRunData.Instance.ItemsBought++;
 
         var display = Displays[displayIdx];
         ParticleScript.EmitAtPosition(ParticleScript.Instance.PlayerLandParticles, display.transform.position, 5);

@@ -10,6 +10,9 @@ public static class TerminalCommands
 
     public static void RegisterCommands()
     {
+        if (Terminal.Shell == null)
+            return;
+
         Terminal.Shell.AddCommand("log", Log, 1, 1, "Show text");
     }
 }

@@ -1,61 +1,10 @@
-using PlayFab.Internal;
 using System;
 using System.Globalization;
-using System.Reflection;
+using PlayFab.Internal;
 
 namespace PlayFab.Json
 {
-    public interface ISerializer
-    {
-        T DeserializeObject<T>(string json);
-        T DeserializeObject<T>(string json, object jsonSerializerStrategy);
-        object DeserializeObject(string json);
-
-        string SerializeObject(object json);
-        string SerializeObject(object json, object jsonSerializerStrategy);
-    }
-
-
-    public static class JsonWrapper
-    {
-        private static ISerializer _instance = new SimpleJsonInstance();
-
-        /// <summary>
-        /// Use this property to override the Serialization for the SDK.
-        /// </summary>
-        public static ISerializer Instance
-        {
-            get { return _instance; }
-            set { _instance = value; }
-        }
-
-        public static T DeserializeObject<T>(string json)
-        {
-            return _instance.DeserializeObject<T>(json);
-        }
-
-        public static T DeserializeObject<T>(string json, object jsonSerializerStrategy)
-        {
-            return _instance.DeserializeObject<T>(json, jsonSerializerStrategy);
-        }
-
-        public static object DeserializeObject(string json)
-        {
-            return _instance.DeserializeObject(json);
-        }
-
-        public static string SerializeObject(object json)
-        {
-            return _instance.SerializeObject(json);
-        }
-
-        public static string SerializeObject(object json, object jsonSerializerStrategy)
-        {
-            return _instance.SerializeObject(json, jsonSerializerStrategy);
-        }
-    }
-
-    public class SimpleJsonInstance : ISerializer
+    public class SimpleJsonInstance : ISerializerPlugin
     {
         /// <summary>
         /// Most users shouldn't access this
@@ -82,14 +31,14 @@ namespace PlayFab.Json
                 else if (type == typeof(DateTime))
                 {
                     DateTime output;
-                    var result = DateTime.TryParseExact(valueStr, PlayFabUtil._defaultDateTimeFormats, CultureInfo.CurrentCulture, PlayFabUtil.DateTimeStyles, out output);
+                    var result = DateTime.TryParseExact(valueStr, PlayFabUtil._defaultDateTimeFormats, CultureInfo.InvariantCulture, PlayFabUtil.DateTimeStyles, out output);
                     if (result)
                         return output;
                 }
                 else if (type == typeof(DateTimeOffset))
                 {
                     DateTimeOffset output;
-                    var result = DateTimeOffset.TryParseExact(valueStr, PlayFabUtil._defaultDateTimeFormats, CultureInfo.CurrentCulture, PlayFabUtil.DateTimeStyles, out output);
+                    var result = DateTimeOffset.TryParseExact(valueStr, PlayFabUtil._defaultDateTimeFormats, CultureInfo.InvariantCulture, PlayFabUtil.DateTimeStyles, out output);
                     if (result)
                         return output;
                 }
@@ -114,12 +63,12 @@ namespace PlayFab.Json
                 }
                 else if (input is DateTime)
                 {
-                    output = ((DateTime)input).ToString(PlayFabUtil._defaultDateTimeFormats[PlayFabUtil.DEFAULT_UTC_OUTPUT_INDEX], CultureInfo.CurrentCulture);
+                    output = ((DateTime)input).ToString(PlayFabUtil._defaultDateTimeFormats[PlayFabUtil.DEFAULT_UTC_OUTPUT_INDEX], CultureInfo.InvariantCulture);
                     return true;
                 }
                 else if (input is DateTimeOffset)
                 {
-                    output = ((DateTimeOffset)input).ToString(PlayFabUtil._defaultDateTimeFormats[PlayFabUtil.DEFAULT_UTC_OUTPUT_INDEX], CultureInfo.CurrentCulture);
+                    output = ((DateTimeOffset)input).ToString(PlayFabUtil._defaultDateTimeFormats[PlayFabUtil.DEFAULT_UTC_OUTPUT_INDEX], CultureInfo.InvariantCulture);
                     return true;
                 }
                 else if (input is TimeSpan)

@@ -56,7 +56,7 @@ public class GolemController : EntityComponentBase
 
     void Appear()
     {
-        Timing.RunCoroutine(AppearCo());
+        Timing.RunCoroutine(AppearCo().CancelWith(this.gameObject));
     }
 
     IEnumerator<float> AppearCo()

@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using PlayFab;
-using PlayFab.ClientModels;
 using System.Collections;
 using System.Runtime.InteropServices;
+using PlayFab;
+using PlayFab.ClientModels;
 
+/// <summary>
+/// PlayerData: key/value where value is a string. Could be JSON.
+/// PlayerStatistics: key/value where value is an int. PlayFab always creates a leaderboard for these. Min, Max, Sum can be set in PlayFab.com.
+/// </summary>
 public class PlayFabFacade : MonoBehaviour
 {
     [DllImport("__Internal")]
@@ -15,7 +19,7 @@ public class PlayFabFacade : MonoBehaviour
 
     public bool LoginWhenInEditor = false;
 
-    [NonSerialized]public object LastResult;
+    [NonSerialized] public object LastResult;
 
     void Awake()
     {
@@ -111,7 +115,7 @@ public class PlayFabFacade : MonoBehaviour
     }
 
     Dictionary<string, StatisticValue> stats = new Dictionary<string, StatisticValue>();
-    [NonSerialized]public bool HasStatsFromServer = false;
+    [NonSerialized] public bool HasStatsFromServer = false;
 
     public bool TryGetStat(string key, out int value)
     {
@@ -147,7 +151,7 @@ public class PlayFabFacade : MonoBehaviour
 
     public IEnumerator UpdateStat(string name, int value)
     {
-        // Don't spam if client is not logged in/offline. Some score might also be posted before login completes and the SDK throws then.
+        // Don't spam if client is not logged in/offline. Some score might also be posted before login completes and the SDK will then throw.
         if (!PlayFabClientAPI.IsClientLoggedIn())
             yield break;
 

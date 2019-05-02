@@ -1,5 +1,6 @@
 ﻿using MEC;
 using Pathfinding;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
@@ -38,10 +39,10 @@ public class GameSceneLogic : MonoBehaviour
         player.transform.SetParent(DynamicObjectRoot);
         playerScript_ = player.GetComponent<PlayableCharacterScript>();
 
-        if (!CurrentRunData.Instance.IsInitialized)
+        if (!CurrentRunData.Instance.HasPlayerData)
         {
-            CurrentRunData.Instance.IsInitialized = true;
             UpdateCurrentRunWithPlayerData(CurrentRunData.Instance, playerScript_);
+            CurrentRunData.Instance.HasPlayerData = true;
         }
         else
         {
@@ -119,7 +120,7 @@ public class GameSceneLogic : MonoBehaviour
     {
         TerminalCommands.RegisterCommands();
 
-        Timing.RunCoroutine(EnterLevelLoop());
+        Timing.RunCoroutine(EnterLevelLoop().CancelWith(this.gameObject));
     }
 
     void UpdateInitCanvas()
@@ -141,6 +142,9 @@ public class GameSceneLogic : MonoBehaviour
     IEnumerator<float> EnterLevelLoop()
     {
         System.GC.Collect(0, System.GCCollectionMode.Forced, blocking: true, compacting: true);
+
+        if (CurrentRunData.Instance.RunEnded)
+            CurrentRunData.StartNewRun();
 
         if (CurrentRunData.Instance.NextMapType == MapType.Floor)
             CurrentRunData.Instance.CurrentFloor++;
@@ -299,13 +303,24 @@ public class GameSceneLogic : MonoBehaviour
         yield return 0;
     }
 
-    void OnRunEnded()
+    void UpdateLocalStats()
     {
         GameProgressData.CurrentProgress.EnemiesKilled += CurrentRunData.Instance.EnemiesKilled;
         GameProgressData.CurrentProgress.NumberOfDeaths++;
         GameProgressData.SaveProgress();
+    }
 
-        CurrentRunData.Reset();
+    bool playFabUpdateComplete;
+    IEnumerator UpdatePlayFabStats()
+    {
+        playFabUpdateComplete = false;
+        float secondsPlayed = CurrentRunData.Instance.RunEndTime - CurrentRunData.Instance.RunStartTime;
+        yield return PlayFabFacade.Instance.UpdateStat(PlayFabData.Stat_SecondsPlayed, (int)secondsPlayed);
+        yield return PlayFabFacade.Instance.UpdateStat(PlayFabData.Stat_FloorReached, CurrentRunData.Instance.CurrentFloor);
+        yield return PlayFabFacade.Instance.UpdateStat(PlayFabData.Stat_EnemiesKilled, CurrentRunData.Instance.EnemiesKilled);
+        yield return PlayFabFacade.Instance.UpdateStat(PlayFabData.Stat_CoinsCollected, CurrentRunData.Instance.CoinsCollected);
+        yield return PlayFabFacade.Instance.UpdateStat(PlayFabData.Stat_Deaths, 1);
+        playFabUpdateComplete = true;
     }
 
     IEnumerator<float> DeadLoop()
@@ -313,8 +328,9 @@ public class GameSceneLogic : MonoBehaviour
         GameEvents.ClearListeners();
         SceneGlobals.Instance.AudioManager.PlaySfxClip(PlayerDeadSound, 1);
         DeadCanvas.gameObject.SetActive(true);
+        CurrentRunData.EndRun();
 
-        float time = Time.unscaledTime - CurrentRunData.Instance.RunStartTime;
+        float time = CurrentRunData.Instance.RunEndTime - CurrentRunData.Instance.RunStartTime;
         var timeSpan = System.TimeSpan.FromSeconds(time);
         KilledByText.text = $"Killed By <color=#ff0000>{playerScript_.KilledBy}</color>";
 
@@ -356,13 +372,25 @@ public class GameSceneLogic : MonoBehaviour
 
         MiniMapCamera.Instance.Show(false);
 
-        OnRunEnded();
+        UpdateLocalStats();
+
+        // Make external calls to PlayFab and block unless timed out
+        playFabUpdateComplete = false;
+        float updatePlayFabTimeout = Time.unscaledTime + 3.0f;
+        StartCoroutine(UpdatePlayFabStats());
+        while (!playFabUpdateComplete && Time.unscaledTime < updatePlayFabTimeout)
+            yield return 0;
+        if (Time.time > updatePlayFabTimeout)
+            DebugLinesScript.Show("Stats update timed out", Time.time);
+
+        var stats = PlayFabFacade.Instance.GetAllStats();
+        var data = PlayFabFacade.Instance.GetAllPlayerData();
 
         float timeScale = Time.timeScale;
 
         while (true)
         {
-            timeScale = Mathf.Max(0.001f, timeScale - Time.unscaledDeltaTime);
+            timeScale = Mathf.Max(0.0001f, timeScale - Time.unscaledDeltaTime);
             Time.timeScale = timeScale;
 
             if (Input.GetKeyDown(KeyCode.R))

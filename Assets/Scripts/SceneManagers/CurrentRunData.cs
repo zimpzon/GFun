@@ -8,22 +8,26 @@ public enum MapType { Floor, Shop };
 public class CurrentRunData
 {
     public static CurrentRunData Instance = new CurrentRunData();
-    public bool IsInitialized;
+    public bool HasPlayerData;
 
     public MapType NextMapType = MapType.Floor;
     public string StartingCharacterTag = "Character1";
     public int StartingDifficulty = 1;
     public int CurrentFloor = 0;
-    public int EnemiesKilled;
     public bool ReaperIsAgitated; // Play AckAck sound and spawn something hard that drops a lot of gold
     public int Coins;
-    public int CoinsCollected;
     public int Life;
     public int MaxLife;
     public int PlayerExplosionDamage = 4;
     public float PlayerAttractDistance = 3.0f;
 
+    public int ItemsBought;
+    public int CoinsCollected;
+    public int EnemiesKilled;
+
     public float RunStartTime;
+    public float RunEndTime;
+    public bool RunEnded;
     public List<string> NewUnlockedCharacters = new List<string>();
 
     public List<PlayerHealthEvent> HealthEvents = new List<PlayerHealthEvent>();
@@ -40,9 +44,20 @@ public class CurrentRunData
         CoinsCollected += count;
     }
 
-    public static void Reset()
+    public static void EndRun()
+    {
+        Instance.RunEndTime = Time.unscaledTime;
+        Instance.RunEnded = true;
+    }
+
+    public static void Clear()
     {
         Instance = new CurrentRunData();
+    }
+
+    public static void StartNewRun()
+    {
+        Clear();
         Instance.RunStartTime = Time.unscaledTime;
     }
 }

@@ -1,5 +1,4 @@
 ﻿using GFun;
-using PlayFab.Json;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +16,7 @@ public class GameProgressData
     public static void RestartProgress()
     {
         PlayerPrefs.DeleteKey(PlayerPrefsNames.Progress);
+        LoadProgress();
     }
 
     public static bool CharacterIsUnlocked(string tag)
@@ -31,7 +31,7 @@ public class GameProgressData
             return;
         }
 
-        CurrentProgress = JsonWrapper.DeserializeObject<GameProgressData>(json);
+        CurrentProgress = JsonUtility.FromJson<GameProgressData>(json);
     }
 
     public static void SaveProgress(bool saveBackup = true)
@@ -40,7 +40,7 @@ public class GameProgressData
             return;
 
         // TODO: Might want to obfuscate this
-        string json = JsonWrapper.SerializeObject(CurrentProgress);
+        string json = JsonUtility.ToJson(CurrentProgress);
         PlayerPrefs.SetString(PlayerPrefsNames.Progress, json);
         if (saveBackup)
             PlayerPrefs.SetString(PlayerPrefsNames.Progress + "_backup", json);

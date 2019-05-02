@@ -28,7 +28,6 @@ public class CampScript : MonoBehaviour
     {
         GameProgressData.LoadProgress();
         GameProgressData.EnableSave = true;
-        GameProgressData.CurrentProgress.UnlockedCharacters.Add("Character3");
     }
 
     void Start()
@@ -106,6 +105,9 @@ public class CampScript : MonoBehaviour
             SelectCharacter(PlayableCharacters.Instance.CharacterPrefabList.CharacterPrefabs[1].tag);
         if (Input.GetKeyDown(KeyCode.Alpha3))
             SelectCharacter(PlayableCharacters.Instance.CharacterPrefabList.CharacterPrefabs[2].tag);
+
+        if (Input.GetKeyDown(KeyCode.F12))
+            GameProgressData.RestartProgress();
     }
 
     public void OnPlayerEnterStartPortal()
@@ -211,7 +213,7 @@ public class CampScript : MonoBehaviour
 
     void StartGame()
     {
-        CurrentRunData.Reset();
+        CurrentRunData.Clear();
         CurrentRunData.Instance.StartingCharacterTag = PlayableCharacters.GetPlayerInScene().tag;
 
         SceneManager.LoadScene(EnterPortalSceneName, LoadSceneMode.Single);

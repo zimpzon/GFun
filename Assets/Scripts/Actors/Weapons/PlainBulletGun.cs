@@ -62,7 +62,7 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         latestFiringDirection_ = firingDirection;
 
         if (!isFiring_)
-            Timing.RunCoroutine(FireCo());
+            Timing.RunCoroutine(FireCo().CancelWith(this.gameObject));
     }
 
     public void OnTriggerUp()
