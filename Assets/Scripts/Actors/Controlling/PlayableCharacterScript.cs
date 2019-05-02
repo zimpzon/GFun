@@ -183,7 +183,6 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
             return;
 
         AddPlayerHealthEvent(amount, source);
-
         Life = Mathf.Min(MaxLife, Life + amount);
         UpdateHealth();
     }

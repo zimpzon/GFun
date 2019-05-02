@@ -262,7 +262,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: You Hear A Terrifying Sound In The Distance
+  m_text: Player Info
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9b3154c8745e85a43a6f7cf571b19677, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: cd4ae020e8a11fa44b952615b36cd487, type: 2}
@@ -271,8 +271,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278391039
-  m_fontColor: {r: 1, g: 0.06611005, b: 0.0141509175, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -331,10 +331,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 280484332}
-    characterCount: 43
+    characterCount: 11
     spriteCount: 0
-    spaceCount: 7
-    wordCount: 8
+    spaceCount: 1
+    wordCount: 2
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -401,7 +401,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 40}
+  m_AnchoredPosition: {x: 0, y: 70}
   m_SizeDelta: {x: 700, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &315768438
@@ -5640,7 +5640,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAAAIIezUFXUQjgIAAIIFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFtVE1v2zAM/SuBzuvgpEuz7bY5bboBbYNmQw9zD4xFx0JkydBHk7TIfx8l27GbDQhg5fGRfKRIvTGhbI2502ZhBL/THNnXEQtn9mHUG29xDxutVuIVO86T4K4MJIicR3BCEz4OblZX6IzIv6mNDOSEQK9EoU11zTeYausswQVIi2Qy2gVvRdDbiO3pc/EluBzoNJmF0yudviSjIx1zVA5NTx0nHXXaMRuiV7mEqkYeVPf8yYlPnpGoqKKWE9TnWkphWznMHepYbgq19VQMEbgAKi9qCPwSxaZ0IfLQ+aEoLLq2dgOHuTDUpSYq+66b1lVgt42yF5AeT9KbkHf/WC/G0VwYXd12WZv6XSny7SMccrBu0NkhPH8v26sdyC2sJT6VqO71wmivOBmd8cHVW5zM+7+nwtIS8+0gRaO1Qzvnum/4qd397Rxj7ftUimodkI/JuEFWUtfdwKChe/lBguNs2B4NKn5b/AWb4RC1hhthrCNTm1AFdWvtTaCyGzqEvufepdoojGgruUYF0h2WFMWd39+ZbZD1zHIDYVva3K2tW4Izlwj3/CQ5My31rr8riz99VS+1UG6FYPJyEM+WeneHtnzwTgqFZ5Z7amKqlWqGz/7Hb+VNAfnQz+HeeYNzcBB3gFTRmPChLzUyuigvZZjIWEeI/ofqCL/n0OYSKLGMMLvXKm7Pu+9zmISNF/z9nLPZ5+k6WX+azSYcx1OOF/ySF3A5nlwl06vZbD1jcRGEoq6DXDZtay+LJkj116po6LsnbbQwUMfF4wZ2C/Fa6cEACFXoVW4Q1UMT4VQsGkpCDwS/5oLKXKFzQsXhY28ZkzrfIs9OgbLY2eu9M5D1UTJWixftApKxNL5hGTuy419QSwMEFAAACAgAAAgh7HdNpdVsAAAAdwAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSM9dRUEovSizIKAYKGII4pZkpIHa0krmFaZJBkom5uVFKqqFpSqpuinFKWqKxoZGZgamZuXmSuVIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAACCHs1BV1EI4CAACCBQAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAACCHsd02l1WwAAAB3AAAACQAkAAAAAAAAAAAAAADbAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAJIDAAAAAA==
+    dataString: AQAAAAltZXRhLmpzb25FAAAAeyJ2ZXJzaW9uIjogNC4yLjcsICJncmFwaHMiOiAxLCAiZ3VpZHMiOiBbbnVsbF0sICJ0eXBlTmFtZXMiOiBbbnVsbF19
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 

@@ -1,4 +1,5 @@
 ﻿public enum EnemyId
 {
-    Bat, FireBat, SeekerScythe, FleeingBat, PlayerSelfDamage, Golem, 
+    // Do not change order, it breaks serialization somewhere.
+    Bat, FireBat, SeekerScythe, FleeingBat, PlayerSelfDamage, Golem, DragonHatchling,
 }

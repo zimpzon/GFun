@@ -15,10 +15,13 @@ public class EnemyDropScript : MonoBehaviour
 
     void SpawnHealth(IEnemy enemy, Vector3 position)
     {
-        if (Random.value < 0.9f)
-            return;
-
         int count = Random.value < 0.2f ? 2 : 1;
+        if (Random.value < 0.9f)
+            count = 0;
+
+        if (enemy.Id == EnemyId.Golem)
+            count = 1;
+
         for (int i = 0; i < count; ++i)
         {
             var heart = HealthPool.GetFromPool();
@@ -35,6 +38,9 @@ public class EnemyDropScript : MonoBehaviour
     void SpawnCoins(IEnemy enemy, Vector3 position)
     {
         int count = Random.Range(0, 5 + enemy.Level);
+        if (enemy.Id == EnemyId.Golem)
+            count = 20;
+
         for (int i = 0; i < count; ++i)
         {
             var coin = CoinPool.GetFromPool();

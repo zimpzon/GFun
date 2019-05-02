@@ -97,7 +97,7 @@ public class AudioManager : MonoBehaviour
 
     #endregion  
 
-    public void PlaySfxClip(AudioClip clip, int maxInstances, float pitchRandomVariation = 0.0f)
+    public void PlaySfxClip(AudioClip clip, int maxInstances, float pitchRandomVariation = 0.0f, float pitch = 1.0f)
     {
         AudioSource selectedSource = null;
         int count = CountPlayingInstancesOfClip(clip, out AudioSource existingPlayingSource);
@@ -107,7 +107,7 @@ public class AudioManager : MonoBehaviour
             // Replace an existing source
             selectedSource.Stop();
             selectedSource.clip = clip;
-            selectedSource.pitch = 1.0f + (pitchRandomVariation * UnityEngine.Random.value - pitchRandomVariation * 0.5f);
+            selectedSource.pitch = pitch + (pitchRandomVariation * UnityEngine.Random.value - pitchRandomVariation * 0.5f);
             selectedSource.Play();
         }
     }

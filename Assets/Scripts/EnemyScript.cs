@@ -29,8 +29,14 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
     public SpriteRenderer BlipRenderer;
     public SpriteRenderer ShadowRenderer;
     public SpriteRenderer LightRenderer;
+
     public AudioClip DamageSound;
+    public float DamageSoundPitch = 1.0f;
+    public float DamageSoundPitchVariation = 0.2f;
     public AudioClip DeathSound;
+    public float DeathSoundPitchVariation = 0.2f;
+    public float DeathSoundPitch = 1.0f;
+
     public float WallAvoidancePower = 0.2f;
     public SpriteRenderer SpriteRenderer;
 
@@ -219,7 +225,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         }
         else
         {
-            AudioManager.Instance.PlaySfxClip(DamageSound, maxInstances: 3, pitchRandomVariation: 0.3f);
+            AudioManager.Instance.PlaySfxClip(DamageSound, maxInstances: 3, pitchRandomVariation: 0.2f, DamageSoundPitch);
             body_.AddForce(damageForce * 5, ForceMode2D.Impulse);
         }
     }
@@ -254,7 +260,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         LightRenderer.enabled = false;
         ShadowRenderer.enabled = false;
 
-        AudioManager.Instance.PlaySfxClip(DeathSound, maxInstances: 3, pitchRandomVariation: 0.3f);
+        AudioManager.Instance.PlaySfxClip(DeathSound, maxInstances: 3, DeathSoundPitchVariation, DeathSoundPitch);
         SceneGlobals.Instance.CameraShake.SetMinimumShake(0.2f);
 
         yield return DisableDelay;
@@ -362,8 +368,8 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         int count = Physics2D.LinecastNonAlloc(cellWorld, fromPosition, MapRaycastHit, mapLayerMask_);
         bool isCover = count != 0;
         var color = isCover ? Color.cyan : Color.magenta;
-        Debug.DrawRay(cellWorld, Vector3.up * -0.2f, color, 0.3f);
-        Debug.DrawRay(cellWorld, Vector3.right * -0.2f, color, 0.3f);
+        //Debug.DrawRay(cellWorld, Vector3.up * -0.2f, color, 0.3f);
+        //Debug.DrawRay(cellWorld, Vector3.right * -0.2f, color, 0.3f);
         return isCover;
     }
 

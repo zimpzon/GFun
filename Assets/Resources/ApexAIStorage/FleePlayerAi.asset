@@ -27,8 +27,8 @@ MonoBehaviour:
     Assembly-CSharp","MaxAge":1,"linearSlope":1,"max":100,"scoreMultiplier":100,"reversed":true}]}],"_defaultQualifier":{"@type":"Apex.AI.DefaultQualifier,
     ApexAI","score":50}},{"@type":"Apex.AI.ScoreSelector, ApexAI","_id":0597b72e9a8c4537bcf414a80ed2c196,"_qualifiers":[],"_defaultQualifier":{"@type":"Apex.AI.DefaultQualifier,
     ApexAI","score":35,"action":{"@type":"Apex.Examples.AI.MoveToRandomPosition, Assembly-CSharp"}}}]}'
-  editorConfiguration: '{"offset":{"@x":-19,"@y":-42},"zoom":1,"SelectorView":{"ViewArea":{"@left":61,"@top":58,"@width":200,"@height":160},"Name":"Fleeing
-    Bat","QualifierView":{"Name":"Recently Seen Player","ActionView":{"@connectorType":"Selector"}},"DefaultQualifier":{"Name":"Player
+  editorConfiguration: '{"offset":{"@x":-19,"@y":-42},"zoom":1,"SelectorView":{"ViewArea":{"@left":61,"@top":58,"@width":200,"@height":160},"Name":"Hiding
+    AI","QualifierView":{"Name":"Recently Seen Player","ActionView":{"@connectorType":"Selector"}},"DefaultQualifier":{"Name":"Player
     Not In Sight","ActionView":{"@connectorType":"Selector"}}},"SelectorView":{"ViewArea":{"@left":381,"@top":58,"@width":200,"@height":220},"Name":"Avoid
     Player","QualifierView":{"Name":"Has Nearby Cover","ActionView":{}},"QualifierView":{"Name":"Sees
     Player Now","ActionView":{}},"DefaultQualifier":{"Name":"Do Nothing"}},"SelectorView":{"ViewArea":{"@left":301,"@top":318,"@width":200,"@height":100},"Name":"Move

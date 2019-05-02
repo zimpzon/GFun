@@ -140,6 +140,8 @@ public class GameSceneLogic : MonoBehaviour
 
     IEnumerator<float> EnterLevelLoop()
     {
+        System.GC.Collect(0, System.GCCollectionMode.Forced, blocking: true, compacting: true);
+
         if (CurrentRunData.Instance.NextMapType == MapType.Floor)
             CurrentRunData.Instance.CurrentFloor++;
 
@@ -314,13 +316,14 @@ public class GameSceneLogic : MonoBehaviour
 
         float time = Time.unscaledTime - CurrentRunData.Instance.RunStartTime;
         var timeSpan = System.TimeSpan.FromSeconds(time);
-        KilledByText.text = $"Killed By: <color=#ff0000>{playerScript_.KilledBy}</color>";
+        KilledByText.text = $"Killed By <color=#ff0000>{playerScript_.KilledBy}</color>";
 
         var sb = new StringBuilder(100);
         sb.AppendLine($"Floor Reached: <color=#00ff00>{CurrentRunData.Instance.CurrentFloor}</color>");
         sb.AppendLine($"Enemies Killed: <color=#00ff00>{CurrentRunData.Instance.EnemiesKilled}</color>");
         sb.AppendLine($"Coins Collected: <color=#00ff00>{CurrentRunData.Instance.CoinsCollected}</color>");
         sb.AppendLine($"Time: <color=#00ff00>{timeSpan.ToString("hh\\:mm\\:ss")}</color>");
+
         StatsText.text = sb.ToString();
 
         sb.Clear();
@@ -410,11 +413,19 @@ public class GameSceneLogic : MonoBehaviour
 
     void BuildPathingGraph()
     {
+        var gridGraph = (GridGraph)AstarPath.active.data.AddGraph(typeof(GridGraph));
+        gridGraph.SetDimensions(MapBuilder.MapMaxWidth, MapBuilder.MapMaxHeight, 1.0f);
+        gridGraph.center = MapBuilder.WorldCenter;
+        gridGraph.collision.use2D = true;
+        gridGraph.collision.collisionCheck = false;
+        gridGraph.neighbours = NumNeighbours.Four;
+        gridGraph.cutCorners = false;
+        gridGraph.rotation = new Vector3(-90, 270, 90);
+
         AstarPath.active.Scan();
         AstarPath.active.AddWorkItem(new AstarWorkItem(ctx =>
         {
             var graph = AstarPath.active.data.gridGraph;
-            graph.cutCorners = false;
             for (int y = 0; y < graph.depth; ++y)
             {
                 for (int x = 0; x < graph.width; ++x)
