@@ -4754,8 +4754,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AppearSound: {fileID: 8300000, guid: 246457a577f25e24986f7ae1f37e9a75, type: 3}
-  KilledPlayerSound: {fileID: 8300000, guid: c8de5a309169d39439def8f9c1c9f03e, type: 3}
-  KilledPlayerPitch: 0.4
   DefaultProjectiles: {fileID: 6434133213173003471}
   RageTelegraphParticles: {fileID: 2035889613894855074}
 --- !u!114 &1921782251215252599
@@ -4781,7 +4779,7 @@ MonoBehaviour:
   EnemyLevel: 3
   EnemyMoveSpeed: 2
   SpeedVariation: 0
-  EnemyLife: 400
+  EnemyLife: 300
   TouchPlayerDamage: 5
   BlipRenderer: {fileID: 1921782252298801372}
   ShadowRenderer: {fileID: 1921782252247090794}

@@ -1,5 +1,4 @@
-﻿using GFun;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyBullet1Script : MonoBehaviour
 {
@@ -15,8 +14,9 @@ public class EnemyBullet1Script : MonoBehaviour
     float speed_;
     int damage_;
     IEnemy owner_;
+    bool collideWalls_;
 
-    public void Init(IEnemy owner, Vector3 position, Vector3 direction, float range, float speed, int damage)
+    public void Init(IEnemy owner, Vector3 position, Vector3 direction, float range, float speed, int damage, bool collideWalls = true)
     {
         owner_ = owner;
         position_ = position;
@@ -25,6 +25,7 @@ public class EnemyBullet1Script : MonoBehaviour
         range_ = range;
         speed_ = speed;
         damage_ = damage;
+        collideWalls_ = collideWalls;
 
         UpdateState();
     }
@@ -64,7 +65,7 @@ public class EnemyBullet1Script : MonoBehaviour
         float distance = speed_ * Time.fixedDeltaTime;
         position_ += Direction * distance;
         distanceMoved_ += distance;
-        if (map_.GetCollisionTileValue(position_) != MapBuilder.TileWalkable)
+        if (collideWalls_ && map_.GetCollisionTileValue(position_) != MapBuilder.TileWalkable)
         {
             Die();
             return;

@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1921782251215252596}
+  - component: {fileID: 8994514636172362697}
   - component: {fileID: 1921782251215252599}
   - component: {fileID: 1921782251215252595}
   - component: {fileID: 1921782251215252592}
-  - component: {fileID: 8994514636172362697}
   - component: {fileID: 711082632569833813}
   - component: {fileID: 1866847542716123366}
   - component: {fileID: 4109897645051153515}
@@ -41,6 +41,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8994514636172362697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921782251215252598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a3810089a40d474aa360d17523fe2e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FireSound: {fileID: 8300000, guid: a9327dd0329195241a47a9c8fd50986b, type: 3}
+  ShootRange: 10
 --- !u!114 &1921782251215252599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,18 +128,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.05}
   serializedVersion: 2
   m_Radius: 0.49
---- !u!114 &8994514636172362697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1921782251215252598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a3810089a40d474aa360d17523fe2e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &711082632569833813
 MonoBehaviour:
   m_ObjectHideFlags: 0

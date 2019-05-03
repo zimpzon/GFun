@@ -50,7 +50,6 @@ public class MapScript : MonoBehaviour, IMapAccess
         var floorbounds = WallTileMap.cellBounds;
     }
 
-
     // When destroying walls some colliders are left behind. Fix should be incoming:
     // https://github.com/Unity-Technologies/2d-extras/issues/34
     public void TriggerExplosion(Vector3 worldPosition, float worldRadius, bool damageWallsOnly = true, IEnemy explosionSource = null, bool damageSelf = true)

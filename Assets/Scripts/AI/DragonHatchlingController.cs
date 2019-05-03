@@ -44,13 +44,13 @@ public class DragonHatchlingController : EntityComponentBase
     void Fire(Vector3 position, Vector3 direction)
     {
         var bullet = bulletPool_.GetFromPool();
-        var bulletScript = (EnemyBullet1Script)bullet.GetComponent(typeof(EnemyBullet1Script));
-        bulletScript.Init(me_, position, direction, range: 15, speed: 5, damage: 1);
+        var bulletScript = (EnemyProjectileChaseScript)bullet.GetComponent(typeof(EnemyProjectileChaseScript));
+        bulletScript.Init(me_, position, direction, range: 12, speed: 4, turnSpeed: 2, damage: 2, collideWalls: false);
         bullet.SetActive(true);
         float rotationDegrees = Mathf.Atan2(direction.x, -direction.y) * Mathf.Rad2Deg;
-        bullet.transform.rotation = Quaternion.Euler(0, 0, rotationDegrees);
+        bullet.transform.rotation = Quaternion.Euler(0, 0, rotationDegrees - 90);
 
-        audioManager_.PlaySfxClip(FireSound, 1, 0.1f);
+        audioManager_.PlaySfxClip(FireSound, 3, 0.1f);
     }
 
     void CheckFire(float time)
@@ -82,7 +82,7 @@ public class DragonHatchlingController : EntityComponentBase
 
                 coolDownEnd_ = time + 0.3f;
                 if (--pendingShots_ == 0)
-                    reloadEnd_ = time + 2.0f + Random.value;
+                    reloadEnd_ = time + 4.0f + Random.value;
             }
         }
     }
