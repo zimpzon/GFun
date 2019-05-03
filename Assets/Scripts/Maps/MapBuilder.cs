@@ -61,6 +61,20 @@ public static class MapBuilder
         }
     }
 
+    public static void BuildCollisionMapFromWallTilemap(Tilemap wallTilemap)
+    {
+        var pos = Vector3Int.zero;
+        for (int y = 0; y < MapMaxHeight; ++y)
+        {
+            for (int x = 0; x < MapMaxWidth; ++x)
+            {
+                pos.x = x;
+                pos.y = y;
+                CollisionMap[x, y] = (byte)(wallTilemap.HasTile(pos) ? 1 : TileWalkable);
+            }
+        }
+    }
+
     static void BuildWallTiles(MapScript mapScript, MapStyle mapStyle)
     {
         var bounds = mapScript.FloorTileMap.cellBounds;

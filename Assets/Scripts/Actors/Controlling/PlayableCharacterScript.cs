@@ -9,6 +9,7 @@ public class PlayerSelfDamage : IEnemy
     public string Name => "Yourself";
     public int Level => 1;
     public float Life => 1;
+    public float LifePct => 1;
     public float MaxLife => 1;
     public bool IsDead => false;
     public void DoFlash(float amount, float ms) { }
@@ -43,6 +44,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
     public AudioClip TakeDamageSound;
 
     [System.NonSerialized] public string KilledBy;
+    [System.NonSerialized] public IEnemy KilledByEnemy;
 
     public IWeapon CurrentWeapon;
     public GameObject CurrentWeaponGo;
@@ -213,6 +215,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
         if (Life == 0)
         {
             KilledBy = enemy.Name;
+            KilledByEnemy = enemy;
             Die();
             GameEvents.RaisePlayerKilled(enemy);
         }

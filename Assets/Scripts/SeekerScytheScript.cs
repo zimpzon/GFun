@@ -25,6 +25,7 @@ public class SeekerScytheScript : MonoBehaviour, IEnemy
     public string Name => "A Scythe";
     public int Level => 2;
     public float Life => 1;
+    public float LifePct => 1;
     public bool IsDead => false;
     public float MaxLife => 1;
 

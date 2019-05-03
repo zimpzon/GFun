@@ -314,12 +314,18 @@ public class GameSceneLogic : MonoBehaviour
     IEnumerator UpdatePlayFabStats()
     {
         playFabUpdateComplete = false;
-        float secondsPlayed = CurrentRunData.Instance.RunEndTime - CurrentRunData.Instance.RunStartTime;
-        yield return PlayFabFacade.Instance.UpdateStat(PlayFabData.Stat_SecondsPlayed, (int)secondsPlayed);
-        yield return PlayFabFacade.Instance.UpdateStat(PlayFabData.Stat_FloorReached, CurrentRunData.Instance.CurrentFloor);
-        yield return PlayFabFacade.Instance.UpdateStat(PlayFabData.Stat_EnemiesKilled, CurrentRunData.Instance.EnemiesKilled);
-        yield return PlayFabFacade.Instance.UpdateStat(PlayFabData.Stat_CoinsCollected, CurrentRunData.Instance.CoinsCollected);
-        yield return PlayFabFacade.Instance.UpdateStat(PlayFabData.Stat_Deaths, 1);
+
+        var statList = new List<(string name, int value)>
+        {
+            (PlayFabData.Stat_SecondsPlayed, (int)(CurrentRunData.Instance.RunEndTime - CurrentRunData.Instance.RunStartTime)),
+            (PlayFabData.Stat_FloorReached, CurrentRunData.Instance.CurrentFloor),
+            (PlayFabData.Stat_EnemiesKilled, CurrentRunData.Instance.EnemiesKilled),
+            (PlayFabData.Stat_CoinsCollected, CurrentRunData.Instance.CoinsCollected),
+            (PlayFabData.Stat_ItemsBought, CurrentRunData.Instance.ItemsBought),
+            (PlayFabData.Stat_Deaths, 1),
+        };
+
+        yield return PlayFabFacade.Instance.UpdateStats(statList);
         playFabUpdateComplete = true;
     }
 
@@ -380,6 +386,7 @@ public class GameSceneLogic : MonoBehaviour
         StartCoroutine(UpdatePlayFabStats());
         while (!playFabUpdateComplete && Time.unscaledTime < updatePlayFabTimeout)
             yield return 0;
+
         if (Time.time > updatePlayFabTimeout)
             DebugLinesScript.Show("Stats update timed out", Time.time);
 

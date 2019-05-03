@@ -30,9 +30,14 @@ namespace GFun
         void BuildCollisionMapFromFloorTilemap(Tilemap floorTilemap);
 
         /// <summary>
+        /// Scans wallTileMap and updates the collision map.
+        /// </summary>
+        void BuildCollisionMapFromWallTilemap(Tilemap wallTilemap);
+
+        /// <summary>
         /// Destroy tiles at worldPosition in a world radius of worldRadius
         /// </summary>
-        void TriggerExplosion(Vector3 worldPosition, float worldRadius, bool damageWallsOnly = true, IEnemy explosionSource = null);
+        void TriggerExplosion(Vector3 worldPosition, float worldRadius, bool damageWallsOnly = true, IEnemy explosionSource = null, bool damageSelf = true);
 
         /// <summary>
         /// Sets how much the map walls should be affected by the lighting effect (0..1)

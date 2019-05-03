@@ -114,14 +114,14 @@ public class PlayFabFacade : MonoBehaviour
         yield return ExecuteApiCallWithRetry(apiCall);
     }
 
-    Dictionary<string, StatisticValue> stats = new Dictionary<string, StatisticValue>();
+    Dictionary<string, StatisticValue> CurrentStats = new Dictionary<string, StatisticValue>();
     [NonSerialized] public bool HasStatsFromServer = false;
 
     public bool TryGetStat(string key, out int value)
     {
         value = 0;
         StatisticValue stat;
-        if (stats.TryGetValue(key, out stat))
+        if (CurrentStats.TryGetValue(key, out stat))
         {
             value = stat.Value;
             return true;
@@ -143,26 +143,30 @@ public class PlayFabFacade : MonoBehaviour
         {
             foreach (var stat in result.Statistics)
             {
-                stats[stat.StatisticName] = stat;
+                CurrentStats[stat.StatisticName] = stat;
             }
             HasStatsFromServer = true;
         }
     }
 
-    public IEnumerator UpdateStat(string name, int value)
+    public IEnumerator UpdateStats(List<(string name, int value)> newStats)
     {
         // Don't spam if client is not logged in/offline. Some score might also be posted before login completes and the SDK will then throw.
         if (!PlayFabClientAPI.IsClientLoggedIn())
             yield break;
 
-        UpdatePlayerStatisticsRequest req = new UpdatePlayerStatisticsRequest();
-        StatisticUpdate stat = new StatisticUpdate
+        var req = new UpdatePlayerStatisticsRequest();
+        req.Statistics = new List<StatisticUpdate>();
+        foreach (var newStat in newStats)
         {
-            Version = stats.ContainsKey(name) ? (uint?)stats[name].Version : null,
-            StatisticName = name,
-            Value = value,
-        };
-        req.Statistics = new List<StatisticUpdate> { stat };
+            var stat = new StatisticUpdate
+            {
+                Version = CurrentStats.ContainsKey(newStat.name) ? (uint?)CurrentStats[newStat.name].Version : null,
+                StatisticName = newStat.name,
+                Value = newStat.value,
+            };
+            req.Statistics.Add(stat);
+        }
 
         Action<Action<UpdatePlayerStatisticsResult>, Action<PlayFabError>> apiCall = (onsuccess, onError) =>
         {
@@ -222,10 +226,10 @@ public class PlayFabFacade : MonoBehaviour
     {
         LastResult = null;
 
-        float startTime = Time.time;
+        float startTime = Time.unscaledTime;
         float timeWaited = 0;
         int attempts = 0;
-        TResult result = default(TResult);
+        TResult result = default;
 
         while (true)
         {
@@ -242,8 +246,8 @@ public class PlayFabFacade : MonoBehaviour
 
             Action<TResult> onSuccess = callResult =>
             {
-                float timeTotal = Time.time - startTime;
-                Debug.Log("PlayFab: Request succesful, ms = " + timeTotal);
+                float timeTotal = Time.unscaledTime - startTime;
+                Debug.Log("PlayFab: Request succesful, ms = " + timeTotal * 1000);
                 result = callResult;
                 callComplete = true;
                 callSuccess = true;
@@ -267,13 +271,13 @@ public class PlayFabFacade : MonoBehaviour
             while (!callComplete)
             {
                 yield return null;
-                timeWaited = Time.time - startTime;
+                timeWaited = Time.unscaledTime - startTime;
             }
 
             if (callSuccess)
                 break;
 
-            timeWaited = Time.time - startTime;
+            timeWaited = Time.unscaledTime - startTime;
 
             // Don't spam, wait a bit.
             yield return new WaitForSeconds(apiCallRetryTime);

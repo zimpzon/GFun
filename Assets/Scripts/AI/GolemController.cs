@@ -9,6 +9,8 @@ using UnityEngine;
 public class GolemController : EntityComponentBase
 {
     public AudioClip AppearSound;
+    public DamagingParticleSystem DefaultProjectiles;
+    public ParticleSystem RageTelegraphParticles;
 
     IMovableActor myMovement_;
     ISensingActor mySenses_;
@@ -18,7 +20,8 @@ public class GolemController : EntityComponentBase
     AIPath aiPath_;
     UtilityAIComponent utilityAi_;
     Transform transform_;
-    DamagingParticleSystem projectiles_;
+    EnemyScript enemyScript_;
+    CoroutineHandle aiCoHandle_;
 
     public override EntityType AiType => EntityType.FleeingBat;
 
@@ -33,9 +36,15 @@ public class GolemController : EntityComponentBase
         me_ = GetComponent<IEnemy>();
         myPhysics_ = GetComponent<IPhysicsActor>();
         transform_ = transform;
-        projectiles_ = GetComponentInChildren<DamagingParticleSystem>();
+        enemyScript_ = GetComponent<EnemyScript>();
 
         base.Awake();
+    }
+
+    private void GameEvents_OnPlayerKilled(IEnemy enemy)
+    {
+        if (enemy == me_)
+            AudioManager.Instance.PlaySfxClip(AppearSound, 1);
     }
 
     void Activate(bool activate)
@@ -51,6 +60,7 @@ public class GolemController : EntityComponentBase
         base.Start();
         Activate(false);
         transform.position = Vector3.right * 1000;
+        GameEvents.OnPlayerKilled += GameEvents_OnPlayerKilled;
         Appear();
     }
 
@@ -95,18 +105,70 @@ public class GolemController : EntityComponentBase
         MapScript.Instance.TriggerExplosion(appearPos, 2);
 
         PlayerInfoScript.Instance.ShowInfo($"{me_.Name} Has Arrived!", Color.red);
-        projectiles_.EnableEmission = true;
+        aiCoHandle_ = Timing.RunCoroutine(AICo().CancelWith(this.gameObject));
+    }
+
+    IEnumerator<float> AICo()
+    {
+        yield return Timing.WaitForSeconds(1 + Random.value * 1);
+
+        float rageTimer = 0.0f;
+
+        while (true)
+        {
+            bool recentlySeenPlayer = mySenses_.GetPlayerLatestKnownPositionAge() < 2.0f;
+            DefaultProjectiles.EnableEmission = recentlySeenPlayer;
+
+            if (recentlySeenPlayer)
+            {
+                rageTimer += Time.deltaTime;
+                if (rageTimer > (me_.LifePct * 4) && me_.LifePct < 0.8f)
+                {
+                    // Telegraph to player
+                    enemyScript_.gameObject.layer = SceneGlobals.Instance.EnemyLayer;
+                    enemyScript_.EnableAiPath(false);
+                    AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3, 0, 1.5f);
+                    myMovement_.StopMove();
+                    DefaultProjectiles.EnableEmission = false;
+                    var rageEmission = RageTelegraphParticles.emission;
+                    rageEmission.enabled = true;
+
+                    yield return Timing.WaitForSeconds(1);
+                    rageEmission.enabled = false;
+
+                    // Rage
+                    Vector2 playerDir = (AiBlackboard.Instance.PlayerPosition - transform_.position).normalized;
+                    myPhysics_.AddForce(playerDir * 200);
+                    rageTimer = 0;
+
+                    yield return Timing.WaitForSeconds(2);
+
+                    // Stop rage
+                    MapScript.Instance.TriggerExplosion(transform_.position, 3, false, me_, damageSelf: false);
+                    enemyScript_.gameObject.layer = SceneGlobals.Instance.EnemyNoWallsLayer;
+                    enemyScript_.EnableAiPath(true);
+
+                    yield return Timing.WaitForSeconds(0.3f);
+                }
+            }
+
+            myMovement_.MoveTo(AiBlackboard.Instance.PlayerPosition);
+            yield return 0;
+        }
+    }
+
+    bool deathDetected_;
+    void OnDeath()
+    {
+        Timing.KillCoroutines(aiCoHandle_);
+        DefaultProjectiles.EnableEmission = false;
+
+        deathDetected_ = true;
     }
 
     private void Update()
     {
-        if (me_.IsDead)
-        {
-            projectiles_.EnableEmission = false;
-            return;
-        }
-
-        projectiles_.EnableEmission = mySenses_.GetPlayerLatestKnownPositionAge() < 2.0f;
-        myMovement_.MoveTo(AiBlackboard.Instance.PlayerPosition);
+        if (me_.IsDead && !deathDetected_)
+            OnDeath();
     }
 }

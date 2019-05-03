@@ -38,7 +38,7 @@ public class CampScript : MonoBehaviour
         mapAccess_ = SceneGlobals.Instance.MapAccess;
         mapScript_ = SceneGlobals.Instance.MapScript;
 
-        mapAccess_.BuildCollisionMapFromFloorTilemap(mapScript_.FloorTileMap);
+        mapAccess_.BuildCollisionMapFromWallTilemap(mapScript_.FloorTileMap);
         SetLighting(MenuLightingSettings);
 
         CreateCharacters();

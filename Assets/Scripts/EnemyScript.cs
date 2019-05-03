@@ -43,6 +43,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
     public EnemyId Id => EnemyId;
     public string Name => EnemyName;
     public float Life => EnemyLife;
+    public float LifePct => EnemyLife / MaxLife;
     public int Level => EnemyLevel;
 
     public bool IsDead { get; set; }
@@ -53,9 +54,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
     public Vector3 NearbyCoverPosition { get; private set; }
 
     float speedMul_;
-    float width_ = 1;
     float height_ = 1;
-    float life_;
     float speedVariation_;
     bool lookForPlayerLos_;
     float playerLoSMaxDistance_;
@@ -138,6 +137,13 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         }
     }
 
+    public void EnableAiPath(bool enable)
+    {
+        if (aiPath_ == null)
+            throw new System.InvalidOperationException("Enemy does not have an AIPath");
+        aiPath_.enabled = enable;
+    }
+
     // IShootingActor
     public void ShootAtPlayer()
     {
@@ -150,8 +156,6 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
 
     // IPhysicsActor
     public void SetMinimumForce(Vector3 force) => throw new System.NotImplementedException();
-
-    public void SetForce(Vector3 force) => throw new System.NotImplementedException();
 
     public void AddForce(Vector3 force)
         => body_.AddForce(force, ForceMode2D.Impulse);
@@ -201,12 +205,25 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         moveTargetReached_ = false;
 
         if (aiPath_ != null)
+        {
             aiPath_.destination = destination;
+            aiPath_.isStopped = false;
+            aiPath_.canSearch = true;
+        }
     }
 
     public Vector3 GetMoveDestination() => moveTo_;
 
-    public void StopMove() => hasMoveTotarget_ = false;
+    public void StopMove()
+    {
+        hasMoveTotarget_ = false;
+        if (aiPath_ != null)
+        {
+            aiPath_.isStopped = true;
+            aiPath_.canSearch = false;
+        }
+    }
+
     public bool MoveTargetReached() => moveTargetReached_;
 
     public void TakeDamage(int amount, Vector3 damageForce)

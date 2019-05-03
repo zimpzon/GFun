@@ -31,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1921782251215252598}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.04, y: -0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1921782251431772650}
@@ -70,7 +70,11 @@ MonoBehaviour:
   ShadowRenderer: {fileID: 1921782252247090794}
   LightRenderer: {fileID: 1921782251431772651}
   DamageSound: {fileID: 8300000, guid: 23ba2dc4b30d32b449cf360211e1583c, type: 3}
+  DamageSoundPitch: 1
+  DamageSoundPitchVariation: 0.2
   DeathSound: {fileID: 8300000, guid: 96d23fa085cbb924e9eceb46fd5559af, type: 3}
+  DeathSoundPitchVariation: 0.2
+  DeathSoundPitch: 1
   WallAvoidancePower: 0.2
   SpriteRenderer: {fileID: 1921782252708537678}
 --- !u!50 &1921782251215252595
@@ -274,7 +278,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 30
   m_Sprite: {fileID: 21300000, guid: b0b471c1f44cc2a4e81613274f102186, type: 3}
-  m_Color: {r: 0.9015674, g: 1, b: 0.5707547, a: 1}
+  m_Color: {r: 0.57254905, g: 0.90052277, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -512,7 +516,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 30
   m_Sprite: {fileID: 21300006, guid: 114c1020741045a43a6e732e390e6cd7, type: 3}
-  m_Color: {r: 1, g: 0.46507528, b: 0.08018869, a: 1}
+  m_Color: {r: 0.6084906, g: 1, b: 0.9927059, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

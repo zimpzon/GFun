@@ -53,7 +53,7 @@ public class MapScript : MonoBehaviour, IMapAccess
 
     // When destroying walls some colliders are left behind. Fix should be incoming:
     // https://github.com/Unity-Technologies/2d-extras/issues/34
-    public void TriggerExplosion(Vector3 worldPosition, float worldRadius, bool damageWallsOnly = true, IEnemy explosionSource = null)
+    public void TriggerExplosion(Vector3 worldPosition, float worldRadius, bool damageWallsOnly = true, IEnemy explosionSource = null, bool damageSelf = true)
     {
         int tilesChecked = MapUtil.ClearCircle(this, MapStyle, worldPosition, worldRadius);
         var particles = SceneGlobals.Instance.ParticleScript.WallDestructionParticles;
@@ -94,7 +94,10 @@ public class MapScript : MonoBehaviour, IMapAccess
             {
                 var enemyGO = TempColliderResult[i];
                 var enemy = enemyGO.GetComponent<IEnemy>();
-                if (enemy != null)
+
+                bool isSelf = enemy == explosionSource;
+                bool skipDueToSelfDamage = isSelf && !damageSelf;
+                if (enemy != null && !skipDueToSelfDamage)
                 {
                     var diff = enemyGO.transform.position - worldPosition;
                     var direction = diff.normalized;
@@ -173,4 +176,7 @@ public class MapScript : MonoBehaviour, IMapAccess
 
     public void BuildCollisionMapFromFloorTilemap(Tilemap floorTilemap)
         => MapBuilder.BuildCollisionMapFromFloorTilemap(floorTilemap);
+
+    public void BuildCollisionMapFromWallTilemap(Tilemap wallTilemap)
+        => MapBuilder.BuildCollisionMapFromWallTilemap(wallTilemap);
 }

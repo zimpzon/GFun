@@ -43,9 +43,8 @@ public class EnemyBullet1Script : MonoBehaviour
         {
             var player = collision.gameObject.GetComponent<PlayableCharacterScript>();
             player.TakeDamage(owner_, damage_, Direction);
+            Die();
         }
-
-        Die();
     }
 
     void Die()
