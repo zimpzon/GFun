@@ -13,12 +13,12 @@ public class FloatingTextScript : MonoBehaviour
     private void Awake()
     {
         text_ = GetComponent<TextMeshPro>();
-        textPool_ = SceneGlobals.Instance.FloatingTextPool;
         transform_ = transform;
     }
 
-    public void Init(Vector3 position, string text, float timeToLive = 2.0f)
+    public void Init(Vector3 position, string text, GameObjectPool textPool, float timeToLive = 2.0f)
     {
+        textPool_ = textPool;
         var go = textPool_.GetFromPool();
         text_.text = text;
         transform_.position = position;

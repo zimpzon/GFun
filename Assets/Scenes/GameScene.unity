@@ -1384,18 +1384,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 718791549}
   m_CullTransparentMesh: 0
---- !u!114 &743855105 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 743855105, guid: 0cf7bc3918782f34fa3e38a7349bd53b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1904927183}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6933e99cec5c14f4dbd74c8f2b72527d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &754898645
 GameObject:
   m_ObjectHideFlags: 0
@@ -1813,7 +1801,7 @@ PrefabInstance:
         type: 3}
       propertyPath: FloatingTextPool
       value: 
-      objectReference: {fileID: 743855105}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f71464834809714da8c2a82a9933032, type: 3}
 --- !u!4 &902635796 stripped
@@ -5537,11 +5525,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2893415611756312362, guid: 57c823fc9599e794aa54b3128c9c960d,
-        type: 3}
-      propertyPath: TextPool
-      value: 
-      objectReference: {fileID: 743855105}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57c823fc9599e794aa54b3128c9c960d, type: 3}
 --- !u!1001 &3934406508438994893
