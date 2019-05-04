@@ -154,7 +154,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
         {
             energyDepleted_ = true;
             Energy = 0;
-            FloatingTextSpawner.Instance.Spawn(transform_.position + Vector3.up, "Depleted", 1.0f);
+            FloatingTextSpawner.Instance.Spawn(transform_.position + Vector3.up, "Depleted", new Color(1, 0.8f, 0), speed: 1.5f, timeToLive: 1.0f);
             return false;
         }
 
@@ -184,6 +184,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
         if (IsDead)
             return;
 
+        FloatingTextSpawner.Instance.Spawn(transform_.position + Vector3.up, $"+{amount.ToString()}", Color.green, speed: 1.0f, timeToLive: 2.0f);
         AddPlayerHealthEvent(amount, source);
         Life = Mathf.Min(MaxLife, Life + amount);
         UpdateHealth();
@@ -205,6 +206,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
 
         AudioManager.Instance.PlaySfxClip(TakeDamageSound, 1);
         DoFlash(2, 0.3f);
+        FloatingTextSpawner.Instance.Spawn(transform_.position + Vector3.up, $"-{amount.ToString()}", Color.red, speed: 1.0f, timeToLive: 1.0f);
 
         AddPlayerHealthEvent(-amount, enemy.Name);
 

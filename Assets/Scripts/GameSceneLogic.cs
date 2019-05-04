@@ -29,6 +29,7 @@ public class GameSceneLogic : MonoBehaviour
     Vector3 latestEnemyDeathPosition_;
 
     PortalScript nextLevelPortal_;
+    BlackHolePluginScript blackHolePlugin_;
     MapScript map_;
     PlayableCharacterScript playerScript_;
 
@@ -114,6 +115,8 @@ public class GameSceneLogic : MonoBehaviour
         map_ = SceneGlobals.Instance.MapScript;
         nextLevelPortal_ = FindObjectOfType<PortalScript>();
         nextLevelPortal_.gameObject.SetActive(false);
+
+        blackHolePlugin_ = FindObjectOfType<BlackHolePluginScript>();
     }
 
     private void Start()
@@ -168,9 +171,15 @@ public class GameSceneLogic : MonoBehaviour
         var playerPos = playerInScene.transform.position;
 
         // Prepare enemies
+        Time.timeScale = 0.01f;
         if (CurrentRunData.Instance.NextMapType == MapType.Floor)
         {
-            EnemySpawner.Instance.AddEnemiesForFloor(DynamicObjectRoot, CurrentRunData.Instance.CurrentFloor, playerPos, playerMinDistance: 15);
+            List<(Vector3, float)> forbiddenPositions = new List<(Vector3, float)>();
+            forbiddenPositions.Add((playerPos, 10));
+            if (blackHolePlugin_.isActiveAndEnabled)
+                forbiddenPositions.Add((blackHolePlugin_.transform.position, 4));
+
+            EnemySpawner.Instance.AddEnemiesForFloor(DynamicObjectRoot, CurrentRunData.Instance.CurrentFloor, forbiddenPositions);
         }
 
         var enemiesAtMapStart = FindObjectsOfType<EnemyScript>();
@@ -178,8 +187,9 @@ public class GameSceneLogic : MonoBehaviour
             GameEvents.RaiseEnemySpawned(enemy, enemy.transform.position);
 
         const float MinimumShowTime = 1.5f;
-        float timeLeft = (startTime - Time.time) + MinimumShowTime;
-        yield return Timing.WaitForSeconds(timeLeft);
+        float endTime = Time.unscaledTime + (startTime - Time.unscaledTime) + MinimumShowTime;
+        while (Time.unscaledTime < endTime)
+            yield return 0;
 
         // Show what we created
         UpdateCoinWidget();
@@ -208,12 +218,14 @@ public class GameSceneLogic : MonoBehaviour
         ParticleScript.EmitAtPosition(ParticleScript.Instance.MuzzleFlashParticles, playerCenter, 1);
         ParticleScript.EmitAtPosition(ParticleScript.Instance.WallDestructionParticles, playerCenter, 5);
 
-        float shakeEndTime = Time.time + 0.3f;
-        while (Time.time < shakeEndTime)
+        float shakeEndTime = Time.unscaledTime + 0.3f;
+        while (Time.unscaledTime < shakeEndTime)
         {
             CameraShake.Instance.SetMinimumShake(1.0f);
             yield return 0;
         }
+
+        Time.timeScale = 1.0f;
 
         if (CurrentRunData.Instance.NextMapType == MapType.Shop)
             Timing.RunCoroutine(ShopLoop().CancelWith(gameObject));
@@ -440,9 +452,13 @@ public class GameSceneLogic : MonoBehaviour
 
         var plugins = FindObjectsOfType<MapPluginScript>();
         foreach (var plugin in plugins)
-            plugin.ApplyToMap(new Vector3Int((int)plugin.transform.position.x, (int)plugin.transform.position.x, 0));
+        {
+            MapBuilder.BuildCollisionMapFromMapSource();
+            plugin.ApplyToMap(new Vector3Int((int)plugin.transform.position.x, (int)plugin.transform.position.y, 0));
+        }
 
         MapBuilder.BuildMapTiles(MapBuilder.MapSource, map_, MapStyle);
+
         BuildPathingGraph();
     }
 

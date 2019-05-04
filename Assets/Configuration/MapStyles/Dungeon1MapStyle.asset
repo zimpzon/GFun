@@ -21,7 +21,7 @@ MonoBehaviour:
   WallTileVariations:
   - {fileID: 11400000, guid: 2f069b14c708460428d8850a76ab4c82, type: 2}
   WallVariationChance: 0.1
-  InvislbleWallTile: {fileID: 11400000, guid: c7ca625c0c69a9b4eab844b48b864196, type: 2}
+  InvisibleWallTile: {fileID: 11400000, guid: c7ca625c0c69a9b4eab844b48b864196, type: 2}
   TopTile: {fileID: 11400000, guid: f287c09467502ed4e8313d4c912fc440, type: 2}
   TopTileVariations:
   - {fileID: 11400000, guid: bfe334ff8ea28f5498eb4c133ee245a9, type: 2}

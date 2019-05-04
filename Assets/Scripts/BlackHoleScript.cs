@@ -2,15 +2,24 @@
 
 public class BlackHoleScript : MonoBehaviour
 {
-    SpriteRenderer renderer_;
+    public Transform SpriteTransform;
 
-    void Start()
+    float baseScale_;
+
+    private void Awake()
     {
-        renderer_ = GetComponent<SpriteRenderer>();
+        baseScale_ = SpriteTransform.localScale.x; // Assuming uniform scale
+    }
+
+    public void OnPlayerEnterered()
+    {
+        FloatingTextSpawner.Instance.Spawn(SpriteTransform.position + Vector3.up * 3, "Not Implemented", Color.yellow, 0.1f, 3.0f);
     }
 
     void Update()
     {
-        
+        float sinX = Mathf.Sin(Time.time * 10) * 0.05f;
+        float sinY = Mathf.Sin(Time.time * 9) * 0.05f;
+        SpriteTransform.localScale = new Vector3(baseScale_ + sinX, baseScale_ + sinY, 1);
     }
 }

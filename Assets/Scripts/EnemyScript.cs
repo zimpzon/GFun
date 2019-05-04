@@ -147,7 +147,6 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
     // IShootingActor
     public void ShootAtPlayer()
     {
-        FloatingTextSpawner.Instance.Spawn(transform_.position, "Bang!");
         nextShoot_ = Time.time + 1.0f;
     }
 

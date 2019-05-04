@@ -47,6 +47,20 @@ public static class MapBuilder
         mapScript.FloorTileMap.CompressBounds();
     }
 
+    public static void BuildCollisionMapFromMapSource()
+    {
+        var pos = Vector3Int.zero;
+        for (int y = 0; y < MapMaxHeight; ++y)
+        {
+            for (int x = 0; x < MapMaxWidth; ++x)
+            {
+                pos.x = x;
+                pos.y = y;
+                CollisionMap[x, y] = (byte)(MapSource[x, y] == 0 ? 1 : 0);
+            }
+        }
+    }
+
     public static void BuildCollisionMapFromFloorTilemap(Tilemap floorTilemap)
     {
         var pos = Vector3Int.zero;
@@ -113,13 +127,13 @@ public static class MapBuilder
         var wallUp = mapScript.WallTileMap.GetTile(posUp);
         var wallDown = mapScript.WallTileMap.GetTile(posDown);
 
-        // Invisible walls
+        // Invisible walls - will be drawn by the background quad
         if (floorLeft == null && wallLeft == null)
-            mapScript.WallTileMap.SetTile(posLeft, mapStyle.InvislbleWallTile);
+            mapScript.WallTileMap.SetTile(posLeft, mapStyle.InvisibleWallTile);
         if (floorRight == null && wallRight == null)
-            mapScript.WallTileMap.SetTile(posRight, mapStyle.InvislbleWallTile);
+            mapScript.WallTileMap.SetTile(posRight, mapStyle.InvisibleWallTile);
         if (floorDown == null && wallDown == null)
-            mapScript.WallTileMap.SetTile(posDown, mapStyle.InvislbleWallTile);
+            mapScript.WallTileMap.SetTile(posDown, mapStyle.InvisibleWallTile);
 
         // Visible wall
         if (floorUp == null)
@@ -193,7 +207,8 @@ public static class MapBuilder
         }
     }
 
-    public static void MarkAsFloor(Vector3Int pos) => MapSource[pos.x, pos.y] = 1;
+    public static void MarkAsFloor(Vector3Int pos)
+        => MapSource[pos.x, pos.y] = 1;
 
     public static void ZeroMap()
         => Fillrect(Rect, 0);

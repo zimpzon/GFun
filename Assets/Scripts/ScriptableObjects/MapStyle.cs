@@ -13,7 +13,7 @@ public class MapStyle : ScriptableObject
     public TileBase WallTile;
     public TileBase[] WallTileVariations;
     public float WallVariationChance = 0.1f;
-    public TileBase InvislbleWallTile;
+    public TileBase InvisibleWallTile;
 
     [Header("Top")]
     public TileBase TopTile;

@@ -162,6 +162,8 @@ public class GolemController : EntityComponentBase
     {
         Timing.KillCoroutines(aiCoHandle_);
         DefaultProjectiles.EnableEmission = false;
+        var rageEmission = RageTelegraphParticles.emission;
+        rageEmission.enabled = false;
 
         deathDetected_ = true;
     }

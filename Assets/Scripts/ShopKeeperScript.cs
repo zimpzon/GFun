@@ -68,7 +68,7 @@ public class ShopKeeperScript : MonoBehaviour
             case ShopItemId.Item1Health:
                 bool isOverheal = player.Life == player.MaxLife;
                 if (isOverheal)
-                    FloatingTextSpawner.Instance.Spawn(transform.position + Vector3.up * 0.5f, "Hah!");
+                    FloatingTextSpawner.Instance.Spawn(transform.position + Vector3.up * 0.5f, "Hah!", Color.white);
                 player.AddHealth(1, "Shop Item");
                 break;
             case ShopItemId.IncreaseMaxHp1:

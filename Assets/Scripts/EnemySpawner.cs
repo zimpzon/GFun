@@ -10,7 +10,7 @@ public class EnemySpawner : MonoBehaviour
         Instance = this;
     }
 
-    List<(int, int)> GetOpen2x2Positions(Vector3 playerPos, float minDistance)
+    List<(int, int)> GetOpen2x2Positions(List<(Vector3, float)> forbiddenPositions)
     {
         var result = new List<(int, int)>();
         for (int y = 0; y < MapBuilder.MapMaxHeight - 1; ++y)
@@ -22,17 +22,30 @@ public class EnemySpawner : MonoBehaviour
                     MapBuilder.CollisionMap[x + 0, y + 1] == MapBuilder.TileWalkable &&
                     MapBuilder.CollisionMap[x + 1, y + 1] == MapBuilder.TileWalkable)
                 {
-                    float distanceToplayer = (playerPos - new Vector3(x, y, 0)).magnitude;
-                    if (distanceToplayer > minDistance)
+                    bool acceptPoint = true;
+                    for (int i = 0; i < forbiddenPositions.Count; ++i)
                     {
-                        result.Add((x, y));
+                        var point = forbiddenPositions[i].Item1;
+                        var minDist = forbiddenPositions[i].Item2;
+                        float distance = (point - new Vector3(x, y, 0)).magnitude;
+                        if (distance < minDist)
+                        {
+                            acceptPoint = false;
+                            break;
+                        }
                     }
+
+                    if (acceptPoint)
+                        result.Add((x, y));
                 }
             }
         }
 
         if (result.Count == 0)
-            throw new System.InvalidOperationException($"No open positions for enemies with a min distance of {minDistance} from player");
+        {
+            result.Add((0, 0));
+            Debug.LogError("No open positions for enemies, defaulting to 0, 0");
+        }
 
         return result;
     }
@@ -62,16 +75,14 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    public void AddEnemiesForFloor(Transform parent, int floor, Vector3 playerPos, float playerMinDistance)
+    public void AddEnemiesForFloor(Transform parent, int floor, List<(Vector3, float)> forbiddenPositions)
     {
-        var openPositions = GetOpen2x2Positions(playerPos, playerMinDistance);
-
-        // if enemy is large just clear some space around it
+        var openPositions = GetOpen2x2Positions(forbiddenPositions);
 
         int batCount = 1 + floor / 2;
         int fireBatCount = floor;
         int fleeingBatCount = 2;
-        int scytheCount = floor / 4;
+        int scytheCount = Random.value < 0.75f ? 0 : floor / 4;
         int dragonCount = 1 + floor / 3;
         int golemCount = (floor & 1) == 1 ? 0 : 1 + floor / 10;
 

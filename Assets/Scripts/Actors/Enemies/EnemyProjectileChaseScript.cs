@@ -53,7 +53,9 @@ public class EnemyProjectileChaseScript : MonoBehaviour
 
     void Die()
     {
-        ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.BulletFizzleParticles, position_, 4);
+        ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.BulletFizzleParticles, position_, 10);
+        ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.MuzzleFlashParticles, position_, 1);
+        ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.MuzzleSmokeParticles, position_, 10);
         SceneGlobals.Instance.EnemyBullet1Pool.ReturnToPool(this.gameObject);
     }
 
