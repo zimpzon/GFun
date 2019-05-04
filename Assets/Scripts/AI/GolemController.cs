@@ -164,6 +164,7 @@ public class GolemController : EntityComponentBase
         DefaultProjectiles.EnableEmission = false;
         var rageEmission = RageTelegraphParticles.emission;
         rageEmission.enabled = false;
+        enemyScript_.gameObject.layer = SceneGlobals.Instance.DeadEnemyLayer;
 
         deathDetected_ = true;
     }
