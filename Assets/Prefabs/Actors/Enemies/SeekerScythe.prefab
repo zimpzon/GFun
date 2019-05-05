@@ -69,7 +69,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 40
   m_Sprite: {fileID: 21300000, guid: 1e5741dfac622ca41ab01d812a7a412d, type: 3}
-  m_Color: {r: 1, g: 0.33333334, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -326,9 +326,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7154584249229889463}
   - component: {fileID: 3048113089029811176}
+  - component: {fileID: 182463128763282633}
   - component: {fileID: 1505885483046128052}
   - component: {fileID: 1247909059034228447}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: SeekerScythe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -365,8 +366,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b87b15105f543a744b7c28446903392d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpriteRenderer: {fileID: 8424624460037236522}
   ChargeSound: {fileID: 8300000, guid: 90757cc9246f5d1418e33e7f3a244e59, type: 3}
+--- !u!114 &182463128763282633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7154584249229889461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0f198733d6af2b4f8e383e70dae94ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnableMoveToGizmo: 0
+  MoveToGizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  EnableCoverGizmo: 0
+  CoverGizmoColor: {r: 0, g: 1, b: 1, a: 1}
+  EnablePlayerLoSGizmo: 0
+  PlayerLOSGizmoColor: {r: 0, g: 1, b: 0, a: 1}
+  EnemyId: 2
+  EnemyName: A Scythe
+  EnemyLevel: 3
+  EnemyMoveSpeed: 1
+  SpeedVariation: 0.2
+  EnemyLife: 100
+  TouchPlayerDamage: 3
+  BlipRenderer: {fileID: 1224020379}
+  ShadowRenderer: {fileID: 8326705842574317702}
+  LightRenderer: {fileID: 4369092537005470345}
+  DamageSound: {fileID: 0}
+  DamageSoundPitch: 1
+  DamageSoundPitchVariation: 0.2
+  DeathSound: {fileID: 0}
+  DeathSoundPitchVariation: 0.2
+  DeathSoundPitch: 1
+  WallAvoidancePower: 0.2
+  SpriteRenderer: {fileID: 8424624460037236522}
 --- !u!50 &1505885483046128052
 Rigidbody2D:
   serializedVersion: 4

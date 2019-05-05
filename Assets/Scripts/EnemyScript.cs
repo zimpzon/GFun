@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Maybe not suitable for enemies larger than 1 tile?
 public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, IPhysicsActor, IShootingActor
 {
     [Header("Debug")]
@@ -156,8 +155,8 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
     // IPhysicsActor
     public void SetMinimumForce(Vector3 force) => throw new System.NotImplementedException();
 
-    public void AddForce(Vector3 force)
-        => body_.AddForce(force, ForceMode2D.Impulse);
+    public void AddForce(Vector3 force, ForceMode2D forceMode = ForceMode2D.Impulse)
+        => body_.AddForce(force, forceMode);
 
     // ISensingActor
     public void SetLookForPlayerLoS(bool doCheck, float maxDistance)
@@ -365,7 +364,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         UpdateNearbyCover();
         UpdateFlash();
 
-        spriteAnimator_.UpdateAnimation(latestMovementDirection_, IsDead);
+        spriteAnimator_?.UpdateAnimation(latestMovementDirection_, IsDead);
     }
 
     private void FixedUpdate()

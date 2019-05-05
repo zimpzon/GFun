@@ -120,8 +120,8 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
             force_ = force;
     }
 
-    public void AddForce(Vector3 force)
-        => body_.AddForce(force, ForceMode2D.Impulse);
+    public void AddForce(Vector3 force, ForceMode2D forceMode = ForceMode2D.Impulse)
+        => body_.AddForce(force, forceMode);
 
     void DoFlash(float amount, float ms)
     {
@@ -154,7 +154,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
         {
             energyDepleted_ = true;
             Energy = 0;
-            FloatingTextSpawner.Instance.Spawn(transform_.position + Vector3.up, "Depleted", new Color(1, 0.8f, 0), speed: 1.5f, timeToLive: 1.0f);
+            FloatingTextSpawner.Instance.Spawn(transform_.position + Vector3.up, "Depleted!", new Color(1, 0.2f, 0), speed: 1.0f, timeToLive: 2.0f);
             return false;
         }
 
@@ -174,8 +174,8 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
             if (energyPct > 0.2f)
                 energyDepleted_ = false;
 
-            float gain = Time.unscaledDeltaTime * 500 * (energyPct + 0.2f);
-            Energy = Mathf.Min(MaxEnergy, Energy + gain);
+            float gainPerSec = 400 * (energyDepleted_ ? 0.25f : 1.0f);
+            Energy = Mathf.Min(MaxEnergy, Energy + gainPerSec * Time.unscaledDeltaTime);
         }
     }
 
