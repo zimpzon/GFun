@@ -7,7 +7,16 @@ using UnityEngine.Audio;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
-
+    public enum eScene
+    {
+        IntroScreen,
+        InGame,
+        InMenu,
+        InMenuSetMusicVolume,
+        InMenuSetSfxVolume,
+        InMenuSetAmbientVolume,
+        Max
+    }
     public AudioClips AudioClips;
     public int SfxSourceCount = 20;
     public bool ShowDebugOutput = false;
@@ -17,8 +26,17 @@ public class AudioManager : MonoBehaviour
 
     private AudioMixerSnapshot IntroScreenSnapshot;
     private AudioMixerSnapshot InGameSnapshot;
+    private AudioMixerSnapshot InMenuSnapshot;
+    private AudioMixerSnapshot InMenuSetMusicVolumeSnapshot;
+    private AudioMixerSnapshot InMenuSetSfxVolumeSnapshot;
+    private AudioMixerSnapshot InMenuSetAmbientVolumeSnapshot;
 
     private bool IsMusicPlaying;
+
+    private float MinVolume = 0.0001f;
+    private float MinVolumenInDb = -80f;
+
+    private eScene CurrentScene = eScene.Max;
 
     AudioSource musicSource_;
     AudioSource ambienceSource_;
@@ -38,11 +56,11 @@ public class AudioManager : MonoBehaviour
 
         IntroScreenSnapshot = MusicMixerGroup.audioMixer.FindSnapshot("IntroScreen");
         InGameSnapshot = MusicMixerGroup.audioMixer.FindSnapshot("InGame");
+        InMenuSnapshot = MusicMixerGroup.audioMixer.FindSnapshot("InMenu");
 
-        //// TODO: Removed since sound disappears on reload of scene
-        //SetMusicVolume(PlayerPrefs.GetFloat(PlayerPrefsNames.MaxMusicVolume, 0.8f));
-        //SetSfxVolume(PlayerPrefs.GetFloat(PlayerPrefsNames.SfxVolume, 0.8f));
-        //SetAmbientVolume(PlayerPrefs.GetFloat(PlayerPrefsNames.AmbientVolume, 0.8f));
+        InMenuSetMusicVolumeSnapshot = MusicMixerGroup.audioMixer.FindSnapshot("OptionsMusic");
+        InMenuSetSfxVolumeSnapshot = MusicMixerGroup.audioMixer.FindSnapshot("OptionsSFX");
+        InMenuSetAmbientVolumeSnapshot = MusicMixerGroup.audioMixer.FindSnapshot("OptionsAmbient");
 
         for (int i = 0; i < SfxSourceCount; ++i)
         {
@@ -115,7 +133,6 @@ public class AudioManager : MonoBehaviour
     public void StopMusic()
     {
         IsMusicPlaying = false;
-        InGameSnapshot.TransitionTo(2.0f);
         StartCoroutine(StopMusicCo());
     }
 
@@ -124,7 +141,6 @@ public class AudioManager : MonoBehaviour
         if (!IsMusicPlaying)
         {
             IsMusicPlaying = true;
-            IntroScreenSnapshot.TransitionTo(0.5f);
             StartCoroutine(PlayMusicCo(clip));
         }
     }
@@ -166,40 +182,101 @@ public class AudioManager : MonoBehaviour
     }
 
     #region Volume Getters and Setters
-    public float GetMusicVolume()
+    private void ClearVolumeValues()
+    {
+        MusicMixerGroup.audioMixer.ClearFloat("MusicVolume");
+        MusicMixerGroup.audioMixer.ClearFloat("SFXVolume");
+        MusicMixerGroup.audioMixer.ClearFloat("AmbientVolume");
+    }
+
+    private float GetMusicVolume()
     {
         float volume;
         MusicMixerGroup.audioMixer.GetFloat("MusicVolume", out volume);
         return volume;
     }
 
-    public void SetMusicVolume(float volume)
+    private void SetMusicVolume(float volume)
     {
-        MusicMixerGroup.audioMixer.SetFloat("MusicVolume", volume);
+        MusicMixerGroup.audioMixer.SetFloat("MusicVolume", Mathf.Log10(volume) * 20);
     }
 
-    public float GetSfxVolume()
+    private float GetSfxVolume()
     {
         float volume;
         SfxMixerGroup.audioMixer.GetFloat("SFXVolume", out volume);
         return volume;
     }
 
-    public void SetSfxVolume(float volume)
+    private void SetSfxVolume(float volume)
     {
-        SfxMixerGroup.audioMixer.SetFloat("SFXVolume", volume);
+        SfxMixerGroup.audioMixer.SetFloat("SFXVolume", Mathf.Log10(volume) * 20);
     }
 
-    public float GetAmbientVolume()
+    private float GetAmbientVolume()
     {
         float volume;
         AmbientMixerGroup.audioMixer.GetFloat("AmbientVolume", out volume);
         return volume;
     }
 
-    public void SetAmbientVolume(float volume)
+    private void SetAmbientVolume(float volume)
     {
-        AmbientMixerGroup.audioMixer.SetFloat("AmbientVolume", volume);
+        AmbientMixerGroup.audioMixer.SetFloat("AmbientVolume", Mathf.Log10(volume) * 20);
     }
     #endregion
+
+    public IEnumerator SetAudioProfile(eScene scene)
+    {
+        yield return null;
+        if (CurrentScene != scene)
+        {
+            CurrentScene = scene;
+            ClearVolumeValues();
+        }
+        switch (scene)
+        {
+            case eScene.IntroScreen:
+                IntroScreenSnapshot.TransitionTo(0f);
+                break;
+            case eScene.InGame:
+                InGameSnapshot.TransitionTo(2.0f);
+                break;
+            case eScene.InMenu:
+                InMenuSnapshot.TransitionTo(0);
+                break;
+            case eScene.InMenuSetMusicVolume:
+                InMenuSetMusicVolumeSnapshot.TransitionTo(0);
+                break;
+            case eScene.InMenuSetSfxVolume:
+                InMenuSetSfxVolumeSnapshot.TransitionTo(0);
+                break;
+            case eScene.InMenuSetAmbientVolume:
+                InMenuSetAmbientVolumeSnapshot.TransitionTo(0);
+                break;
+            case eScene.Max:
+            default:
+                break;
+        }
+
+        StartCoroutine(SetPlayerVolume());
+    }
+
+    private IEnumerator SetPlayerVolume()
+    {
+        yield return null;
+
+        float playerMusicVolumeAdjustment = PlayerPrefs.GetFloat(PlayerPrefsNames.MaxMusicVolume, 1f);
+        float musicVolumeInDb = GetMusicVolume();
+        SetMusicVolume(musicVolumeInDb > MinVolumenInDb ? playerMusicVolumeAdjustment : MinVolume);
+
+        float playerSfxVolumeAdjustment = PlayerPrefs.GetFloat(PlayerPrefsNames.SfxVolume, 1f);
+        float sfxVolumeInDb = GetSfxVolume();
+        SetSfxVolume(sfxVolumeInDb > MinVolumenInDb ? playerSfxVolumeAdjustment : MinVolume);
+
+        float playerAmbientVolumeAdjustment = PlayerPrefs.GetFloat(PlayerPrefsNames.AmbientVolume, 1f);
+        float ambientVolumeInDb = GetAmbientVolume();
+        SetAmbientVolume(ambientVolumeInDb > MinVolumenInDb ? playerAmbientVolumeAdjustment : MinVolume);
+    }
+
 }
