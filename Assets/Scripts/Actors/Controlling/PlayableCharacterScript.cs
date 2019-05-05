@@ -67,6 +67,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
     Vector3 force_;
     Vector3 moveRequest_;
     Vector3 latestFixedMovenentDirection_;
+    float latestFacingDirection_ = 1;
 
     bool isHumanControlled_;
     InteractableTrigger switchPlayerInteract_;
@@ -283,6 +284,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
     void FixedUpdateInternal(float dt)
     {
         Vector3 movement = moveRequest_ * Speed * dt + force_ * dt;
+
         latestFixedMovenentDirection_ = movement.normalized;
         moveRequest_ = Vector3.zero;
 
@@ -306,7 +308,11 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
         bool hasRecentlyFiredWeapon = CurrentWeapon.LatestFiringTimeUnscaled > Time.unscaledTime - 0.70f;
         Vector3 latestHorizontalMovement = new Vector3(latestFixedMovenentDirection_.x, 0, 0);
         Vector3 facingDirection = hasRecentlyFiredWeapon ? CurrentWeapon.LatestFiringDirection : latestHorizontalMovement;
-        flipX_ = facingDirection.x < 0; // NB: This makes the gun always face right when player is idle (x is 0)
+
+        if (facingDirection.x != 0)
+            latestFacingDirection_ = facingDirection.x;
+
+        flipX_ = latestFacingDirection_ < 0;
         weaponTransform_.localPosition = WeaponOffsetRight;
 
         bool isRunning = latestFixedMovenentDirection_ != Vector3.zero;

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SeekerScytheController : MonoBehaviour
 {
-    public float AttractDistance = 6.0f;
+    public float AttractDistance = 10.0f;
     public float AttractPower = 8.0f;
-    public float MaxVelocity = 6;
+    public float MaxVelocity = 8;
     public float ChargeSoundCooldown = 4.0f;
     public AudioClip ChargeSound;
 
@@ -44,7 +44,11 @@ public class SeekerScytheController : MonoBehaviour
         while (true)
         {
             if (me_.IsDead)
+            {
+                body_.drag = 2;
+                body_.angularDrag = 3;
                 yield break;
+            }
 
             float dt = Time.deltaTime;
             float time = Time.time;
@@ -54,7 +58,7 @@ public class SeekerScytheController : MonoBehaviour
             if (velocityMagnitude > MaxVelocity)
                 body_.velocity = Vector3.ClampMagnitude(body_.velocity, MaxVelocity);
 
-            float rotationSpeed = 90 + (velocityMagnitude * 200);
+            float rotationSpeed = 90 + (velocityMagnitude * 100);
             rotation_ -= dt * rotationSpeed;
             rendererTransform_.rotation = Quaternion.Euler(0, 0, rotation_);
 

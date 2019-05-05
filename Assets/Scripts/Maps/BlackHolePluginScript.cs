@@ -4,11 +4,11 @@ public class BlackHolePluginScript : MapPluginScript
 {
     public override void ApplyToMap(Vector3Int position)
     {
-        //if (Random.value < 0.75f || CurrentRunData.Instance.CurrentFloor == 1)
-        //{
-        //    gameObject.SetActive(false);
-        //    return;
-        //}
+        if (Random.value < 0.75f || CurrentRunData.Instance.CurrentFloor == 1)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
 
         Vector3 worldPosition = new Vector3(MapBuilder.MapMaxWidth / 2, MapBuilder.MapMaxHeight / 2);
         if (Random.value < 0.5f)

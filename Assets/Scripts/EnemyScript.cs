@@ -275,7 +275,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         LightRenderer.enabled = false;
         ShadowRenderer.enabled = false;
 
-        AudioManager.Instance.PlaySfxClip(DeathSound, maxInstances: 3, DeathSoundPitchVariation, DeathSoundPitch);
+        AudioManager.Instance.PlaySfxClip(DeathSound, maxInstances: 5, DeathSoundPitchVariation, DeathSoundPitch);
         SceneGlobals.Instance.CameraShake.SetMinimumShake(0.2f);
 
         yield return DisableDelay;

@@ -86,7 +86,7 @@ public class EnemySpawner : MonoBehaviour
         int dragonCount = 1 + floor / 3;
         int golemCount = (floor & 1) == 1 ? 0 : 1 + floor / 10;
 
-        //        AddEnemiesOfType(parent, EnemyId.SeekerScythe, scytheCount, openPositions);
+        AddEnemiesOfType(parent, EnemyId.SeekerScythe, scytheCount, openPositions);
         AddEnemiesOfType(parent, EnemyId.Bat, batCount, openPositions);
         AddEnemiesOfType(parent, EnemyId.FireBat, fireBatCount, openPositions);
         AddEnemiesOfType(parent, EnemyId.FleeingBat, fleeingBatCount, openPositions);

@@ -93,6 +93,14 @@ public class HumanPlayerController : MonoBehaviour
         weapon_.OnTriggerUp();    
     }
 
+    private void FixedUpdate()
+    {
+        if (Disabled)
+            return;
+
+        CheckMovement();
+    }
+
     void Update()
     {
         if (Disabled)
@@ -103,7 +111,7 @@ public class HumanPlayerController : MonoBehaviour
         //defaultLight_.AmbientLight = new Color(f, f, f);
         //lightingImageEffect_.SetBaseColorTarget(defaultLight_);
 
-        CheckInput();
+        CheckActions();
         UpdateBulletTime();
 
         AiBlackboard.Instance.PlayerPosition = transform_.position;
@@ -119,19 +127,10 @@ public class HumanPlayerController : MonoBehaviour
         weapon_.OnTriggerUp();
     }
 
-    void CheckInput()
+    void CheckActions()
     {
         if (MiniMapCamera.Instance.IsShown)
             return;
-
-        var horz = Input.GetAxisRaw("Horizontal");
-        var vert = Input.GetAxisRaw("Vertical");
-        var moveVec = new Vector3(horz, vert);
-        player_.Move(moveVec);
-        isMoving_ = moveVec != Vector3.zero;
-
-        if (Input.GetKeyDown(KeyCode.Q))
-            ToggleBulletTime();
 
         //if (Input.GetKeyDown(KeyCode.F))
         //{
@@ -161,5 +160,17 @@ public class HumanPlayerController : MonoBehaviour
 
         //if (Input.GetKeyDown(KeyCode.R))
         //    RandomizeWeapon();
+    }
+
+    void CheckMovement()
+    {
+        if (MiniMapCamera.Instance.IsShown)
+            return;
+
+        var horz = Input.GetAxisRaw("Horizontal");
+        var vert = Input.GetAxisRaw("Vertical");
+        var moveVec = new Vector3(horz, vert);
+        player_.Move(moveVec);
+        isMoving_ = moveVec != Vector3.zero;
     }
 }

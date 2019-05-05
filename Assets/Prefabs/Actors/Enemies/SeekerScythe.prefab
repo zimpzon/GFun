@@ -306,7 +306,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b0b471c1f44cc2a4e81613274f102186, type: 3}
-  m_Color: {r: 0.755, g: 0.6111905, b: 0.7100595, a: 1}
+  m_Color: {r: 1, g: 0.023584902, b: 0.6833246, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -366,6 +366,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b87b15105f543a744b7c28446903392d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AttractDistance: 10
+  AttractPower: 12
+  MaxVelocity: 7
+  ChargeSoundCooldown: 4
   ChargeSound: {fileID: 8300000, guid: 90757cc9246f5d1418e33e7f3a244e59, type: 3}
 --- !u!114 &182463128763282633
 MonoBehaviour:
@@ -390,17 +394,17 @@ MonoBehaviour:
   EnemyLevel: 3
   EnemyMoveSpeed: 1
   SpeedVariation: 0.2
-  EnemyLife: 100
+  EnemyLife: 60
   TouchPlayerDamage: 3
   BlipRenderer: {fileID: 1224020379}
   ShadowRenderer: {fileID: 8326705842574317702}
   LightRenderer: {fileID: 4369092537005470345}
   DamageSound: {fileID: 0}
   DamageSoundPitch: 1
-  DamageSoundPitchVariation: 0.2
-  DeathSound: {fileID: 0}
-  DeathSoundPitchVariation: 0.2
-  DeathSoundPitch: 1
+  DamageSoundPitchVariation: 0.1
+  DeathSound: {fileID: 8300000, guid: 90757cc9246f5d1418e33e7f3a244e59, type: 3}
+  DeathSoundPitchVariation: 0.1
+  DeathSoundPitch: 2.5
   WallAvoidancePower: 0.2
   SpriteRenderer: {fileID: 8424624460037236522}
 --- !u!50 &1505885483046128052
@@ -416,8 +420,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0.1
-  m_AngularDrag: 0.05
+  m_LinearDrag: 0.2
+  m_AngularDrag: 0.2
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
