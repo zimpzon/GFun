@@ -82,7 +82,7 @@ public class EnemySpawner : MonoBehaviour
         int batCount = 1 + floor / 2;
         int fireBatCount = floor;
         int fleeingBatCount = 2;
-        int scytheCount = 3;// Random.value < 0.75f ? 0 : floor / 4;
+        int scytheCount = Random.value < 0.75f ? 0 : 1 + floor / 3;
         int dragonCount = 1 + floor / 3;
         int golemCount = (floor & 1) == 1 ? 0 : 1 + floor / 10;
 

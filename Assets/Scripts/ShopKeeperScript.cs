@@ -23,8 +23,7 @@ public class ShopKeeperScript : MonoBehaviour
 {
     public static int Price1Health = 100;
 
-    public GameObject Scythe1;
-    public GameObject Scythe2;
+    public GameObject[] Scythes;
 
     public AudioClip DenyBuySound;
     public AudioClip AcceptBuySound;
@@ -45,11 +44,22 @@ public class ShopKeeperScript : MonoBehaviour
     {
         if (scythesEnabled_)
             return;
+        CurrentRunData.Instance.ShopKeeperPokeCount++;
+        int scytheCount = CurrentRunData.Instance.ShopKeeperPokeCount + 1;
+        if (scytheCount > Scythes.Length)
+            scytheCount = Scythes.Length;
 
-        Scythe1.SetActive(true);
-        Scythe2.SetActive(true);
-        ParticleScript.EmitAtPosition(ParticleScript.Instance.PlayerLandParticles, Scythe1.transform.position, 5);
-        ParticleScript.EmitAtPosition(ParticleScript.Instance.PlayerLandParticles, Scythe2.transform.position, 5);
+        for (int i = 0; i < scytheCount; ++i)
+        {
+            if (i != 0 && Random.value < 0.1f)
+                continue;
+
+            var scythe = Scythes[i];
+            Vector3 offset = Random.insideUnitCircle * 1.0f;
+            scythe.transform.position += offset;
+            scythe.SetActive(true);
+            ParticleScript.EmitAtPosition(ParticleScript.Instance.PlayerLandParticles, scythe.transform.position, 5);
+        }
         AudioManager.Instance.PlaySfxClip(ShopKeeperAggroSound, 1);
 
         scythesEnabled_ = true;

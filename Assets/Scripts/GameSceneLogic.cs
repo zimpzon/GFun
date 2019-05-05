@@ -241,10 +241,8 @@ public class GameSceneLogic : MonoBehaviour
 
         while (true)
         {
-            if (Input.GetKeyDown(KeyCode.X))
-            {
-                playerScript_.Die();
-            }
+            //if (Input.GetKeyDown(KeyCode.X))
+            //    playerScript_.Die();
 
             if (playerScript_.IsDead)
             {

@@ -157,9 +157,6 @@ public class HumanPlayerController : MonoBehaviour
             ReleaseFire();
         else if (Input.GetKeyUp(KeyCode.RightArrow))
             ReleaseFire();
-
-        //if (Input.GetKeyDown(KeyCode.R))
-        //    RandomizeWeapon();
     }
 
     void CheckMovement()

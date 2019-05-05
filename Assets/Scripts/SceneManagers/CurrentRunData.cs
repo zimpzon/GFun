@@ -14,13 +14,13 @@ public class CurrentRunData
     public string StartingCharacterTag = "Character1";
     public int StartingDifficulty = 1;
     public int CurrentFloor = 0;
-    public bool ReaperIsAgitated; // Play AckAck sound and spawn something hard that drops a lot of gold
     public int Coins;
     public int Life;
     public int MaxLife;
     public int PlayerExplosionDamage = 4;
     public float PlayerAttractDistance = 3.0f;
 
+    public int ShopKeeperPokeCount;
     public int ItemsBought;
     public int CoinsCollected;
     public int EnemiesKilled;
