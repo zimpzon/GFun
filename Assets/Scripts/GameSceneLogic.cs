@@ -123,6 +123,7 @@ public class GameSceneLogic : MonoBehaviour
     {
         TerminalCommands.RegisterCommands();
 
+        StartCoroutine(SceneGlobals.Instance.AudioManager.SetAudioProfile(AudioManager.eScene.InGame));
         Timing.RunCoroutine(EnterLevelLoop().CancelWith(this.gameObject));
     }
 
@@ -397,7 +398,7 @@ public class GameSceneLogic : MonoBehaviour
         while (!playFabUpdateComplete && Time.unscaledTime < updatePlayFabTimeout)
             yield return 0;
 
-        if (Time.time > updatePlayFabTimeout)
+        if (Time.unscaledDeltaTime > updatePlayFabTimeout)
             DebugLinesScript.Show("Stats update timed out", Time.time);
 
         var stats = PlayFabFacade.Instance.GetAllStats();

@@ -80,7 +80,7 @@ public class EnemySpawner : MonoBehaviour
         var openPositions = GetOpen2x2Positions(forbiddenPositions);
 
         int batCount = 1 + floor / 2;
-        int fireBatCount = floor;
+        int fireBatCount = 2 + floor;
         int fleeingBatCount = 2;
         int scytheCount = Random.value < 0.75f ? 0 : 1 + floor / 3;
         int dragonCount = 1 + floor / 3;

@@ -29,6 +29,9 @@ public class MiniMapCamera : MonoBehaviour
         var player = PlayableCharacters.GetPlayerInScene();
         if (Input.GetKeyDown(KeyCode.Tab))
         {
+            if (CurrentRunData.Instance.CurrentFloor == 0)
+                return;
+
             if (player == null || player.IsDead)
                 return;
 

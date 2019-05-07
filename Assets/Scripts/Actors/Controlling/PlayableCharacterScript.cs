@@ -166,18 +166,18 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
 
     void UpdateEnergy()
     {
-        if (EnergyWidget.Instance != null)
-            EnergyWidget.Instance.ShowEnergy((int)Energy, MaxEnergy);
-
         if (Time.unscaledTime > timeLatestEnergyUsage_ + 0.3f)
         {
             float energyPct = Mathf.Min(Energy / MaxEnergy);
-            if (energyPct > 0.2f)
+            if (energyPct > 0.5f)
                 energyDepleted_ = false;
 
-            float gainPerSec = 400 * (energyDepleted_ ? 0.25f : 1.0f);
+            float gainPerSec = 400 ;
             Energy = Mathf.Min(MaxEnergy, Energy + gainPerSec * Time.unscaledDeltaTime);
         }
+
+        if (EnergyWidget.Instance != null)
+            EnergyWidget.Instance.ShowEnergy((int)Energy, MaxEnergy);
     }
 
     public void AddHealth(int amount, string source)
@@ -297,8 +297,18 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
 
         bool isRunning = movement != Vector3.zero;
         if (isRunning)
+        {
             body_.MovePosition(transform_.position + movement);
+            //dustDistance_ += movement.magnitude;
+            //if (dustDistance_ > nextDust_)
+            //{
+            //    nextDust_ = dustDistance_ + 0.5f;
+            //    ParticleScript.EmitAtPosition(ParticleScript.Instance.MuzzleSmokeParticles, transform_.position, 1);
+            //}
+        }
     }
+    //float dustDistance_;
+    //float nextDust_;
 
     void UpdateInternal(float dt)
     {
