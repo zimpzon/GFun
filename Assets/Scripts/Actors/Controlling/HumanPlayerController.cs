@@ -166,7 +166,7 @@ public class HumanPlayerController : MonoBehaviour
 
         var horz = Input.GetAxisRaw("Horizontal");
         var vert = Input.GetAxisRaw("Vertical");
-        var moveVec = new Vector3(horz, vert);
+        var moveVec = new Vector3(horz, vert).normalized;
         player_.Move(moveVec);
         isMoving_ = moveVec != Vector3.zero;
     }
