@@ -137,8 +137,11 @@ public class HumanPlayerController : MonoBehaviour
         //    map_.TriggerExplosion(transform.position, 3f);
         //}
 
-        if (Input.GetKeyDown(KeyCode.P))
-            PlainBulletGun.EffectsOn = !PlainBulletGun.EffectsOn;
+        //if (Input.GetKeyDown(KeyCode.P))
+        //    PlainBulletGun.EffectsOn = !PlainBulletGun.EffectsOn;
+
+        //if (Input.GetKeyDown(KeyCode.Q))
+        //    ToggleBulletTime();
 
         if (Input.GetKey(KeyCode.DownArrow))
             Fire(Vector3.down);

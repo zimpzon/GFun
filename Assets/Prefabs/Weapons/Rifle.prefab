@@ -140,7 +140,7 @@ MonoBehaviour:
     Size: 0.25
     BounceWalls: 0
     Damage: 10
-    DamageForce: 1
+    DamageForce: 2
     EnergyCost: 50
   PowerBulletSettings:
     Speed: 15

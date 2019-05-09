@@ -17,53 +17,62 @@ public class Options : MonoBehaviour
     private float MusicVolume;
     private float SFxVolume;
     private float AmbientVolume;
+    private bool isMusicPlaying;
+    private bool isAmbientSoundPlaying;
 
     // Start is called before the first frame update
     void Awake()
     {
-        MusicVolume = PlayerPrefs.GetFloat(PlayerPrefsNames.MaxMusicVolume, 0.8f);
-        SFxVolume = PlayerPrefs.GetFloat(PlayerPrefsNames.SfxVolume, 0.8f);
-        AmbientVolume = PlayerPrefs.GetFloat(PlayerPrefsNames.AmbientVolume, 0.8f);
+        MusicVolume = PlayerPrefs.GetFloat(PlayerPrefsNames.MaxMusicVolume, 1f);
+        SFxVolume = PlayerPrefs.GetFloat(PlayerPrefsNames.SfxVolume, 1f);
+        AmbientVolume = PlayerPrefs.GetFloat(PlayerPrefsNames.AmbientVolume, 1f);
 
         MusicVolumeControl.value = MusicVolume;
         SFxVolumeControl.value = SFxVolume;
         AmbientVolumeControl.value = AmbientVolume;
-
-        SceneGlobals globals;
-        globals = SceneGlobals.Instance;
-        globals.AudioManager.SetMusicVolume(MusicVolume);
-        globals.AudioManager.SetSfxVolume(SFxVolume);
-        globals.AudioManager.SetAmbientVolume(AmbientVolume);
     }
 
     public void AdjustMusicVolume(Single volume)
     {
-        SceneGlobals globals = SceneGlobals.Instance;
-        globals.AudioManager.PlayMusic(globals.AudioManager.AudioClips.IntroMusic);
-        globals.AudioManager.StopAmbience();
         MusicVolume = volume;
-        globals.AudioManager.SetMusicVolume(MusicVolume);
         PlayerPrefs.SetFloat(PlayerPrefsNames.MaxMusicVolume, MusicVolume);
+        SceneGlobals globals = SceneGlobals.Instance;
+        StartCoroutine(globals.AudioManager.SetAudioProfile(AudioManager.eScene.InMenuSetMusicVolume));
+        if (!isMusicPlaying)
+        {
+            isMusicPlaying = true;
+            globals.AudioManager.PlayMusic(globals.AudioManager.AudioClips.IntroMusic);
+        }
+        globals.AudioManager.StopAmbience();
+        isAmbientSoundPlaying = false;
     }
+
 
     public void AdjustSFxVolume(Single volume)
     {
+        SFxVolume = volume;
+        PlayerPrefs.SetFloat(PlayerPrefsNames.SfxVolume, SFxVolume);
         SceneGlobals globals = SceneGlobals.Instance;
         globals.AudioManager.StopMusic();
         globals.AudioManager.StopAmbience();
+        StartCoroutine(globals.AudioManager.SetAudioProfile(AudioManager.eScene.InMenuSetSfxVolume));
+        isMusicPlaying = false;
+        isAmbientSoundPlaying = false;
         globals.AudioManager.PlaySfxClip(globals.AudioManager.AudioClips.ShotgunShot, 1);
-        SFxVolume = volume;
-        globals.AudioManager.SetSfxVolume(SFxVolume);
-        PlayerPrefs.SetFloat(PlayerPrefsNames.SfxVolume, SFxVolume);
     }
 
     public void AdjustAmbientVolume(Single volume)
     {
+        AmbientVolume = volume;
+        PlayerPrefs.SetFloat(PlayerPrefsNames.AmbientVolume, AmbientVolume);
         SceneGlobals globals = SceneGlobals.Instance;
         globals.AudioManager.StopMusic();
-        globals.AudioManager.PlayAmbience(globals.AudioManager.AudioClips.Campfire, true);
-        AmbientVolume = volume;
-        globals.AudioManager.SetAmbientVolume(AmbientVolume);
-        PlayerPrefs.SetFloat(PlayerPrefsNames.AmbientVolume, AmbientVolume);
+        StartCoroutine(globals.AudioManager.SetAudioProfile(AudioManager.eScene.InMenuSetAmbientVolume));
+        isMusicPlaying = false;
+        if (!isAmbientSoundPlaying)
+        {
+            isAmbientSoundPlaying = true;
+            globals.AudioManager.PlayAmbience(globals.AudioManager.AudioClips.Campfire, true);
+        }
     }
 }

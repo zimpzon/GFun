@@ -147,6 +147,8 @@ public class CampScript : MonoBehaviour
         CampfireSoundSource.enabled = true;
         LightingFadeTo(isInGraveyard_ ? GraveyardLightingSettings : CampLightingSettings, transitionSpeed: 20);
         IntroCanvas.enabled = false;
+        StartCoroutine(SceneGlobals.Instance.AudioManager.SetAudioProfile(AudioManager.eScene.InGame));
+
         SceneGlobals.Instance.AudioManager.StopMusic();
 
         while (true)
@@ -196,6 +198,7 @@ public class CampScript : MonoBehaviour
         IntroCanvas.enabled = true;
 
         LightingFadeTo(MenuLightingSettings, transitionSpeed: 20);
+        StartCoroutine(SceneGlobals.Instance.AudioManager.SetAudioProfile(AudioManager.eScene.IntroScreen));
         SceneGlobals.Instance.AudioManager.PlayMusic(IntroMusicClip);
 
         while (true)
