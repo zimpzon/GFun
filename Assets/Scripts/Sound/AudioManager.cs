@@ -278,5 +278,4 @@ public class AudioManager : MonoBehaviour
         float ambientVolumeInDb = GetAmbientVolume();
         SetAmbientVolume(ambientVolumeInDb > MinVolumenInDb ? playerAmbientVolumeAdjustment : MinVolume);
     }
-
 }

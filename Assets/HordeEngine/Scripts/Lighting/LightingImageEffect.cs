@@ -46,6 +46,16 @@ public class LightingImageEffect : MonoBehaviour
     float flashStartTime_;
     AnimationCurve flashCurve_;
 
+    int id_LightingTex;
+    int id_Brightness;
+    int id_MonochromeAmount;
+    int id_MonochromeFactorR;
+    int id_MonochromeFactorG;
+    int id_MonochromeFactorB;
+    int id_MonochromeDisplayR;
+    int id_MonochromeDisplayG;
+    int id_MonochromeDisplayB;
+
     public void SetBaseColorTarget(LightingEffectSettings target, float transitionSpeed = 30)
     {
         target_ = target ?? throw new NullReferenceException();
@@ -82,6 +92,16 @@ public class LightingImageEffect : MonoBehaviour
 
         CurrentValues = new LightingEffectSettings();
         target_ = new LightingEffectSettings();
+
+        id_LightingTex = Shader.PropertyToID("_LightingTex");
+        id_Brightness = Shader.PropertyToID("_Brightness");
+        id_MonochromeAmount = Shader.PropertyToID("_MonochromeAmount");
+        id_MonochromeFactorR = Shader.PropertyToID("_MonochromeFactorR");
+        id_MonochromeFactorG = Shader.PropertyToID("_MonochromeFactorG");
+        id_MonochromeFactorB = Shader.PropertyToID("_MonochromeFactorB");
+        id_MonochromeDisplayR = Shader.PropertyToID("_MonochromeDisplayR");
+        id_MonochromeDisplayG = Shader.PropertyToID("_MonochromeDisplayG");
+        id_MonochromeDisplayB = Shader.PropertyToID("_MonochromeDisplayB");
 
         SetBaseColor(StartValues);
     }
@@ -121,15 +141,25 @@ public class LightingImageEffect : MonoBehaviour
 
     void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
-        EffectMaterial.SetTexture("_LightingTex", LightingTexture);
-        EffectMaterial.SetFloat("_Brightness", CurrentValues.Brightness);
-        EffectMaterial.SetFloat("_MonochromeAmount", CurrentValues.MonochromeAmount);
-        EffectMaterial.SetFloat("_MonochromeFactorR", CurrentValues.MonochromeFactorR);
-        EffectMaterial.SetFloat("_MonochromeFactorG", CurrentValues.MonochromeFactorG);
-        EffectMaterial.SetFloat("_MonochromeFactorB", CurrentValues.MonochromeFactorB);
-        EffectMaterial.SetFloat("_MonochromeDisplayR", CurrentValues.MonochromeDisplayR);
-        EffectMaterial.SetFloat("_MonochromeDisplayG", CurrentValues.MonochromeDisplayG);
-        EffectMaterial.SetFloat("_MonochromeDisplayB", CurrentValues.MonochromeDisplayB);
+        EffectMaterial.SetTexture(id_LightingTex, LightingTexture);
+        EffectMaterial.SetFloat(id_Brightness, CurrentValues.Brightness);
+        EffectMaterial.SetFloat(id_MonochromeAmount, CurrentValues.MonochromeAmount);
+        EffectMaterial.SetFloat(id_MonochromeDisplayR, CurrentValues.MonochromeFactorR);
+        EffectMaterial.SetFloat(id_MonochromeDisplayG, CurrentValues.MonochromeFactorG);
+        EffectMaterial.SetFloat(id_MonochromeDisplayB, CurrentValues.MonochromeFactorB);
+        EffectMaterial.SetFloat(id_MonochromeFactorR, CurrentValues.MonochromeDisplayR);
+        EffectMaterial.SetFloat(id_MonochromeFactorG, CurrentValues.MonochromeDisplayG);
+        EffectMaterial.SetFloat(id_MonochromeFactorB, CurrentValues.MonochromeDisplayB);
+
+        //EffectMaterial.SetTexture("_LightingTex", LightingTexture);
+        //EffectMaterial.SetFloat("_Brightness", CurrentValues.Brightness);
+        //EffectMaterial.SetFloat("_MonochromeAmount", CurrentValues.MonochromeAmount);
+        //EffectMaterial.SetFloat("_MonochromeFactorR", CurrentValues.MonochromeFactorR);
+        //EffectMaterial.SetFloat("_MonochromeFactorG", CurrentValues.MonochromeFactorG);
+        //EffectMaterial.SetFloat("_MonochromeFactorB", CurrentValues.MonochromeFactorB);
+        //EffectMaterial.SetFloat("_MonochromeDisplayR", CurrentValues.MonochromeDisplayR);
+        //EffectMaterial.SetFloat("_MonochromeDisplayG", CurrentValues.MonochromeDisplayG);
+        //EffectMaterial.SetFloat("_MonochromeDisplayB", CurrentValues.MonochromeDisplayB);
 
         Graphics.Blit(source, destination, EffectMaterial);
     }

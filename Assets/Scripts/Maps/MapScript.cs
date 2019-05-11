@@ -12,6 +12,7 @@ public class MapScript : MonoBehaviour, IMapAccess
     public MapStyle MapStyle;
     public GameObject BackgroundQuad;
     public CompositeCollider2D WallCompositeCollider;
+    public TilemapCollider2D TilemapCollider;
 
     const int ExplosionDamageToEnemies = 40;
 
@@ -109,6 +110,8 @@ public class MapScript : MonoBehaviour, IMapAccess
         SceneGlobals.Instance.CameraShake.SetMinimumShake(1.0f);
 
         WallCompositeCollider.generationType = CompositeCollider2D.GenerationType.Synchronous;
+        TilemapCollider.enabled = false;
+        TilemapCollider.enabled = true;
     }
 
     void Awake()

@@ -137,8 +137,11 @@ public class HumanPlayerController : MonoBehaviour
         //    map_.TriggerExplosion(transform.position, 3f);
         //}
 
-        if (Input.GetKeyDown(KeyCode.P))
-            PlainBulletGun.EffectsOn = !PlainBulletGun.EffectsOn;
+        //if (Input.GetKeyDown(KeyCode.P))
+        //    PlainBulletGun.EffectsOn = !PlainBulletGun.EffectsOn;
+
+        //if (Input.GetKeyDown(KeyCode.Q))
+        //    ToggleBulletTime();
 
         if (Input.GetKey(KeyCode.DownArrow))
             Fire(Vector3.down);
@@ -166,7 +169,7 @@ public class HumanPlayerController : MonoBehaviour
 
         var horz = Input.GetAxisRaw("Horizontal");
         var vert = Input.GetAxisRaw("Vertical");
-        var moveVec = new Vector3(horz, vert);
+        var moveVec = new Vector3(horz, vert).normalized;
         player_.Move(moveVec);
         isMoving_ = moveVec != Vector3.zero;
     }

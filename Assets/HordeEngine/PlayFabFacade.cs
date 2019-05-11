@@ -36,6 +36,9 @@ public class PlayFabFacade : MonoBehaviour
 
     public IEnumerator InitializePlayFab()
     {
+        if (PlayFabClientAPI.IsClientLoggedIn())
+            yield break; // Already logged in
+
         Debug.Log("PlayFab: Login...");
         yield return DoLoginCo();
         if (!PlayFabClientAPI.IsClientLoggedIn())

@@ -70,7 +70,11 @@ MonoBehaviour:
   ShadowRenderer: {fileID: 1921782252247090794}
   LightRenderer: {fileID: 1921782251431772651}
   DamageSound: {fileID: 8300000, guid: 23ba2dc4b30d32b449cf360211e1583c, type: 3}
+  DamageSoundPitch: 1
+  DamageSoundPitchVariation: 0.2
   DeathSound: {fileID: 8300000, guid: 96d23fa085cbb924e9eceb46fd5559af, type: 3}
+  DeathSoundPitchVariation: 0.2
+  DeathSoundPitch: 1
   WallAvoidancePower: 0.2
   SpriteRenderer: {fileID: 1921782252708537678}
 --- !u!50 &1921782251215252595
