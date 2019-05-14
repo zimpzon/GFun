@@ -129,8 +129,8 @@ public class HumanPlayerController : MonoBehaviour
 
     void CheckActions()
     {
-        if (MiniMapCamera.Instance.IsShown)
-            return;
+        //if (MiniMapCamera.Instance.IsShown)
+        //    return;
 
         //if (Input.GetKeyDown(KeyCode.F))
         //{
@@ -164,8 +164,8 @@ public class HumanPlayerController : MonoBehaviour
 
     void CheckMovement()
     {
-        if (MiniMapCamera.Instance.IsShown)
-            return;
+        //if (MiniMapCamera.Instance.IsShown)
+        //    return;
 
         var horz = Input.GetAxisRaw("Horizontal");
         var vert = Input.GetAxisRaw("Vertical");

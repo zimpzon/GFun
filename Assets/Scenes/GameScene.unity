@@ -678,6 +678,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7530739392227593191, guid: a47b908e0054478469f5b6dcd3bbdf60,
+        type: 3}
+      propertyPath: EmissionModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a47b908e0054478469f5b6dcd3bbdf60, type: 3}
 --- !u!4 &454477282 stripped
@@ -2284,6 +2289,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179259766407433031, guid: ee081d1cdf6a5354ca1be625e135e052,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179259766407433031, guid: ee081d1cdf6a5354ca1be625e135e052,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179259766407433031, guid: ee081d1cdf6a5354ca1be625e135e052,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.width
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179259766407433031, guid: ee081d1cdf6a5354ca1be625e135e052,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.height
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179259766407433031, guid: ee081d1cdf6a5354ca1be625e135e052,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee081d1cdf6a5354ca1be625e135e052, type: 3}
@@ -5795,6 +5825,11 @@ PrefabInstance:
     - target: {fileID: 6058835128484636549, guid: 3a51bf0b0eab33748b2b9d1ed93cd512,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6058835128484636550, guid: 3a51bf0b0eab33748b2b9d1ed93cd512,
+        type: 3}
+      propertyPath: LoginWhenInEditor
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
