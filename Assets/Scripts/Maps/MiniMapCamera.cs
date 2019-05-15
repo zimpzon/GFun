@@ -4,6 +4,7 @@ public class MiniMapCamera : MonoBehaviour
 {
     public static MiniMapCamera Instance;
 
+    public GameObject Background;
     public bool IsShown;
     public float Z;
 
@@ -14,6 +15,7 @@ public class MiniMapCamera : MonoBehaviour
     {
         camera_.enabled = show;
         IsShown = show;
+        Background.SetActive(show);
     }
 
     private void Awake()
@@ -22,6 +24,7 @@ public class MiniMapCamera : MonoBehaviour
 
         transform_ = transform;
         camera_ = GetComponent<Camera>();
+        Show(true);
     }
 
     void Update()
@@ -38,7 +41,7 @@ public class MiniMapCamera : MonoBehaviour
             Show(!IsShown);
         }
 
-        if (IsShown)
+        if (IsShown && player != null)
         {
             var pos = player.transform.position;
             pos.z = Z;
