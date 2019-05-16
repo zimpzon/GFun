@@ -144,12 +144,12 @@ public class LightingImageEffect : MonoBehaviour
         EffectMaterial.SetTexture(id_LightingTex, LightingTexture);
         EffectMaterial.SetFloat(id_Brightness, CurrentValues.Brightness);
         EffectMaterial.SetFloat(id_MonochromeAmount, CurrentValues.MonochromeAmount);
-        EffectMaterial.SetFloat(id_MonochromeDisplayR, CurrentValues.MonochromeFactorR);
-        EffectMaterial.SetFloat(id_MonochromeDisplayG, CurrentValues.MonochromeFactorG);
-        EffectMaterial.SetFloat(id_MonochromeDisplayB, CurrentValues.MonochromeFactorB);
-        EffectMaterial.SetFloat(id_MonochromeFactorR, CurrentValues.MonochromeDisplayR);
-        EffectMaterial.SetFloat(id_MonochromeFactorG, CurrentValues.MonochromeDisplayG);
-        EffectMaterial.SetFloat(id_MonochromeFactorB, CurrentValues.MonochromeDisplayB);
+        EffectMaterial.SetFloat(id_MonochromeDisplayR, CurrentValues.MonochromeDisplayR);
+        EffectMaterial.SetFloat(id_MonochromeDisplayG, CurrentValues.MonochromeDisplayG);
+        EffectMaterial.SetFloat(id_MonochromeDisplayB, CurrentValues.MonochromeDisplayB);
+        EffectMaterial.SetFloat(id_MonochromeFactorR, CurrentValues.MonochromeFactorR);
+        EffectMaterial.SetFloat(id_MonochromeFactorG, CurrentValues.MonochromeFactorG);
+        EffectMaterial.SetFloat(id_MonochromeFactorB, CurrentValues.MonochromeFactorB);
 
         //EffectMaterial.SetTexture("_LightingTex", LightingTexture);
         //EffectMaterial.SetFloat("_Brightness", CurrentValues.Brightness);

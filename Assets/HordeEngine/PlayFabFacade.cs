@@ -5,6 +5,7 @@ using System.Collections;
 using System.Runtime.InteropServices;
 using PlayFab;
 using PlayFab.ClientModels;
+using System.Linq;
 
 /// <summary>
 /// PlayerData: key/value where value is a string. Could be JSON.
@@ -16,10 +17,13 @@ public class PlayFabFacade : MonoBehaviour
     public static extern string GetURLFromPage();
 
     public static PlayFabFacade Instance;
+    public static GetPlayerStatisticsResult AllStats = new GetPlayerStatisticsResult();
+    public static GetPlayerCombinedInfoResult AllData = new GetPlayerCombinedInfoResult();
 
     public bool LoginWhenInEditor = false;
 
     [NonSerialized] public object LastResult;
+    [NonSerialized] public bool LoginProcessComplete;
 
     void Awake()
     {
@@ -29,7 +33,10 @@ public class PlayFabFacade : MonoBehaviour
     private void Start()
     {
         if (Application.isEditor && !LoginWhenInEditor)
+        {
+            LoginProcessComplete = true;
             return;
+        }
 
         StartCoroutine(InitializePlayFab());
     }
@@ -37,15 +44,26 @@ public class PlayFabFacade : MonoBehaviour
     public IEnumerator InitializePlayFab()
     {
         if (PlayFabClientAPI.IsClientLoggedIn())
+        {
+            LoginProcessComplete = true;
             yield break; // Already logged in
+        }
 
         Debug.Log("PlayFab: Login...");
         yield return DoLoginCo();
         if (!PlayFabClientAPI.IsClientLoggedIn())
+        {
+            LoginProcessComplete = true;
             yield break;
+        }
 
         Debug.Log("PlayFab: Get all stats...");
         yield return GetAllStats();
+        AllStats = (GetPlayerStatisticsResult)LastResult;
+
+        Debug.Log("PlayFab: Get all data...");
+        yield return GetAllPlayerData();
+        AllData = (GetPlayerCombinedInfoResult)LastResult;
 
         if (Application.platform == RuntimePlatform.WebGLPlayer)
         {
@@ -56,6 +74,8 @@ public class PlayFabFacade : MonoBehaviour
             { "page_top_url", GetURLFromPage() }
             });
         }
+
+        LoginProcessComplete = true;
     }
 
     string GetUserId()
