@@ -3628,6 +3628,8 @@ MonoBehaviour:
   AcceptBuySound: {fileID: 8300000, guid: cf29758ca52effc4bb5861ff3ea23db7, type: 3}
   ShopKeeperAggroSound: {fileID: 8300000, guid: c8de5a309169d39439def8f9c1c9f03e,
     type: 3}
+  GhostPlayerPrefab: {fileID: 3403651042106934664, guid: 21598d44785feab4096f720260d9f2ec,
+    type: 3}
   Displays:
   - {fileID: 7537765697042005198}
   - {fileID: 7537765696324114546}

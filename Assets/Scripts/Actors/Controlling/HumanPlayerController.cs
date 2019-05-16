@@ -5,6 +5,7 @@ public class HumanPlayerController : MonoBehaviour
 {
     public LightingEffectSettings BulletTimeLight;
 
+    public static TrackedPath TrackedPath = new TrackedPath();
     public static bool Disabled = false;
 
     LightingEffectSettings bulletTimeLight_ = new LightingEffectSettings();
@@ -37,6 +38,7 @@ public class HumanPlayerController : MonoBehaviour
         lightingImageEffect_.StartValues.CopyTo(defaultLight_);
 
         UpdateWeapon();
+        TrackedPath.Rewind();
     }
 
     public void UpdateWeapon()
@@ -172,5 +174,7 @@ public class HumanPlayerController : MonoBehaviour
         var moveVec = new Vector3(horz, vert).normalized;
         player_.Move(moveVec);
         isMoving_ = moveVec != Vector3.zero;
+
+        TrackedPath.Sample(moveVec, transform_.position, Time.unscaledTime);
     }
 }

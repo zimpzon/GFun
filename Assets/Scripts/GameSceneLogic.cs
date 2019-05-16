@@ -158,7 +158,7 @@ public class GameSceneLogic : MonoBehaviour
         yield return 0;
 
         // Prepare map
-        float startTime = Time.time;
+        float startTime = Time.unscaledTime;
         if (CurrentRunData.Instance.NextMapType == MapType.Shop)
             GenerateShop();
         else
@@ -400,9 +400,6 @@ public class GameSceneLogic : MonoBehaviour
 
         if (Time.unscaledDeltaTime > updatePlayFabTimeout)
             DebugLinesScript.Show("Stats update timed out", Time.time);
-
-        var stats = PlayFabFacade.Instance.GetAllStats();
-        var data = PlayFabFacade.Instance.GetAllPlayerData();
 
         float timeScale = Time.timeScale;
 

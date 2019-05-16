@@ -1,10 +1,14 @@
 ﻿using GFun;
+using MEC;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CampScript : MonoBehaviour
 {
+    static readonly TrackedPath GhostPath = new TrackedPath();
+
     public string EnterPortalSceneName;
     public Canvas IntroCanvas;
     public Canvas LoadingCanvas;
@@ -15,6 +19,7 @@ public class CampScript : MonoBehaviour
     public LightingEffectSettings MenuLightingSettings;
     public AudioSource CampfireSoundSource;
     public Transform[] CharacterDefaultPositions;
+    public GameObject GhostPlayerPrefab;
 
     LightingEffectSettings activeLightingSettings_;
     bool isInGraveyard_;
@@ -23,6 +28,7 @@ public class CampScript : MonoBehaviour
     LightingImageEffect lightingImageEffect_;
     IMapAccess mapAccess_;
     MapScript mapScript_;
+    GhostPlayerScript ghostScript_;
 
     private void Awake()
     {
@@ -30,8 +36,30 @@ public class CampScript : MonoBehaviour
         GameProgressData.EnableSave = true;
     }
 
-    void Start()
+    IEnumerator Start()
     {
+        LoadingCanvas.gameObject.SetActive(true);
+
+        while (!PlayFabFacade.Instance.LoginProcessComplete)
+            yield return null;
+
+        LoadingCanvas.gameObject.SetActive(false);
+
+        string ghostPath = PlayerPrefs.GetString("LatestCampPath");
+        try
+        {
+            if (string.IsNullOrWhiteSpace(ghostPath))
+                PlayFabFacade.AllData.InfoResultPayload.TitleData.TryGetValue("DefaultCampGhost", out ghostPath);
+
+            GhostPath.FromString(ghostPath);
+            if (GhostPath.HasPath)
+            {
+                var ghost = Instantiate(GhostPlayerPrefab, Vector3.left * 10000, Quaternion.identity);
+                ghostScript_ = ghost.GetComponent<GhostPlayerScript>();
+            }
+        }
+        catch (System.Exception) { }
+
         camPos_ = SceneGlobals.Instance.CameraPositioner;
         camShake_ = SceneGlobals.Instance.CameraShake;
         lightingImageEffect_ = SceneGlobals.Instance.LightingImageEffect;
@@ -149,6 +177,9 @@ public class CampScript : MonoBehaviour
         IntroCanvas.enabled = false;
         StartCoroutine(SceneGlobals.Instance.AudioManager.SetAudioProfile(AudioManager.eScene.InGame));
 
+        if (!ghostScript_.IsStarted)
+            ghostScript_.Wander(GhostPath, 2.0f + Random.value);
+
         SceneGlobals.Instance.AudioManager.StopMusic();
 
         while (true)
@@ -216,6 +247,10 @@ public class CampScript : MonoBehaviour
 
     void StartGame()
     {
+        var stringPath = HumanPlayerController.TrackedPath.AsString();
+        PlayerPrefs.SetString("LatestCampPath", stringPath);
+        PlayerPrefs.Save();
+
         CurrentRunData.Clear();
         CurrentRunData.Instance.StartingCharacterTag = PlayableCharacters.GetPlayerInScene().tag;
 

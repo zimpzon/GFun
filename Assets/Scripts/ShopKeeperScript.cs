@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GFun;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -23,11 +24,14 @@ public class ShopKeeperScript : MonoBehaviour
 {
     public static int Price1Health = 100;
 
+    static readonly TrackedPath GhostPath = new TrackedPath();
+
     public GameObject[] Scythes;
 
     public AudioClip DenyBuySound;
     public AudioClip AcceptBuySound;
     public AudioClip ShopKeeperAggroSound;
+    public GameObject GhostPlayerPrefab;
 
     public GameObject[] Displays;
 
@@ -37,13 +41,14 @@ public class ShopKeeperScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        OnPoke();    
+        OnPoke();
     }
 
     public void OnPoke()
     {
         if (scythesEnabled_)
             return;
+
         CurrentRunData.Instance.ShopKeeperPokeCount++;
         int scytheCount = CurrentRunData.Instance.ShopKeeperPokeCount + 1;
         if (scytheCount > Scythes.Length)
@@ -60,6 +65,7 @@ public class ShopKeeperScript : MonoBehaviour
             scythe.SetActive(true);
             ParticleScript.EmitAtPosition(ParticleScript.Instance.PlayerLandParticles, scythe.transform.position, 5);
         }
+
         AudioManager.Instance.PlaySfxClip(ShopKeeperAggroSound, 1);
 
         scythesEnabled_ = true;
@@ -118,10 +124,34 @@ public class ShopKeeperScript : MonoBehaviour
 
     void Start()
     {
+        string ghostPath = PlayerPrefs.GetString("LatestShopPath");
+        try
+        {
+            if (string.IsNullOrWhiteSpace(ghostPath))
+                PlayFabFacade.AllData.InfoResultPayload.TitleData.TryGetValue("DefaultShopGhost", out ghostPath);
+
+            GhostPath.FromString(ghostPath);
+            if (GhostPath.HasPath)
+            {
+                var ghost = Instantiate(GhostPlayerPrefab, Vector3.left * 10000, Quaternion.identity);
+                var script = ghost.GetComponent<GhostPlayerScript>();
+                script.Wander(GhostPath, 2.0f + Random.value);
+            }
+        }
+        catch(System.Exception) {}
+
         anim_ = GetComponentInChildren<SpriteAnimator_Single>();
 
+        GameEvents.OnPlayerEnteredPortal += GameEvents_OnPlayerEnteredPortal;
         CreateItemData();
         InitDisplays(level: 1);
+    }
+
+    private void GameEvents_OnPlayerEnteredPortal()
+    {
+        var stringPath = HumanPlayerController.TrackedPath.AsString();
+        PlayerPrefs.SetString("LatestShopPath", stringPath);
+        PlayerPrefs.Save();
     }
 
     List<ShopItem> GetRandomItems(int count, int level)
@@ -162,6 +192,7 @@ public class ShopKeeperScript : MonoBehaviour
     void Update()
     {
         anim_.UpdateAnimation(Vector3.zero);
+        GhostPath.DebugDraw();
     }
 
     void CreateItemData()

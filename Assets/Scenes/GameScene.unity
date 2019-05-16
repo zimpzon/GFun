@@ -282,7 +282,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'Hint: (<color=#00ff00>TAB</color>) for minimap'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9b3154c8745e85a43a6f7cf571b19677, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: cd4ae020e8a11fa44b952615b36cd487, type: 2}
@@ -680,6 +680,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7530739392227593191, guid: a47b908e0054478469f5b6dcd3bbdf60,
         type: 3}
+      propertyPath: EmissionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 903984234, guid: a47b908e0054478469f5b6dcd3bbdf60, type: 3}
       propertyPath: EmissionModule.enabled
       value: 0
       objectReference: {fileID: 0}
@@ -3987,7 +3991,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.3647059}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.21176471}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -5955,7 +5959,7 @@ PrefabInstance:
     - target: {fileID: 6058835128484636550, guid: 3a51bf0b0eab33748b2b9d1ed93cd512,
         type: 3}
       propertyPath: LoginWhenInEditor
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a51bf0b0eab33748b2b9d1ed93cd512, type: 3}
