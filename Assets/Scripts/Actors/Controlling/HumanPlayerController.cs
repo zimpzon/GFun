@@ -19,9 +19,12 @@ public class HumanPlayerController : MonoBehaviour
     float bulletTimeTarget_;
     LightingImageEffect lightingImageEffect_;
     bool isMoving_;
+    Camera mainCam_;
     
     private void Start()
     {
+        mainCam_ = Camera.main;
+
         BulletTimeLight.AmbientLight = new Color(0.9f, 0.9f, 0.9f);
         BulletTimeLight.Brightness = 1.8f;
         BulletTimeLight.MonochromeDisplayR = 0.6f;
@@ -36,6 +39,8 @@ public class HumanPlayerController : MonoBehaviour
 
         lightingImageEffect_ = SceneGlobals.Instance.LightingImageEffect;
         lightingImageEffect_.StartValues.CopyTo(defaultLight_);
+
+//        Cursor.lockState = CursorLockMode.Locked;
 
         UpdateWeapon();
         TrackedPath.Rewind();
@@ -131,19 +136,20 @@ public class HumanPlayerController : MonoBehaviour
 
     void CheckActions()
     {
-        //if (MiniMapCamera.Instance.IsShown)
-        //    return;
-
-        //if (Input.GetKeyDown(KeyCode.F))
-        //{
-        //    map_.TriggerExplosion(transform.position, 3f);
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.P))
-        //    PlainBulletGun.EffectsOn = !PlainBulletGun.EffectsOn;
-
         //if (Input.GetKeyDown(KeyCode.Q))
         //    ToggleBulletTime();
+
+        var mouseScreenPos = Input.mousePosition;
+        mouseScreenPos.z = -mainCam_.transform.position.z;
+        var mouseWorldPos = mainCam_.ScreenToWorldPoint(mouseScreenPos);
+        mouseWorldPos.z = 0;
+        var weaponMuzzlePosition = weapon_.GetMuzzlePosition(mouseWorldPos);
+        var lookDir = (mouseWorldPos - weaponMuzzlePosition).normalized;
+
+        if (Input.GetMouseButton(0))
+            Fire(lookDir);
+        if (Input.GetMouseButtonUp(0))
+            ReleaseFire();
 
         if (Input.GetKey(KeyCode.DownArrow))
             Fire(Vector3.down);
@@ -166,9 +172,6 @@ public class HumanPlayerController : MonoBehaviour
 
     void CheckMovement()
     {
-        //if (MiniMapCamera.Instance.IsShown)
-        //    return;
-
         var horz = Input.GetAxisRaw("Horizontal");
         var vert = Input.GetAxisRaw("Vertical");
         var moveVec = new Vector3(horz, vert).normalized;

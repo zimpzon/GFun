@@ -10,6 +10,7 @@ public class NullWeapon : MonoBehaviour, IWeapon
     public int AmmoCount => 0;
     public int AmmoMax => 0;
 
+    public Vector3 GetMuzzlePosition(Vector3 target) => Vector3.zero;
     public Vector3 LatestFiringDirection => Vector3.zero;
     public float LatestFiringTimeUnscaled => float.MinValue;
 

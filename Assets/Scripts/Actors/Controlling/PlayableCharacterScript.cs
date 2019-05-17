@@ -42,6 +42,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
     public bool IsDead = false;
     public Vector3 WeaponOffsetRight;
     public AudioClip TakeDamageSound;
+    public Texture2D CursorTexture;
 
     [System.NonSerialized] public string KilledBy;
     [System.NonSerialized] public IEnemy KilledByEnemy;
@@ -51,6 +52,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
     Transform weaponTransform_;
     SpriteRenderer weaponRenderer_;
     Material renderMaterial_;
+    Camera mainCam_;
 
     float timeLatestEnergyUsage_;
     bool energyDepleted_;
@@ -263,6 +265,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
     private void Start()
     {
         Blip.SetActive(true);
+        mainCam_ = Camera.main;
         map_ = SceneGlobals.Instance.MapScript;
         lookAt_ = transform_.position;
         camPositioner_ = SceneGlobals.Instance.CameraPositioner;
@@ -315,6 +318,17 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
         UpdateEnergy();
         UpdateFlash();
 
+        UpdateInternal_MouseControls(dt);
+
+        if (isHumanControlled_)
+            camPositioner_.Target = lookAt_;
+
+        if (ShowCollisionDebug)
+            DrawCollisionDebug();
+    }
+
+    void UpdateInternal_KeyboardControls(float dt)
+    {
         bool hasRecentlyFiredWeapon = CurrentWeapon.LatestFiringTimeUnscaled > Time.unscaledTime - 0.70f;
         Vector3 latestHorizontalMovement = new Vector3(latestFixedMovenentDirection_.x, 0, 0);
         Vector3 facingDirection = hasRecentlyFiredWeapon ? CurrentWeapon.LatestFiringDirection : latestHorizontalMovement;
@@ -344,12 +358,35 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
             weaponRotation = 90;
 
         weaponTransform_.rotation = Quaternion.Euler(0, 0, weaponRotation);
+    }
 
-        if (isHumanControlled_)
-            camPositioner_.Target = lookAt_;
+    void UpdateInternal_MouseControls(float dt)
+    {
+        var mouseScreenPos = Input.mousePosition;
+        mouseScreenPos.z = -mainCam_.transform.position.z;
+        var mouseWorldPos = mainCam_.ScreenToWorldPoint(mouseScreenPos);
+        mouseWorldPos.z = 0;
+        var weaponMuzzlePosition = CurrentWeapon.GetMuzzlePosition(mouseWorldPos);
+        var lookDir = (mouseWorldPos - weaponMuzzlePosition).normalized;
+        float distanceToCursor = (mouseWorldPos - weaponMuzzlePosition).magnitude;
 
-        if (ShowCollisionDebug)
-            DrawCollisionDebug();
+        flipX_ = lookDir.x < 0;
+        weaponTransform_.localPosition = WeaponOffsetRight;
+
+        bool isRunning = latestFixedMovenentDirection_ != Vector3.zero;
+        lookAt_ = weaponMuzzlePosition + lookDir * distanceToCursor * 0.15f;
+
+        renderer_.sprite = SimpleSpriteAnimator.GetAnimationSprite(isRunning ? Anim.Run : Anim.Idle, Anim.DefaultAnimationFramesPerSecond);
+        renderer_.flipX = flipX_;
+
+        // Weapon positioning
+        var weaponOffset = WeaponOffsetRight;
+        weaponOffset.x *= flipX_ ? -1 : 1;
+        weaponTransform_.localPosition = weaponOffset;
+        weaponRenderer_.flipX = flipX_;
+
+        float weaponRotation = Mathf.Atan2(lookDir.x, -lookDir.y) * Mathf.Rad2Deg - (flipX_ ? 270 : 90);
+        weaponTransform_.rotation = Quaternion.Euler(0, 0, weaponRotation);
     }
 
     void DrawCollisionDebug()
