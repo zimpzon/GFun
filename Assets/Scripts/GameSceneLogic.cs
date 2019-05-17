@@ -23,6 +23,8 @@ public class GameSceneLogic : MonoBehaviour
     public TextMeshProUGUI KilledByText;
     public TextMeshProUGUI StatsText;
     public TextMeshProUGUI HistoryText;
+    public AudioClip GameMusic;
+    public AudioClip ShopMusic;
 
     int enemyAliveCount_;
     int enemyDeadCount_;
@@ -239,6 +241,7 @@ public class GameSceneLogic : MonoBehaviour
     IEnumerator<float> GameLoop()
     {
         CurrentRunData.Instance.NextMapType = MapType.Shop;
+        AudioManager.Instance.PlayMusic(GameMusic);
 
         while (true)
         {
@@ -265,6 +268,7 @@ public class GameSceneLogic : MonoBehaviour
         nextLevelPortal_.gameObject.SetActive(true);
         nextLevelPortal_.transform.position = shopScript.PortalPosition.position;
         nextLevelPortal_.OnPlayerEnter.AddListener(OnPlayerEnterPortal);
+        AudioManager.Instance.PlayMusic(ShopMusic);
 
         while (true)
         {
@@ -342,6 +346,7 @@ public class GameSceneLogic : MonoBehaviour
 
     IEnumerator<float> DeadLoop()
     {
+        AudioManager.Instance.StopMusic();
         GameEvents.ClearListeners();
         SceneGlobals.Instance.AudioManager.PlaySfxClip(PlayerDeadSound, 1);
         DeadCanvas.gameObject.SetActive(true);
