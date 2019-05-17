@@ -2444,6 +2444,8 @@ MonoBehaviour:
   KilledByText: {fileID: 1970565223}
   StatsText: {fileID: 1116465470}
   HistoryText: {fileID: 718791551}
+  GameMusic: {fileID: 8300000, guid: e46abf6b6c404424b85fca958b4864f7, type: 3}
+  ShopMusic: {fileID: 8300000, guid: a0a790bd48dd4984da1914f5cdc20c47, type: 3}
 --- !u!114 &1069388693
 MonoBehaviour:
   m_ObjectHideFlags: 0
