@@ -535,7 +535,7 @@ Tilemap:
   - first: {x: -34, y: -14, z: 0}
     second:
       m_TileIndex: 46
-      m_TileSpriteIndex: 25
+      m_TileSpriteIndex: 47
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -769,7 +769,7 @@ Tilemap:
   - first: {x: -8, y: -14, z: 0}
     second:
       m_TileIndex: 47
-      m_TileSpriteIndex: 42
+      m_TileSpriteIndex: 45
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -1723,7 +1723,7 @@ Tilemap:
   - first: {x: -11, y: -1, z: 0}
     second:
       m_TileIndex: 28
-      m_TileSpriteIndex: 39
+      m_TileSpriteIndex: 42
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -1732,7 +1732,7 @@ Tilemap:
   - first: {x: -10, y: -1, z: 0}
     second:
       m_TileIndex: 29
-      m_TileSpriteIndex: 36
+      m_TileSpriteIndex: 40
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -1741,7 +1741,7 @@ Tilemap:
   - first: {x: -9, y: -1, z: 0}
     second:
       m_TileIndex: 30
-      m_TileSpriteIndex: 27
+      m_TileSpriteIndex: 39
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -1813,7 +1813,7 @@ Tilemap:
   - first: {x: -11, y: 0, z: 0}
     second:
       m_TileIndex: 31
-      m_TileSpriteIndex: 28
+      m_TileSpriteIndex: 36
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -2254,7 +2254,7 @@ Tilemap:
   - first: {x: -34, y: 5, z: 0}
     second:
       m_TileIndex: 26
-      m_TileSpriteIndex: 24
+      m_TileSpriteIndex: 28
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -3097,16 +3097,16 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 18
     m_Data: {fileID: 21300000, guid: e3a50057ceb33f54a88bee6e5ecac557, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 21300000, guid: b04986f89193ff847ae7e3120cefc027, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 21300000, guid: 5ddc31a4f8c4f6142bb51ef5d34662d9, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 18
     m_Data: {fileID: 21300000, guid: 2c9e15787311ab940a572d016a1b9b1b, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
-    m_Data: {fileID: 21300000, guid: 90f61b5c3cdbb4a42835d6c41d939da8, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 21300000, guid: ba43e87ed320c334a94d2e848e9ab0a0, type: 3}
+    m_Data: {fileID: 21300000, guid: b04986f89193ff847ae7e3120cefc027, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 8977f6f5612bb7c47bbfe2036974ac03, type: 3}
   - m_RefCount: 1
@@ -3122,29 +3122,29 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 23414e935f14053488aa349d2568a33e, type: 3}
   - m_RefCount: 1
-    m_Data: {fileID: 21300000, guid: b3f589763766d524b8176f002a1cb38a, type: 3}
+    m_Data: {fileID: 21300000, guid: ba43e87ed320c334a94d2e848e9ab0a0, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 53e3f4786f08b754d9a0d8c6e61cebb1, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 1473affe8a95dc149ade6e0dc3a26ff7, type: 3}
   - m_RefCount: 1
-    m_Data: {fileID: 21300000, guid: d7f35d33b70211c409fdfc366a4dd788, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+    m_Data: {fileID: 21300000, guid: 90f61b5c3cdbb4a42835d6c41d939da8, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: b3f589763766d524b8176f002a1cb38a, type: 3}
   - m_RefCount: 22
     m_Data: {fileID: 21300000, guid: cc59c8f6e3d3dd2409459777b9418bd6, type: 3}
   - m_RefCount: 1
-    m_Data: {fileID: 21300000, guid: 2d2b30ec1eadfdf45bf471fd367d1a7f, type: 3}
+    m_Data: {fileID: 21300000, guid: d7f35d33b70211c409fdfc366a4dd788, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 152efb3d660ec794dbcd010ba63b84ca, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: c01f4ccc890e2ee48a250eaad112daab, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: 2d2b30ec1eadfdf45bf471fd367d1a7f, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 535c0556165ca714bae8b6bd2a14ff0b, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: 5ddc31a4f8c4f6142bb51ef5d34662d9, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 293
     m_Data:
@@ -24521,6 +24521,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6612987193690478788, guid: a9068111adb35bc4e8a0d057cb25236e,
         type: 3}
+      propertyPath: GraveStoneWall.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6612987193690478788, guid: a9068111adb35bc4e8a0d057cb25236e,
+        type: 3}
+      propertyPath: GraveStoneTop.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6612987193690478788, guid: a9068111adb35bc4e8a0d057cb25236e,
+        type: 3}
       propertyPath: GravestoneInteractPrefab
       value: 
       objectReference: {fileID: 1294051505361783961, guid: 2a2a208af76f8494c8cbe65e38a76543,
@@ -24530,6 +24540,54 @@ PrefabInstance:
       propertyPath: PlayerInfoPresenterPrefab
       value: 
       objectReference: {fileID: 725744244}
+    - target: {fileID: 6612987193690478788, guid: a9068111adb35bc4e8a0d057cb25236e,
+        type: 3}
+      propertyPath: GraveStoneWall.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 380e471524266b14389f9120d86ee132,
+        type: 2}
+    - target: {fileID: 6612987193690478788, guid: a9068111adb35bc4e8a0d057cb25236e,
+        type: 3}
+      propertyPath: GraveStoneWall.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: cd46922a2d0e8064595ded788bd96cb2,
+        type: 2}
+    - target: {fileID: 6612987193690478788, guid: a9068111adb35bc4e8a0d057cb25236e,
+        type: 3}
+      propertyPath: GraveStoneTop.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: ce42d2bd19f5979459bd487f069adb03,
+        type: 2}
+    - target: {fileID: 6612987193690478788, guid: a9068111adb35bc4e8a0d057cb25236e,
+        type: 3}
+      propertyPath: GraveStoneTop.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1411a42efcad03e46a4b82a6100b73ea,
+        type: 2}
+    - target: {fileID: 6612987193690478788, guid: a9068111adb35bc4e8a0d057cb25236e,
+        type: 3}
+      propertyPath: GraveStoneTop.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 87208bd5551f47e41b4f87dc55137bed,
+        type: 2}
+    - target: {fileID: 6612987193690478788, guid: a9068111adb35bc4e8a0d057cb25236e,
+        type: 3}
+      propertyPath: GraveStoneTop.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 72fd9098d40326c4abce58565f006847,
+        type: 2}
+    - target: {fileID: 6612987193690478788, guid: a9068111adb35bc4e8a0d057cb25236e,
+        type: 3}
+      propertyPath: GraveStoneWall.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: e7593c85238777540b9d9eeeb10162af,
+        type: 2}
+    - target: {fileID: 6612987193690478788, guid: a9068111adb35bc4e8a0d057cb25236e,
+        type: 3}
+      propertyPath: GraveStoneWall.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: b55dbdf26aa50e74da515f120a109fe4,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9068111adb35bc4e8a0d057cb25236e, type: 3}
 --- !u!1 &1933542601
