@@ -6,8 +6,8 @@ public class GraveStoneManager : MonoBehaviour
 {
     public static GraveStoneManager Instance;
 
-    public Tile GraveStoneWall;
-    public Tile GraveStoneTop;
+    public Tile[] GraveStoneWall;
+    public Tile[] GraveStoneTop;
     public Tile GraveyardFloor;
 
     public GameObject GravestoneInteractPrefab;
@@ -53,8 +53,9 @@ public class GraveStoneManager : MonoBehaviour
 
     private void CreateGraveStone(int xpos, int ypos, string info)
     {
-        MapScript.Instance.WallTileMap.SetTile(new Vector3Int(xpos, ypos, 0), GraveStoneWall);
-        MapScript.Instance.TopTileMap.SetTile(new Vector3Int(xpos, ypos + 1, 0), GraveStoneTop);
+        int randomGrave = Random.Range(0, GraveStoneWall.Length);
+        MapScript.Instance.WallTileMap.SetTile(new Vector3Int(xpos, ypos, 0), GraveStoneWall[randomGrave]);
+        MapScript.Instance.TopTileMap.SetTile(new Vector3Int(xpos, ypos + 1, 0), GraveStoneTop[randomGrave]);
         GridLayout gridLayout = MapScript.Instance.WallTileMap.GetComponentInParent<GridLayout>();
         // add 0.5 in x and y so it's in the center of the cell
         Vector3 worldPosition = gridLayout.CellToWorld(new Vector3Int(xpos, ypos, 0)) + new Vector3(0.5f, 0.5f, 0);
