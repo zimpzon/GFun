@@ -98,10 +98,11 @@ public class AudioManager : MonoBehaviour
     }
 
     #region Coroutines
-    private IEnumerator PlayMusicCo(AudioClip clip)
+    private IEnumerator PlayMusicCo(AudioClip clip, float volume = 1.0f)
     {
         musicSource_.clip = clip;
         musicSource_.loop = true;
+        musicSource_.volume = volume;
         musicSource_.Play();
 
         yield return null;
@@ -136,12 +137,12 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(StopMusicCo());
     }
 
-    public void PlayMusic(AudioClip clip)
+    public void PlayMusic(AudioClip clip, float volume = 1.0f)
     {
         if (!IsMusicPlaying)
         {
             IsMusicPlaying = true;
-            StartCoroutine(PlayMusicCo(clip));
+            StartCoroutine(PlayMusicCo(clip, volume));
         }
     }
 

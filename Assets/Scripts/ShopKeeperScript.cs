@@ -135,7 +135,7 @@ public class ShopKeeperScript : MonoBehaviour
             {
                 var ghost = Instantiate(GhostPlayerPrefab, Vector3.left * 10000, Quaternion.identity);
                 var script = ghost.GetComponent<GhostPlayerScript>();
-                script.Wander(GhostPath, 2.0f + Random.value);
+                script.Wander(GhostPath, 2.0f + Random.value * 5);
             }
         }
         catch(System.Exception) {}
@@ -192,7 +192,6 @@ public class ShopKeeperScript : MonoBehaviour
     void Update()
     {
         anim_.UpdateAnimation(Vector3.zero);
-        GhostPath.DebugDraw();
     }
 
     void CreateItemData()

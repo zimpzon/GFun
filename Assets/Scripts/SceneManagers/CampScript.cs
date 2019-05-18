@@ -180,7 +180,7 @@ public class CampScript : MonoBehaviour
         StartCoroutine(SceneGlobals.Instance.AudioManager.SetAudioProfile(AudioManager.eScene.InGame));
 
         if (!ghostScript_.IsStarted)
-            ghostScript_.Wander(GhostPath, 2.0f + Random.value);
+            ghostScript_.Wander(GhostPath, 2.0f + Random.value * 3);
 
         SceneGlobals.Instance.AudioManager.StopMusic();
 
