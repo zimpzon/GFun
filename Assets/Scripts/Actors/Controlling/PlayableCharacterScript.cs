@@ -70,6 +70,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
     Vector3 moveRequest_;
     Vector3 latestFixedMovenentDirection_;
     float latestFacingDirection_ = 1;
+    Collider2D collider_;
 
     bool isHumanControlled_;
     InteractableTrigger switchPlayerInteract_;
@@ -81,7 +82,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
 
     public void DisableCollider()
     {
-        GetComponent<Collider2D>().enabled = false;
+        collider_.enabled = false;
     }
 
     public void SetIsHumanControlled(bool isHumanControlled, bool showChangeEffect = false)
@@ -253,6 +254,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
     void Awake()
     {
         transform_ = transform;
+        collider_ = GetComponent<Collider2D>();
         humanPlayerController_ = GetComponent<HumanPlayerController>();
         renderer_ = GetComponent<SpriteRenderer>();
         renderMaterial_ = renderer_.material;
@@ -301,17 +303,51 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
         bool isRunning = movement != Vector3.zero;
         if (isRunning)
         {
+            movement = SlideWalls(transform_.position, movement);
             body_.MovePosition(transform_.position + movement);
-            //dustDistance_ += movement.magnitude;
-            //if (dustDistance_ > nextDust_)
-            //{
-            //    nextDust_ = dustDistance_ + 0.5f;
-            //    ParticleScript.EmitAtPosition(ParticleScript.Instance.MuzzleSmokeParticles, transform_.position, 1);
-            //}
         }
     }
-    //float dustDistance_;
-    //float nextDust_;
+
+    ContactFilter2D slideFilter = new ContactFilter2D() { layerMask = 1 << SceneGlobals.Instance.MapLayer, useLayerMask = true };
+    RaycastHit2D[] slideHit = new RaycastHit2D[1];
+
+    Vector3 SlideWalls(Vector3 pos, Vector3 movement)
+    {
+        // Only slide when moving diagonally
+        if (movement.x == 0 || movement.y == 0)
+            return movement;
+
+        float magnitude = movement.magnitude;
+        int collCount = collider_.Cast(movement.normalized, slideFilter, slideHit, magnitude);
+        // If no collision in this attempted move there is nothing to adjust
+        if (collCount == 0)
+            return movement;
+
+        // There is possibly something to adjust, try moving in X only.
+        var moveX = new Vector3(Mathf.Sign(movement.x), 0, 0);
+        collCount = collider_.Cast(moveX, slideFilter, slideHit, movement.magnitude);
+
+        if (collCount == 0)
+        {
+            // There is room when moving in the X direction. Try the full movement in X.
+            var result = new Vector3(Mathf.Sign(movement.x) * magnitude, 0, 0);
+            return result;
+        }
+
+        // There is possibly something to adjust, try moving in Y only.
+        var moveY = new Vector3(0, Mathf.Sign(movement.y), 0);
+        collCount = collider_.Cast(moveY, slideFilter, slideHit, movement.magnitude);
+
+        if (collCount == 0)
+        {
+            // There is room when moving in the Y direction. Try the full movement in Y.
+            var result = new Vector3(0, Mathf.Sign(movement.y) * magnitude, 0);
+            return result;
+        }
+
+        // There is collision in both X and Y, don't attempt to adjust anything.
+        return movement;
+    }
 
     void UpdateInternal(float dt)
     {

@@ -241,7 +241,7 @@ public class GameSceneLogic : MonoBehaviour
     IEnumerator<float> GameLoop()
     {
         CurrentRunData.Instance.NextMapType = MapType.Shop;
-        AudioManager.Instance.PlayMusic(GameMusic);
+        AudioManager.Instance.PlayMusic(GameMusic, 0.4f);
 
         while (true)
         {
@@ -268,7 +268,7 @@ public class GameSceneLogic : MonoBehaviour
         nextLevelPortal_.gameObject.SetActive(true);
         nextLevelPortal_.transform.position = shopScript.PortalPosition.position;
         nextLevelPortal_.OnPlayerEnter.AddListener(OnPlayerEnterPortal);
-        AudioManager.Instance.PlayMusic(ShopMusic);
+        AudioManager.Instance.PlayMusic(ShopMusic, 0.8f);
 
         while (true)
         {

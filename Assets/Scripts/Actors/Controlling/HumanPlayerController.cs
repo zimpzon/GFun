@@ -40,8 +40,6 @@ public class HumanPlayerController : MonoBehaviour
         lightingImageEffect_ = SceneGlobals.Instance.LightingImageEffect;
         lightingImageEffect_.StartValues.CopyTo(defaultLight_);
 
-//        Cursor.lockState = CursorLockMode.Locked;
-
         UpdateWeapon();
         TrackedPath.Rewind();
     }
@@ -138,6 +136,12 @@ public class HumanPlayerController : MonoBehaviour
     {
         //if (Input.GetKeyDown(KeyCode.Q))
         //    ToggleBulletTime();
+
+        if (Input.GetKeyDown(KeyCode.F))
+            Screen.fullScreen = !Screen.fullScreen;
+
+        //if (Input.GetKeyDown(KeyCode.F))
+        //    MapScript.Instance.TriggerExplosion(transform_.position, 5);
 
         var mouseScreenPos = Input.mousePosition;
         mouseScreenPos.z = -mainCam_.transform.position.z;
