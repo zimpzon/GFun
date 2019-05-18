@@ -11,6 +11,7 @@ namespace GFun
         int AmmoCount { get; }
         int Level { get; }
 
+        Vector3 GetMuzzlePosition(Vector3 target);
         void OnTriggerDown(Vector3 firingDirection);
         void OnTriggerUp();
         Vector3 LatestFiringDirection { get; }

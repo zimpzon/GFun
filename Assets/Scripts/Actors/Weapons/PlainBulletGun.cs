@@ -36,6 +36,7 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
     bool triggerIsDown_;
     bool awaitingRelease_;
     bool isFiring_;
+    Transform transform_;
     Vector3 latestFiringDirection_;
     float latestFiringTime_ = float.MinValue;
 
@@ -44,6 +45,7 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         bulletPool_ = SceneGlobals.Instance.ElongatedBulletPool;
         audioManager_ = SceneGlobals.Instance.AudioManager;
         cameraShake_ = SceneGlobals.Instance.CameraShake;
+        transform_ = transform;
     }
 
     public void SetOwner(IPhysicsActor forceReceiver, IEnergyProvider energyProvider)
@@ -82,6 +84,12 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         }
     }
 
+    public Vector3 GetMuzzlePosition(Vector3 target)
+    {
+        var direction = (target - transform_.position).normalized;
+        return transform_.position + direction * 0.5f;
+    }
+
     IEnumerator<float> FireCo()
     {
         isFiring_ = true;
@@ -91,7 +99,7 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
             for (int i = 0; i < GunSettings.BurstCount; ++i)
             {
                 var direction = latestFiringDirection_;
-                var position = transform.position + direction * 0.5f;
+                var position = transform_.position + direction * 0.5f;
 
                 var angleOffsets = GetFiringAngleOffsets(GunSettings.FiringSpread, 1.0f);
                 for (int j = 0; j < angleOffsets.Length; ++j)

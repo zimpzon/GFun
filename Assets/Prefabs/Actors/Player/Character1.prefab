@@ -55,6 +55,8 @@ MonoBehaviour:
   Speed: 6
   MaxLife: 5
   Life: 5
+  MaxEnergy: 1000
+  Energy: 1000
   Anim: {fileID: 11400000, guid: 861a36bbdedb0854188e5cddd67508d5, type: 2}
   LookAtOffset: 1
   Drag: 20
@@ -64,6 +66,7 @@ MonoBehaviour:
   IsDead: 0
   WeaponOffsetRight: {x: 0.25, y: 0.5, z: 0}
   TakeDamageSound: {fileID: 8300000, guid: 109ce1555c4c6f443a86c8988d2ee23c, type: 3}
+  CursorTexture: {fileID: 2800000, guid: 252fddade9770cb40b3d15acc0d5bfd1, type: 3}
   CurrentWeaponGo: {fileID: 0}
 --- !u!114 &8847912072020252237
 MonoBehaviour:
