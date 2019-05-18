@@ -66,6 +66,8 @@ public class CampScript : MonoBehaviour
         mapAccess_ = SceneGlobals.Instance.MapAccess;
         mapScript_ = SceneGlobals.Instance.MapScript;
 
+        SceneGlobals.Instance.GraveStoneManager.CreateGravestones();
+
         mapAccess_.BuildCollisionMapFromWallTilemap(mapScript_.FloorTileMap);
         SetLighting(MenuLightingSettings);
 

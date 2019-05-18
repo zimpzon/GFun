@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &628914842406984390
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5942363480575410619}
+  - component: {fileID: 6612987193690478788}
+  m_Layer: 0
+  m_Name: GraveStoneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5942363480575410619
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 628914842406984390}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 91.8911, y: 44.150173, z: -422.39908}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6612987193690478788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 628914842406984390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e1de8350bb8eb74a91d7f98d92dd5e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GraveStoneWall: {fileID: 11400000, guid: 380e471524266b14389f9120d86ee132, type: 2}
+  GraveStoneTop: {fileID: 11400000, guid: ce42d2bd19f5979459bd487f069adb03, type: 2}
+  GraveyardFloor: {fileID: 11400000, guid: e0ab847b4f642124385823520387edea, type: 2}
+  GravestoneInteractPrefab: {fileID: 1294051505361783961, guid: 2a2a208af76f8494c8cbe65e38a76543,
+    type: 3}
+  PlayerInfoPresenterPrefab: {fileID: 120938319638710510, guid: 3f828dd3d9ecdcd43a82dbaa3b44281c,
+    type: 3}

@@ -16,6 +16,7 @@ public class SceneGlobals : MonoBehaviour
     public LightingImageEffect LightingImageEffect;
     public LightingCamera LightingCamera;
     public MiniMapCamera MapCamera;
+    public GraveStoneManager GraveStoneManager;
     public int MapLayer;
     public int PlayerLayer;
     public int PlayerDamageLayer;
@@ -57,6 +58,7 @@ public class SceneGlobals : MonoBehaviour
         LightingCamera = FindObjectOfType<LightingCamera>();
         MapCamera = FindObjectOfType<MiniMapCamera>();
         PlayableCharacters = FindObjectOfType<PlayableCharacters>();
+        GraveStoneManager = FindObjectOfType<GraveStoneManager>();
 
         NullCheck(MapLayer);
         NullCheck(PlayerLayer);

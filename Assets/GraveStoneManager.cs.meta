@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 0e1de8350bb8eb74a91d7f98d92dd5e7
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - FloorTileMap: {instanceID: 0}
+  - WallTileMap: {instanceID: 0}
+  - TopTileMap: {instanceID: 0}
+  - GraveStoneWall: {fileID: 11400000, guid: 380e471524266b14389f9120d86ee132, type: 2}
+  - GraveSteneTop: {fileID: 11400000, guid: ce42d2bd19f5979459bd487f069adb03, type: 2}
+  - GraveyardFloor: {fileID: 11400000, guid: e0ab847b4f642124385823520387edea, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
