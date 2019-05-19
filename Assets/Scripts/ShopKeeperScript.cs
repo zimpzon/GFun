@@ -32,6 +32,7 @@ public class ShopKeeperScript : MonoBehaviour
     public AudioClip AcceptBuySound;
     public AudioClip ShopKeeperAggroSound;
     public GameObject GhostPlayerPrefab;
+    public GameObject Chest;
 
     public GameObject[] Displays;
 
@@ -140,8 +141,10 @@ public class ShopKeeperScript : MonoBehaviour
         }
         catch(System.Exception) {}
 
-        anim_ = GetComponentInChildren<SpriteAnimator_Single>();
+        bool showChest = Random.value < 0.5f;
+        Chest.SetActive(showChest);
 
+        anim_ = GetComponentInChildren<SpriteAnimator_Single>();
         GameEvents.OnPlayerEnteredPortal += GameEvents_OnPlayerEnteredPortal;
         CreateItemData();
         InitDisplays(level: 1);

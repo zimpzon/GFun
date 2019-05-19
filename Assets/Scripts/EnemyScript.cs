@@ -1,6 +1,6 @@
 ﻿using GFun;
+using MEC;
 using Pathfinding;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -257,10 +257,10 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         }
 
         GameEvents.RaiseEnemyKilled(this, transform_.position);
-        StartCoroutine(DieCo(damageForce));
+        Timing.RunCoroutine(DieCo(damageForce).CancelWith(this.gameObject));
     }
 
-    IEnumerator DieCo(Vector3 damageForce)
+    IEnumerator<float> DieCo(Vector3 damageForce)
     {
         DoFlash(-0.25f, 100.0f);
         IsDead = true;
@@ -275,19 +275,31 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         LightRenderer.enabled = false;
         ShadowRenderer.enabled = false;
 
-        AudioManager.Instance.PlaySfxClip(DeathSound, maxInstances: 5, DeathSoundPitchVariation, DeathSoundPitch);
-        SceneGlobals.Instance.CameraShake.SetMinimumShake(0.2f);
+        ParticleScript.EmitAtPosition(ParticleScript.Instance.DeathFlashParticles, transform_.position, 2);
+        AudioManager.Instance.PlaySfxClip(DeathSound, maxInstances: 8, DeathSoundPitchVariation, DeathSoundPitch);
+        SceneGlobals.Instance.CameraShake.SetMinimumShake(0.6f);
 
-        yield return DisableDelay;
+        float endTime = Time.unscaledTime + 2.0f;
+        while (Time.unscaledTime < endTime)
+        {
+            float velocity = body_.velocity.sqrMagnitude;
+            if (velocity > 0.02f & Random.value < 0.1f)
+                ParticleScript.EmitAtPosition(ParticleScript.Instance.MuzzleSmokeParticles, transform_.position, 2);
+
+            yield return 0;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == playerLayer_)
         {
-            var player = PlayableCharacters.GetPlayerInScene();
-            player.TakeDamage(this, TouchPlayerDamage, latestMovementDirection_);
-            AddForce(latestMovementDirection_ * -1);
+            if (TouchPlayerDamage != 0)
+            {
+                var player = PlayableCharacters.GetPlayerInScene();
+                player.TakeDamage(this, TouchPlayerDamage, latestMovementDirection_);
+                AddForce(latestMovementDirection_ * -1);
+            }
         }
 
         if (collision.gameObject.layer == mapLayer_)

@@ -42,7 +42,7 @@ public class PlainBulletScript : MonoBehaviour
     {
         if (((1 << collision.gameObject.layer) & enemyLayerMask_) != 0 && remainingDamage_ > 0)
         {
-            var enemyScript = collision.gameObject.GetComponent<EnemyScript>();
+            var enemyScript = collision.gameObject.GetComponent<IEnemy>();
             if (enemyScript != null)
             {
                 enemyScript.TakeDamage(settings_.Damage, Direction * settings_.DamageForce);

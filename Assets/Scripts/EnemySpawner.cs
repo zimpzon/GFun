@@ -70,8 +70,6 @@ public class EnemySpawner : MonoBehaviour
             enemy.transform.SetParent(parent);
             var randomPos = GetRandomPositionAtBottomMidOf2x2(openPositions);
             enemy.transform.position = randomPos;
-
-            var vec = new Vector3(randomPos.x, randomPos.y, 0);
         }
     }
 

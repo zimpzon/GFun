@@ -138,6 +138,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2998776084999831440, guid: f6439424608acdb4b95ec951538a9d38,
+        type: 3}
+      propertyPath: SfxMixerGroup
+      value: 
+      objectReference: {fileID: 243113692463124104, guid: a0f88eba81b45d84e9b3e352f0602b67,
+        type: 2}
     - target: {fileID: 2998776084999831439, guid: f6439424608acdb4b95ec951538a9d38,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -193,12 +199,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2998776084999831440, guid: f6439424608acdb4b95ec951538a9d38,
-        type: 3}
-      propertyPath: SfxMixerGroup
-      value: 
-      objectReference: {fileID: 243113692463124104, guid: a0f88eba81b45d84e9b3e352f0602b67,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6439424608acdb4b95ec951538a9d38, type: 3}
 --- !u!4 &165286413 stripped
@@ -351,13 +351,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 341560934}
-    characterCount: 33
+    characterCount: 0
     spriteCount: 0
-    spaceCount: 6
-    wordCount: 6
+    spaceCount: 0
+    wordCount: 0
     linkCount: 0
-    lineCount: 3
-    pageCount: 1
+    lineCount: 0
+    pageCount: 0
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -678,15 +678,79 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 903984234, guid: a47b908e0054478469f5b6dcd3bbdf60, type: 3}
-      propertyPath: EmissionModule.enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7530739392227593191, guid: a47b908e0054478469f5b6dcd3bbdf60,
+    - target: {fileID: 7530739392508469660, guid: a47b908e0054478469f5b6dcd3bbdf60,
         type: 3}
-      propertyPath: EmissionModule.enabled
+      propertyPath: DeathFlashParticles
+      value: 
+      objectReference: {fileID: 550916713}
+    - target: {fileID: 550916713, guid: a47b908e0054478469f5b6dcd3bbdf60, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 550916713, guid: a47b908e0054478469f5b6dcd3bbdf60, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.96546113
+      objectReference: {fileID: 0}
+    - target: {fileID: 550916713, guid: a47b908e0054478469f5b6dcd3bbdf60, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.759434
+      objectReference: {fileID: 0}
+    - target: {fileID: 550916713, guid: a47b908e0054478469f5b6dcd3bbdf60, type: 3}
+      propertyPath: InitialModule.startColor.minColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 550916713, guid: a47b908e0054478469f5b6dcd3bbdf60, type: 3}
+      propertyPath: InitialModule.startColor.minColor.g
+      value: 0.9930291
+      objectReference: {fileID: 0}
+    - target: {fileID: 550916713, guid: a47b908e0054478469f5b6dcd3bbdf60, type: 3}
+      propertyPath: InitialModule.startColor.minColor.b
+      value: 0.9858491
+      objectReference: {fileID: 0}
+    - target: {fileID: 550916713, guid: a47b908e0054478469f5b6dcd3bbdf60, type: 3}
+      propertyPath: InitialModule.startColor.minMaxState
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 550916713, guid: a47b908e0054478469f5b6dcd3bbdf60, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 550916713, guid: a47b908e0054478469f5b6dcd3bbdf60, type: 3}
+      propertyPath: InitialModule.startLifetime.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 550916713, guid: a47b908e0054478469f5b6dcd3bbdf60, type: 3}
+      propertyPath: InitialModule.startLifetime.minScalar
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 550916713, guid: a47b908e0054478469f5b6dcd3bbdf60, type: 3}
+      propertyPath: InitialModule.startSize.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 550916713, guid: a47b908e0054478469f5b6dcd3bbdf60, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 550916713, guid: a47b908e0054478469f5b6dcd3bbdf60, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 550916713, guid: a47b908e0054478469f5b6dcd3bbdf60, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 550916713, guid: a47b908e0054478469f5b6dcd3bbdf60, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 550916713, guid: a47b908e0054478469f5b6dcd3bbdf60, type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 550916712, guid: a47b908e0054478469f5b6dcd3bbdf60, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a6e0b318810935a429775e12fd8917f5, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a47b908e0054478469f5b6dcd3bbdf60, type: 3}
 --- !u!4 &454477282 stripped
@@ -821,6 +885,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 484389994}
   m_CullTransparentMesh: 0
+--- !u!198 &550916713 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 550916713, guid: a47b908e0054478469f5b6dcd3bbdf60,
+    type: 3}
+  m_PrefabInstance: {fileID: 454477281}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &584597772
 GameObject:
   m_ObjectHideFlags: 0
@@ -4343,7 +4413,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1765966876
 MonoBehaviour:
   m_ObjectHideFlags: 0

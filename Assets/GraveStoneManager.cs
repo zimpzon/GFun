@@ -33,7 +33,7 @@ public class GraveStoneManager : MonoBehaviour
         // TODO: Load all the past deaths information here when we update instead of just the one
         List<GameProgressData> gameProgress = new List<GameProgressData>();
         gameProgress.Add(GameProgressData.CurrentProgress);
-        for (int i = 0; i < gameProgress[gameProgressIndex].NumberOfDeaths; i++)
+        for (int i = 0; i < gameProgress[gameProgressIndex].NumberOfDeaths + 20; i++)
         {
             gameProgress.Add(GameProgressData.CurrentProgress);
         }

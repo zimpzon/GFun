@@ -210,6 +210,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
 
         AudioManager.Instance.PlaySfxClip(TakeDamageSound, 1);
         DoFlash(2, 0.3f);
+        ParticleScript.EmitAtPosition(ParticleScript.Instance.DeathFlashParticles, transform_.position, 2);
         FloatingTextSpawner.Instance.Spawn(transform_.position + Vector3.up, $"-{amount.ToString()}", Color.red, speed: 1.0f, timeToLive: 1.0f);
 
         AddPlayerHealthEvent(-amount, enemy.Name);
@@ -230,8 +231,10 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
     public void Die()
     {
         DoFlash(0, 0);
+        ParticleScript.EmitAtPosition(ParticleScript.Instance.DeathFlashParticles, transform_.position, 4);
         IsDead = true;
         SetIsHumanControlled(false);
+        CameraShake.Instance.SetMinimumShake(0.8f);
     }
 
     public void SetForce(Vector3 force)
@@ -266,6 +269,8 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
 
     private void Start()
     {
+        slideFilter = new ContactFilter2D() { layerMask = 1 << SceneGlobals.Instance.MapLayer, useLayerMask = true };
+
         Blip.SetActive(true);
         mainCam_ = Camera.main;
         map_ = SceneGlobals.Instance.MapScript;
@@ -308,7 +313,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
         }
     }
 
-    ContactFilter2D slideFilter = new ContactFilter2D() { layerMask = 1 << SceneGlobals.Instance.MapLayer, useLayerMask = true };
+    ContactFilter2D slideFilter;
     RaycastHit2D[] slideHit = new RaycastHit2D[1];
 
     Vector3 SlideWalls(Vector3 pos, Vector3 movement)

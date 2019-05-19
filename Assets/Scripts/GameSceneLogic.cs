@@ -74,7 +74,7 @@ public class GameSceneLogic : MonoBehaviour
         enemyAliveCount_--;
         enemyDeadCount_++;
 
-        EnemyDropScript.Instance.SpawnDrops(enemy, position);
+        LootDropScript.Instance.SpawnDrops(enemy, position);
     }
 
     void OnEnemySpawned(IEnemy enemy, Vector3 position)
@@ -106,6 +106,8 @@ public class GameSceneLogic : MonoBehaviour
 
     private void Awake()
     {
+        System.GC.Collect(0, System.GCCollectionMode.Forced, blocking: true, compacting: true);
+
         Instance = this;
 
         GameEvents.ClearListeners();
@@ -147,8 +149,6 @@ public class GameSceneLogic : MonoBehaviour
 
     IEnumerator<float> EnterLevelLoop()
     {
-        System.GC.Collect(0, System.GCCollectionMode.Forced, blocking: true, compacting: true);
-
         if (CurrentRunData.Instance.RunEnded)
             CurrentRunData.StartNewRun();
 
