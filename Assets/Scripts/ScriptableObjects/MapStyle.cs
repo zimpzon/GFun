@@ -4,6 +4,8 @@ using UnityEngine.Tilemaps;
 [CreateAssetMenu(fileName = "new MapStyle.asset", menuName = "GFun/Map Style", order = 10)]
 public class MapStyle : ScriptableObject
 {
+    public Color Color;
+
     [Header("Floor")]
     public TileBase FloorTile;
     public TileBase[] FloorTileVariations;

@@ -23,7 +23,7 @@ public class PlainBulletScript : MonoBehaviour
         distanceMoved_ = 0;
         remainingDamage_ = settings.Damage;
 
-        float rotationDegrees = Mathf.Atan2(Direction.x, -Direction.y) * Mathf.Rad2Deg;
+        float rotationDegrees = Mathf.Atan2(Direction.x, -Direction.y) * Mathf.Rad2Deg + 180;
         rotation_ = Quaternion.Euler(0, 0, rotationDegrees);
         transform.localScale = baseScale_ * settings.Size;
 

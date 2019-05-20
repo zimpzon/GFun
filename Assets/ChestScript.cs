@@ -10,6 +10,7 @@ public class ChestScript : MonoBehaviour, IEnemy
     public float Life => 1;
     public float LifePct => 1;
     public float MaxLife => 1;
+    public int XP => 0;
     public bool IsDead => false;
     public void DoFlash(float amount, float ms) { }
 

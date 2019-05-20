@@ -11,7 +11,9 @@ public class GameSceneLogic : MonoBehaviour
 {
     public static GameSceneLogic Instance;
 
-    public MapStyle MapStyle;
+    public MapStyle MapStyleShop;
+    public MapStyle MapStyleDungeon1;
+    public MapStyle MapStyleIce1;
     public Canvas DeadCanvas;
     public Canvas InitCanvas;
     public string CampSceneName = "TheCampScene";
@@ -440,7 +442,7 @@ public class GameSceneLogic : MonoBehaviour
         MapBuilder.ZeroMap();
         var shop = Instantiate(MapPlugins.ShopPlugin);
         shop.GetComponent<MapPluginScript>().ApplyToMap(MapBuilder.Center);
-        MapBuilder.BuildMapTiles(MapBuilder.MapSource, map_, MapStyle);
+        MapBuilder.BuildMapTiles(MapBuilder.MapSource, map_, MapStyleShop);
         BuildPathingGraph();
     }
 
@@ -448,6 +450,8 @@ public class GameSceneLogic : MonoBehaviour
     {
         int w = 40;
         int h = 40;
+
+        var mapStyle = MapStyleDungeon1;
 
         MapBuilder.GenerateMapFloor(w, h, MapFloorAlgorithm.RandomWalkers);
 
@@ -458,7 +462,7 @@ public class GameSceneLogic : MonoBehaviour
             plugin.ApplyToMap(new Vector3Int((int)plugin.transform.position.x, (int)plugin.transform.position.y, 0));
         }
 
-        MapBuilder.BuildMapTiles(MapBuilder.MapSource, map_, MapStyle);
+        MapBuilder.BuildMapTiles(MapBuilder.MapSource, map_, mapStyle);
 
         BuildPathingGraph();
     }

@@ -8,6 +8,7 @@ public interface IEnemy
     float Life { get; }
     float LifePct { get; }
     float MaxLife { get; }
+    int XP { get; }
     bool IsDead { get; }
     void DoFlash(float amount, float ms);
     void TakeDamage(int amount, Vector3 damageForce);

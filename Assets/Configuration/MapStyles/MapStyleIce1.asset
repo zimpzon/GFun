@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b139d8c796108cb4683dea6764ddf51b, type: 3}
-  m_Name: Dungeon1MapStyle
+  m_Name: MapStyleIce1
   m_EditorClassIdentifier: 
+  Color: {r: 0, g: 1, b: 0.90622044, a: 1}
   FloorTile: {fileID: 11400000, guid: 62c6243bc3a6eaf4d87f75cc5e71c981, type: 2}
   FloorTileVariations:
   - {fileID: 11400000, guid: c320e8af5742fb54a8fc62680c533903, type: 2}

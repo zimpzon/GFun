@@ -20,6 +20,7 @@ public static class MapBuilder
         mapScript.FloorTileMap.ClearAllTiles();
         mapScript.WallTileMap.ClearAllTiles();
         mapScript.TopTileMap.ClearAllTiles();
+        mapScript.SetMapStyle(mapStyle);
 
         ApplyFloorTiles(mapScript, mapStyle);
         BuildWallTiles(mapScript, mapStyle);

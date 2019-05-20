@@ -23,6 +23,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
     public int EnemyLevel = 1;
     public float EnemyMoveSpeed = 1;
     public float SpeedVariation = 0.2f;
+    public int EnemyXP = 0;
     public float EnemyLife = 50;
     public int TouchPlayerDamage = 1;
     public SpriteRenderer BlipRenderer;
@@ -44,6 +45,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
     public float Life => EnemyLife;
     public float LifePct => EnemyLife / MaxLife;
     public int Level => EnemyLevel;
+    public int XP => EnemyXP;
 
     public bool IsDead { get; set; }
 
@@ -256,6 +258,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
             aiPath_.enabled = false;
         }
 
+        FloatingTextSpawner.Instance.Spawn(transform_.position + Vector3.up * 0.5f, $"{XP} XP", Color.cyan, 0.3f, 1.0f);
         GameEvents.RaiseEnemyKilled(this, transform_.position);
         Timing.RunCoroutine(DieCo(damageForce).CancelWith(this.gameObject));
     }

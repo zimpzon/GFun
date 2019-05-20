@@ -36,6 +36,8 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
     bool triggerIsDown_;
     bool awaitingRelease_;
     bool isFiring_;
+    float penalty_;
+    float timeEndFire_;
     Transform transform_;
     Vector3 latestFiringDirection_;
     float latestFiringTime_ = float.MinValue;
@@ -62,15 +64,19 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         triggerIsDown_ = true;
         awaitingRelease_ = GunSettings.FiringMode == FiringMode.Single;
         latestFiringDirection_ = firingDirection;
-
         if (!isFiring_)
+        {
+            float pauseTime = Time.unscaledTime - timeEndFire_;
+            penalty_ = Mathf.Max(0, penalty_ - pauseTime * 3);
             Timing.RunCoroutine(FireCo().CancelWith(this.gameObject));
+        }
     }
 
     public void OnTriggerUp()
     {
         triggerIsDown_ = false;
         awaitingRelease_ = false;
+        timeEndFire_ = Time.unscaledTime;
     }
 
     float[] GetFiringAngleOffsets(FiringSpread spread, float precision)
@@ -104,17 +110,22 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
                 var angleOffsets = GetFiringAngleOffsets(GunSettings.FiringSpread, 1.0f);
                 for (int j = 0; j < angleOffsets.Length; ++j)
                 {
+                    float precisionPenalty = Mathf.Min(0.75f, Mathf.Max(0, -0.5f + penalty_ * 0.8f));
+                    float precision = GunSettings.Precision - precisionPenalty;
+
                     float angleOffset = angleOffsets[j];
                     const float MaxDegreesOffsetAtLowestPrecision = 30.0f;
-                    angleOffset += (Random.value - 0.5f) * (1.0f - GunSettings.Precision) * MaxDegreesOffsetAtLowestPrecision;
+                    angleOffset += (Random.value - 0.5f) * (1.0f - precision) * MaxDegreesOffsetAtLowestPrecision;
                     var offsetDirection = Quaternion.AngleAxis(angleOffset, Vector3.forward) * direction;
                     Fire(position, offsetDirection);
                 }
 
-                // This must be realtime seconds and I'm not sure free version of MEC support realtime. So wait manually.
-                float waitEndTime = Time.realtimeSinceStartup + GunSettings.TimeBetweenShots;
+                float timePenalty = Mathf.Min(0.2f, Mathf.Max(0, -0.5f + penalty_ * 0.4f));
+                float waitEndTime = Time.realtimeSinceStartup + GunSettings.TimeBetweenShots + timePenalty;
                 while (Time.realtimeSinceStartup < waitEndTime)
                     yield return 0;
+
+                penalty_ = Mathf.Min(2.0f, penalty_ + 0.1f);
             }
 
             bool continueFiring = GunSettings.FiringMode == FiringMode.Auto && triggerIsDown_;
@@ -128,8 +139,6 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
     void Fire(Vector3 position, Vector3 direction, bool powerShot = false)
     {
         var bulletSettings = powerShot ? PowerBulletSettings : BulletSettings;
-        if (!energyProvider_.TryUseEnergy(bulletSettings.EnergyCost))
-            return;
 
         var bullet = bulletPool_.GetFromPool();
         var bulletScript = (PlainBulletScript)bullet.GetComponent(typeof(PlainBulletScript));
@@ -142,7 +151,8 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         {
             audioManager_.PlaySfxClip(FireSound, 1, 0.1f);
             cameraShake_.SetMinimumShake(0.75f);
-            forceReceiver_.SetMinimumForce(-direction * 2);
+
+            forceReceiver_.SetMinimumForce(-direction * 3);
 
             var particleCenter = position + direction * 0.3f;
             ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.MuzzleFlashParticles, particleCenter, 1);

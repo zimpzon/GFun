@@ -9,18 +9,20 @@ public class MapScript : MonoBehaviour, IMapAccess
     public Tilemap FloorTileMap;
     public Tilemap WallTileMap;
     public Tilemap TopTileMap;
-    public MapStyle MapStyle;
     public GameObject BackgroundQuad;
     public CompositeCollider2D WallCompositeCollider;
     public TilemapCollider2D TilemapCollider;
+    public Color MapColor = Color.white;
 
     const int ExplosionDamageToEnemies = 40;
 
     Renderer wallRenderer_;
     Renderer topRenderer_;
     Renderer backgroundRenderer_;
+    Renderer floorRenderer_;
     float wallClarity_;
     bool shaderHasClarity_;
+    MapStyle mapStyle_;
 
     static readonly Collider2D[] TempColliderResult = new Collider2D[50];
 
@@ -40,6 +42,20 @@ public class MapScript : MonoBehaviour, IMapAccess
         }
     }
 
+    public void SetMapStyle(MapStyle mapStyle)
+    {
+        mapStyle_ = mapStyle;
+        SetColor(mapStyle_.Color);
+    }
+
+    void SetColor(Color color)
+    {
+        wallRenderer_.material.SetColor("_Color", color);
+        floorRenderer_.material.SetColor("_Color", color);
+        topRenderer_.material.SetColor("_Color", color);
+        backgroundRenderer_.material.SetColor("_Color", color);
+    }
+
     /// <summary>
     /// Access cells at start to avoid spike mid-game the first time it is accessed
     /// </summary>
@@ -55,7 +71,7 @@ public class MapScript : MonoBehaviour, IMapAccess
     // https://github.com/Unity-Technologies/2d-extras/issues/34
     public void TriggerExplosion(Vector3 worldPosition, float worldRadius, bool damageWallsOnly = true, IEnemy explosionSource = null, bool damageSelf = true)
     {
-        int tilesChecked = MapUtil.ClearCircle(this, MapStyle, worldPosition, worldRadius);
+        int tilesChecked = MapUtil.ClearCircle(this, mapStyle_, worldPosition, worldRadius);
         var particles = SceneGlobals.Instance.ParticleScript.WallDestructionParticles;
 
         WallCompositeCollider.generationType = CompositeCollider2D.GenerationType.Manual;
@@ -121,6 +137,7 @@ public class MapScript : MonoBehaviour, IMapAccess
         wallRenderer_ = WallTileMap.GetComponent<Renderer>();
         topRenderer_ = TopTileMap.GetComponent<Renderer>();
         backgroundRenderer_ = BackgroundQuad?.GetComponent<Renderer>();
+        floorRenderer_ = FloorTileMap.GetComponent<Renderer>();
 
         // Wall, top and background should all be equal so just pick one to start with
         shaderHasClarity_ = topRenderer_.material.HasProperty("_Clarity");
