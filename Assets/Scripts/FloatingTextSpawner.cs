@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 public class FloatingTextSpawner : MonoBehaviour
 {
@@ -12,11 +13,11 @@ public class FloatingTextSpawner : MonoBehaviour
         textPool_ = GetComponentInChildren<GameObjectPool>();
     }
 
-    public void Spawn(Vector3 position, string text, Color color, float speed = 1.0f, float timeToLive = 2.0f)
+    public void Spawn(Vector3 position, string text, Color color, float speed = 1.0f, float timeToLive = 2.0f, FontStyles fontStyle = FontStyles.Bold)
     {
         var go = textPool_.GetFromPool();
         var script = go.GetComponent<FloatingTextScript>();
-        script.Init(textPool_, position, text, color, speed, timeToLive);
+        script.Init(textPool_, position, text, color, speed, timeToLive, fontStyle);
         go.SetActive(true);
     }
 }

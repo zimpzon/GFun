@@ -12,7 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b139d8c796108cb4683dea6764ddf51b, type: 3}
   m_Name: MapStyleShop
   m_EditorClassIdentifier: 
-  Color: {r: 1, g: 0.7987913, b: 0.5707547, a: 1}
+  Color: {r: 1, g: 1, b: 1, a: 1}
+  LightingSettings:
+    AmbientLight: {r: 0.65699995, g: 0.17806539, b: 0.10745326, a: 1}
+    Brightness: 3
+    MonochromeAmount: 0
+    MonochromeFactorR: 0.23
+    MonochromeFactorG: 0.66
+    MonochromeFactorB: 0.11
+    MonochromeDisplayR: 1
+    MonochromeDisplayG: 1
+    MonochromeDisplayB: 1
   FloorTile: {fileID: 11400000, guid: 62c6243bc3a6eaf4d87f75cc5e71c981, type: 2}
   FloorTileVariations:
   - {fileID: 11400000, guid: c320e8af5742fb54a8fc62680c533903, type: 2}

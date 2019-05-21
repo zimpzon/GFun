@@ -29,6 +29,7 @@ public class ChestScript : MonoBehaviour, IEnemy
         MapScript.Instance.TriggerExplosion(pos, 2, damageWallsOnly: false);
 
         bool spawnEnemy = Random.value < 0.5f;
+        enemy.transform.SetPositionAndRotation(transform_.position, Quaternion.identity);
         enemy.SetActive(spawnEnemy);
     }
 
@@ -38,6 +39,5 @@ public class ChestScript : MonoBehaviour, IEnemy
 
         enemy = Enemies.Instance.CreateEnemy(EnemyId.SeekerScythe);
         enemy.SetActive(false);
-        enemy.transform.SetPositionAndRotation(transform_.position + Vector3.down * 0.5f, Quaternion.identity);
     }
 }

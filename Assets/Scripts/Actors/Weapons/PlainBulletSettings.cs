@@ -11,6 +11,5 @@ namespace GFun
         public bool BounceWalls = false;
         public int Damage = 10;
         public float DamageForce = 1.0f;
-        public float EnergyCost = 50;
     }
 }

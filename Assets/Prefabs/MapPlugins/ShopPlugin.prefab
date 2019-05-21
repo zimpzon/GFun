@@ -2557,7 +2557,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b0b471c1f44cc2a4e81613274f102186, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2754,7 +2754,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7537765695302751286}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.348, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 7537765696502482808}
@@ -2798,7 +2798,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b0b471c1f44cc2a4e81613274f102186, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.252, g: 0.055867925, b: 0.06576827, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2956,7 +2956,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b0b471c1f44cc2a4e81613274f102186, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3799,7 +3799,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b0b471c1f44cc2a4e81613274f102186, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5296,12 +5296,12 @@ PrefabInstance:
     - target: {fileID: 8473194048218598287, guid: ca2ca0a9b1ef6814b829073b82bf20ff,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.53
+      value: 0.54
       objectReference: {fileID: 0}
     - target: {fileID: 8473194048218598287, guid: ca2ca0a9b1ef6814b829073b82bf20ff,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.97
+      value: -2.47
       objectReference: {fileID: 0}
     - target: {fileID: 8473194048218598287, guid: ca2ca0a9b1ef6814b829073b82bf20ff,
         type: 3}

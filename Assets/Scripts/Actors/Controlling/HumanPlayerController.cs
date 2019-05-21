@@ -8,8 +8,6 @@ public class HumanPlayerController : MonoBehaviour
     public static TrackedPath TrackedPath = new TrackedPath();
     public static bool Disabled = false;
 
-    LightingEffectSettings bulletTimeLight_ = new LightingEffectSettings();
-    LightingEffectSettings defaultLight_ = new LightingEffectSettings();
     PlayableCharacterScript player_;
     Transform transform_;
     IWeapon weapon_;
@@ -17,7 +15,6 @@ public class HumanPlayerController : MonoBehaviour
     bool bulletTime_;
     float bulletTimeValue_;
     float bulletTimeTarget_;
-    LightingImageEffect lightingImageEffect_;
     bool isMoving_;
     Camera mainCam_;
     
@@ -25,20 +22,10 @@ public class HumanPlayerController : MonoBehaviour
     {
         mainCam_ = Camera.main;
 
-        BulletTimeLight.AmbientLight = new Color(0.9f, 0.9f, 0.9f);
-        BulletTimeLight.Brightness = 1.8f;
-        BulletTimeLight.MonochromeDisplayR = 0.6f;
-        BulletTimeLight.MonochromeDisplayB = 0.8f;
-        BulletTimeLight.MonochromeAmount = 1.5f;
-        BulletTimeLight.CopyTo(bulletTimeLight_);
-
         transform_ = transform;
         player_ = GetComponent<PlayableCharacterScript>();
         SceneGlobals.NullCheck(player_);
         map_ = SceneGlobals.Instance.MapScript;
-
-        lightingImageEffect_ = SceneGlobals.Instance.LightingImageEffect;
-        lightingImageEffect_.StartValues.CopyTo(defaultLight_);
 
         UpdateWeapon();
         TrackedPath.Rewind();
@@ -49,41 +36,17 @@ public class HumanPlayerController : MonoBehaviour
         weapon_ = GetComponentInChildren<IWeapon>();
     }
 
-    // Value changed in editor
-    private void OnValidate()
-    {
-        BulletTimeLight.CopyTo(bulletTimeLight_);
-    }
-
     void ToggleBulletTime()
     {
         bulletTime_ = !bulletTime_;
         AiBlackboard.Instance.BulletTimeActive = bulletTime_;
         bulletTimeTarget_ = bulletTime_ ? 1.0f : 0.0f;
-
-        if (bulletTime_)
-        {
-            lightingImageEffect_.SetBaseColorTarget(bulletTimeLight_);
-        }
-        else
-        {
-            lightingImageEffect_.SetBaseColorTarget(lightingImageEffect_.StartValues);
-        }
     }
 
     void UpdateBulletTime()
     {
         if (!bulletTime_ && bulletTimeValue_ == 0.0f)
             return;
-
-        if (bulletTime_)
-        {
-            float cost = isMoving_ ? 800 : 100;
-            if (!player_.TryUseEnergy(cost * Time.unscaledDeltaTime))
-            {
-                ToggleBulletTime();
-            }
-        }
 
         Time.timeScale = 1.0f - bulletTimeValue_ * 0.995f;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
@@ -110,11 +73,6 @@ public class HumanPlayerController : MonoBehaviour
     {
         if (Disabled)
             return;
-
-        // Lighting fade test
-        //float f = Mathf.Sin(Time.time) * 0.5f + 0.5f;
-        //defaultLight_.AmbientLight = new Color(f, f, f);
-        //lightingImageEffect_.SetBaseColorTarget(defaultLight_);
 
         CheckActions();
         UpdateBulletTime();

@@ -77,6 +77,43 @@ public class GameSceneLogic : MonoBehaviour
         enemyDeadCount_++;
 
         LootDropScript.Instance.SpawnDrops(enemy, position);
+
+        UpdateXp(position, enemy.XP);
+    }
+
+    void UpdateXp(Vector3 position, int xp)
+    {
+        int currentXp = GameProgressData.CurrentProgress.PlayerXp + CurrentRunData.Instance.XpEarned;
+        int levelBefore = XpCalc.GetLevelAtXp(currentXp);
+        if (xp != 0)
+        {
+            var color = Color.magenta;
+            bool outLevelled = levelBefore > CurrentRunData.Instance.CurrentFloor;
+            if (outLevelled)
+            {
+                color = Color.gray;
+                xp /= 10;
+            }
+
+            FloatingTextSpawner.Instance.Spawn(position + Vector3.up * 0.5f, $"XP: {xp}", color, 0.2f, 2.0f, TMPro.FontStyles.Normal);
+        }
+
+        CurrentRunData.Instance.XpEarned += xp;
+        currentXp += xp;
+
+        int levelAfter = XpCalc.GetLevelAtXp(currentXp);
+        if (levelAfter > levelBefore)
+            Timing.RunCoroutine(LevelUpCo(levelAfter));
+
+        int xpInThisLevel = currentXp - XpCalc.GetTotalXpRequired(levelAfter);
+        int xpRequiredInThisLevel = XpCalc.GetXpRequired(levelAfter);
+        XpWidget.Instance.ShowXp(levelAfter, xpInThisLevel, xpRequiredInThisLevel, currentXp);
+    }
+
+    IEnumerator<float> LevelUpCo(int newLevel)
+    {
+        FloatingTextSpawner.Instance.Spawn(AiBlackboard.Instance.PlayerPosition + Vector3.up * 0.5f, "Level Up", Color.yellow);
+        yield return 0;
     }
 
     void OnEnemySpawned(IEnemy enemy, Vector3 position)
@@ -137,11 +174,11 @@ public class GameSceneLogic : MonoBehaviour
     {
         if (CurrentRunData.Instance.NextMapType == MapType.Floor)
         {
-            LoadingText.text = $"Floor {CurrentRunData.Instance.CurrentFloor}";
+            LoadingText.text = $"Kingdom Of Earth\nFloor {CurrentRunData.Instance.CurrentFloor}";
         }
         else if (CurrentRunData.Instance.NextMapType == MapType.Shop)
         {
-            LoadingText.text = $"The Shop";
+            LoadingText.text = $"Reapers Hideout";
         }
         else
         {
@@ -174,6 +211,7 @@ public class GameSceneLogic : MonoBehaviour
         Helpers.SetCameraPositionToActivePlayer();
         var playerInScene = PlayableCharacters.GetPlayerInScene();
         var playerPos = playerInScene.transform.position;
+        UpdateXp(Vector3.zero, 0);
 
         // Prepare enemies
         Time.timeScale = 0.01f;
@@ -323,6 +361,7 @@ public class GameSceneLogic : MonoBehaviour
     void UpdateLocalStats()
     {
         GameProgressData.CurrentProgress.EnemiesKilled += CurrentRunData.Instance.EnemiesKilled;
+        GameProgressData.CurrentProgress.PlayerXp += CurrentRunData.Instance.XpEarned;
         GameProgressData.CurrentProgress.NumberOfDeaths++;
         GameProgressData.SaveProgress();
     }
@@ -442,7 +481,7 @@ public class GameSceneLogic : MonoBehaviour
         MapBuilder.ZeroMap();
         var shop = Instantiate(MapPlugins.ShopPlugin);
         shop.GetComponent<MapPluginScript>().ApplyToMap(MapBuilder.Center);
-        MapBuilder.BuildMapTiles(MapBuilder.MapSource, map_, MapStyleShop);
+        MapBuilder.BuildMap(MapBuilder.MapSource, map_, MapStyleShop);
         BuildPathingGraph();
     }
 
@@ -462,7 +501,7 @@ public class GameSceneLogic : MonoBehaviour
             plugin.ApplyToMap(new Vector3Int((int)plugin.transform.position.x, (int)plugin.transform.position.y, 0));
         }
 
-        MapBuilder.BuildMapTiles(MapBuilder.MapSource, map_, mapStyle);
+        MapBuilder.BuildMap(MapBuilder.MapSource, map_, mapStyle);
 
         BuildPathingGraph();
     }

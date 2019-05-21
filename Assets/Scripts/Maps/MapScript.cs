@@ -142,6 +142,7 @@ public class MapScript : MonoBehaviour, IMapAccess
         // Wall, top and background should all be equal so just pick one to start with
         shaderHasClarity_ = topRenderer_.material.HasProperty("_Clarity");
         wallClarity_ = shaderHasClarity_ ? -topRenderer_.material.GetFloat("_Clarity") : 0.0f;
+        SetColor(MapColor);
 
         TouchMap();
     }

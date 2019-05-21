@@ -26,14 +26,12 @@ public class PlayerHealthEvent
     public float Time;
 }
 
-public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProvider
+public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
 {
     public string Name;
     public float Speed = 10;
     public int MaxLife = 5;
     public int Life = 5;
-    public int MaxEnergy = 1000;
-    public float Energy = 1000;
     public SpriteAnimationFrames_IdleRun Anim;
     public float LookAtOffset = 10;
     public float Drag = 1.0f;
@@ -55,8 +53,6 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
     Material renderMaterial_;
     Camera mainCam_;
 
-    float timeLatestEnergyUsage_;
-    bool energyDepleted_;
     float flashAmount_;
     float flashEndTime_;
     HumanPlayerController humanPlayerController_;
@@ -109,7 +105,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
 
         CurrentWeaponGo = weapon;
         CurrentWeapon = weapon.GetComponent<IWeapon>();
-        CurrentWeapon.SetOwner(this, this);
+        CurrentWeapon.SetOwner(this);
 
         weaponRenderer_ = CurrentWeaponGo.GetComponentInChildren<SpriteRenderer>();
         weaponTransform_ = weapon.transform;
@@ -148,40 +144,6 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
     {
         if (HealthWidget.Instance != null)
             HealthWidget.Instance.ShowLife(Life, MaxLife);
-    }
-
-    public bool TryUseEnergy(float amount)
-    {
-        if (energyDepleted_)
-            return false;
-
-        if (Energy < amount)
-        {
-            energyDepleted_ = true;
-            Energy = 0;
-            FloatingTextSpawner.Instance.Spawn(transform_.position + Vector3.up, "Depleted!", new Color(1, 0.2f, 0), speed: 1.0f, timeToLive: 2.0f);
-            return false;
-        }
-
-        timeLatestEnergyUsage_ = Time.unscaledTime;
-        Energy -= amount;
-        return true;
-    }
-
-    void UpdateEnergy()
-    {
-        if (Time.unscaledTime > timeLatestEnergyUsage_ + 0.3f)
-        {
-            float energyPct = Mathf.Min(Energy / MaxEnergy);
-            if (energyPct > 0.5f)
-                energyDepleted_ = false;
-
-            float gainPerSec = 400 ;
-            Energy = Mathf.Min(MaxEnergy, Energy + gainPerSec * Time.unscaledDeltaTime);
-        }
-
-        if (EnergyWidget.Instance != null)
-            EnergyWidget.Instance.ShowEnergy((int)Energy, MaxEnergy);
     }
 
     public void AddHealth(int amount, string source)
@@ -278,7 +240,6 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
         lookAt_ = transform_.position;
         camPositioner_ = SceneGlobals.Instance.CameraPositioner;
 
-        UpdateEnergy();
         UpdateHealth();
 
         RefreshInteracting();
@@ -357,7 +318,6 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IEnergyProv
 
     void UpdateInternal(float dt)
     {
-        UpdateEnergy();
         UpdateFlash();
 
         UpdateInternal_MouseControls(dt);

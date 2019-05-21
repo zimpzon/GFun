@@ -37,8 +37,9 @@ public class LightingImageEffect : MonoBehaviour
     [NonSerialized] public RenderTexture LightingTexture;
     public LightingEffectSettings StartValues = new LightingEffectSettings();
     public LightingEffectSettings CurrentValues = new LightingEffectSettings();
+    LightingEffectSettings transitionValues_ = new LightingEffectSettings();
 
-    LightingEffectSettings flash_;
+    LightingEffectSettings flash_ = new LightingEffectSettings();
     LightingEffectSettings target_;
 
     float baseTransitionSpeed_;
@@ -66,10 +67,12 @@ public class LightingImageEffect : MonoBehaviour
     {
         target_ = baseColor;
         target_.CopyTo(CurrentValues);
+        target_.CopyTo(transitionValues_);
     }
 
     public void FlashColor(LightingEffectSettings flashTarget, AnimationCurve flashCurve, float flashTimeMs)
     {
+        flash_ = flashTarget;
         flashTimeMs_ = flashTimeMs;
         flashCurve_ = flashCurve;
         flashStartTime_ = Time.unscaledTime;
@@ -117,20 +120,36 @@ public class LightingImageEffect : MonoBehaviour
         if (target_ == null || CurrentValues == null)
             return;
 
-        MoveToTarget(target_.AmbientLight.r, dt, ref CurrentValues.AmbientLight.r);
-        MoveToTarget(target_.AmbientLight.g, dt, ref CurrentValues.AmbientLight.g);
-        MoveToTarget(target_.AmbientLight.b, dt, ref CurrentValues.AmbientLight.b);
+        MoveToTarget(target_.AmbientLight.r, dt, ref transitionValues_.AmbientLight.r);
+        MoveToTarget(target_.AmbientLight.g, dt, ref transitionValues_.AmbientLight.g);
+        MoveToTarget(target_.AmbientLight.b, dt, ref transitionValues_.AmbientLight.b);
 
-        MoveToTarget(target_.Brightness, dt, ref CurrentValues.Brightness);
-        MoveToTarget(target_.MonochromeAmount, dt, ref CurrentValues.MonochromeAmount);
+        MoveToTarget(target_.Brightness, dt, ref transitionValues_.Brightness);
+        MoveToTarget(target_.MonochromeAmount, dt, ref transitionValues_.MonochromeAmount);
 
-        MoveToTarget(target_.MonochromeFactorR, dt, ref CurrentValues.MonochromeFactorR);
-        MoveToTarget(target_.MonochromeFactorG, dt, ref CurrentValues.MonochromeFactorG);
-        MoveToTarget(target_.MonochromeFactorB, dt, ref CurrentValues.MonochromeFactorB);
+        MoveToTarget(target_.MonochromeFactorR, dt, ref transitionValues_.MonochromeFactorR);
+        MoveToTarget(target_.MonochromeFactorG, dt, ref transitionValues_.MonochromeFactorG);
+        MoveToTarget(target_.MonochromeFactorB, dt, ref transitionValues_.MonochromeFactorB);
 
-        MoveToTarget(target_.MonochromeDisplayR, dt, ref CurrentValues.MonochromeDisplayR);
-        MoveToTarget(target_.MonochromeDisplayG, dt, ref CurrentValues.MonochromeDisplayG);
-        MoveToTarget(target_.MonochromeDisplayB, dt, ref CurrentValues.MonochromeDisplayB);
+        MoveToTarget(target_.MonochromeDisplayR, dt, ref transitionValues_.MonochromeDisplayR);
+        MoveToTarget(target_.MonochromeDisplayG, dt, ref transitionValues_.MonochromeDisplayG);
+        MoveToTarget(target_.MonochromeDisplayB, dt, ref transitionValues_.MonochromeDisplayB);
+
+        float flashAmount = GetFlashAmount();
+        CurrentValues.AmbientLight.r = transitionValues_.AmbientLight.r + flash_.AmbientLight.r * flashAmount;
+        CurrentValues.AmbientLight.g = transitionValues_.AmbientLight.g + flash_.AmbientLight.g * flashAmount;
+        CurrentValues.AmbientLight.b = transitionValues_.AmbientLight.b + flash_.AmbientLight.b * flashAmount;
+
+        CurrentValues.Brightness = transitionValues_.Brightness + flash_.Brightness * flashAmount;
+        CurrentValues.MonochromeAmount = transitionValues_.MonochromeAmount + flash_.MonochromeAmount * flashAmount;
+
+        CurrentValues.MonochromeFactorR = transitionValues_.MonochromeFactorR + flash_.MonochromeFactorR * flashAmount;
+        CurrentValues.MonochromeFactorG = transitionValues_.MonochromeFactorG + flash_.MonochromeFactorG * flashAmount;
+        CurrentValues.MonochromeFactorB  = transitionValues_.MonochromeFactorB + flash_.MonochromeFactorB * flashAmount;
+
+        CurrentValues.MonochromeDisplayR = transitionValues_.MonochromeDisplayR + flash_.MonochromeDisplayR * flashAmount;
+        CurrentValues.MonochromeDisplayG = transitionValues_.MonochromeDisplayG + flash_.MonochromeDisplayG * flashAmount;
+        CurrentValues.MonochromeDisplayB = transitionValues_.MonochromeDisplayB + flash_.MonochromeDisplayB * flashAmount;
     }
 
     private void Update()

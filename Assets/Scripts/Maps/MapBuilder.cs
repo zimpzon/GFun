@@ -15,7 +15,7 @@ public static class MapBuilder
     public static readonly byte[,] CollisionMap = new byte[MapMaxWidth, MapMaxHeight];
     public static readonly byte[,] MapSource = new byte[MapMaxWidth, MapMaxHeight];
 
-    public static void BuildMapTiles(byte[,] map, MapScript mapScript, MapStyle mapStyle)
+    public static void BuildMap(byte[,] map, MapScript mapScript, MapStyle mapStyle)
     {
         mapScript.FloorTileMap.ClearAllTiles();
         mapScript.WallTileMap.ClearAllTiles();
@@ -24,6 +24,7 @@ public static class MapBuilder
 
         ApplyFloorTiles(mapScript, mapStyle);
         BuildWallTiles(mapScript, mapStyle);
+        LightingImageEffect.Instance.SetBaseColor(mapStyle.LightingSettings);
 
         BuildCollisionMapFromFloorTilemap(mapScript.FloorTileMap);
     }

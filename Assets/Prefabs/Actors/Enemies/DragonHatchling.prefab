@@ -78,6 +78,7 @@ MonoBehaviour:
   EnemyLevel: 2
   EnemyMoveSpeed: 6
   SpeedVariation: 0.2
+  EnemyXP: 20
   EnemyLife: 50
   TouchPlayerDamage: 3
   BlipRenderer: {fileID: 1921782252298801372}

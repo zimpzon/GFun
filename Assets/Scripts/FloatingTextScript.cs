@@ -17,12 +17,13 @@ public class FloatingTextScript : MonoBehaviour
         transform_ = transform;
     }
 
-    public void Init(GameObjectPool textPool, Vector3 position, string text, Color color, float speed = 1.0f, float timeToLive = 2.0f)
+    public void Init(GameObjectPool textPool, Vector3 position, string text, Color color, float speed = 1.0f, float timeToLive = 2.0f, FontStyles fontStyle = FontStyles.Bold)
     {
         textPool_ = textPool;
         var go = textPool_.GetFromPool();
         text_.text = text;
         text_.color = color;
+        text_.fontStyle = fontStyle;
         transform_.position = position;
         basePos_ = position;
         position_ = position;

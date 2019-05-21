@@ -17,5 +17,5 @@ public class NullWeapon : MonoBehaviour, IWeapon
     public void OnTriggerDown(Vector3 firingDirection) { }
     public void OnTriggerUp() { }
 
-    public void SetOwner(IPhysicsActor forceReceiver, IEnergyProvider energyProvider) { }
+    public void SetOwner(IPhysicsActor forceReceiver) { }
 }

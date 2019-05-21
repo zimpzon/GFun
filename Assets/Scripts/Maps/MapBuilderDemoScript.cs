@@ -94,6 +94,6 @@ public class MapBuilderDemoScript : MonoBehaviour
         }
 
         MapBuilder.GenerateMapFloor(w, h, algo);
-        MapBuilder.BuildMapTiles(MapBuilder.MapSource, mapScript_, MapStyle);
+        MapBuilder.BuildMap(MapBuilder.MapSource, mapScript_, MapStyle);
     }
 }

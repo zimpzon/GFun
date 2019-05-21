@@ -1,7 +1,5 @@
 ﻿using GFun;
-using MEC;
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,12 +12,17 @@ public class CampScript : MonoBehaviour
     public Canvas LoadingCanvas;
     public Canvas OptionsCanvas;
     public AudioClip IntroMusicClip;
+    public AudioClip DistantThunder;
     public LightingEffectSettings CampLightingSettings;
     public LightingEffectSettings GraveyardLightingSettings;
     public LightingEffectSettings MenuLightingSettings;
+    public LightingEffectSettings FlashLightingSettings;
+    public AnimationCurve FlashCurve;
+    public float FlashTime;
     public AudioSource CampfireSoundSource;
     public Transform[] CharacterDefaultPositions;
     public GameObject GhostPlayerPrefab;
+    public GameObject LockedCharacterPrefab;
 
     LightingEffectSettings activeLightingSettings_;
     bool isInGraveyard_;
@@ -99,7 +102,7 @@ public class CampScript : MonoBehaviour
 
     void CreateGhost(string characterTag, Vector3 position)
     {
-        // TODO
+        var lockedCharacter = Instantiate(LockedCharacterPrefab, position, Quaternion.identity);
     }
 
     void ActivateLatestSelectedCharacter()
@@ -137,7 +140,10 @@ public class CampScript : MonoBehaviour
             SelectCharacter(PlayableCharacters.Instance.CharacterPrefabList.CharacterPrefabs[2].tag);
 
         if (Input.GetKeyDown(KeyCode.F12))
+        {
             GameProgressData.RestartProgress();
+            PlayerInfoScript.Instance.ShowInfo("Progress Reset", Color.red);
+        }
     }
 
     public void OnPlayerEnterStartPortal()
@@ -170,6 +176,25 @@ public class CampScript : MonoBehaviour
         lightingImageEffect_.SetBaseColor(activeLightingSettings_);
     }
 
+    float nextFlash;
+    float nextThunder = float.MaxValue;
+
+    void UpdateThunder(float time)
+    {
+        if (time > nextFlash)
+        {
+            lightingImageEffect_.FlashColor(FlashLightingSettings, FlashCurve, FlashTime);
+            nextFlash = time + 10.0f + Random.value * 10;
+            nextThunder = time + Random.value * 1.0f + 1.0f;
+        }
+
+        if (time > nextThunder)
+        {
+            AudioManager.Instance.PlaySfxClip(DistantThunder, 2, 0.2f);
+            nextThunder = float.MaxValue;
+        }
+    }
+
     IEnumerator InCamp()
     {
         Time.timeScale = 1.0f;
@@ -184,8 +209,11 @@ public class CampScript : MonoBehaviour
 
         SceneGlobals.Instance.AudioManager.StopMusic();
 
+        nextFlash = Time.time + 3 + Random.value * 3;
         while (true)
         {
+            UpdateThunder(Time.time);
+
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 StartCoroutine(InMenu());
@@ -205,7 +233,7 @@ public class CampScript : MonoBehaviour
         HumanPlayerController.Disabled = true;
 
         CampfireSoundSource.enabled = false;
-        Time.timeScale = 0.25f;
+        Time.timeScale = 0.75f;
 
         OptionsCanvas.gameObject.SetActive(true);
         while (true)
@@ -225,18 +253,20 @@ public class CampScript : MonoBehaviour
     {
         HumanPlayerController.Disabled = true;
 
-        CampfireSoundSource.enabled = false;
-        Time.timeScale = 0.25f;
-
+        CampfireSoundSource.enabled = true;
+        Time.timeScale = 1.0f;
         IntroCanvas.enabled = true;
 
         LightingFadeTo(MenuLightingSettings, transitionSpeed: 20);
-        StartCoroutine(SceneGlobals.Instance.AudioManager.SetAudioProfile(AudioManager.eScene.IntroScreen));
+        StartCoroutine(SceneGlobals.Instance.AudioManager.SetAudioProfile(AudioManager.eScene.InGame));
         SceneGlobals.Instance.AudioManager.PlayMusic(IntroMusicClip);
 
+        nextFlash = Time.time + 3 + Random.value * 3;
         while (true)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            UpdateThunder(Time.time);
+
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonUp(0))
             {
                 HumanPlayerController.Disabled = false;
 

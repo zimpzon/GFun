@@ -11,6 +11,8 @@ public class GameProgressData
 
     public long NumberOfDeaths;
     public long EnemiesKilled;
+    public int PlayerXp = 0;
+
     public List<string> UnlockedCharacters = new List<string>() { "Character1" };
 
     public static void RestartProgress()

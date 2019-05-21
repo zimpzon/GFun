@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 public class MapStyle : ScriptableObject
 {
     public Color Color;
+    public LightingEffectSettings LightingSettings;
 
     [Header("Floor")]
     public TileBase FloorTile;

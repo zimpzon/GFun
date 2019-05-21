@@ -31,7 +31,6 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
     GameObjectPool bulletPool_;
     AudioManager audioManager_;
     IPhysicsActor forceReceiver_;
-    IEnergyProvider energyProvider_;
     CameraShake cameraShake_;
     bool triggerIsDown_;
     bool awaitingRelease_;
@@ -50,10 +49,9 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         transform_ = transform;
     }
 
-    public void SetOwner(IPhysicsActor forceReceiver, IEnergyProvider energyProvider)
+    public void SetOwner(IPhysicsActor forceReceiver)
     {
         forceReceiver_ = forceReceiver;
-        energyProvider_ = energyProvider;
     }
 
     public void OnTriggerDown(Vector3 firingDirection)

@@ -258,7 +258,6 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
             aiPath_.enabled = false;
         }
 
-        FloatingTextSpawner.Instance.Spawn(transform_.position + Vector3.up * 0.5f, $"{XP} XP", Color.cyan, 0.3f, 1.0f);
         GameEvents.RaiseEnemyKilled(this, transform_.position);
         Timing.RunCoroutine(DieCo(damageForce).CancelWith(this.gameObject));
     }
