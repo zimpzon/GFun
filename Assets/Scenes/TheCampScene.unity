@@ -20847,20 +20847,6 @@ CompositeCollider2D:
         Y: 30000000
       - X: 129375000
         Y: 30000000
-    - - X: 47500000
-        Y: 15000000
-      - X: 47500000
-        Y: 20000000
-      - X: 32500000
-        Y: 20000000
-      - X: 32500000
-        Y: 15000000
-      - X: 33125000
-        Y: 11875000
-      - X: 36250000
-        Y: 10625000
-      - X: 45000000
-        Y: 10625000
     - - X: 77500000
         Y: 15000000
       - X: 77500000
@@ -20875,22 +20861,20 @@ CompositeCollider2D:
         Y: 10625000
       - X: 75000000
         Y: 10625000
-    - - X: 130000000
-        Y: 625000
-      - X: 130000000
-        Y: 8750000
-      - X: 128750000
-        Y: 10000000
-      - X: 121250000
-        Y: 10000000
-      - X: 120000000
-        Y: 8750000
-      - X: 120000000
-        Y: 1250000
-      - X: 121250000
-        Y: 0
-      - X: 129375000
-        Y: 0
+    - - X: 47500000
+        Y: 15000000
+      - X: 47500000
+        Y: 20000000
+      - X: 32500000
+        Y: 20000000
+      - X: 32500000
+        Y: 15000000
+      - X: 33125000
+        Y: 11875000
+      - X: 36250000
+        Y: 10625000
+      - X: 45000000
+        Y: 10625000
     - - X: -10000000
         Y: 625000
       - X: -10000000
@@ -20915,6 +20899,22 @@ CompositeCollider2D:
         Y: 625000
       - X: 70000000
         Y: 625000
+    - - X: 130000000
+        Y: 625000
+      - X: 130000000
+        Y: 8750000
+      - X: 128750000
+        Y: 10000000
+      - X: 121250000
+        Y: 10000000
+      - X: 120000000
+        Y: 8750000
+      - X: 120000000
+        Y: 1250000
+      - X: 121250000
+        Y: 0
+      - X: 129375000
+        Y: 0
     - - X: 30000000
         Y: -6875000
       - X: 30000000
@@ -21360,13 +21360,6 @@ CompositeCollider2D:
       - {x: -11, y: -0.375}
       - {x: -10.75, y: -1}
       - {x: -8.25, y: -1}
-    - - {x: 4.75, y: 1.5}
-      - {x: 4.75, y: 2}
-      - {x: 3.25, y: 2}
-      - {x: 3.25, y: 1.5}
-      - {x: 3.3125, y: 1.1875}
-      - {x: 3.625, y: 1.0625}
-      - {x: 4.5, y: 1.0625}
     - - {x: 7.75, y: 1.5}
       - {x: 7.75, y: 2}
       - {x: 6.25, y: 2}
@@ -21374,14 +21367,13 @@ CompositeCollider2D:
       - {x: 6.3125, y: 1.1875}
       - {x: 6.625, y: 1.0625}
       - {x: 7.5, y: 1.0625}
-    - - {x: 13, y: 0.0625}
-      - {x: 13, y: 0.875}
-      - {x: 12.875, y: 1}
-      - {x: 12.125, y: 1}
-      - {x: 12, y: 0.875}
-      - {x: 12, y: 0.125}
-      - {x: 12.125, y: 0}
-      - {x: 12.9375, y: 0}
+    - - {x: 4.75, y: 1.5}
+      - {x: 4.75, y: 2}
+      - {x: 3.25, y: 2}
+      - {x: 3.25, y: 1.5}
+      - {x: 3.3125, y: 1.1875}
+      - {x: 3.625, y: 1.0625}
+      - {x: 4.5, y: 1.0625}
     - - {x: -1, y: 0.0625}
       - {x: -1, y: 0.875}
       - {x: -1.125, y: 1}
@@ -21394,6 +21386,14 @@ CompositeCollider2D:
       - {x: 6, y: 1}
       - {x: 6, y: 0.0625}
       - {x: 7, y: 0.0625}
+    - - {x: 13, y: 0.0625}
+      - {x: 13, y: 0.875}
+      - {x: 12.875, y: 1}
+      - {x: 12.125, y: 1}
+      - {x: 12, y: 0.875}
+      - {x: 12, y: 0.125}
+      - {x: 12.125, y: 0}
+      - {x: 12.9375, y: 0}
     - - {x: 3, y: -0.6875}
       - {x: 3, y: -0.125}
       - {x: 2.875, y: 0}
@@ -57879,30 +57879,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
-    - target: {fileID: 2998776084999831440, guid: f6439424608acdb4b95ec951538a9d38,
-        type: 3}
-      propertyPath: MusicMixerGroup
-      value: 
-      objectReference: {fileID: 243287746366484798, guid: a0f88eba81b45d84e9b3e352f0602b67,
-        type: 2}
-    - target: {fileID: 2998776084999831440, guid: f6439424608acdb4b95ec951538a9d38,
-        type: 3}
-      propertyPath: AmbianceMixerGroup
-      value: 
-      objectReference: {fileID: 243347228789799692, guid: a0f88eba81b45d84e9b3e352f0602b67,
-        type: 2}
-    - target: {fileID: 2998776084999831440, guid: f6439424608acdb4b95ec951538a9d38,
-        type: 3}
-      propertyPath: SfxMixerGroup
-      value: 
-      objectReference: {fileID: 243113692463124104, guid: a0f88eba81b45d84e9b3e352f0602b67,
-        type: 2}
-    - target: {fileID: 2998776084999831440, guid: f6439424608acdb4b95ec951538a9d38,
-        type: 3}
-      propertyPath: AmbientMixerGroup
-      value: 
-      objectReference: {fileID: 243347228789799692, guid: a0f88eba81b45d84e9b3e352f0602b67,
-        type: 2}
     - target: {fileID: 2998776084999831439, guid: f6439424608acdb4b95ec951538a9d38,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -57958,6 +57934,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2998776084999831440, guid: f6439424608acdb4b95ec951538a9d38,
+        type: 3}
+      propertyPath: MusicMixerGroup
+      value: 
+      objectReference: {fileID: 243287746366484798, guid: a0f88eba81b45d84e9b3e352f0602b67,
+        type: 2}
+    - target: {fileID: 2998776084999831440, guid: f6439424608acdb4b95ec951538a9d38,
+        type: 3}
+      propertyPath: AmbianceMixerGroup
+      value: 
+      objectReference: {fileID: 243347228789799692, guid: a0f88eba81b45d84e9b3e352f0602b67,
+        type: 2}
+    - target: {fileID: 2998776084999831440, guid: f6439424608acdb4b95ec951538a9d38,
+        type: 3}
+      propertyPath: SfxMixerGroup
+      value: 
+      objectReference: {fileID: 243113692463124104, guid: a0f88eba81b45d84e9b3e352f0602b67,
+        type: 2}
+    - target: {fileID: 2998776084999831440, guid: f6439424608acdb4b95ec951538a9d38,
+        type: 3}
+      propertyPath: AmbientMixerGroup
+      value: 
+      objectReference: {fileID: 243347228789799692, guid: a0f88eba81b45d84e9b3e352f0602b67,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6439424608acdb4b95ec951538a9d38, type: 3}
 --- !u!4 &1457961989 stripped

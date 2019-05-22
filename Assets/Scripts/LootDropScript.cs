@@ -15,7 +15,7 @@ public class LootDropScript : MonoBehaviour
 
     void SpawnHealth(IEnemy enemy, Vector3 position)
     {
-        int count = Random.value < 0.2f ? 2 : 1;
+        int count = Random.value < 0.1f ? 2 : 1;
         if (Random.value < 0.9f)
             count = 0;
 

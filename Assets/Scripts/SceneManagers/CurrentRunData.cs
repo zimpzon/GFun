@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum MapType { Floor, Shop };
+public enum World { World1, World2 };
+public enum SpecialLocation { None, Shop, BossWorld1, }
 
 [Serializable]
 public class CurrentRunData
@@ -10,10 +11,13 @@ public class CurrentRunData
     public static CurrentRunData Instance = new CurrentRunData();
     public bool HasPlayerData;
 
-    public MapType NextMapType = MapType.Floor;
+    public int FloorInWorld = 2;
+    public int TotalFloor = 1;
+    public int StartingDifficulty = 0;
+    public World World = World.World1;
+    public SpecialLocation SpecialLocation = SpecialLocation.None;
+
     public string StartingCharacterTag = "Character1";
-    public int StartingDifficulty = 1;
-    public int CurrentFloor = 0;
     public int Coins;
     public int Life;
     public int MaxLife;

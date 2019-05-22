@@ -28,12 +28,13 @@ public class GameSceneLogic : MonoBehaviour
     public AudioClip GameMusic;
     public AudioClip ShopMusic;
 
+    [System.NonSerialized] public PortalScript NextLevelPortal;
+    [System.NonSerialized] public PortalScript BossPortal;
+
     int enemyAliveCount_;
     int enemyDeadCount_;
     Vector3 latestEnemyDeathPosition_;
 
-    PortalScript nextLevelPortal_;
-    BlackHolePluginScript blackHolePlugin_;
     MapScript map_;
     PlayableCharacterScript playerScript_;
 
@@ -46,7 +47,8 @@ public class GameSceneLogic : MonoBehaviour
 
         if (!CurrentRunData.Instance.HasPlayerData)
         {
-            UpdateCurrentRunWithPlayerData(CurrentRunData.Instance, playerScript_);
+            // This is a new game
+            SavePlayerDataInCurrentRun(playerScript_, CurrentRunData.Instance);
             CurrentRunData.Instance.HasPlayerData = true;
         }
         else
@@ -55,16 +57,43 @@ public class GameSceneLogic : MonoBehaviour
         }
     }
 
-    void UpdateCurrentRunWithPlayerData(CurrentRunData run, PlayableCharacterScript player)
+    void AdvanceCurrentRun(CurrentRunData run, PlayableCharacterScript player)
     {
-        print("Updating current run with player data");
+        // Advance progress.
+        if (run.SpecialLocation == SpecialLocation.BossWorld1)
+        {
+            // World1 complete, move to world 2 (but first a visit to the shop)
+            run.FloorInWorld = 1;
+            run.World = World.World2;
+            run.SpecialLocation = SpecialLocation.Shop;
+        }
+        else if (run.SpecialLocation == SpecialLocation.Shop)
+        {
+            run.SpecialLocation = SpecialLocation.None;
+        }
+        else if (run.SpecialLocation == SpecialLocation.None)
+        {
+            // Just complated a standard floor.
+            run.TotalFloor++;
+            run.FloorInWorld++;
+
+            run.SpecialLocation = SpecialLocation.Shop;
+        }
+        else
+        {
+            run.SpecialLocation = SpecialLocation.None;
+        }
+    }
+
+    void SavePlayerDataInCurrentRun(PlayableCharacterScript player, CurrentRunData run)
+    {
+        // Remember player stats since player object is destroyed when loading next level
         run.MaxLife = player.MaxLife;
         run.Life = player.Life;
     }
 
     void InitializePlayerWithCurrentRunData(PlayableCharacterScript player, CurrentRunData run)
     {
-        print("Initializing player from current run data");
         player.MaxLife = run.MaxLife;
         player.Life = run.Life;
     }
@@ -73,8 +102,10 @@ public class GameSceneLogic : MonoBehaviour
     {
         latestEnemyDeathPosition_ = position;
         CurrentRunData.Instance.EnemiesKilled++;
-        enemyAliveCount_--;
         enemyDeadCount_++;
+        enemyAliveCount_--;
+        if (enemyAliveCount_ <= 0)
+            OnAllEnemiesDead();
 
         LootDropScript.Instance.SpawnDrops(enemy, position);
 
@@ -88,13 +119,6 @@ public class GameSceneLogic : MonoBehaviour
         if (xp != 0)
         {
             var color = Color.magenta;
-            bool outLevelled = levelBefore > CurrentRunData.Instance.CurrentFloor;
-            if (outLevelled)
-            {
-                color = Color.gray;
-                xp /= 10;
-            }
-
             FloatingTextSpawner.Instance.Spawn(position + Vector3.up * 0.5f, $"XP: {xp}", color, 0.2f, 2.0f, TMPro.FontStyles.Normal);
         }
 
@@ -103,7 +127,7 @@ public class GameSceneLogic : MonoBehaviour
 
         int levelAfter = XpCalc.GetLevelAtXp(currentXp);
         if (levelAfter > levelBefore)
-            Timing.RunCoroutine(LevelUpCo(levelAfter));
+            Timing.RunCoroutine(LevelUpCo(levelAfter).CancelWith(this.gameObject));
 
         int xpInThisLevel = currentXp - XpCalc.GetTotalXpRequired(levelAfter);
         int xpRequiredInThisLevel = XpCalc.GetXpRequired(levelAfter);
@@ -156,10 +180,14 @@ public class GameSceneLogic : MonoBehaviour
         GameEvents.OnAutoPickUp += OnAutoPickUp;
 
         map_ = SceneGlobals.Instance.MapScript;
-        nextLevelPortal_ = FindObjectOfType<PortalScript>();
-        nextLevelPortal_.gameObject.SetActive(false);
 
-        blackHolePlugin_ = FindObjectOfType<BlackHolePluginScript>();
+        NextLevelPortal = GameObject.FindWithTag("PurplePortal").GetComponent<PortalScript>();
+        NextLevelPortal.gameObject.SetActive(false);
+        NextLevelPortal.OnPlayerEnter.AddListener(OnPlayerEnterNextLevelPortal);
+
+        BossPortal = GameObject.FindWithTag("GreenPortal").GetComponent<PortalScript>();
+        BossPortal.gameObject.SetActive(false);
+        BossPortal.OnPlayerEnter.AddListener(OnPlayerEnterBossPortal);
     }
 
     private void Start()
@@ -167,74 +195,77 @@ public class GameSceneLogic : MonoBehaviour
         TerminalCommands.RegisterCommands();
 
         StartCoroutine(SceneGlobals.Instance.AudioManager.SetAudioProfile(AudioManager.eScene.InGame));
-        Timing.RunCoroutine(EnterLevelLoop().CancelWith(this.gameObject));
+        StartCoroutine(EnterLevelLoopCo());
     }
 
-    void UpdateInitCanvas()
+    (GameObject plugin, MapStyle mapStyle) GetCurrentMapPluginPrefab(CurrentRunData run)
     {
-        if (CurrentRunData.Instance.NextMapType == MapType.Floor)
+        if (run.SpecialLocation == SpecialLocation.None)
         {
-            LoadingText.text = $"Kingdom Of Earth\nFloor {CurrentRunData.Instance.CurrentFloor}";
+            if (run.World == World.World1)
+                return (MapPlugins.World1RandomPlugin, MapStyleDungeon1);
+
+            return (MapPlugins.World2RandomPlugin, MapStyleIce1);
         }
-        else if (CurrentRunData.Instance.NextMapType == MapType.Shop)
+        else if (run.SpecialLocation == SpecialLocation.Shop)
         {
-            LoadingText.text = $"Reapers Hideout";
+            return (MapPlugins.ShopPlugin, MapStyleShop);
         }
-        else
+        else if (run.SpecialLocation == SpecialLocation.BossWorld1)
         {
-            LoadingText.text = $"Missing text: {CurrentRunData.Instance.NextMapType}";
+            return (MapPlugins.Boss1Plugin, MapStyleDungeon1);
         }
+
+        DebugLinesScript.Show("Location error, loading shop as default", "Location = " + run.SpecialLocation);
+        return (MapPlugins.ShopPlugin, MapStyleShop);
     }
 
-    IEnumerator<float> EnterLevelLoop()
+    IEnumerator EnterLevelLoopCo()
     {
         if (CurrentRunData.Instance.RunEnded)
             CurrentRunData.StartNewRun();
 
-        if (CurrentRunData.Instance.NextMapType == MapType.Floor)
-            CurrentRunData.Instance.CurrentFloor++;
+        (var mapPluginPrefab, var mapStyle) = GetCurrentMapPluginPrefab(CurrentRunData.Instance);
+        var mapPlugin = Instantiate(mapPluginPrefab);
+        mapPlugin.SetActive(false);
+        var mapPluginScript = mapPlugin.GetComponent<MapPluginScript>();
+        LoadingText.text = mapPluginScript.Name;
 
-        UpdateInitCanvas();
         InitCanvas.gameObject.SetActive(true);
-        yield return 0;
+        yield return null;
 
         // Prepare map
         float startTime = Time.unscaledTime;
-        if (CurrentRunData.Instance.NextMapType == MapType.Shop)
-            GenerateShop();
-        else
-            GenerateMap();
+        GenerateMapFromPlugin(mapPlugin, mapStyle);
 
         // Prepare player
-        CreatePlayer(map_.GetPlayerStartPosition(CurrentRunData.Instance.NextMapType));
+        var playerStartPos = mapPluginScript.GetPlayerStartPosition();
+        CreatePlayer(playerStartPos);
         PlayableCharacters.Instance.SetCharacterToHumanControlled(playerScript_.tag);
         Helpers.SetCameraPositionToActivePlayer();
         var playerInScene = PlayableCharacters.GetPlayerInScene();
         var playerPos = playerInScene.transform.position;
         UpdateXp(Vector3.zero, 0);
 
-        // Prepare enemies
+        // Locate enemies
         Time.timeScale = 0.01f;
-        if (CurrentRunData.Instance.NextMapType == MapType.Floor)
-        {
-            List<(Vector3, float)> forbiddenPositions = new List<(Vector3, float)>();
-            forbiddenPositions.Add((playerPos, 10));
-            if (blackHolePlugin_.isActiveAndEnabled)
-                forbiddenPositions.Add((blackHolePlugin_.transform.position, 4));
-
-            EnemySpawner.Instance.AddEnemiesForFloor(DynamicObjectRoot, CurrentRunData.Instance.CurrentFloor, forbiddenPositions);
-        }
-
         var enemiesAtMapStart = FindObjectsOfType<EnemyScript>();
         foreach (var enemy in enemiesAtMapStart)
+        {
+            if (enemy.transform.parent != DynamicObjectRoot)
+                enemy.transform.SetParent(DynamicObjectRoot);
+
             GameEvents.RaiseEnemySpawned(enemy, enemy.transform.position);
+        }
 
         const float MinimumShowTime = 1.5f;
         float endTime = Time.unscaledTime + (startTime - Time.unscaledTime) + MinimumShowTime;
         while (Time.unscaledTime < endTime)
-            yield return 0;
+            yield return null;
 
         // Show what we created
+        mapPlugin.SetActive(true);
+
         UpdateCoinWidget();
         InitCanvas.gameObject.SetActive(false);
 
@@ -250,7 +281,7 @@ public class GameSceneLogic : MonoBehaviour
             playerInScene.transform.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, t * 500));
 
             t -= Time.unscaledDeltaTime * 2;
-            yield return 0;
+            yield return null;
         }
 
         playerInScene.transform.SetPositionAndRotation(targetPos, Quaternion.identity);
@@ -265,78 +296,70 @@ public class GameSceneLogic : MonoBehaviour
         while (Time.unscaledTime < shakeEndTime)
         {
             CameraShake.Instance.SetMinimumShake(1.0f);
-            yield return 0;
+            yield return null;
         }
 
+        GameEvents.OnPlayerKilled += GameEvents_OnPlayerKilled;
         Time.timeScale = 1.0f;
 
-        if (CurrentRunData.Instance.NextMapType == MapType.Shop)
-            Timing.RunCoroutine(ShopLoop().CancelWith(gameObject));
-        else
-            Timing.RunCoroutine(GameLoop().CancelWith(gameObject));
-
-        yield return 0;
+        Timing.RunCoroutine(GameLoopCo().CancelWith(this.gameObject));
+        Timing.RunCoroutine(mapPluginScript.GameLoopCo().CancelWith(mapPluginScript.gameObject));
     }
 
-    IEnumerator<float> GameLoop()
+    void KillAllEnemies()
     {
-        CurrentRunData.Instance.NextMapType = MapType.Shop;
-        AudioManager.Instance.PlayMusic(GameMusic, 0.4f);
+        var enemies = FindObjectsOfType<EnemyScript>();
+        int count = enemies.Length;
+        PlayerInfoScript.Instance.ShowInfo($"Killing All Enemies! ({count})", Color.yellow);
+        foreach (var enemy in enemies)
+            enemy.TakeDamage(10000, Vector3.up);
+    }
 
+    IEnumerator<float> GameLoopCo()
+    {
         while (true)
         {
-            //if (Input.GetKeyDown(KeyCode.X))
-            //    playerScript_.Die();
-
-            if (playerScript_.IsDead)
-            {
-                StartCoroutine(DeadLoop());
-                yield break;
-            }
-
-            if (enemyAliveCount_ <= 0 && !nextLevelPortal_.gameObject.activeInHierarchy)
-                OnAllEnemiesDead();
+            if (Input.GetKeyDown(KeyCode.K))
+                KillAllEnemies();
 
             yield return 0;
         }
     }
 
-    IEnumerator<float> ShopLoop()
+    private void GameEvents_OnPlayerKilled(IEnemy enemy)
     {
-        CurrentRunData.Instance.NextMapType = MapType.Floor;
-        var shopScript = FindObjectOfType<ShopPluginScript>();
-        nextLevelPortal_.gameObject.SetActive(true);
-        nextLevelPortal_.transform.position = shopScript.PortalPosition.position;
-        nextLevelPortal_.OnPlayerEnter.AddListener(OnPlayerEnterPortal);
-        AudioManager.Instance.PlayMusic(ShopMusic, 0.8f);
-
-        while (true)
-        {
-            if (playerScript_.IsDead)
-            {
-                StartCoroutine(DeadLoop());
-                yield break;
-            }
-
-            yield return 0;
-        }
+        Timing.RunCoroutine(DeadLoop().CancelWith(this.gameObject));
     }
 
     void OnAllEnemiesDead()
     {
-        Timing.RunCoroutine(ActivatePortalLoop().CancelWith(gameObject));
+        if (NextLevelPortal.gameObject.activeInHierarchy)
+            return;
+
+        Timing.RunCoroutine(ActivatePortalLoop().CancelWith(this.gameObject));
     }
 
-    public void OnPlayerEnterPortal()
+    public void OnPlayerEnterNextLevelPortal()
     {
-        UpdateCurrentRunWithPlayerData(CurrentRunData.Instance, playerScript_);
+        SavePlayerDataInCurrentRun(playerScript_, CurrentRunData.Instance);
+        AdvanceCurrentRun(CurrentRunData.Instance, playerScript_);
+        LoadNextLevel();
+    }
+
+    public void OnPlayerEnterBossPortal()
+    {
+        SavePlayerDataInCurrentRun(playerScript_, CurrentRunData.Instance);
+        if (CurrentRunData.Instance.World == World.World1)
+            CurrentRunData.Instance.SpecialLocation = SpecialLocation.BossWorld1;
+        else
+            CurrentRunData.Instance.SpecialLocation = SpecialLocation.BossWorld1; // TODO: More bosses?
 
         LoadNextLevel();
     }
 
     IEnumerator<float> ActivatePortalLoop()
     {
-        nextLevelPortal_.gameObject.SetActive(true);
+        NextLevelPortal.gameObject.SetActive(true);
 
         float t = 0;
         while (t < 1)
@@ -347,8 +370,7 @@ public class GameSceneLogic : MonoBehaviour
         }
 
         var pos = latestEnemyDeathPosition_;
-        nextLevelPortal_.transform.position = pos;
-        nextLevelPortal_.OnPlayerEnter.AddListener(OnPlayerEnterPortal);
+        NextLevelPortal.transform.position = pos;
         map_.TriggerExplosion(pos, 3);
         var portalCenter = pos + Vector3.up * 1.5f;
         ParticleScript.EmitAtPosition(ParticleScript.Instance.PlayerLandParticles, portalCenter, 25);
@@ -374,7 +396,7 @@ public class GameSceneLogic : MonoBehaviour
         var statList = new List<(string name, int value)>
         {
             (PlayFabData.Stat_SecondsPlayed, (int)(CurrentRunData.Instance.RunEndTime - CurrentRunData.Instance.RunStartTime)),
-            (PlayFabData.Stat_FloorReached, CurrentRunData.Instance.CurrentFloor),
+            (PlayFabData.Stat_FloorReached, CurrentRunData.Instance.TotalFloor),
             (PlayFabData.Stat_EnemiesKilled, CurrentRunData.Instance.EnemiesKilled),
             (PlayFabData.Stat_CoinsCollected, CurrentRunData.Instance.CoinsCollected),
             (PlayFabData.Stat_ItemsBought, CurrentRunData.Instance.ItemsBought),
@@ -398,7 +420,7 @@ public class GameSceneLogic : MonoBehaviour
         KilledByText.text = $"Killed By <color=#ff0000>{playerScript_.KilledBy}</color>";
 
         var sb = new StringBuilder(100);
-        sb.AppendLine($"Floor Reached: <color=#00ff00>{CurrentRunData.Instance.CurrentFloor}</color>");
+        sb.AppendLine($"Floor Reached: <color=#00ff00>{CurrentRunData.Instance.TotalFloor}</color>");
         sb.AppendLine($"Enemies Killed: <color=#00ff00>{CurrentRunData.Instance.EnemiesKilled}</color>");
         sb.AppendLine($"Coins Collected: <color=#00ff00>{CurrentRunData.Instance.CoinsCollected}</color>");
         sb.AppendLine($"Time: <color=#00ff00>{timeSpan.ToString("hh\\:mm\\:ss")}</color>");
@@ -476,33 +498,11 @@ public class GameSceneLogic : MonoBehaviour
         SceneManager.LoadScene(GameSceneName, LoadSceneMode.Single);
     }
 
-    public void GenerateShop()
+    public void GenerateMapFromPlugin(GameObject plugin, MapStyle mapStyle)
     {
         MapBuilder.ZeroMap();
-        var shop = Instantiate(MapPlugins.ShopPlugin);
-        shop.GetComponent<MapPluginScript>().ApplyToMap(MapBuilder.Center);
-        MapBuilder.BuildMap(MapBuilder.MapSource, map_, MapStyleShop);
-        BuildPathingGraph();
-    }
-
-    public void GenerateMap()
-    {
-        int w = 40;
-        int h = 40;
-
-        var mapStyle = MapStyleDungeon1;
-
-        MapBuilder.GenerateMapFloor(w, h, MapFloorAlgorithm.RandomWalkers);
-
-        var plugins = FindObjectsOfType<MapPluginScript>();
-        foreach (var plugin in plugins)
-        {
-            MapBuilder.BuildCollisionMapFromMapSource();
-            plugin.ApplyToMap(new Vector3Int((int)plugin.transform.position.x, (int)plugin.transform.position.y, 0));
-        }
-
+        plugin.GetComponent<MapPluginScript>().ApplyToMap(MapBuilder.Center);
         MapBuilder.BuildMap(MapBuilder.MapSource, map_, mapStyle);
-
         BuildPathingGraph();
     }
 

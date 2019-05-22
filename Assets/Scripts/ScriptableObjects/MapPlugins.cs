@@ -4,4 +4,8 @@
 public class MapPlugins : ScriptableObject
 {
     public GameObject ShopPlugin;
+    public GameObject BlackHolePlugin;
+    public GameObject World1RandomPlugin;
+    public GameObject World2RandomPlugin;
+    public GameObject Boss1Plugin;
 }

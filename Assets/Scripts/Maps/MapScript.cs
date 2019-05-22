@@ -177,14 +177,6 @@ public class MapScript : MonoBehaviour, IMapAccess
         Debug.DrawRay(worldPos, Vector3.right * 0.25f, col);
     }
 
-    public Vector3 GetPlayerStartPosition(MapType mapType)
-    {
-        if (mapType == MapType.Shop)
-            return MapUtil.GetLeftmostFreeCell();
-
-        return MapUtil.GetRandomEdgePosition(out Vector3 directionToMapCenter);
-    }
-
     public Vector3 GetTileBottomMid(Vector3 worldPos)
         => new Vector3((int)worldPos.x + 0.5f, (int)worldPos.y);
 

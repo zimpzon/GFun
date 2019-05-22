@@ -7,6 +7,9 @@ TagManager:
   - Character1
   - Character2
   - Character3
+  - PurplePortal
+  - DynamicObjects
+  - GreenPortal
   layers:
   - Default
   - TransparentFX

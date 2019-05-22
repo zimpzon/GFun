@@ -2,9 +2,11 @@
 
 public class BlackHolePluginScript : MapPluginScript
 {
+    public override string Name => "Black Hole";
+
     public override void ApplyToMap(Vector3Int position)
     {
-        if (Random.value < 0.75f || CurrentRunData.Instance.CurrentFloor == 1)
+        if (Random.value < 0.75f || CurrentRunData.Instance.FloorInWorld == 1)
         {
             gameObject.SetActive(false);
             return;
@@ -35,4 +37,6 @@ public class BlackHolePluginScript : MapPluginScript
         transform.position = worldPosition;
         ApplyTilemap(new Vector3Int((int)worldPosition.x, (int)worldPosition.y, 0));
     }
+
+    public override Vector3 GetPlayerStartPosition() => Vector3.zero;
 }

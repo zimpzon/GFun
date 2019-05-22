@@ -52,6 +52,10 @@ public static class CollisionUtil
 
         int startX = (int)start.x;
         int startY = (int)start.y;
+        if (startX < 0 || startX >= MapBuilder.MapMaxWidth)
+            throw new System.ArgumentException($"x position ({startX}) is out of bounds");
+        if (startY < 0 || startY >= MapBuilder.MapMaxHeight)
+            throw new System.ArgumentException($"x position ({startY}) is out of bounds");
 
         up = 0;
         down = 0;

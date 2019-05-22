@@ -6,9 +6,8 @@ using Pathfinding;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GolemController : EntityComponentBase
+public class GolemKingController : EntityComponentBase
 {
-    public bool DelayAppearance = true;
     public AudioClip AppearSound;
     public DamagingParticleSystem DefaultProjectiles;
     public ParticleSystem RageTelegraphParticles;
@@ -45,7 +44,7 @@ public class GolemController : EntityComponentBase
     private void GameEvents_OnPlayerKilled(IEnemy enemy)
     {
         if (enemy == me_)
-            AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3);
+            AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3, 0, 0.8f);
     }
 
     void Activate(bool activate)
@@ -61,61 +60,17 @@ public class GolemController : EntityComponentBase
         base.Start();
         GameEvents.OnPlayerKilled += GameEvents_OnPlayerKilled;
 
-        if (DelayAppearance)
-        {
-            Activate(false);
-            transform.position = Vector3.right * 1000;
-            Timing.RunCoroutine(AppearCo().CancelWith(this.gameObject));
-        }
-        else
-        {
-            Activate(true);
-            aiCoHandle_ = Timing.RunCoroutine(AICo().CancelWith(this.gameObject));
-        }
-    }
-
-    IEnumerator<float> AppearCo()
-    {
-        yield return Timing.WaitForSeconds(10 + Random.value * 10);
-
-        PlayerInfoScript.Instance.ShowInfo("A Horrifying Sound Is Heard In The Distance", Color.red);
-
-        AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3);
-        yield return Timing.WaitForSeconds(6);
-
-        var playerPos = AiBlackboard.Instance.PlayerPosition;
-        Vector3 appearPos;
-        if (playerPos.x > MapBuilder.WorldCenter.x)
-            appearPos = MapUtil.GetRightmostFreeCell();
-        else
-            appearPos = MapUtil.GetLeftmostFreeCell();
-
-        AudioManager.Instance.PlaySfxClip(SceneGlobals.Instance.AudioManager.AudioClips.PlayerLand, 1, 0.1f);
         Activate(true);
-
-        var startOffset = new Vector3(0, 1, -12);
-        float t = 1;
-        while (t >= 0)
-        {
-            CameraShake.Instance.SetMinimumShake(1.0f);
-
-            var pos = appearPos + startOffset * t;
-            transform_.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, t * 500));
-
-            t -= Time.unscaledDeltaTime * 2;
-            yield return 0;
-        }
-
-        transform_.SetPositionAndRotation(appearPos, Quaternion.identity);
-        MapScript.Instance.TriggerExplosion(appearPos, 2);
-
-        PlayerInfoScript.Instance.ShowInfo($"{me_.Name} Has Arrived!", Color.red);
         aiCoHandle_ = Timing.RunCoroutine(AICo().CancelWith(this.gameObject));
     }
 
     IEnumerator<float> AICo()
     {
-        yield return Timing.WaitForSeconds(1 + Random.value * 1);
+        yield return Timing.WaitForSeconds(2);
+
+        AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3, 0, 0.75f);
+        yield return Timing.WaitForSeconds(0.1f);
+        AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3, 0, 0.8f);
 
         float rageTimer = 0.0f;
 
@@ -132,7 +87,7 @@ public class GolemController : EntityComponentBase
                     // Telegraph to player
                     enemyScript_.gameObject.layer = SceneGlobals.Instance.EnemyLayer;
                     enemyScript_.EnableAiPath(false);
-                    AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3, 0, 1.5f);
+                    AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3, 0, 0.8f);
                     myMovement_.StopMove();
                     DefaultProjectiles.EnableEmission = false;
                     var rageEmission = RageTelegraphParticles.emission;

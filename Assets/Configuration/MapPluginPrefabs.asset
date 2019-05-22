@@ -14,3 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShopPlugin: {fileID: 7537765696553365295, guid: fd3a4a625e2adb6498999a2223c4e8a0,
     type: 3}
+  BlackHolePlugin: {fileID: 7537765696553365295, guid: ffd7c8c4129a88f4d8aba56112a103f2,
+    type: 3}
+  World1RandomPlugin: {fileID: 7537765696553365295, guid: 77e1d1e234818634986f6fed9cbc5938,
+    type: 3}
+  World2RandomPlugin: {fileID: 7537765696553365295, guid: 498fd2b8540461842806b45be750657a,
+    type: 3}
+  Boss1Plugin: {fileID: 7537765696553365295, guid: 9dc9fdcdffd971849900ffcbaaa4688f,
+    type: 3}

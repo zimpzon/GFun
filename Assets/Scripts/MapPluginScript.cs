@@ -1,18 +1,25 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public abstract class MapPluginScript : MonoBehaviour
 {
-    public string Name;
+    public virtual string Name { get; } = "<name>";
     public BoundsInt AppliedCellBounds;
 
     public abstract void ApplyToMap(Vector3Int position);
+    public abstract Vector3 GetPlayerStartPosition();
 
     private void Awake()
     {
         var tilemapRenderer = GetComponentInChildren<TilemapRenderer>();
         if (tilemapRenderer != null)
             tilemapRenderer.enabled = false;
+    }
+
+    public virtual IEnumerator<float> GameLoopCo()
+    {
+        yield return 0;
     }
 
     protected void ApplyTilemap(Vector3Int position)
