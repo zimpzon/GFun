@@ -111,7 +111,7 @@ namespace Apex.Examples.AI.Game
 
         protected void Start()
         {
-            this.name = string.Concat(this.AiType, " ", this.transform.parent != null ? this.transform.parent.childCount - 1 : 0);
+//            this.name = string.Concat(this.AiType, " ", this.transform.parent != null ? this.transform.parent.childCount - 1 : 0);
 
             // Register this game object and entity so that others can identify it as part of the scanning
             EntityManager.instance.Register(this.gameObject, this);

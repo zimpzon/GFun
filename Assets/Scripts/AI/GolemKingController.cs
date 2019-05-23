@@ -1,5 +1,4 @@
-﻿using Apex.AI.Components;
-using Apex.Examples.AI;
+﻿using Apex.Examples.AI;
 using Apex.Examples.AI.Game;
 using MEC;
 using Pathfinding;
@@ -9,7 +8,6 @@ using UnityEngine;
 public class GolemKingController : EntityComponentBase
 {
     public AudioClip AppearSound;
-    public DamagingParticleSystem DefaultProjectiles;
     public ParticleSystem RageTelegraphParticles;
 
     IMovableActor myMovement_;
@@ -18,7 +16,6 @@ public class GolemKingController : EntityComponentBase
     IPhysicsActor myPhysics_;
     Collider2D collider_;
     AIPath aiPath_;
-    UtilityAIComponent utilityAi_;
     Transform transform_;
     EnemyScript enemyScript_;
     CoroutineHandle aiCoHandle_;
@@ -29,7 +26,6 @@ public class GolemKingController : EntityComponentBase
     {
         collider_ = GetComponent<Collider2D>();
         aiPath_ = GetComponent<AIPath>();
-        utilityAi_ = GetComponent<UtilityAIComponent>();
         myMovement_ = GetComponent<IMovableActor>();
         mySenses_ = GetComponent<ISensingActor>();
         mySenses_.SetLookForPlayerLoS(true, maxDistance: 10);
@@ -51,7 +47,6 @@ public class GolemKingController : EntityComponentBase
     {
         collider_.enabled = activate;
         aiPath_.enabled = activate;
-        utilityAi_.enabled = activate;
         mySenses_.SetLookForPlayerLoS(activate, 12);
     }
 
@@ -68,16 +63,30 @@ public class GolemKingController : EntityComponentBase
     {
         yield return Timing.WaitForSeconds(2);
 
-        AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3, 0, 0.75f);
-        yield return Timing.WaitForSeconds(0.1f);
-        AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3, 0, 0.8f);
+        // 1) Follow player until damaged a bit
+        while (me_.LifePct > 0.95)
+        {
+            myMovement_.MoveTo(AiBlackboard.Instance.PlayerPosition);
+            yield return 0;
+        }
 
+        // 2) Call for help
+        myMovement_.StopMove();
+        AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3, 0, 2.5f);
+        yield return Timing.WaitForSeconds(0.1f);
+        AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3, 0, 2.0f);
+        yield return Timing.WaitForSeconds(1.5f);
+
+        GameEvents.RaiseGolemKingCallForHelp();
+
+        // 3) Standard loop
         float rageTimer = 0.0f;
 
         while (true)
         {
+            DebugLinesScript.Show("life", me_.Life);
+
             bool recentlySeenPlayer = mySenses_.GetPlayerLatestKnownPositionAge() < 2.0f;
-            DefaultProjectiles.EnableEmission = recentlySeenPlayer;
 
             if (recentlySeenPlayer)
             {
@@ -87,9 +96,8 @@ public class GolemKingController : EntityComponentBase
                     // Telegraph to player
                     enemyScript_.gameObject.layer = SceneGlobals.Instance.EnemyLayer;
                     enemyScript_.EnableAiPath(false);
-                    AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3, 0, 0.8f);
+                    AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3, 0, 1.4f);
                     myMovement_.StopMove();
-                    DefaultProjectiles.EnableEmission = false;
                     var rageEmission = RageTelegraphParticles.emission;
                     rageEmission.enabled = true;
 
@@ -121,7 +129,6 @@ public class GolemKingController : EntityComponentBase
     void OnDeath()
     {
         Timing.KillCoroutines(aiCoHandle_);
-        DefaultProjectiles.EnableEmission = false;
         var rageEmission = RageTelegraphParticles.emission;
         rageEmission.enabled = false;
         enemyScript_.gameObject.layer = SceneGlobals.Instance.DeadEnemyLayer;

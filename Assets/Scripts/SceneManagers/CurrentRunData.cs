@@ -15,7 +15,7 @@ public class CurrentRunData
     public int TotalFloor = 1;
     public int StartingDifficulty = 0;
     public World World = World.World1;
-    public SpecialLocation SpecialLocation = SpecialLocation.None;
+    public SpecialLocation SpecialLocation = SpecialLocation.BossWorld1;
 
     public string StartingCharacterTag = "Character1";
     public int Coins;

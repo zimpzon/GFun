@@ -139,7 +139,8 @@ public class GameSceneLogic : MonoBehaviour
         FloatingTextSpawner.Instance.Spawn(AiBlackboard.Instance.PlayerPosition + Vector3.up * 0.5f, "Level Up", Color.yellow);
         yield return 0;
     }
-
+    // handle mini in a loop?
+    // WHY is event not received?
     void OnEnemySpawned(IEnemy enemy, Vector3 position)
     {
         enemyAliveCount_++;

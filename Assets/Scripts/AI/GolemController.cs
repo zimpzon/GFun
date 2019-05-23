@@ -74,9 +74,18 @@ public class GolemController : EntityComponentBase
         }
     }
 
+    public void SetAppearTimeLimits(float min, float random)
+    {
+        appearMin_ = min;
+        appearRandom_ = random;
+    }
+
+    float appearMin_ = 10;
+    float appearRandom_ = 10;
+
     IEnumerator<float> AppearCo()
     {
-        yield return Timing.WaitForSeconds(10 + Random.value * 10);
+        yield return Timing.WaitForSeconds(appearMin_ + Random.value * appearRandom_);
 
         PlayerInfoScript.Instance.ShowInfo("A Horrifying Sound Is Heard In The Distance", Color.red);
 

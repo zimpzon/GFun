@@ -13,6 +13,7 @@ public static class GameEvents
     public static event EnemyAndPositionEventHandler OnEnemySpawned;
     public static event AutoPickUpEventHandler OnAutoPickUp;
     public static event NoParamEventHandler OnPlayerEnteredPortal;
+    public static event NoParamEventHandler OnGolemKingCallingForHelp;
 
     public static void RaisePlayerKilled(IEnemy enemy) => OnPlayerKilled?.Invoke(enemy);
     public static void RaisePlayerDamaged(IEnemy enemy) => OnPlayerDamaged?.Invoke(enemy);
@@ -20,6 +21,7 @@ public static class GameEvents
     public static void RaiseEnemySpawned(IEnemy enemy, Vector3 position) => OnEnemySpawned?.Invoke(enemy, position);
     public static void RaiseAutoPickUp(AutoPickUpType type, int value, Vector3 position) => OnAutoPickUp?.Invoke(type, value, position);
     public static void RaisePlayerEnteredPortal() => OnPlayerEnteredPortal?.Invoke();
+    public static void RaiseGolemKingCallForHelp() => OnGolemKingCallingForHelp?.Invoke();
 
     public static void ClearListeners()
     {
@@ -29,5 +31,6 @@ public static class GameEvents
         OnEnemySpawned = null;
         OnAutoPickUp = null;
         OnPlayerEnteredPortal = null;
+        OnGolemKingCallingForHelp = null;
     }
 }
