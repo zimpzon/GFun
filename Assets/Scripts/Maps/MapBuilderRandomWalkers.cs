@@ -2,13 +2,16 @@
 
 public static class MapBuilderRandomWalkers
 {
-    public static void Build(int w, int h)
+    public static void Build(int w, int h, int pathSize = 2, int walkerCount = 5, int steps = 60, int minBeforeTurn = 2, int maxBeforeTurn = 5)
     {
         var param = new WalkParam(MapBuilder.MapMaxWidth / 2, MapBuilder.MapMaxHeight / 2, w, h);
 
-        for (int i = 0; i < 5; ++i)
+        for (int i = 0; i < walkerCount; ++i)
         {
-            param.steps = 60;
+            param.steps = steps;
+            param.pathSize = pathSize;
+            param.minBeforeTurn = minBeforeTurn;
+            param.maxBeforeTurn = maxBeforeTurn;
             DoWalk(param, MapBuilder.MapSource);
         }
     }
@@ -22,6 +25,7 @@ public static class MapBuilderRandomWalkers
             this.x = x;
             this.y = y;
             steps = 50;
+            pathSize = 2;
             minBeforeTurn = 2;
             maxBeforeTurn = 5;
             xMin = x - w / 2;
@@ -35,6 +39,7 @@ public static class MapBuilderRandomWalkers
         public int w;
         public int h;
         public int steps;
+        public int pathSize;
         public int minBeforeTurn;
         public int maxBeforeTurn;
         public int xMin;
@@ -67,9 +72,20 @@ public static class MapBuilderRandomWalkers
             for (int i = 0; i < len; ++i)
             {
                 map[param.x + 0, param.y + 0] = 1;
-                map[param.x + 1, param.y + 0] = 1;
-                map[param.x + 0, param.y + 1] = 1;
-                map[param.x + 1, param.y + 1] = 1;
+                if (param.pathSize > 1)
+                {
+                    map[param.x + 1, param.y + 0] = 1;
+                    map[param.x + 0, param.y + 1] = 1;
+                    map[param.x + 1, param.y + 1] = 1;
+                }
+                if (param.pathSize > 2)
+                {
+                    map[param.x + 2, param.y + 0] = 1;
+                    map[param.x + 2, param.y + 1] = 1;
+                    map[param.x + 2, param.y + 2] = 1;
+                    map[param.x + 1, param.y + 2] = 1;
+                    map[param.x + 0, param.y + 2] = 1;
+                }
 
                 if (param.x > param.xMin && param.x < param.xMax - 2)
                     param.x += dirX;

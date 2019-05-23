@@ -18,8 +18,8 @@ public class BlackHoleScript : MonoBehaviour
 
     void Update()
     {
-        float sinX = Mathf.Sin(Time.time * 10) * 0.05f;
-        float sinY = Mathf.Sin(Time.time * 9) * 0.05f;
+        float sinX = Mathf.Sin(Time.time * 10.1f) * 0.05f;
+        float sinY = Mathf.Sin(Time.time * 9.01f) * 0.05f;
         SpriteTransform.localScale = new Vector3(baseScale_ + sinX, baseScale_ + sinY, 1);
     }
 }

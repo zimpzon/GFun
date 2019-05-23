@@ -45,7 +45,7 @@ public class DragonHatchlingController : EntityComponentBase
     {
         var bullet = bulletPool_.GetFromPool();
         var bulletScript = (EnemyProjectileChaseScript)bullet.GetComponent(typeof(EnemyProjectileChaseScript));
-        bulletScript.Init(me_, position, direction, range: 12, speed: 4, turnSpeed: 2, damage: 2, collideWalls: false);
+        bulletScript.Init(me_, position, direction, range: 12, speed: 5, turnSpeed: 1.0f, damage: 2, collideWalls: false);
         bullet.SetActive(true);
         float rotationDegrees = Mathf.Atan2(direction.x, -direction.y) * Mathf.Rad2Deg;
         bullet.transform.rotation = Quaternion.Euler(0, 0, rotationDegrees - 90);

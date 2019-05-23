@@ -21,6 +21,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
     public EnemyId EnemyId;
     public string EnemyName;
     public int EnemyLevel = 1;
+    public bool EnemyLootDisabled;
     public float EnemyMoveSpeed = 1;
     public float SpeedVariation = 0.2f;
     public int EnemyXP = 0;
@@ -46,6 +47,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
     public float LifePct => EnemyLife / MaxLife;
     public int Level => EnemyLevel;
     public int XP => EnemyXP;
+    public bool LootDisabled => EnemyLootDisabled;
 
     public bool IsDead { get; set; }
 
@@ -129,12 +131,19 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         MaxLife = EnemyLife;
     }
 
+    bool isFirstStart_ = true;
     private void Start()
     {
         if (aiPath_ != null)
         {
             aiPath_.destination = transform_.position;
             aiPath_.canMove = true;
+        }
+
+        if (isFirstStart_)
+        {
+            GameEvents.RaiseEnemySpawned(this, transform_.position);
+            isFirstStart_ = false;
         }
     }
 
@@ -217,6 +226,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
     public void StopMove()
     {
         hasMoveTotarget_ = false;
+        latestMovementDirection_ = Vector3.zero;
         if (aiPath_ != null)
         {
             aiPath_.isStopped = true;
@@ -226,6 +236,10 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
 
     public bool MoveTargetReached() => moveTargetReached_;
 
+    System.Func<int, int> damageFilter_;
+    public void SetDamageFilter(System.Func<int, int> filter)
+        => damageFilter_ = filter;
+
     public void TakeDamage(int amount, Vector3 damageForce)
     {
         if (IsDead)
@@ -233,7 +247,12 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
             body_.AddForce(damageForce * 10, ForceMode2D.Impulse);
             return;
         }
-         
+
+        if (damageFilter_ != null)
+            amount = damageFilter_(amount);
+        if (amount == 0)
+            return;
+
         DoFlash(0.5f, 0.3f);
         EnemyLife = Mathf.Max(0, EnemyLife - amount);
         if (EnemyLife == 0)

@@ -192,6 +192,54 @@ MonoBehaviour:
   ExpandCount: 10
   PoolCount: 0
   InFlightCount: 0
+--- !u!1 &1934359035
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1934359036}
+  - component: {fileID: 1934359037}
+  m_Layer: 0
+  m_Name: EnemyIceBulletPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1934359036
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934359035}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6710576160537641272}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1934359037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934359035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6933e99cec5c14f4dbd74c8f2b72527d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Prefab: {fileID: 6462519186071445375, guid: 9e1c18f0b1f89c049b10af8f9d6ade6e, type: 3}
+  StartCount: 100
+  ExpandCount: 10
+  PoolCount: 0
+  InFlightCount: 0
 --- !u!1 &6710576160059068766
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,6 +321,7 @@ Transform:
   - {fileID: 468808154}
   - {fileID: 1250768378}
   - {fileID: 1352407783}
+  - {fileID: 1934359036}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -13,6 +13,7 @@ public class ChestScript : MonoBehaviour, IEnemy
     public int XP => 0;
     public bool IsDead => false;
     public void DoFlash(float amount, float ms) { }
+    public bool LootDisabled => true;
 
     GameObject enemy;
 

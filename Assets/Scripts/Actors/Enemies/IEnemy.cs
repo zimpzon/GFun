@@ -10,6 +10,7 @@ public interface IEnemy
     float MaxLife { get; }
     int XP { get; }
     bool IsDead { get; }
+    bool LootDisabled { get; }
     void DoFlash(float amount, float ms);
     void TakeDamage(int amount, Vector3 damageForce);
 }

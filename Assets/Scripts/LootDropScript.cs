@@ -9,6 +9,9 @@ public class LootDropScript : MonoBehaviour
 
     public void SpawnDrops(IEnemy enemy, Vector3 position)
     {
+        if (enemy.LootDisabled)
+            return;
+
         SpawnCoins(enemy, position);
         SpawnHealth(enemy, position);
     }

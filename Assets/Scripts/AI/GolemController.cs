@@ -19,7 +19,6 @@ public class GolemController : EntityComponentBase
     IPhysicsActor myPhysics_;
     Collider2D collider_;
     AIPath aiPath_;
-    UtilityAIComponent utilityAi_;
     Transform transform_;
     EnemyScript enemyScript_;
     CoroutineHandle aiCoHandle_;
@@ -30,7 +29,6 @@ public class GolemController : EntityComponentBase
     {
         collider_ = GetComponent<Collider2D>();
         aiPath_ = GetComponent<AIPath>();
-        utilityAi_ = GetComponent<UtilityAIComponent>();
         myMovement_ = GetComponent<IMovableActor>();
         mySenses_ = GetComponent<ISensingActor>();
         mySenses_.SetLookForPlayerLoS(true, maxDistance: 10);
@@ -52,7 +50,6 @@ public class GolemController : EntityComponentBase
     {
         collider_.enabled = activate;
         aiPath_.enabled = activate;
-        utilityAi_.enabled = activate;
         mySenses_.SetLookForPlayerLoS(activate, 12);
     }
 
@@ -116,9 +113,10 @@ public class GolemController : EntityComponentBase
         }
 
         transform_.SetPositionAndRotation(appearPos, Quaternion.identity);
-        MapScript.Instance.TriggerExplosion(appearPos, 2);
+        MapScript.Instance.TriggerExplosion(appearPos, 3);
 
         PlayerInfoScript.Instance.ShowInfo($"{me_.Name} Has Arrived!", Color.red);
+
         aiCoHandle_ = Timing.RunCoroutine(AICo().CancelWith(this.gameObject));
     }
 

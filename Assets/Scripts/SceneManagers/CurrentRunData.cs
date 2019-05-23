@@ -8,14 +8,15 @@ public enum SpecialLocation { None, Shop, BossWorld1, }
 [Serializable]
 public class CurrentRunData
 {
+    public const int BossActivationFloor = 5;
     public static CurrentRunData Instance = new CurrentRunData();
     public bool HasPlayerData;
 
-    public int FloorInWorld = 2;
+    public int FloorInWorld = 1;
     public int TotalFloor = 1;
     public int StartingDifficulty = 0;
     public World World = World.World1;
-    public SpecialLocation SpecialLocation = SpecialLocation.BossWorld1;
+    public SpecialLocation SpecialLocation = SpecialLocation.None;
 
     public string StartingCharacterTag = "Character1";
     public int Coins;
@@ -30,6 +31,8 @@ public class CurrentRunData
     public int EnemiesKilled;
     public int XpEarned;
 
+    public int Boss1Attempts;
+    public int Boss1Kills;
     public float RunStartTime;
     public float RunEndTime;
     public bool RunEnded;

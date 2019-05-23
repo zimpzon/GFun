@@ -105,19 +105,18 @@ public class EnemySpawner : MonoBehaviour
     {
         var openPositions = GetOpen2x2Positions(forbiddenPositions);
 
-        if (difficulty < 7)
-            DebugLinesScript.Show("Unexpected difficulty for World2 (expected >= 7)", difficulty);
+        if (difficulty < 6)
+            DebugLinesScript.Show("Unexpected difficulty for World2 (expected >= 6)", difficulty);
 
-        // Minimum difficulty here is 7 (5 World1 + boss + 1)
-        difficulty -= 6; // = 1 and up
+        difficulty -= 5;
 
         int dragonHatchlingCount = 2 + difficulty / 2;
-        int fireBatCount = difficulty + 1;
-        int scytheCount = Random.Range(0, (difficulty / 2) + 2);
+        int iceBatCount = difficulty + 1;
+        int scytheCount = Random.Range(0, (difficulty / 2) + 3) + 1;
 
         var defaultPos = openPositions[0];
         AddEnemiesOfType(parent, EnemyId.SeekerScythe, scytheCount, openPositions, defaultPos);
-        AddEnemiesOfType(parent, EnemyId.FireBat, fireBatCount, openPositions, defaultPos);
+        AddEnemiesOfType(parent, EnemyId.IceBat, iceBatCount, openPositions, defaultPos);
         AddEnemiesOfType(parent, EnemyId.DragonHatchling, dragonHatchlingCount, openPositions, defaultPos);
     }
 }

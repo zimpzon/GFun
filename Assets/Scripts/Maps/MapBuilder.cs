@@ -191,9 +191,14 @@ public static class MapBuilder
 
         else if (algo == MapFloorAlgorithm.CaveLike1)
             MapBuilderCaveLike1.Build(w, h);
-
         else
             SceneGlobals.Instance.DebugLinesScript.SetLine("Unknown map algorithm", algo);
+    }
+
+    public static void GenerateRandomWalkersMapFloor(int w, int h, int pathSize = 2, int walkerCount = 5, int steps = 60, int minBeforeTurn = 2, int maxBeforeTurn = 5)
+    {
+        ZeroMap();
+        MapBuilderRandomWalkers.Build(w, h, pathSize, walkerCount, steps, minBeforeTurn, maxBeforeTurn);
     }
 
     static RectInt CreateRect(int x, int y, int w, int h) => new RectInt(x - w / 2, y - h / 2, w, h);

@@ -7,6 +7,7 @@ public class SpriteAnimator_IdleRun : MonoBehaviour, ISpriteAnimator
 
     SpriteRenderer renderer_;
     float randomOffset_;
+    bool latestFlip_;
 
     public void UpdateAnimation(Vector3 latestMovementDirection, bool isDead = false)
     {
@@ -20,7 +21,15 @@ public class SpriteAnimator_IdleRun : MonoBehaviour, ISpriteAnimator
             renderer_.sprite = SimpleSpriteAnimator.GetAnimationSprite(isRunning ? Anim.Run : Anim.Idle, Anim.DefaultAnimationFramesPerSecond, randomOffset_);
         }
 
-        renderer_.flipX = latestMovementDirection.x < 0;
+        if (latestMovementDirection.x == 0)
+        {
+            renderer_.flipX = latestFlip_;
+        }
+        else
+        {
+            renderer_.flipX = latestMovementDirection.x < 0;
+            latestFlip_ = renderer_.flipX;
+        }
     }
 
     private void Awake()

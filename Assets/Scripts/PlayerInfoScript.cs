@@ -67,7 +67,15 @@ public class PlayerInfoScript : MonoBehaviour
             pos.x = 0;
             transform_.localPosition = pos;
 
-            yield return Timing.WaitForSeconds(4);
+            float endTime = Time.unscaledTime + 4;
+            float endTimeWhenQueue = Time.unscaledTime + 1.5f;
+            while (Time.unscaledTime < endTime)
+            {
+                if (queue_.Count > 0 && Time.unscaledTime > endTimeWhenQueue)
+                    break;
+
+                yield return 0;
+            }
 
             t = 0;
             while (t < 1.0f)

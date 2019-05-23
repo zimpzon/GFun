@@ -2438,7 +2438,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2538338988247646576}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.56, y: 3.36, z: 0}
+  m_LocalPosition: {x: -4.48, y: 3.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7537765696553365294}
@@ -3898,7 +3898,7 @@ MonoBehaviour:
   AppliedCellBounds:
     m_Position: {x: 0, y: 0, z: 0}
     m_Size: {x: 0, y: 0, z: 0}
-  Music: {fileID: 0}
+  Music: {fileID: 8300000, guid: d4299a350b83f3b489ec530a5195159b, type: 3}
   PortalPosition: {fileID: 4037538267790314147}
   BossPortalPosition: {fileID: 5943791911613617091}
 --- !u!1 &7537765696622411806
@@ -5320,11 +5320,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7537765696553365294}
     m_Modifications:
-    - target: {fileID: 8473194048218598285, guid: ca2ca0a9b1ef6814b829073b82bf20ff,
-        type: 3}
-      propertyPath: m_Name
-      value: Chest
-      objectReference: {fileID: 0}
     - target: {fileID: 8473194048218598287, guid: ca2ca0a9b1ef6814b829073b82bf20ff,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5379,6 +5374,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8473194048218598285, guid: ca2ca0a9b1ef6814b829073b82bf20ff,
+        type: 3}
+      propertyPath: m_Name
+      value: Chest
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca2ca0a9b1ef6814b829073b82bf20ff, type: 3}

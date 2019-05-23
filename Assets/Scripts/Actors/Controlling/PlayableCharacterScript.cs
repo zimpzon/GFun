@@ -12,6 +12,7 @@ public class PlayerSelfDamage : IEnemy
     public float LifePct => 1;
     public float MaxLife => 1;
     public int XP => 0;
+    public bool LootDisabled => true;
     public bool IsDead => false;
     public void DoFlash(float amount, float ms) { }
     public void TakeDamage(int amount, Vector3 damageForce) { }

@@ -4,11 +4,13 @@ public static class MapBuilderCaveLike1
 {
     public static void Build(int w, int h)
     {
-        var mapHandler = new CaveBuilder1(MapBuilder.MapSource, w, h, 0.5f);
+        var mapHandler = new CaveBuilder1(w, h, 0.45f);
         mapHandler.MakeCaverns();
         mapHandler.InvertMap();
+        mapHandler.CopyTo(MapBuilder.MapSource, MapBuilder.MapMaxWidth / 2, MapBuilder.MapMaxHeight / 2);
     }
 
+    // PWE: Copied from somewhere, I didn't write it.
     public class CaveBuilder1
     {
         public byte[,] Map;
@@ -16,15 +18,29 @@ public static class MapBuilderCaveLike1
         public int MapHeight { get; set; }
         public float WallPct { get; set; }
 
-        public CaveBuilder1(byte[,] map, int w, int h, float wallPct)
+        public CaveBuilder1(int w, int h, float wallPct)
         {
-            Map = map;
+            Map = new byte[w, h];
 
             MapWidth = w;
             MapHeight = h;
             WallPct = wallPct;
 
             RandomFillMap();
+        }
+
+        public void CopyTo(byte[,] dst, int centerX, int centerY)
+        {
+            int baseX = centerX - MapWidth / 2;
+            int baseY = centerY - MapHeight / 2;
+            for (int y = 0; y < MapHeight; ++y)
+            {
+                for (int x = 0; x < MapWidth; ++x)
+                {
+                    byte val = Map[x, y];
+                    dst[baseX + x, baseY + y] = Map[x, y];
+                }
+            }
         }
 
         public void InvertMap()
@@ -55,7 +71,6 @@ public static class MapBuilderCaveLike1
         {
             int numWalls = GetAdjacentWalls(x, y, 1, 1);
 
-
             if (Map[x, y] == 1)
             {
                 if (numWalls >= 4)
@@ -66,7 +81,6 @@ public static class MapBuilderCaveLike1
                 {
                     return 0;
                 }
-
             }
             else
             {

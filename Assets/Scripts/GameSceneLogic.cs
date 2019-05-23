@@ -66,6 +66,7 @@ public class GameSceneLogic : MonoBehaviour
             run.FloorInWorld = 1;
             run.World = World.World2;
             run.SpecialLocation = SpecialLocation.Shop;
+            run.ShopKeeperPokeCount = 0; // Start over poke count when changing world
         }
         else if (run.SpecialLocation == SpecialLocation.Shop)
         {
@@ -74,9 +75,8 @@ public class GameSceneLogic : MonoBehaviour
         else if (run.SpecialLocation == SpecialLocation.None)
         {
             // Just complated a standard floor.
-            run.TotalFloor++;
             run.FloorInWorld++;
-
+            run.TotalFloor++;
             run.SpecialLocation = SpecialLocation.Shop;
         }
         else
@@ -248,17 +248,7 @@ public class GameSceneLogic : MonoBehaviour
         var playerPos = playerInScene.transform.position;
         UpdateXp(Vector3.zero, 0);
 
-        // Locate enemies
         Time.timeScale = 0.01f;
-        var enemiesAtMapStart = FindObjectsOfType<EnemyScript>();
-        foreach (var enemy in enemiesAtMapStart)
-        {
-            if (enemy.transform.parent != DynamicObjectRoot)
-                enemy.transform.SetParent(DynamicObjectRoot);
-
-            GameEvents.RaiseEnemySpawned(enemy, enemy.transform.position);
-        }
-
         const float MinimumShowTime = 1.5f;
         float endTime = Time.unscaledTime + (startTime - Time.unscaledTime) + MinimumShowTime;
         while (Time.unscaledTime < endTime)
@@ -311,7 +301,6 @@ public class GameSceneLogic : MonoBehaviour
     {
         var enemies = FindObjectsOfType<EnemyScript>();
         int count = enemies.Length;
-        PlayerInfoScript.Instance.ShowInfo($"Killing All Enemies! ({count})", Color.yellow);
         foreach (var enemy in enemies)
             enemy.TakeDamage(10000, Vector3.up);
     }
@@ -334,10 +323,11 @@ public class GameSceneLogic : MonoBehaviour
 
     void OnAllEnemiesDead()
     {
+        GameEvents.RaiseAllEnemieKiled();
         if (NextLevelPortal.gameObject.activeInHierarchy)
             return;
 
-        Timing.RunCoroutine(ActivatePortalLoop().CancelWith(this.gameObject));
+        Timing.RunCoroutine(ActivatePortalLoop(latestEnemyDeathPosition_).CancelWith(this.gameObject));
     }
 
     public void OnPlayerEnterNextLevelPortal()
@@ -358,7 +348,7 @@ public class GameSceneLogic : MonoBehaviour
         LoadNextLevel();
     }
 
-    IEnumerator<float> ActivatePortalLoop()
+    public IEnumerator<float> ActivatePortalLoop(Vector3 position)
     {
         NextLevelPortal.gameObject.SetActive(true);
 
@@ -370,7 +360,7 @@ public class GameSceneLogic : MonoBehaviour
             yield return 0;
         }
 
-        var pos = latestEnemyDeathPosition_;
+        var pos = position;
         NextLevelPortal.transform.position = pos;
         map_.TriggerExplosion(pos, 3);
         var portalCenter = pos + Vector3.up * 1.5f;
@@ -401,6 +391,8 @@ public class GameSceneLogic : MonoBehaviour
             (PlayFabData.Stat_EnemiesKilled, CurrentRunData.Instance.EnemiesKilled),
             (PlayFabData.Stat_CoinsCollected, CurrentRunData.Instance.CoinsCollected),
             (PlayFabData.Stat_ItemsBought, CurrentRunData.Instance.ItemsBought),
+            (PlayFabData.Stat_Boss1Attempts, CurrentRunData.Instance.Boss1Attempts),
+            (PlayFabData.Stat_Boss1Kills, CurrentRunData.Instance.Boss1Kills),
             (PlayFabData.Stat_Deaths, 1),
         };
 

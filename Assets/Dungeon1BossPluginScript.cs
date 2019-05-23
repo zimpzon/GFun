@@ -8,80 +8,85 @@ public class Dungeon1BossPluginScript : MapPluginScript
     public override string Name => "The Golem King";
     public Transform PlayerStartPosition;
     public Transform PortalPosition;
-    public Transform ChestPosition;
+    public GameObject Chest;
 
+    Color baseAmbientColor_;
     MiniGolemController[] miniGolems_;
     GolemController[] golems_;
     GolemKingController golemKing_;
-
     PortalScript nextLevelPortal_;
 
     private void Start()
     {
-        var dynamicObjects = GameObject.FindWithTag("DynamicObjects");
+        CurrentRunData.Instance.Boss1Attempts++;
 
         golemKing_ = FindObjectOfType<GolemKingController>();
-        GameEvents.RaiseEnemySpawned((IEnemy)golemKing_, Vector3.zero);
 
         miniGolems_ = FindObjectsOfType<MiniGolemController>();
-        for (int i = 0; i < miniGolems_.Length; ++i)
-            GameEvents.RaiseEnemySpawned((IEnemy)miniGolems_[i], Vector3.zero);
-
         golems_ = FindObjectsOfType<GolemController>();
         for (int i = 0; i < golems_.Length; ++i)
-        {
-            GameEvents.RaiseEnemySpawned((IEnemy)golems_[i], Vector3.zero);
-            golems_[i].enabled = false;
-        }
+            golems_[i].gameObject.SetActive(false);
 
         GameEvents.OnGolemKingCallingForHelp += GameEvents_OnGolemKingCallingForHelp;
+        GameEvents.OnAllEnemiesKilled += GameEvents_OnAllEnemiesKilled;
+
+        nextLevelPortal_ = GameSceneLogic.Instance.NextLevelPortal;
+        nextLevelPortal_.gameObject.SetActive(true);
+        nextLevelPortal_.transform.position = Vector3.right * 800;
+
+        Chest.SetActive(false);
+    }
+
+    private void GameEvents_OnAllEnemiesKilled()
+    {
+        CurrentRunData.Instance.Boss1Kills++;
+        Timing.RunCoroutine(VictoryCo().CancelWith(this.gameObject));
+    }
+
+    IEnumerator<float> VictoryCo()
+    {
+        nextLevelPortal_.transform.position = PortalPosition.position;
+        Chest.SetActive(true);
+        ScaleAmbientLight(1.0f);
+
+        yield return Timing.WaitForSeconds(2.0f);
+        PlayerInfoScript.Instance.ShowInfo("Victory!", Color.yellow);
+
+        // Let the dust settle
+        yield return Timing.WaitForSeconds(5.0f);
+
+        AudioManager.Instance.PlayMusic(Music, 0.8f);
     }
 
     private void GameEvents_OnGolemKingCallingForHelp()
     {
         for (int i = 0; i < miniGolems_.Length; ++i)
-            miniGolems_[i].Run();
+            miniGolems_[i].Run(i * 2f + 2);
 
         for (int i = 0; i < golems_.Length; ++i)
         {
-            golems_[i].SetAppearTimeLimits(i * 5, 1);
-            golems_[i].enabled = true;
+            golems_[i].SetAppearTimeLimits(i * 4, 0);
+            golems_[i].gameObject.SetActive(true);
         }
 
-        DarkenAmbientLight();
+        baseAmbientColor_ = LightingImageEffect.Instance.CurrentValues.AmbientLight;
+        ScaleAmbientLight(0.01f);
     }
 
     public override void ApplyToMap(Vector3Int position)
     {
         ApplyTilemap(position);
-        nextLevelPortal_ = GameSceneLogic.Instance.NextLevelPortal;
-        nextLevelPortal_.gameObject.SetActive(false);
-        nextLevelPortal_.transform.position = PortalPosition.position;
     }
 
-    void DarkenAmbientLight()
+    void ScaleAmbientLight(float amount)
     {
         var currentLight = LightingImageEffect.Instance.CurrentValues;
-        Color.RGBToHSV(currentLight.AmbientLight, out float H, out float S, out float V);
-        V *= 0.25f;
+        Color.RGBToHSV(baseAmbientColor_, out float H, out float S, out float V);
+        V *= amount;
         currentLight.AmbientLight = Color.HSVToRGB(H, S, V);
-        LightingImageEffect.Instance.SetBaseColorTarget(currentLight, 5);
+        LightingImageEffect.Instance.SetBaseColorTarget(currentLight, 10);
     }
 
     public override Vector3 GetPlayerStartPosition()
         => PlayerStartPosition.position;
-
-    bool bossDead_;
-
-    public override IEnumerator<float> GameLoopCo()
-    {
-        yield return Timing.WaitForSeconds(0.5f);
-
-        while (!bossDead_)
-        {
-            yield return 0;
-        }
-
-        AudioManager.Instance.PlayMusic(Music, 0.8f);
-    }
 }

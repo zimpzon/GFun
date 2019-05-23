@@ -19,6 +19,7 @@ public class GolemKingController : EntityComponentBase
     Transform transform_;
     EnemyScript enemyScript_;
     CoroutineHandle aiCoHandle_;
+    ShieldScript shield_;
 
     public override EntityType AiType => EntityType.FleeingBat;
 
@@ -33,6 +34,9 @@ public class GolemKingController : EntityComponentBase
         myPhysics_ = GetComponent<IPhysicsActor>();
         transform_ = transform;
         enemyScript_ = GetComponent<EnemyScript>();
+        enemyScript_.SetDamageFilter(DamageFilter);
+        shield_ = GetComponentInChildren<ShieldScript>();
+        shield_.gameObject.SetActive(false);
 
         base.Awake();
     }
@@ -41,6 +45,24 @@ public class GolemKingController : EntityComponentBase
     {
         if (enemy == me_)
             AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3, 0, 0.8f);
+    }
+
+    float showImmuneCooldown_;
+    int DamageFilter(int amount)
+    {
+        if (amount > 500) // Mostly for testing
+            shield_.gameObject.SetActive(false);
+
+        if (shield_.gameObject.activeInHierarchy)
+        {
+            if (Time.unscaledTime > showImmuneCooldown_)
+            {
+                FloatingTextSpawner.Instance.Spawn(transform_.position + Vector3.up * 0.5f, "Immune", Color.red, 1.0f, 1.0f);
+                showImmuneCooldown_ = Time.unscaledTime + 2.0f;
+            }
+            return 0;
+        }
+        return amount;
     }
 
     void Activate(bool activate)
@@ -72,19 +94,27 @@ public class GolemKingController : EntityComponentBase
 
         // 2) Call for help
         myMovement_.StopMove();
-        AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3, 0, 2.5f);
-        yield return Timing.WaitForSeconds(0.1f);
-        AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3, 0, 2.0f);
-        yield return Timing.WaitForSeconds(1.5f);
+        shield_.gameObject.SetActive(true);
+        yield return Timing.WaitForSeconds(1.0f);
+        AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3, 0, 0.8f);
+        yield return Timing.WaitForSeconds(0.2f);
+        AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3, 0, 1.5f);
+
+        var rageEmission = RageTelegraphParticles.emission;
+        rageEmission.enabled = true;
+        yield return Timing.WaitForSeconds(2.5f);
+        rageEmission.enabled = false;
 
         GameEvents.RaiseGolemKingCallForHelp();
+        yield return Timing.WaitForSeconds(5.0f);
 
         // 3) Standard loop
         float rageTimer = 0.0f;
-
+        float shieldEnd = Time.unscaledTime + 30.0f;
         while (true)
         {
-            DebugLinesScript.Show("life", me_.Life);
+            if (Time.unscaledTime > shieldEnd && shield_.gameObject.activeInHierarchy)
+                shield_.gameObject.SetActive(false);
 
             bool recentlySeenPlayer = mySenses_.GetPlayerLatestKnownPositionAge() < 2.0f;
 
@@ -98,7 +128,6 @@ public class GolemKingController : EntityComponentBase
                     enemyScript_.EnableAiPath(false);
                     AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3, 0, 1.4f);
                     myMovement_.StopMove();
-                    var rageEmission = RageTelegraphParticles.emission;
                     rageEmission.enabled = true;
 
                     yield return Timing.WaitForSeconds(1);

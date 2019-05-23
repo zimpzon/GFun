@@ -46,12 +46,14 @@ public class MiniGolemController : EntityComponentBase
         aiCoHandle_ = Timing.RunCoroutine(AICo().CancelWith(this.gameObject));
     }
 
-    public void Run()
+    public void Run(float delay)
     {
         run_ = true;
+        spawnDelay_ = delay;
     }
 
     bool run_;
+    float spawnDelay_ = 1;
 
     IEnumerator<float> AICo()
     {
@@ -62,10 +64,10 @@ public class MiniGolemController : EntityComponentBase
         while (!run_)
             yield return 0;
 
-        yield return Timing.WaitForSeconds(2.0f + Random.value * 20);
+        yield return Timing.WaitForSeconds(spawnDelay_ + Random.value * 0.5f);
 
         var basePos = AiBlackboard.Instance.PlayerPosition;
-        var startOffset = new Vector3(0, 1, -12);
+        var startOffset = new Vector3(0, 0, -12);
 
         SceneGlobals.Instance.AudioManager.PlaySfxClip(SceneGlobals.Instance.AudioManager.AudioClips.PlayerLand, 3, 0.1f, 1.8f);
 
@@ -82,9 +84,10 @@ public class MiniGolemController : EntityComponentBase
         }
 
         transform_.SetPositionAndRotation(basePos, Quaternion.identity);
+        MapScript.Instance.TriggerExplosion(transform_.position, 1);
         ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.WallDestructionParticles, basePos, 10);
-        SceneGlobals.Instance.AudioManager.PlaySfxClip(SceneGlobals.Instance.AudioManager.AudioClips.LargeExplosion1, 3, 0.1f, 1.2f);
-        SceneGlobals.Instance.CameraShake.SetMinimumShake(1.0f);
+//        SceneGlobals.Instance.AudioManager.PlaySfxClip(SceneGlobals.Instance.AudioManager.AudioClips.LargeExplosion1, 3, 0.1f, 1.2f);
+  //      SceneGlobals.Instance.CameraShake.SetMinimumShake(1.0f);
 
         collider_.enabled = true;
 

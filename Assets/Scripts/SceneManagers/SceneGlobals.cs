@@ -30,6 +30,7 @@ public class SceneGlobals : MonoBehaviour
     public GameObjectPool PlainBulletPool;
     public GameObjectPool ElongatedBulletPool;
     public GameObjectPool EnemyBullet1Pool;
+    public GameObjectPool EnemyIceBulletPool;
     public GameObjectPool DragonHatchlingProjectilePool;
     public PlayableCharacters PlayableCharacters;
     public int OnTheFloorSortingValue = 15;
