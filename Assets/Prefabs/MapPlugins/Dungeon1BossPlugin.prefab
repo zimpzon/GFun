@@ -7938,12 +7938,75 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AppliedCellBounds:
-    m_Position: {x: 0, y: 0, z: 0}
-    m_Size: {x: 0, y: 0, z: 0}
+    m_Position: {x: 75, y: 32, z: 0}
+    m_Size: {x: 48, y: 37, z: 1}
   Music: {fileID: 8300000, guid: d4299a350b83f3b489ec530a5195159b, type: 3}
+  DistantThunder: {fileID: 8300000, guid: 8e78768dd93d62e429d94c7839e7a17c, type: 3}
   PlayerStartPosition: {fileID: 1048060495702584893}
   PortalPosition: {fileID: 4037538267790314147}
   Chest: {fileID: 202727208463618493}
+  FlashLightingSettings:
+    AmbientLight: {r: 0.35088107, g: 0.8793599, b: 0.8962264, a: 1}
+    Brightness: 3
+    MonochromeAmount: 0.5
+    MonochromeFactorR: 0.23
+    MonochromeFactorG: 0.66
+    MonochromeFactorB: 0.11
+    MonochromeDisplayR: 0.1
+    MonochromeDisplayG: 0.1
+    MonochromeDisplayB: 0.1
+  FlashCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0008010864
+      value: 0.4017563
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.014172923
+      value: 1.0763227
+      inSlope: 0.7598072
+      outSlope: 0.7598072
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.29017627
+      value: 0.40570724
+      inSlope: 0.31557974
+      outSlope: 0.31557974
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.44775486
+      value: 0.9086115
+      inSlope: -0.037466504
+      outSlope: -0.037466504
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.0054932
+      value: 0.2042923
+      inSlope: -3.267037
+      outSlope: -3.267037
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.022097914
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  FlashTime: 0.4
 --- !u!1 &7702129131285555287
 GameObject:
   m_ObjectHideFlags: 0
@@ -8626,6 +8689,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7537765696553365294}
     m_Modifications:
+    - target: {fileID: 8473194048218598285, guid: ca2ca0a9b1ef6814b829073b82bf20ff,
+        type: 3}
+      propertyPath: m_Name
+      value: Chest
+      objectReference: {fileID: 0}
+    - target: {fileID: 8473194048218598285, guid: ca2ca0a9b1ef6814b829073b82bf20ff,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8473194048218598287, guid: ca2ca0a9b1ef6814b829073b82bf20ff,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8680,16 +8753,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8473194048218598285, guid: ca2ca0a9b1ef6814b829073b82bf20ff,
-        type: 3}
-      propertyPath: m_Name
-      value: Chest
-      objectReference: {fileID: 0}
-    - target: {fileID: 8473194048218598285, guid: ca2ca0a9b1ef6814b829073b82bf20ff,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca2ca0a9b1ef6814b829073b82bf20ff, type: 3}

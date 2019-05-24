@@ -110,7 +110,7 @@ public class GolemKingController : EntityComponentBase
 
         // 3) Standard loop
         float rageTimer = 0.0f;
-        float shieldEnd = Time.unscaledTime + 30.0f;
+        float shieldEnd = Time.unscaledTime + 20.0f;
         while (true)
         {
             if (Time.unscaledTime > shieldEnd && shield_.gameObject.activeInHierarchy)

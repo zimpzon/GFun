@@ -127,6 +127,8 @@ MonoBehaviour:
   WeaponId: 1
   DisplayName: Rifle
   FireSound: {fileID: 8300000, guid: 810c97943c369fe43876f64b287305f2, type: 3}
+  FireSoundPitch: 1.1
+  FireSoundPitchVariation: 0.1
   GunSettings:
     Level: 1
     AmmoCount: 100
@@ -139,10 +141,9 @@ MonoBehaviour:
     Speed: 20
     Range: 6
     Size: 0.25
-    BounceWalls: 0
+    BounceWalls: 1
     Damage: 10
     DamageForce: 2
-    EnergyCost: 50
   PowerBulletSettings:
     Speed: 15
     Range: 15
@@ -150,4 +151,3 @@ MonoBehaviour:
     BounceWalls: 0
     Damage: 20
     DamageForce: 10
-    EnergyCost: 50

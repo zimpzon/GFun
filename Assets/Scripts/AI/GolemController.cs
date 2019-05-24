@@ -78,7 +78,7 @@ public class GolemController : EntityComponentBase
     }
 
     float appearMin_ = 10;
-    float appearRandom_ = 10;
+    float appearRandom_ = 5;
 
     IEnumerator<float> AppearCo()
     {
@@ -87,7 +87,7 @@ public class GolemController : EntityComponentBase
         PlayerInfoScript.Instance.ShowInfo("A Horrifying Sound Is Heard In The Distance", Color.red);
 
         AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3);
-        yield return Timing.WaitForSeconds(6);
+        yield return Timing.WaitForSeconds(4);
 
         var playerPos = AiBlackboard.Instance.PlayerPosition;
         Vector3 appearPos;

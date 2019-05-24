@@ -297,8 +297,13 @@ public class GameSceneLogic : MonoBehaviour
         Timing.RunCoroutine(mapPluginScript.GameLoopCo().CancelWith(mapPluginScript.gameObject));
     }
 
+    bool killAllPressed;
     void KillAllEnemies()
     {
+        if (killAllPressed)
+            OnPlayerEnterNextLevelPortal();
+
+        killAllPressed = true;
         var enemies = FindObjectsOfType<EnemyScript>();
         int count = enemies.Length;
         foreach (var enemy in enemies)

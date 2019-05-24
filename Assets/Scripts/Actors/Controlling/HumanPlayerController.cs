@@ -90,8 +90,12 @@ public class HumanPlayerController : MonoBehaviour
         weapon_.OnTriggerUp();
     }
 
+    int screenshotCounter = 0;
     void CheckActions()
     {
+        if (Input.GetKeyDown(KeyCode.Q) && Application.isEditor)
+            ScreenCapture.CaptureScreenshot($@"C:\private\GFun\Screenshots\screenshot{screenshotCounter++}.png");
+
         //if (Input.GetKeyDown(KeyCode.Q))
         //    ToggleBulletTime();
 

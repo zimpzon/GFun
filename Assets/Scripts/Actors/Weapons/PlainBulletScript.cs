@@ -68,6 +68,36 @@ public class PlainBulletScript : MonoBehaviour
         }
 
         float distance = settings_.Speed * Time.fixedDeltaTime;
+
+        if (settings_.BounceWalls)
+        {
+            bool updateAngle = false;
+
+            // Move X
+            Vector3 newPosX = position_;
+            newPosX.x += Direction.x * distance;
+            if (map_.GetCollisionTileValue(newPosX) != MapBuilder.TileWalkable)
+            {
+                Direction.x *= -1;
+                updateAngle = true;
+            }
+
+            // Move Y
+            Vector3 newPosY = position_;
+            newPosY.y += Direction.y * distance;
+            if (map_.GetCollisionTileValue(newPosY) != MapBuilder.TileWalkable)
+            {
+                Direction.y *= -1;
+                updateAngle = true;
+            }
+
+            if (updateAngle)
+            {
+                float rotationDegrees = Mathf.Atan2(Direction.x, -Direction.y) * Mathf.Rad2Deg + 180;
+                rotation_ = Quaternion.Euler(0, 0, rotationDegrees);
+            }
+        }
+
         position_ += Direction * distance;
         distanceMoved_ += distance;
         if (map_.GetCollisionTileValue(position_) != MapBuilder.TileWalkable)

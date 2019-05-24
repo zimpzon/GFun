@@ -228,7 +228,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
         body_ = GetComponent<Rigidbody2D>();
         switchPlayerInteract_ = transform_.Find("SwitchPlayerInteract").GetComponent<InteractableTrigger>();
 
-        AttachWeapon(Weapons.Instance.CreateWeapon(WeaponIds.Rifle));
+        AttachWeapon(Weapons.Instance.CreateWeapon(WeaponIds.Shotgun));
     }
 
     private void Start()

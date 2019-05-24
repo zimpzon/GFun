@@ -2,4 +2,5 @@
 {
     NullWeapon,
     Rifle,
+    Shotgun,
 }

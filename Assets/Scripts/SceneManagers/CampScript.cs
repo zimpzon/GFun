@@ -184,8 +184,8 @@ public class CampScript : MonoBehaviour
         if (time > nextFlash)
         {
             lightingImageEffect_.FlashColor(FlashLightingSettings, FlashCurve, FlashTime);
-            nextFlash = time + 10.0f + Random.value * 10;
-            nextThunder = time + Random.value * 1.0f + 1.0f;
+            nextFlash = time + 8.0f + Random.value * 4;
+            nextThunder = time + Random.value + 0.5f;
         }
 
         if (time > nextThunder)

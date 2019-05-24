@@ -8,6 +8,8 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
     public WeaponIds WeaponId;
     public string DisplayName;
     public AudioClip FireSound;
+    public float FireSoundPitch = 1.0f;
+    public float FireSoundPitchVariation = 0.1f;
     public AmmoType AmmoType => AmmoType.Bullets;
     public int Level => GunSettings.Level;
     public int AmmoCount => GunSettings.AmmoCount;
@@ -147,7 +149,7 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
 
         if (EffectsOn)
         {
-            audioManager_.PlaySfxClip(FireSound, 1, 0.1f);
+            audioManager_.PlaySfxClip(FireSound, 1, FireSoundPitchVariation, FireSoundPitch);
             cameraShake_.SetMinimumShake(0.75f);
 
             forceReceiver_.SetMinimumForce(-direction * 3);
