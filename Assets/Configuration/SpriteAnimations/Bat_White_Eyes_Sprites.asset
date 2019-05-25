@@ -15,6 +15,7 @@ MonoBehaviour:
   DefaultAnimationFramesPerSecond: 6
   Sprites:
   - {fileID: 21300010, guid: aff0e86a4febd424cb1672d6572e016e, type: 3}
+  - {fileID: 21300010, guid: aff0e86a4febd424cb1672d6572e016e, type: 3}
   - {fileID: 21300012, guid: aff0e86a4febd424cb1672d6572e016e, type: 3}
   - {fileID: 21300014, guid: aff0e86a4febd424cb1672d6572e016e, type: 3}
   - {fileID: 21300016, guid: aff0e86a4febd424cb1672d6572e016e, type: 3}
