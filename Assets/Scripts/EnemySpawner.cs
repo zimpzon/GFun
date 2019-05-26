@@ -81,42 +81,14 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    public void AddEnemiesForWorld1(Transform parent, int difficulty, List<(Vector3, float)> forbiddenPositions)
+    public void AddEnemiesForWorld(List<EnemySpawnDefinition> enemiesToSpawn, Transform parent, List<(Vector3, float)> forbiddenPositions)
     {
         var openPositions = GetOpen2x2Positions(forbiddenPositions);
 
-        bool isFirstLevel = difficulty == 1;
-
-        int batCount = 2 + difficulty / 2;
-        int fireBatCount = difficulty - 1;
-        int fleeingBatCount = 2;
-        int scytheCount = isFirstLevel ? 0 : Random.Range(0, (difficulty / 2) + 2);
-        int golemCount = (difficulty & 1) == 1 ? 0 : 1 + difficulty / 6;
-
-        var defaultPos = openPositions[0];
-        AddEnemiesOfType(parent, EnemyId.SeekerScythe, scytheCount, openPositions, defaultPos);
-        AddEnemiesOfType(parent, EnemyId.Bat, batCount, openPositions, defaultPos);
-        AddEnemiesOfType(parent, EnemyId.FireBat, fireBatCount, openPositions, defaultPos);
-        AddEnemiesOfType(parent, EnemyId.FleeingBat, fleeingBatCount, openPositions, defaultPos);
-        AddEnemiesOfType(parent, EnemyId.Golem, golemCount, openPositions, defaultPos);
-    }
-
-    public void AddEnemiesForWorld2(Transform parent, int difficulty, List<(Vector3, float)> forbiddenPositions)
-    {
-        var openPositions = GetOpen2x2Positions(forbiddenPositions);
-
-        if (difficulty < 6)
-            DebugLinesScript.Show("Unexpected difficulty for World2 (expected >= 6)", difficulty);
-
-        difficulty -= 5;
-
-        int dragonHatchlingCount = 2 + difficulty / 2;
-        int iceBatCount = difficulty + 1;
-        int scytheCount = Random.Range(0, (difficulty / 2) + 3) + 1;
-
-        var defaultPos = openPositions[0];
-        AddEnemiesOfType(parent, EnemyId.SeekerScythe, scytheCount, openPositions, defaultPos);
-        AddEnemiesOfType(parent, EnemyId.IceBat, iceBatCount, openPositions, defaultPos);
-        AddEnemiesOfType(parent, EnemyId.DragonHatchling, dragonHatchlingCount, openPositions, defaultPos);
+        foreach (EnemySpawnDefinition item in enemiesToSpawn)
+        {
+            var defaultPos = openPositions[0];
+            AddEnemiesOfType(parent, item.EnemyId, item.Count, openPositions, defaultPos);
+        }
     }
 }

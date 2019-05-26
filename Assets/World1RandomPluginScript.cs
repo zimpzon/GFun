@@ -24,7 +24,23 @@ public class World1RandomPluginScript : MapPluginScript
 
         var dynamicObjects = GameObject.FindWithTag("DynamicObjects");
         int difficulty = CurrentRunData.Instance.StartingDifficulty + CurrentRunData.Instance.TotalFloor;
-        EnemySpawner.Instance.AddEnemiesForWorld1(dynamicObjects.transform, difficulty, forbiddenPositions);
+        List<EnemySpawnDefinition> enemySpawnDefinitions = new List<EnemySpawnDefinition>();
+
+        bool isFirstLevel = difficulty == 1;
+
+        int batCount = 2 + difficulty / 2;
+        int fireBatCount = difficulty - 1;
+        int fleeingBatCount = 2;
+        int scytheCount = isFirstLevel ? 0 : Random.Range(0, (difficulty / 2) + 2);
+        int golemCount = (difficulty & 1) == 1 ? 0 : 1 + difficulty / 6;
+
+        enemySpawnDefinitions.Add( new EnemySpawnDefinition() { EnemyId = EnemyId.SeekerScythe, Count = scytheCount });
+        enemySpawnDefinitions.Add( new EnemySpawnDefinition() { EnemyId = EnemyId.Bat, Count = batCount });
+        enemySpawnDefinitions.Add( new EnemySpawnDefinition() { EnemyId = EnemyId.FireBat, Count = fireBatCount });
+        enemySpawnDefinitions.Add( new EnemySpawnDefinition() { EnemyId = EnemyId.FleeingBat, Count = fleeingBatCount });
+        enemySpawnDefinitions.Add( new EnemySpawnDefinition() { EnemyId = EnemyId.Golem, Count = golemCount });
+
+        EnemySpawner.Instance.AddEnemiesForWorld(enemySpawnDefinitions, dynamicObjects.transform, forbiddenPositions);
     }
 
     public override Vector3 GetPlayerStartPosition() => playerStartPos_;

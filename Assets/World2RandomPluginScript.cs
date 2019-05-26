@@ -24,7 +24,22 @@ public class World2RandomPluginScript : MapPluginScript
 
         var dynamicObjects = GameObject.FindWithTag("DynamicObjects");
         int difficulty = CurrentRunData.Instance.StartingDifficulty + CurrentRunData.Instance.TotalFloor;
-        EnemySpawner.Instance.AddEnemiesForWorld2(dynamicObjects.transform, difficulty, forbiddenPositions);
+        List<EnemySpawnDefinition> enemySpawnDefinitions = new List<EnemySpawnDefinition>();
+
+        if (difficulty < 6)
+            DebugLinesScript.Show("Unexpected difficulty for World2 (expected >= 6)", difficulty);
+
+        difficulty -= 5;
+
+        int dragonHatchlingCount = 2 + difficulty / 2;
+        int iceBatCount = difficulty + 1;
+        int scytheCount = Random.Range(0, (difficulty / 2) + 3) + 1;
+
+        enemySpawnDefinitions.Add( new EnemySpawnDefinition() { EnemyId = EnemyId.SeekerScythe, Count = scytheCount });
+        enemySpawnDefinitions.Add( new EnemySpawnDefinition() { EnemyId = EnemyId.IceBat, Count = iceBatCount });
+        enemySpawnDefinitions.Add( new EnemySpawnDefinition() { EnemyId = EnemyId.DragonHatchling, Count = dragonHatchlingCount });
+
+        EnemySpawner.Instance.AddEnemiesForWorld(enemySpawnDefinitions, dynamicObjects.transform, forbiddenPositions);
     }
 
     public override Vector3 GetPlayerStartPosition() => playerStartPos_;
