@@ -8,13 +8,13 @@ public class Shotgun : MonoBehaviour, IWeapon
     public AudioClip FireSound;
     public AmmoType AmmoType => AmmoType.Bullets;
     public int Level => 1;
-    public int AmmoCount => 100;
     public int AmmoMax => 100;
     public string Name => DisplayName;
+    public int AmmoCount { get; set; }
     public WeaponIds Id => WeaponId;
     public Vector3 LatestFiringDirection { get; private set; }
     public float LatestFiringTimeUnscaled { get; private set; }
-    public float AngleSpread = 30;
+    public float AngleSpread = 20;
     public int BulletCount = 5;
     public float Cooldown = 0.3f;
     public PlainBulletSettings BulletSettings;
@@ -29,6 +29,7 @@ public class Shotgun : MonoBehaviour, IWeapon
 
     private void Awake()
     {
+        AmmoCount = AmmoMax;
         bulletPool_ = SceneGlobals.Instance.ElongatedBulletPool;
         audioManager_ = SceneGlobals.Instance.AudioManager;
         cameraShake_ = SceneGlobals.Instance.CameraShake;
@@ -48,7 +49,6 @@ public class Shotgun : MonoBehaviour, IWeapon
         cd_ = Time.unscaledTime + Cooldown;
         awaitingRelease_ = true;
 
-        var position = transform_.position + firingDirection * 0.5f;
         LatestFiringDirection = firingDirection;
         LatestFiringTimeUnscaled = Time.unscaledTime;
 
@@ -57,6 +57,9 @@ public class Shotgun : MonoBehaviour, IWeapon
         float angleMaxVariation = 10;
         for (int j = 0; j < BulletCount; ++j)
         {
+            float positionRandomOffset = Random.value * 0.35f;
+            var position = transform_.position + firingDirection * (0.375f + positionRandomOffset);
+
             float angleOffset = angle + Random.value * angleMaxVariation;
             angle += angleStep;
             var offsetDirection = Quaternion.AngleAxis(angleOffset, Vector3.forward) * firingDirection;

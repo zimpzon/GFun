@@ -8,7 +8,7 @@ namespace GFun
         string Name { get; }
         AmmoType AmmoType { get; }
         int AmmoMax { get; }
-        int AmmoCount { get; }
+        int AmmoCount { get; set; }
         int Level { get; }
 
         Vector3 GetMuzzlePosition(Vector3 target);

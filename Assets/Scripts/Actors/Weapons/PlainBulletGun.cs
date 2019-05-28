@@ -12,7 +12,7 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
     public float FireSoundPitchVariation = 0.1f;
     public AmmoType AmmoType => AmmoType.Bullets;
     public int Level => GunSettings.Level;
-    public int AmmoCount => GunSettings.AmmoCount;
+    public int AmmoCount { get; set; }
     public int AmmoMax => GunSettings.AmmoMax;
     public string Name => DisplayName;
     public WeaponIds Id => WeaponId;
@@ -21,7 +21,6 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
 
     public PlainBulletGunSettings GunSettings;
     public PlainBulletSettings BulletSettings;
-    public PlainBulletSettings PowerBulletSettings;
 
     public static bool EffectsOn = true;
 
@@ -45,6 +44,7 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
 
     private void Awake()
     {
+        AmmoCount = GunSettings.AmmoCount;
         bulletPool_ = SceneGlobals.Instance.ElongatedBulletPool;
         audioManager_ = SceneGlobals.Instance.AudioManager;
         cameraShake_ = SceneGlobals.Instance.CameraShake;
@@ -58,7 +58,7 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
 
     public void OnTriggerDown(Vector3 firingDirection)
     {
-        if (awaitingRelease_ || GunSettings.FiringMode == FiringMode.None)
+        if (awaitingRelease_ || GunSettings.FiringMode == FiringMode.None || AmmoCount == 0)
             return;
 
         triggerIsDown_ = true;
@@ -136,9 +136,14 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         isFiring_ = false;
     }
 
-    void Fire(Vector3 position, Vector3 direction, bool powerShot = false)
+    void Fire(Vector3 position, Vector3 direction)
     {
-        var bulletSettings = powerShot ? PowerBulletSettings : BulletSettings;
+        if (AmmoCount == 0)
+            return;
+
+        AmmoCount--;
+
+        var bulletSettings = BulletSettings;
 
         var bullet = bulletPool_.GetFromPool();
         var bulletScript = (PlainBulletScript)bullet.GetComponent(typeof(PlainBulletScript));

@@ -46,9 +46,8 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
 
     [System.NonSerialized] public string KilledBy;
     [System.NonSerialized] public IEnemy KilledByEnemy;
-
-    public IWeapon CurrentWeapon;
-    public GameObject CurrentWeaponGo;
+    [System.NonSerialized] public IWeapon CurrentWeapon;
+    [System.NonSerialized] public GameObject CurrentWeaponGo;
     Transform weaponTransform_;
     SpriteRenderer weaponRenderer_;
     Material renderMaterial_;
@@ -99,6 +98,13 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
         RefreshInteracting();
     }
 
+    public void CreateWeapon(WeaponIds id, int ammoCount)
+    {
+        var weapon = Weapons.Instance.CreateWeapon(id);
+        weapon.GetComponent<IWeapon>().AmmoCount = ammoCount;
+        AttachWeapon(weapon);
+    }
+
     public void AttachWeapon(GameObject weapon)
     {
         if (CurrentWeaponGo != null)
@@ -112,8 +118,6 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
         weaponTransform_ = weapon.transform;
         weaponTransform_.localPosition = Vector3.zero;
         weapon.transform.SetParent(transform_, worldPositionStays: false);
-
-        humanPlayerController_.UpdateWeapon();
     }
 
     public void SetMinimumForce(Vector3 force)

@@ -7,7 +7,7 @@ public class NullWeapon : MonoBehaviour, IWeapon
     public string Name => "No Weapon";
     public int Level => 0;
     public AmmoType AmmoType => AmmoType.None;
-    public int AmmoCount => 0;
+    public int AmmoCount { get; set; }
     public int AmmoMax => 0;
 
     public Vector3 GetMuzzlePosition(Vector3 target) => Vector3.zero;

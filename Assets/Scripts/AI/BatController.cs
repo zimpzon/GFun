@@ -35,7 +35,7 @@ public class BatController : MonoBehaviour
                 if (!hasRecentlySeenPlayer)
                     break;
 
-                var target = mySenses_.GetPlayerLatestKnownPosition(PlayerPositionType.Tile);
+                var target = mySenses_.GetPlayerLatestKnownPosition(PlayerPositionType.Feet);
                 myMovement_.MoveTo(target, baseSpeed * 2);
 
                 yield return null;

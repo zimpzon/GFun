@@ -14,6 +14,12 @@ TextureImporter:
   - first:
       213: -8703208154269505046
     second: SpriteShotgun
+  - first:
+      213: 8107972689558555495
+    second: SpriteSlugger
+  - first:
+      213: -1789688629211898939
+    second: SpriteRocketLauncher
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -136,7 +142,7 @@ TextureImporter:
         width: 24
         height: 6
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -144,6 +150,48 @@ TextureImporter:
       bones: []
       spriteID: 1c0a75029dba6694d887b7012e6d4d7f
       internalID: -8703208154269505046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSlugger
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 0
+        width: 28
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 564bf8f1db09f864c97334c11abfa0c5
+      internalID: 8107972689558555495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteRocketLauncher
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 352
+        width: 27
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8c281ceb8dddf64e85d0e1dfa34fb27
+      internalID: -1789688629211898939
       vertices: []
       indices: 
       edges: []

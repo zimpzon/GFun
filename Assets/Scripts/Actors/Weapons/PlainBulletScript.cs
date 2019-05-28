@@ -14,6 +14,7 @@ public class PlainBulletScript : MonoBehaviour
     PlainBulletSettings settings_;
     MapScript map_;
     int remainingDamage_;
+    int bouncesLeft_;
 
     public void Init(Vector3 position, Vector3 direction, PlainBulletSettings settings)
     {
@@ -22,6 +23,7 @@ public class PlainBulletScript : MonoBehaviour
         settings_ = settings;
         distanceMoved_ = 0;
         remainingDamage_ = settings.Damage;
+        bouncesLeft_ = settings.MaxBounces;
 
         float rotationDegrees = Mathf.Atan2(Direction.x, -Direction.y) * Mathf.Rad2Deg + 180;
         rotation_ = Quaternion.Euler(0, 0, rotationDegrees);
@@ -69,7 +71,7 @@ public class PlainBulletScript : MonoBehaviour
 
         float distance = settings_.Speed * Time.fixedDeltaTime;
 
-        if (settings_.BounceWalls)
+        if (bouncesLeft_ > 0)
         {
             bool updateAngle = false;
 
@@ -95,6 +97,7 @@ public class PlainBulletScript : MonoBehaviour
             {
                 float rotationDegrees = Mathf.Atan2(Direction.x, -Direction.y) * Mathf.Rad2Deg + 180;
                 rotation_ = Quaternion.Euler(0, 0, rotationDegrees);
+                bouncesLeft_--;
             }
         }
 

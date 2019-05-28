@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 1921782251215252599}
   - component: {fileID: 1921782251215252595}
   - component: {fileID: 1921782251215252592}
-  - component: {fileID: 5858678511140378763}
   - component: {fileID: 711082632569833813}
   - component: {fileID: 1866847542716123366}
   - component: {fileID: 4109897645051153515}
+  - component: {fileID: 784108255275123784}
   m_Layer: 8
   m_Name: FleeingBat
   m_TagString: Untagged
@@ -62,7 +62,8 @@ MonoBehaviour:
   EnemyId: 3
   EnemyName: A Hiding Bat
   EnemyLevel: 1
-  EnemyMoveSpeed: 6
+  EnemyLootDisabled: 0
+  EnemyMoveSpeed: 4
   SpeedVariation: 0.2
   EnemyXP: 10
   EnemyLife: 20
@@ -70,10 +71,10 @@ MonoBehaviour:
   BlipRenderer: {fileID: 1921782252298801372}
   ShadowRenderer: {fileID: 1921782252247090794}
   LightRenderer: {fileID: 1921782251431772651}
-  DamageSound: {fileID: 8300000, guid: 23ba2dc4b30d32b449cf360211e1583c, type: 3}
-  DamageSoundPitch: 1
+  DamageSound: {fileID: 8300000, guid: 50db012df0a0243468a23e634a296a66, type: 3}
+  DamageSoundPitch: 1.5
   DamageSoundPitchVariation: 0.2
-  DeathSound: {fileID: 8300000, guid: 96d23fa085cbb924e9eceb46fd5559af, type: 3}
+  DeathSound: {fileID: 8300000, guid: 50db012df0a0243468a23e634a296a66, type: 3}
   DeathSoundPitchVariation: 0.2
   DeathSoundPitch: 1
   WallAvoidancePower: 0.2
@@ -115,18 +116,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.5}
   serializedVersion: 2
   m_Radius: 0.3
---- !u!114 &5858678511140378763
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1921782251215252598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e45c2a88338a0248a7d93ab4a997312, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &711082632569833813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,6 +199,18 @@ MonoBehaviour:
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 1
   constrainInsideGraph: 0
+--- !u!114 &784108255275123784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921782251215252598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e37b1aa7ac603d45a8c20077e5f2d00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1921782251431772653
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,7 +237,7 @@ Transform:
   m_GameObject: {fileID: 1921782251431772653}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.65, z: 1}
   m_Children: []
   m_Father: {fileID: 1921782251215252596}
   m_RootOrder: 0
@@ -279,7 +280,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 30
   m_Sprite: {fileID: 21300000, guid: b0b471c1f44cc2a4e81613274f102186, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7735849, g: 0.71079296, b: 0.48531505, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -457,7 +458,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1921782252708537649}
   - component: {fileID: 1921782252708537678}
-  - component: {fileID: 1921782252708537679}
+  - component: {fileID: 4536781909244762135}
   m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
@@ -473,7 +474,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1921782252708537648}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1921782251215252596}
@@ -516,7 +517,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 30
-  m_Sprite: {fileID: 21300000, guid: aff0e86a4febd424cb1672d6572e016e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5d6a426230217fd41b31a64aacf058e3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -527,7 +528,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1921782252708537679
+--- !u!114 &4536781909244762135
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -536,8 +537,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1921782252708537648}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad974ab402097bc40b0a300315f4c5af, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b2dc28d25f52f24eb2b1d2f6a4b0be2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Anim: {fileID: 11400000, guid: 2a951802aa277604b8d67bffea3981d7, type: 2}
-  SpriteWhenDead: {fileID: 21300024, guid: aff0e86a4febd424cb1672d6572e016e, type: 3}
+  Anim: {fileID: 11400000, guid: bffcf211cc8cefe4f8ffef507a66cacd, type: 2}
+  SpriteWhenDead: {fileID: 21300000, guid: 5d6a426230217fd41b31a64aacf058e3, type: 3}

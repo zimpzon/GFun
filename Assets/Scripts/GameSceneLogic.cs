@@ -88,12 +88,15 @@ public class GameSceneLogic : MonoBehaviour
     void SavePlayerDataInCurrentRun(PlayableCharacterScript player, CurrentRunData run)
     {
         // Remember player stats since player object is destroyed when loading next level
+        run.CurrentWeapon = player.CurrentWeapon.Id;
+        run.CurrentAmmo = player.CurrentWeapon.AmmoCount;
         run.MaxLife = player.MaxLife;
         run.Life = player.Life;
     }
 
     void InitializePlayerWithCurrentRunData(PlayableCharacterScript player, CurrentRunData run)
     {
+        player.CreateWeapon(run.CurrentWeapon, run.CurrentAmmo);
         player.MaxLife = run.MaxLife;
         player.Life = run.Life;
     }
@@ -139,8 +142,7 @@ public class GameSceneLogic : MonoBehaviour
         FloatingTextSpawner.Instance.Spawn(AiBlackboard.Instance.PlayerPosition + Vector3.up * 0.5f, "Level Up", Color.yellow);
         yield return 0;
     }
-    // handle mini in a loop?
-    // WHY is event not received?
+
     void OnEnemySpawned(IEnemy enemy, Vector3 position)
     {
         enemyAliveCount_++;

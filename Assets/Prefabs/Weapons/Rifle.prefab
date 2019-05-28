@@ -139,15 +139,15 @@ MonoBehaviour:
     TimeBetweenShots: 0.1
   BulletSettings:
     Speed: 20
-    Range: 6
-    Size: 0.25
-    BounceWalls: 1
+    Range: 8
+    Size: 0.3
+    MaxBounces: 0
     Damage: 10
-    DamageForce: 2
+    DamageForce: 1
   PowerBulletSettings:
     Speed: 15
     Range: 15
     Size: 0.45
-    BounceWalls: 0
+    MaxBounces: 1
     Damage: 20
     DamageForce: 10

@@ -3,4 +3,5 @@
     NullWeapon,
     Rifle,
     Shotgun,
+    Slugger,
 }

@@ -12,6 +12,9 @@ public class CurrentRunData
     public static CurrentRunData Instance = new CurrentRunData();
     public bool HasPlayerData;
 
+    public WeaponIds CurrentWeapon = WeaponIds.NullWeapon;
+    public int CurrentAmmo;
+
     public int FloorInWorld = 1;
     public int TotalFloor = 1;
     public int StartingDifficulty = 0;
