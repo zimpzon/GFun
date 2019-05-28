@@ -68,7 +68,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 31
-  m_Sprite: {fileID: -8703208154269505046, guid: e17279eb1cde3ad448618b1dd1a4c482,
+  m_Sprite: {fileID: 8606930319082817419, guid: e17279eb1cde3ad448618b1dd1a4c482,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 2816594798548844391}
   - component: {fileID: 677534294}
   m_Layer: 0
-  m_Name: Slugger
+  m_Name: Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124,23 +124,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f06bde2b3e7810f4288edc4601d730d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponId: 3
-  DisplayName: Slugger
+  WeaponId: 1
+  DisplayName: Rifle
   FireSound: {fileID: 8300000, guid: 810c97943c369fe43876f64b287305f2, type: 3}
-  FireSoundPitch: 0.9
+  FireSoundPitch: 1.1
   FireSoundPitchVariation: 0.1
+  Recoil: 3
   GunSettings:
-    Level: 3
+    Level: 1
     AmmoCount: 100
     FiringSpread: 0
-    FiringMode: 1
-    Precision: 0.9
+    FiringMode: 2
+    Precision: 0.8
     BurstCount: 1
-    TimeBetweenShots: 0.3
+    TimeBetweenShots: 0.1
   BulletSettings:
-    Speed: 30
-    Range: 10
-    Size: 0.6
+    Speed: 20
+    Range: 8
+    Size: 0.3
     MaxBounces: 0
-    Damage: 50
+    Damage: 10
     DamageForce: 1

@@ -12,8 +12,22 @@ public class Enemies : MonoBehaviour
 {
     public static Enemies Instance;
 
-    public EnemyPrefabList EnemyPrefabList;
-    public List<EnemyLookup> EnemyLookup;
+    public static List<GameObject> EnemyPrefabs;
+    public static List<EnemyLookup> EnemyLookup;
+
+    public static void LoadEnemiesFromResources()
+    {
+        if (EnemyPrefabs == null)
+        {
+            EnemyPrefabs = Resources.LoadAll<GameObject>("").Where(r => r.GetComponent<EnemyScript>() != null).ToList();
+            foreach (var enemy in EnemyPrefabs)
+                enemy.hideFlags = HideFlags.DontUnloadUnusedAsset;
+
+            EnemyLookup = EnemyPrefabs.Select(prefab => new EnemyLookup { Enemy = prefab.GetComponent<EnemyScript>(), Prefab = prefab }).ToList();
+
+            Debug.Log($"Loaded {EnemyPrefabs.Count} enemies");
+        }
+    }
 
     public List<EnemyLookup> FindEnemies(int minLevel, int maxLevel)
     {
@@ -35,7 +49,5 @@ public class Enemies : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        EnemyLookup = EnemyPrefabList.EnemyPrefabs.Select(prefab =>
-            new EnemyLookup { Enemy = prefab.GetComponent<IEnemy>(), Prefab = prefab }).ToList();
     }
 }

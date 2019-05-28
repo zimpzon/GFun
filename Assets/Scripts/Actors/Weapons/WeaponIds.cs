@@ -4,4 +4,5 @@
     Rifle,
     Shotgun,
     Slugger,
+    BouncingAutoDoubleRifleRifle,
 }

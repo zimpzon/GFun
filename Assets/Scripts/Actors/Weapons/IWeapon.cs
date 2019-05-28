@@ -7,8 +7,7 @@ namespace GFun
         WeaponIds Id { get; }
         string Name { get; }
         AmmoType AmmoType { get; }
-        int AmmoMax { get; }
-        int AmmoCount { get; set; }
+        int AmmoCount { get; }
         int Level { get; }
 
         Vector3 GetMuzzlePosition(Vector3 target);
@@ -17,5 +16,6 @@ namespace GFun
         Vector3 LatestFiringDirection { get; }
         float LatestFiringTimeUnscaled { get; }
         void SetOwner(IPhysicsActor forceReceiver);
+        void SetAmmoProvider(IAmmoProvider ammoProvider);
     }
 }

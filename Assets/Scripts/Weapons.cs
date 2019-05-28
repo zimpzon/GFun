@@ -12,8 +12,22 @@ public class WeaponLookup
 public class Weapons : MonoBehaviour
 {
     public static Weapons Instance;
-    public WeaponPrefabList WeaponPrefabList;
-    public List<WeaponLookup> WeaponLookup;
+    public static List<GameObject> WeaponPrefabs;
+    public static List<WeaponLookup> WeaponLookup;
+
+    public static void LoadWeaponsFromResources()
+    {
+        if (WeaponPrefabs == null)
+        {
+            WeaponPrefabs = Resources.LoadAll<GameObject>("").Where(r => r.GetComponent<IWeapon>() != null).ToList();
+            foreach (var weapon in WeaponPrefabs)
+                weapon.hideFlags = HideFlags.DontUnloadUnusedAsset;
+
+            WeaponLookup = WeaponPrefabs.Select(prefab => new WeaponLookup { Weapon = prefab.GetComponent<IWeapon>(), Prefab = prefab }).ToList();
+
+            Debug.Log($"Loaded {WeaponPrefabs.Count} weapons");
+        }
+    }
 
     public List<WeaponLookup> FindWeapons(int minLevel, int maxLevel)
     {
@@ -35,7 +49,6 @@ public class Weapons : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        WeaponLookup = WeaponPrefabList.WeaponPrefabs.Select(prefab =>
-            new WeaponLookup { Weapon = prefab.GetComponent<IWeapon>(), Prefab = prefab }).ToList();
+        LoadWeaponsFromResources();
     }
 }

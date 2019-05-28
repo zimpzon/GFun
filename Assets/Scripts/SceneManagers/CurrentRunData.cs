@@ -13,7 +13,10 @@ public class CurrentRunData
     public bool HasPlayerData;
 
     public WeaponIds CurrentWeapon = WeaponIds.NullWeapon;
-    public int CurrentAmmo;
+    public int BulletAmmo = 999;
+    public int ShellAmmo = 999;
+    public int ExplosiveAmmo;
+    public int ArrowAmmo;
 
     public int FloorInWorld = 1;
     public int TotalFloor = 1;

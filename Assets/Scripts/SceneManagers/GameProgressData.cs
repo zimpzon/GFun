@@ -9,11 +9,12 @@ public class GameProgressData
     public static GameProgressData CurrentProgress = new GameProgressData();
     public static bool EnableSave = false; // So we can start at different scenes without overwriting
 
-    public long NumberOfDeaths;
-    public long EnemiesKilled;
+    public int Version = 1;
+    public int NumberOfDeaths;
+    public int EnemiesKilled;
     public int PlayerXp = 0;
 
-    public List<string> UnlockedCharacters = new List<string>() { "Character1" };
+    public List<string> UnlockedCharacters = new List<string>() { "Character1", "Character2", "Character3" };
 
     public static void RestartProgress()
     {
