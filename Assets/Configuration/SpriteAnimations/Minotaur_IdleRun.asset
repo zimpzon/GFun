@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1394803210e4a414ebe4a6652d8ee43f, type: 3}
+  m_Name: Minotaur_IdleRun
+  m_EditorClassIdentifier: 
+  DefaultAnimationFramesPerSecond: 5
+  Idle:
+  - {fileID: -2991773290986861209, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
+  - {fileID: -3482560379574023985, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
+  - {fileID: -4089556705372702670, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
+  - {fileID: -7291498848502609278, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
+  - {fileID: 5545791981575950956, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
+  Run:
+  - {fileID: 2695833335711562302, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
+  - {fileID: -4074518398165530191, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
+  - {fileID: -1750775512566399208, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
+  - {fileID: 1239450828636133216, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
+  - {fileID: 7747281075459476067, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
+  - {fileID: -4614463974701417080, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
+  - {fileID: 576915257532028970, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
