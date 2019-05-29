@@ -9,7 +9,8 @@ public class GameProgressData
     public static GameProgressData CurrentProgress = new GameProgressData();
     public static bool EnableSave = false; // So we can start at different scenes without overwriting
 
-    public int Version = 1;
+    public int Version = 2;
+    public const int RequiredVersion = 2;
     public int NumberOfDeaths;
     public int EnemiesKilled;
     public int PlayerXp = 0;
@@ -31,10 +32,14 @@ public class GameProgressData
         if (string.IsNullOrWhiteSpace(json))
         {
             CurrentProgress = new GameProgressData();
-            return;
+        }
+        else
+        {
+            CurrentProgress = JsonUtility.FromJson<GameProgressData>(json);
         }
 
-        CurrentProgress = JsonUtility.FromJson<GameProgressData>(json);
+        if (CurrentProgress.Version < GameProgressData.RequiredVersion)
+            CurrentProgress = new GameProgressData();
     }
 
     public static void SaveProgress(bool saveBackup = true)
