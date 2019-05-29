@@ -52,30 +52,24 @@ MonoBehaviour:
   LightingImageEffect: {fileID: 0}
   LightingCamera: {fileID: 0}
   MapCamera: {fileID: 0}
-  MapLayer:
-    serializedVersion: 2
-    m_Bits: 8192
-  PlayerLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  PlayerDamageLayer:
-    serializedVersion: 2
-    m_Bits: 2048
-  PlayerInteractionLayer:
-    serializedVersion: 2
-    m_Bits: 4096
-  EnemyLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  EnemyDamageLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  DeadEnemyLayer:
-    serializedVersion: 2
-    m_Bits: 2097152
+  GraveStoneManager: {fileID: 0}
+  MapLayer: 0
+  PlayerLayer: 0
+  PlayerDamageLayer: 0
+  PlayerInteractionLayer: 0
+  EnemyLayer: 0
+  EnemyNoWallsLayer: 0
+  EnemyDamageLayer: 0
+  DeadEnemyLayer: 0
+  EnemyDeadOrAliveMask: 0
+  EnemyAliveMask: 0
+  RocketPool: {fileID: 0}
   PlainBulletPool: {fileID: 0}
   ElongatedBulletPool: {fileID: 0}
   EnemyBullet1Pool: {fileID: 0}
-  FloatingTextPool: {fileID: 0}
+  EnemyIceBulletPool: {fileID: 0}
+  DragonHatchlingProjectilePool: {fileID: 0}
+  WeaponPickupPrefab: {fileID: 5949134711215471000, guid: cc333f35a001fa9459b80d552a4ff4b4,
+    type: 3}
   PlayableCharacters: {fileID: 0}
   OnTheFloorSortingValue: 15

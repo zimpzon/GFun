@@ -1,4 +1,5 @@
 ﻿using GFun;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerSelfDamage : IEnemy
@@ -27,7 +28,7 @@ public class PlayerHealthEvent
     public float Time;
 }
 
-public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
+public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IAmmoProvider
 {
     public string Name;
     public float Speed = 10;
@@ -41,14 +42,16 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
     public int ShowCollisionDebugSize = 10;
     public bool IsDead = false;
     public Vector3 WeaponOffsetRight;
+    public WeaponIds DefaultWeapon = WeaponIds.Rifle;
     public AudioClip TakeDamageSound;
     public Texture2D CursorTexture;
+    int MaxWeapons = 1;
 
     [System.NonSerialized] public string KilledBy;
     [System.NonSerialized] public IEnemy KilledByEnemy;
-
-    public IWeapon CurrentWeapon;
-    public GameObject CurrentWeaponGo;
+    [System.NonSerialized] public IWeapon CurrentWeapon;
+    [System.NonSerialized] public GameObject CurrentWeaponGo;
+    [System.NonSerialized] public List<GameObject> EquippedWeapons = new List<GameObject>();
     Transform weaponTransform_;
     SpriteRenderer weaponRenderer_;
     Material renderMaterial_;
@@ -73,6 +76,37 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
     bool isHumanControlled_;
     InteractableTrigger switchPlayerInteract_;
 
+    public bool TryUseAmmo(AmmoType ammoType, int amount)
+    {
+        int amountLeft = GetCurrentAmount(ammoType);
+        if (amountLeft < amount)
+            return false;
+
+        switch (ammoType)
+        {
+            case AmmoType.Bullet: CurrentRunData.Instance.BulletAmmo -= amount; break;
+            case AmmoType.Shell: CurrentRunData.Instance.ShellAmmo -= amount; break;
+            case AmmoType.Explosive: CurrentRunData.Instance.ExplosiveAmmo -= amount; break;
+            case AmmoType.Arrow: CurrentRunData.Instance.ArrowAmmo -= amount; break;
+            default: break;
+        }
+        GameEvents.RaiseAmmoChanged(ammoType, amount);
+
+        return true;
+    }
+
+    public int GetCurrentAmount(AmmoType ammoType)
+    {
+        switch (ammoType)
+        {
+            case AmmoType.Bullet: return CurrentRunData.Instance.BulletAmmo;
+            case AmmoType.Shell: return CurrentRunData.Instance.ShellAmmo;
+            case AmmoType.Explosive: return CurrentRunData.Instance.ExplosiveAmmo;
+            case AmmoType.Arrow: return CurrentRunData.Instance.ArrowAmmo;
+            default: return 0;
+        }
+    }
+
     void AddPlayerHealthEvent(int amount, string source)
     {
         CurrentRunData.Instance.AddPlayerHealthEvent(amount, source);
@@ -83,7 +117,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
         collider_.enabled = false;
     }
 
-    public void SetIsHumanControlled(bool isHumanControlled, bool showChangeEffect = false)
+    public void SetIsHumanControlled(bool isHumanControlled, RigidbodyConstraints2D constraints = RigidbodyConstraints2D.FreezeRotation, bool showChangeEffect = false)
     {
         bool noChange = isHumanControlled == isHumanControlled_;
         if (noChange)
@@ -91,6 +125,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
 
         isHumanControlled_ = isHumanControlled;
         humanPlayerController_.enabled = isHumanControlled_;
+        body_.constraints = constraints;
         if (showChangeEffect && isHumanControlled)
         {
             ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.CharacterSelectedParticles, transform_.position + Vector3.up * 0.5f, 30);
@@ -99,21 +134,48 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
         RefreshInteracting();
     }
 
-    public void AttachWeapon(GameObject weapon)
+    public void EquipWeapon(WeaponIds id)
+    {
+        var weapon = Weapons.Instance.CreateWeapon(id);
+        EquipWeapon(weapon);
+    }
+
+    public void EquipWeapon(GameObject weapon)
     {
         if (CurrentWeaponGo != null)
-            Destroy(CurrentWeaponGo);
+        {
+            if (EquippedWeapons.Count < MaxWeapons)
+            {
+                CurrentWeaponGo.SetActive(false);
+                EquippedWeapons.Add(CurrentWeaponGo);
+            }
+            else
+            {
+                // No room for the new weapon, drop the one we hold
+                var direction = (lookAt_ - transform.position).normalized;
+                var pickup = Instantiate(SceneGlobals.Instance.WeaponPickupPrefab, transform_.position + direction * 0.5f, Quaternion.identity);
+                var script = pickup.GetComponent<WeaponPickup>();
+                script.CreateFromExisting(CurrentWeaponGo);
+                pickup.SetActive(true);
+                script.Throw(direction * 100);
+
+                CurrentWeaponGo = null;
+            }
+        }
+        else
+        {
+            EquippedWeapons.Add(weapon);
+        }
 
         CurrentWeaponGo = weapon;
         CurrentWeapon = weapon.GetComponent<IWeapon>();
         CurrentWeapon.SetOwner(this);
+        CurrentWeapon.SetAmmoProvider(this);
 
         weaponRenderer_ = CurrentWeaponGo.GetComponentInChildren<SpriteRenderer>();
         weaponTransform_ = weapon.transform;
         weaponTransform_.localPosition = Vector3.zero;
         weapon.transform.SetParent(transform_, worldPositionStays: false);
-
-        humanPlayerController_.UpdateWeapon();
     }
 
     public void SetMinimumForce(Vector3 force)
@@ -227,13 +289,12 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
         renderMaterial_ = renderer_.material;
         body_ = GetComponent<Rigidbody2D>();
         switchPlayerInteract_ = transform_.Find("SwitchPlayerInteract").GetComponent<InteractableTrigger>();
-
-        AttachWeapon(Weapons.Instance.CreateWeapon(WeaponIds.Shotgun));
+        body_.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 
     private void Start()
     {
-        slideFilter = new ContactFilter2D() { layerMask = 1 << SceneGlobals.Instance.MapLayer, useLayerMask = true };
+        wallSlideFilter = new ContactFilter2D() { layerMask = 1 << SceneGlobals.Instance.MapLayer, useLayerMask = true };
 
         Blip.SetActive(true);
         mainCam_ = Camera.main;
@@ -241,8 +302,10 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
         lookAt_ = transform_.position;
         camPositioner_ = SceneGlobals.Instance.CameraPositioner;
 
-        UpdateHealth();
+        if (CurrentWeaponGo == null)
+            EquipWeapon(DefaultWeapon);
 
+        UpdateHealth();
         RefreshInteracting();
     }
 
@@ -276,7 +339,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
         }
     }
 
-    ContactFilter2D slideFilter;
+    ContactFilter2D wallSlideFilter;
     RaycastHit2D[] slideHit = new RaycastHit2D[1];
 
     Vector3 SlideWalls(Vector3 pos, Vector3 movement)
@@ -286,14 +349,14 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
             return movement;
 
         float magnitude = movement.magnitude;
-        int collCount = collider_.Cast(movement.normalized, slideFilter, slideHit, magnitude);
+        int collCount = collider_.Cast(movement.normalized, wallSlideFilter, slideHit, magnitude);
         // If no collision in this attempted move there is nothing to adjust
         if (collCount == 0)
             return movement;
 
         // There is possibly something to adjust, try moving in X only.
         var moveX = new Vector3(Mathf.Sign(movement.x), 0, 0);
-        collCount = collider_.Cast(moveX, slideFilter, slideHit, movement.magnitude);
+        collCount = collider_.Cast(moveX, wallSlideFilter, slideHit, movement.magnitude);
 
         if (collCount == 0)
         {
@@ -304,7 +367,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
 
         // There is possibly something to adjust, try moving in Y only.
         var moveY = new Vector3(0, Mathf.Sign(movement.y), 0);
-        collCount = collider_.Cast(moveY, slideFilter, slideHit, movement.magnitude);
+        collCount = collider_.Cast(moveY, wallSlideFilter, slideHit, movement.magnitude);
 
         if (collCount == 0)
         {
@@ -321,10 +384,17 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
     {
         UpdateFlash();
 
-        UpdateInternal_MouseControls(dt);
+        if (weaponRenderer_ != null)
+            weaponRenderer_.enabled = isHumanControlled_;
 
         if (isHumanControlled_)
+        {
+            UpdateInternal_MouseControls(dt);
             camPositioner_.Target = lookAt_;
+        }
+
+        bool isRunning = latestFixedMovenentDirection_ != Vector3.zero;
+        renderer_.sprite = SimpleSpriteAnimator.GetAnimationSprite(isRunning ? Anim.Run : Anim.Idle, Anim.DefaultAnimationFramesPerSecond);
 
         if (ShowCollisionDebug)
             DrawCollisionDebug();
@@ -373,13 +443,11 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor
         var lookDir = (mouseWorldPos - weaponMuzzlePosition).normalized;
         float distanceToCursor = (mouseWorldPos - weaponMuzzlePosition).magnitude;
 
-        flipX_ = lookDir.x < 0;
         weaponTransform_.localPosition = WeaponOffsetRight;
 
-        bool isRunning = latestFixedMovenentDirection_ != Vector3.zero;
         lookAt_ = weaponMuzzlePosition + lookDir * distanceToCursor * 0.15f;
 
-        renderer_.sprite = SimpleSpriteAnimator.GetAnimationSprite(isRunning ? Anim.Run : Anim.Idle, Anim.DefaultAnimationFramesPerSecond);
+        flipX_ = lookDir.x < 0;
         renderer_.flipX = flipX_;
 
         // Weapon positioning

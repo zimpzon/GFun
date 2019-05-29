@@ -30,7 +30,7 @@ public class PortalScript : MonoBehaviour
     IEnumerator EnterPortalCo()
     {
         var player = PlayableCharacters.GetPlayerInScene();
-        player.SetIsHumanControlled(false, showChangeEffect: false);
+        player.SetIsHumanControlled(false, constraints: RigidbodyConstraints2D.None, showChangeEffect: false);
         player.DisableCollider();
 
         float effectTime = 1.0f;

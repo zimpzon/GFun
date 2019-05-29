@@ -250,6 +250,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
 
         if (damageFilter_ != null)
             amount = damageFilter_(amount);
+
         if (amount == 0)
             return;
 

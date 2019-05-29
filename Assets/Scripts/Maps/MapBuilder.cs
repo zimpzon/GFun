@@ -154,6 +154,9 @@ public static class MapBuilder
 
     public static void DestroyTile(MapScript mapScript, MapStyle mapStyle, Vector3Int pos)
     {
+        if (mapStyle == null)
+            return;
+
         // Clear wall
         mapScript.WallTileMap.SetTile(pos, null);
 
@@ -162,7 +165,7 @@ public static class MapBuilder
         mapScript.TopTileMap.SetTile(topPos, null);
 
         // Add floor
-        var floorTile = ChooseTile(mapStyle.FloorTile, mapStyle.FloorTileVariations, mapStyle.FloorVariationChance);
+        var floorTile = mapStyle.FloorBehindWallTile;
         mapScript.FloorTileMap.SetTile(pos, floorTile);
 
         SingleFloorTileBuildWalls(mapScript, mapStyle, pos);
@@ -172,7 +175,7 @@ public static class MapBuilder
 
     static TileBase ChooseTile(TileBase tile, TileBase[] variations, float variationChance)
     {
-        int variationCount = variations.Length;
+        int variationCount = variations?.Length ?? 0;
         if (variationCount == 0 || Random.value > variationChance)
             return tile;
 

@@ -25,7 +25,7 @@ public class MapBuilderDemoScript : MonoBehaviour
     void CreatePlayer()
     {
         PlayableCharacters.Instance.InstantiateCharacter("Character1", new Vector3(100, 50, 0));
-        PlayableCharacters.GetPlayerInScene().SetIsHumanControlled(true);
+        PlayableCharacters.GetPlayerInScene().SetIsHumanControlled(true, constraints: RigidbodyConstraints2D.FreezeRotation);
         Helpers.SetCameraPositionToActivePlayer();
     }
 

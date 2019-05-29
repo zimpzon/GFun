@@ -23,6 +23,6 @@ public class XpWidget : MonoBehaviour
     public void ShowXp(int level, int current, int max, int totalXp)
     {
         XpBar.rectTransform.sizeDelta = new Vector2((xpBarMaxWidth_ / max) * current, xpBarMaxHeight_);
-        Text.text = $"LVL {level} ({current}/{max})";
+        Text.SetText("LVL {0} ({1}/{2})", level, current, max);
     }
 }

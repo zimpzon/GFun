@@ -12,6 +12,12 @@ public class CurrentRunData
     public static CurrentRunData Instance = new CurrentRunData();
     public bool HasPlayerData;
 
+    public WeaponIds CurrentWeapon = WeaponIds.NullWeapon;
+    public int BulletAmmo = 999;
+    public int ShellAmmo = 999;
+    public int ExplosiveAmmo = 999;
+    public int ArrowAmmo = 999;
+
     public int FloorInWorld = 1;
     public int TotalFloor = 1;
     public int StartingDifficulty = 0;
@@ -67,5 +73,16 @@ public class CurrentRunData
     {
         Clear();
         Instance.RunStartTime = Time.unscaledTime;
+    }
+
+    static string state;
+    public static void StoreState()
+    {
+        state = JsonUtility.ToJson(Instance);
+    }
+
+    public static void RestoreState()
+    {
+        Instance = JsonUtility.FromJson<CurrentRunData>(state);
     }
 }

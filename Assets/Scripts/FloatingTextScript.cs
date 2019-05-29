@@ -21,7 +21,7 @@ public class FloatingTextScript : MonoBehaviour
     {
         textPool_ = textPool;
         var go = textPool_.GetFromPool();
-        text_.text = text;
+        text_.SetText(text);
         text_.color = color;
         text_.fontStyle = fontStyle;
         transform_.position = position;

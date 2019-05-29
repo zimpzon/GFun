@@ -10,7 +10,6 @@ public class HumanPlayerController : MonoBehaviour
 
     PlayableCharacterScript player_;
     Transform transform_;
-    IWeapon weapon_;
     MapScript map_;
     bool bulletTime_;
     float bulletTimeValue_;
@@ -27,13 +26,7 @@ public class HumanPlayerController : MonoBehaviour
         SceneGlobals.NullCheck(player_);
         map_ = SceneGlobals.Instance.MapScript;
 
-        UpdateWeapon();
         TrackedPath.Rewind();
-    }
-
-    public void UpdateWeapon()
-    {
-        weapon_ = GetComponentInChildren<IWeapon>();
     }
 
     void ToggleBulletTime()
@@ -58,7 +51,7 @@ public class HumanPlayerController : MonoBehaviour
 
     private void OnDisable()
     {
-        weapon_.OnTriggerUp();    
+        player_.CurrentWeapon.OnTriggerUp();
     }
 
     private void FixedUpdate()
@@ -82,12 +75,12 @@ public class HumanPlayerController : MonoBehaviour
 
     void Fire(Vector3 direction)
     {
-        weapon_.OnTriggerDown(direction);
+        player_.CurrentWeapon.OnTriggerDown(direction);
     }
 
     void ReleaseFire()
     {
-        weapon_.OnTriggerUp();
+        player_.CurrentWeapon.OnTriggerUp();
     }
 
     int screenshotCounter = 0;
@@ -109,7 +102,7 @@ public class HumanPlayerController : MonoBehaviour
         mouseScreenPos.z = -mainCam_.transform.position.z;
         var mouseWorldPos = mainCam_.ScreenToWorldPoint(mouseScreenPos);
         mouseWorldPos.z = 0;
-        var weaponMuzzlePosition = weapon_.GetMuzzlePosition(mouseWorldPos);
+        var weaponMuzzlePosition = player_.CurrentWeapon.GetMuzzlePosition(mouseWorldPos);
         var lookDir = (mouseWorldPos - weaponMuzzlePosition).normalized;
 
         if (Input.GetMouseButton(0))

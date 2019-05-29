@@ -1,4 +1,5 @@
-﻿using MEC;
+﻿using GFun;
+using MEC;
 using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,8 +26,12 @@ public class GameSceneLogic : MonoBehaviour
     public TextMeshProUGUI KilledByText;
     public TextMeshProUGUI StatsText;
     public TextMeshProUGUI HistoryText;
-    public AudioClip GameMusic;
     public AudioClip ShopMusic;
+    public TextMeshProUGUI BulletAmmoText;
+    public TextMeshProUGUI ShellAmmoText;
+    public TextMeshProUGUI ExplosiveAmmoText;
+    public TextMeshProUGUI ArrowAmmoText;
+    public TextMeshProUGUI CoinText;
 
     [System.NonSerialized] public PortalScript NextLevelPortal;
     [System.NonSerialized] public PortalScript BossPortal;
@@ -47,9 +52,11 @@ public class GameSceneLogic : MonoBehaviour
 
         if (!CurrentRunData.Instance.HasPlayerData)
         {
-            // This is a new game
+            // Initialize current run if game is started directly from this scene, and not from camp
+            CurrentRunData.StartNewRun();
             SavePlayerDataInCurrentRun(playerScript_, CurrentRunData.Instance);
             CurrentRunData.Instance.HasPlayerData = true;
+            CurrentRunData.StoreState();
         }
         else
         {
@@ -88,12 +95,14 @@ public class GameSceneLogic : MonoBehaviour
     void SavePlayerDataInCurrentRun(PlayableCharacterScript player, CurrentRunData run)
     {
         // Remember player stats since player object is destroyed when loading next level
+        run.CurrentWeapon = player?.CurrentWeapon?.Id ?? WeaponIds.Rifle;
         run.MaxLife = player.MaxLife;
         run.Life = player.Life;
     }
 
     void InitializePlayerWithCurrentRunData(PlayableCharacterScript player, CurrentRunData run)
     {
+        player.EquipWeapon(run.CurrentWeapon);
         player.MaxLife = run.MaxLife;
         player.Life = run.Life;
     }
@@ -139,8 +148,7 @@ public class GameSceneLogic : MonoBehaviour
         FloatingTextSpawner.Instance.Spawn(AiBlackboard.Instance.PlayerPosition + Vector3.up * 0.5f, "Level Up", Color.yellow);
         yield return 0;
     }
-    // handle mini in a loop?
-    // WHY is event not received?
+
     void OnEnemySpawned(IEnemy enemy, Vector3 position)
     {
         enemyAliveCount_++;
@@ -164,8 +172,7 @@ public class GameSceneLogic : MonoBehaviour
 
     public void UpdateCoinWidget()
     {
-        if (CoinWidgetScript.Instance != null)
-            CoinWidgetScript.Instance.SetAmount(CurrentRunData.Instance.Coins);
+        CoinText.SetText("{0}", CurrentRunData.Instance.Coins);
     }
 
     private void Awake()
@@ -179,6 +186,7 @@ public class GameSceneLogic : MonoBehaviour
         GameEvents.OnEnemySpawned += OnEnemySpawned;
         GameEvents.OnPlayerDamaged += OnPlayerDamaged;
         GameEvents.OnAutoPickUp += OnAutoPickUp;
+        GameEvents.OnAmmoChanged += OnAmmoChanged;
 
         map_ = SceneGlobals.Instance.MapScript;
 
@@ -189,6 +197,24 @@ public class GameSceneLogic : MonoBehaviour
         BossPortal = GameObject.FindWithTag("GreenPortal").GetComponent<PortalScript>();
         BossPortal.gameObject.SetActive(false);
         BossPortal.OnPlayerEnter.AddListener(OnPlayerEnterBossPortal);
+    }
+
+    void UpdateAmmoText(TextMeshProUGUI text, int amount, int max)
+    {
+        Color col = Color.white;
+        text.SetText("{0}", amount);
+        text.color = col;
+    }
+
+    private void OnAmmoChanged(AmmoType ammoType, int change)
+    {
+        switch(ammoType)
+        {
+            case AmmoType.Bullet: UpdateAmmoText(BulletAmmoText, CurrentRunData.Instance.BulletAmmo, 0); break;
+            case AmmoType.Shell: UpdateAmmoText(ShellAmmoText, CurrentRunData.Instance.ShellAmmo, 0); break;
+            case AmmoType.Explosive: UpdateAmmoText(ExplosiveAmmoText, CurrentRunData.Instance.ExplosiveAmmo, 0); break;
+            case AmmoType.Arrow: UpdateAmmoText(ArrowAmmoText, CurrentRunData.Instance.ArrowAmmo, 0); break;
+        }
     }
 
     private void Start()
@@ -233,6 +259,12 @@ public class GameSceneLogic : MonoBehaviour
         LoadingText.text = mapPluginScript.Name;
 
         InitCanvas.gameObject.SetActive(true);
+        OnAmmoChanged(AmmoType.Bullet, 0);
+        OnAmmoChanged(AmmoType.Shell, 0);
+        OnAmmoChanged(AmmoType.Explosive, 0);
+        OnAmmoChanged(AmmoType.Arrow, 0);
+        Weapons.LoadWeaponsFromResources();
+        Enemies.LoadEnemiesFromResources();
         yield return null;
 
         // Prepare map
@@ -276,7 +308,7 @@ public class GameSceneLogic : MonoBehaviour
         }
 
         playerInScene.transform.SetPositionAndRotation(targetPos, Quaternion.identity);
-        map_.TriggerExplosion(targetPos, 2);
+        map_.TriggerExplosion(targetPos, 2.0f);
 
         var playerCenter = targetPos + Vector3.up * 0.5f;
         ParticleScript.EmitAtPosition(ParticleScript.Instance.PlayerLandParticles, playerCenter, 15);
@@ -367,7 +399,7 @@ public class GameSceneLogic : MonoBehaviour
 
         var pos = position;
         NextLevelPortal.transform.position = pos;
-        map_.TriggerExplosion(pos, 3);
+        map_.TriggerExplosion(pos, 2.9f);
         var portalCenter = pos + Vector3.up * 1.5f;
         ParticleScript.EmitAtPosition(ParticleScript.Instance.PlayerLandParticles, portalCenter, 25);
         ParticleScript.EmitAtPosition(ParticleScript.Instance.MuzzleFlashParticles, portalCenter, 1);
@@ -475,7 +507,10 @@ public class GameSceneLogic : MonoBehaviour
             Time.timeScale = timeScale;
 
             if (Input.GetKeyDown(KeyCode.R))
+            {
+                CurrentRunData.RestoreState();
                 LoadNextLevel();
+            }
 
             if (Input.GetKeyDown(KeyCode.Space))
                 LoadTheCamp();

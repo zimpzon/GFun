@@ -10,20 +10,17 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
     public AudioClip FireSound;
     public float FireSoundPitch = 1.0f;
     public float FireSoundPitchVariation = 0.1f;
-    public AmmoType AmmoType => AmmoType.Bullets;
+    public AmmoType AmmoType => AmmoType.Bullet;
     public int Level => GunSettings.Level;
-    public int AmmoCount => GunSettings.AmmoCount;
-    public int AmmoMax => GunSettings.AmmoMax;
+    public int AmmoCount => ammoProvider_.GetCurrentAmount(AmmoType);
     public string Name => DisplayName;
     public WeaponIds Id => WeaponId;
+    public float Recoil = 1.0f;
     public Vector3 LatestFiringDirection => latestFiringDirection_;
     public float LatestFiringTimeUnscaled => latestFiringTime_;
 
     public PlainBulletGunSettings GunSettings;
     public PlainBulletSettings BulletSettings;
-    public PlainBulletSettings PowerBulletSettings;
-
-    public static bool EffectsOn = true;
 
     static readonly float[] FiringAngleOffsetsSingle = new float[] { 0 };
     static readonly float[] FiringAngleOffsetsDual = new float[] { -5, 5 };
@@ -33,6 +30,7 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
     GameObjectPool bulletPool_;
     AudioManager audioManager_;
     IPhysicsActor forceReceiver_;
+    IAmmoProvider ammoProvider_;
     CameraShake cameraShake_;
     bool triggerIsDown_;
     bool awaitingRelease_;
@@ -51,14 +49,12 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         transform_ = transform;
     }
 
-    public void SetOwner(IPhysicsActor forceReceiver)
-    {
-        forceReceiver_ = forceReceiver;
-    }
+    public void SetAmmoProvider(IAmmoProvider ammoProvider) => ammoProvider_ = ammoProvider;
+    public void SetOwner(IPhysicsActor forceReceiver) => forceReceiver_ = forceReceiver;
 
     public void OnTriggerDown(Vector3 firingDirection)
     {
-        if (awaitingRelease_ || GunSettings.FiringMode == FiringMode.None)
+        if (awaitingRelease_ || GunSettings.FiringMode == FiringMode.None || AmmoCount == 0)
             return;
 
         triggerIsDown_ = true;
@@ -108,24 +104,39 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
                 var position = transform_.position + direction * 0.5f;
 
                 var angleOffsets = GetFiringAngleOffsets(GunSettings.FiringSpread, 1.0f);
-                for (int j = 0; j < angleOffsets.Length; ++j)
+                int bulletCount = angleOffsets.Length;
+                if (ammoProvider_.TryUseAmmo(AmmoType, bulletCount))
                 {
-                    float precisionPenalty = Mathf.Min(0.75f, Mathf.Max(0, -0.5f + penalty_ * 0.8f));
-                    float precision = GunSettings.Precision - precisionPenalty;
+                    for (int j = 0; j < bulletCount; ++j)
+                    {
+                        float precisionPenalty = Mathf.Min(0.75f, Mathf.Max(0, -0.5f + penalty_ * 0.8f));
+                        float precision = GunSettings.Precision - precisionPenalty;
 
-                    float angleOffset = angleOffsets[j];
-                    const float MaxDegreesOffsetAtLowestPrecision = 30.0f;
-                    angleOffset += (Random.value - 0.5f) * (1.0f - precision) * MaxDegreesOffsetAtLowestPrecision;
-                    var offsetDirection = Quaternion.AngleAxis(angleOffset, Vector3.forward) * direction;
-                    Fire(position, offsetDirection);
+                        float angleOffset = angleOffsets[j];
+                        const float MaxDegreesOffsetAtLowestPrecision = 30.0f;
+                        angleOffset += (Random.value - 0.5f) * (1.0f - precision) * MaxDegreesOffsetAtLowestPrecision;
+                        var offsetDirection = Quaternion.AngleAxis(angleOffset, Vector3.forward) * direction;
+                        Fire(position, offsetDirection);
+                    }
+
+                    latestFiringTime_ = Time.unscaledTime;
+
+                    audioManager_.PlaySfxClip(FireSound, 1, FireSoundPitchVariation, FireSoundPitch);
+                    cameraShake_.SetMinimumShake(0.75f);
+
+                    forceReceiver_.SetMinimumForce(-direction * Recoil);
+
+                    var particleCenter = position + direction * 0.3f;
+                    ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.MuzzleFlashParticles, particleCenter, 1);
+                    ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.MuzzleSmokeParticles, particleCenter, 5);
+
+                    float timePenalty = Mathf.Min(0.2f, Mathf.Max(0, -0.5f + penalty_ * 0.4f));
+                    float waitEndTime = Time.realtimeSinceStartup + GunSettings.TimeBetweenShots + timePenalty;
+                    while (Time.realtimeSinceStartup < waitEndTime)
+                        yield return 0;
+
+                    penalty_ = Mathf.Min(2.0f, penalty_ + 0.1f);
                 }
-
-                float timePenalty = Mathf.Min(0.2f, Mathf.Max(0, -0.5f + penalty_ * 0.4f));
-                float waitEndTime = Time.realtimeSinceStartup + GunSettings.TimeBetweenShots + timePenalty;
-                while (Time.realtimeSinceStartup < waitEndTime)
-                    yield return 0;
-
-                penalty_ = Mathf.Min(2.0f, penalty_ + 0.1f);
             }
 
             bool continueFiring = GunSettings.FiringMode == FiringMode.Auto && triggerIsDown_;
@@ -136,27 +147,13 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
         isFiring_ = false;
     }
 
-    void Fire(Vector3 position, Vector3 direction, bool powerShot = false)
+    void Fire(Vector3 position, Vector3 direction)
     {
-        var bulletSettings = powerShot ? PowerBulletSettings : BulletSettings;
+        var bulletSettings = BulletSettings;
 
         var bullet = bulletPool_.GetFromPool();
         var bulletScript = (PlainBulletScript)bullet.GetComponent(typeof(PlainBulletScript));
         bulletScript.Init(position, direction, bulletSettings);
         bullet.SetActive(true);
-
-        latestFiringTime_ = Time.unscaledTime;
-
-        if (EffectsOn)
-        {
-            audioManager_.PlaySfxClip(FireSound, 1, FireSoundPitchVariation, FireSoundPitch);
-            cameraShake_.SetMinimumShake(0.75f);
-
-            forceReceiver_.SetMinimumForce(-direction * 3);
-
-            var particleCenter = position + direction * 0.3f;
-            ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.MuzzleFlashParticles, particleCenter, 1);
-            ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.MuzzleSmokeParticles, particleCenter, 5);
-        }
     }
 }

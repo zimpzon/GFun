@@ -113,7 +113,7 @@ public class GolemController : EntityComponentBase
         }
 
         transform_.SetPositionAndRotation(appearPos, Quaternion.identity);
-        MapScript.Instance.TriggerExplosion(appearPos, 3);
+        MapScript.Instance.TriggerExplosion(appearPos, 2.5f);
 
         PlayerInfoScript.Instance.ShowInfo($"{me_.Name} Has Arrived!", Color.red);
 
@@ -156,7 +156,7 @@ public class GolemController : EntityComponentBase
                     yield return Timing.WaitForSeconds(2);
 
                     // Stop rage
-                    MapScript.Instance.TriggerExplosion(transform_.position, 3, false, me_, damageSelf: false);
+                    MapScript.Instance.TriggerExplosion(transform_.position, 2.85f, false, me_, damageSelf: false);
                     enemyScript_.gameObject.layer = SceneGlobals.Instance.EnemyNoWallsLayer;
                     enemyScript_.EnableAiPath(true);
 

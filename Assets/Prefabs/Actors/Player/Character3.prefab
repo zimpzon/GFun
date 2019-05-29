@@ -51,9 +51,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e5b6558bd35e534191721139ca5130b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Character 3
+  Name: Slugger Guy
   Speed: 6
-  Life: 0
+  MaxLife: 5
+  Life: 5
   Anim: {fileID: 11400000, guid: 861a36bbdedb0854188e5cddd67508d5, type: 2}
   LookAtOffset: 1
   Drag: 20
@@ -62,8 +63,9 @@ MonoBehaviour:
   ShowCollisionDebugSize: 10
   IsDead: 0
   WeaponOffsetRight: {x: 0.25, y: 0.5, z: 0}
+  DefaultWeapon: 3
   TakeDamageSound: {fileID: 8300000, guid: 109ce1555c4c6f443a86c8988d2ee23c, type: 3}
-  CurrentWeaponGo: {fileID: 0}
+  CursorTexture: {fileID: 2800000, guid: 252fddade9770cb40b3d15acc0d5bfd1, type: 3}
 --- !u!114 &5881881659447664188
 MonoBehaviour:
   m_ObjectHideFlags: 0

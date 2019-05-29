@@ -84,7 +84,7 @@ public class MiniGolemController : EntityComponentBase
         }
 
         transform_.SetPositionAndRotation(basePos, Quaternion.identity);
-        MapScript.Instance.TriggerExplosion(transform_.position, 1);
+        MapScript.Instance.TriggerExplosion(transform_.position, 2.5f);
         ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.WallDestructionParticles, basePos, 10);
 //        SceneGlobals.Instance.AudioManager.PlaySfxClip(SceneGlobals.Instance.AudioManager.AudioClips.LargeExplosion1, 3, 0.1f, 1.2f);
   //      SceneGlobals.Instance.CameraShake.SetMinimumShake(1.0f);

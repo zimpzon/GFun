@@ -23,6 +23,6 @@ public class HealthWidget : MonoBehaviour
     public void ShowLife(int current, int max)
     {
         LifeBar.rectTransform.sizeDelta = new Vector2((lifeBarMaxWidth_ / max) * current, lifeBarMaxHeight_);
-        TextLife.text = $"{current}/{max}";
+        TextLife.SetText("{0}/{1}", current, max);
     }
 }

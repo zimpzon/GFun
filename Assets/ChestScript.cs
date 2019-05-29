@@ -27,7 +27,7 @@ public class ChestScript : MonoBehaviour, IEnemy
         ParticleScript.EmitAtPosition(ParticleScript.Instance.GoldParticles, pos, 10);
         ParticleScript.EmitAtPosition(ParticleScript.Instance.WallDestructionParticles, pos, 5);
         ParticleScript.EmitAtPosition(ParticleScript.Instance.MuzzleFlashParticles, pos, 1);
-        MapScript.Instance.TriggerExplosion(pos, 2, damageWallsOnly: false);
+        MapScript.Instance.TriggerExplosion(pos, 1.9f, damageWallsOnly: false);
 
         bool spawnEnemy = Random.value < 0.5f;
         enemy.transform.SetPositionAndRotation(transform_.position, Quaternion.identity);

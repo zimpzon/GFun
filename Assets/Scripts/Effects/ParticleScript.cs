@@ -13,6 +13,7 @@ public class ParticleScript : MonoBehaviour
     public ParticleSystem PlayerLandParticles;
     public ParticleSystem GoldParticles;
     public ParticleSystem DeathFlashParticles;
+    public ParticleSystem AnimatedFireParticles;
 
     private void Awake()
     {

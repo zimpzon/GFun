@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1394803210e4a414ebe4a6652d8ee43f, type: 3}
+  m_Name: Zombie1_IdleRun
+  m_EditorClassIdentifier: 
+  DefaultAnimationFramesPerSecond: 10
+  Idle:
+  - {fileID: 21300000, guid: 5d6a426230217fd41b31a64aacf058e3, type: 3}
+  - {fileID: 21300000, guid: a6f816f986813c14da63107828b6a050, type: 3}
+  - {fileID: 21300000, guid: 7aa3cad8487af224aa32e320038193d5, type: 3}
+  - {fileID: 21300000, guid: 23d7fc13b07b82d489867ae572de3e2a, type: 3}
+  - {fileID: 21300000, guid: e6784f5c9081b444da956631a95f498c, type: 3}
+  - {fileID: 21300000, guid: 75adfb418a947e44893ce661b7e16445, type: 3}
+  - {fileID: 21300000, guid: 967b3605cddadde4c87aebbe4f82cffd, type: 3}
+  - {fileID: 21300000, guid: 22f4fc14de2534347a4fe967893579e9, type: 3}
+  - {fileID: 21300000, guid: 2be279146d646fb49926de24afa51d68, type: 3}
+  - {fileID: 21300000, guid: e457ec260e0598b40b0392fd5b62f220, type: 3}
+  - {fileID: 21300000, guid: 629fe348bd2708246be491bcf798f94d, type: 3}
+  Run:
+  - {fileID: 21300000, guid: 46744a2cd54676749b758f135aaa4e7f, type: 3}
+  - {fileID: 21300000, guid: 4ac38354f0aa8b9418f75be3e51b4e68, type: 3}
+  - {fileID: 21300000, guid: e720241bfc7f5e64f8049d4c64941167, type: 3}
+  - {fileID: 21300000, guid: 20193db3ead8cc54c83ed8b8929691d2, type: 3}

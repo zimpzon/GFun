@@ -46,6 +46,9 @@ public class CampScript : MonoBehaviour
         while (!PlayFabFacade.Instance.LoginProcessComplete)
             yield return null;
 
+        Weapons.LoadWeaponsFromResources();
+        Enemies.LoadEnemiesFromResources();
+
         LoadingCanvas.gameObject.SetActive(false);
 
         string ghostPath = PlayerPrefs.GetString("LatestCampPath");
@@ -109,7 +112,7 @@ public class CampScript : MonoBehaviour
     {
         string startCharacterTag = PlayerPrefs.GetString(PlayerPrefsNames.SelectedCharacterTag);
 
-        // When developing we might experience the selected characer is no longer unlocked. Revert to default.
+        // When developing we might experience the selected character is no longer unlocked. Revert to default.
         bool isUnlocked = GameProgressData.CharacterIsUnlocked(startCharacterTag);
         if (!isUnlocked)
             startCharacterTag = PlayableCharacters.Instance.CharacterPrefabList.CharacterPrefabs[0].tag;
@@ -285,6 +288,18 @@ public class CampScript : MonoBehaviour
 
         CurrentRunData.Clear();
         CurrentRunData.Instance.StartingCharacterTag = PlayableCharacters.GetPlayerInScene().tag;
+
+        // Init the run data
+        var player = PlayableCharacters.GetPlayerInScene();
+        CurrentRunData.StartNewRun();
+        CurrentRunData.Instance.MaxLife = player.MaxLife;
+        CurrentRunData.Instance.Life = player.Life;
+        CurrentRunData.Instance.CurrentWeapon = player.CurrentWeapon.Id;
+        CurrentRunData.Instance.BulletAmmo = 999;
+        CurrentRunData.Instance.ShellAmmo = 999;
+        CurrentRunData.Instance.StartingCharacterTag = player.tag;
+        CurrentRunData.Instance.HasPlayerData = true;
+        CurrentRunData.StoreState();
 
         SceneManager.LoadScene(EnterPortalSceneName, LoadSceneMode.Single);
     }

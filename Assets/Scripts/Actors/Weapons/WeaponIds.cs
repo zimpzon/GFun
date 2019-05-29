@@ -3,4 +3,7 @@
     NullWeapon,
     Rifle,
     Shotgun,
+    Slugger,
+    BouncingAutoDoubleRifleRifle,
+    RocketLauncher,
 }

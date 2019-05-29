@@ -46,7 +46,7 @@ public class World2RandomPluginScript : MapPluginScript
 
     public override IEnumerator<float> GameLoopCo()
     {
-        AudioManager.Instance.PlayMusic(Music, 0.4f);
+        AudioManager.Instance.PlayMusic(Music, 0.2f);
 
         while (true)
         {
