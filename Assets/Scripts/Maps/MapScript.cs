@@ -14,7 +14,7 @@ public class MapScript : MonoBehaviour, IMapAccess
     public TilemapCollider2D TilemapCollider;
     public Color MapColor = Color.white;
 
-    const int ExplosionDamageToEnemies = 40;
+    const int ExplosionDamageToEnemies = 50;
 
     Renderer wallRenderer_;
     Renderer topRenderer_;
@@ -72,10 +72,7 @@ public class MapScript : MonoBehaviour, IMapAccess
     public void TriggerExplosion(Vector3 worldPosition, float worldRadius, bool damageWallsOnly = true, IEnemy explosionSource = null, bool damageSelf = true)
     {
         int tilesChecked = MapUtil.ClearCircle(this, mapStyle_, worldPosition, worldRadius);
-        var particles = SceneGlobals.Instance.ParticleScript.WallDestructionParticles;
-
         WallCompositeCollider.generationType = CompositeCollider2D.GenerationType.Manual;
-
         int tilesCleared = 0;
 
         for (int i = 0; i < tilesChecked; ++i)
@@ -91,7 +88,7 @@ public class MapScript : MonoBehaviour, IMapAccess
                 // Show effect a bit above wall tile center since they also have a top
                 const float EffectOffset = 0.5f;
                 var tileWorldPos = WallTileMap.GetCellCenterWorld(tile) + Vector3.up * EffectOffset;
-                ParticleScript.EmitAtPosition(particles, tileWorldPos, 10);
+                ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.AnimatedFireParticles, tileWorldPos, 3);
             }
         }
 
@@ -117,7 +114,7 @@ public class MapScript : MonoBehaviour, IMapAccess
                 {
                     var diff = enemyGO.transform.position - worldPosition;
                     var direction = diff.normalized;
-                    enemy.TakeDamage(ExplosionDamageToEnemies, direction);
+                    enemy.TakeDamage(ExplosionDamageToEnemies, direction * 1.5f);
                 }
             }
         }

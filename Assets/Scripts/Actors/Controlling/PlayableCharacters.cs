@@ -42,7 +42,7 @@ public class PlayableCharacters : MonoBehaviour
             return false;
 
         alreadyControlled?.SetIsHumanControlled(false);
-        toBeControlled.SetIsHumanControlled(true, showChangeEffect);
+        toBeControlled.SetIsHumanControlled(true, constraints: RigidbodyConstraints2D.FreezeRotation, showChangeEffect);
         playerInScene_ = toBeControlled;
 
         return true;

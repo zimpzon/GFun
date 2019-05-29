@@ -13,6 +13,7 @@ public class RocketScript : MonoBehaviour
     MapScript map_;
     PlainBulletSettings settings_;
     int bouncesLeft_;
+    int enemyLayerMask_;
 
     public void Init(Vector3 position, Vector3 direction, PlainBulletSettings settings)
     {
@@ -33,11 +34,20 @@ public class RocketScript : MonoBehaviour
     {
         transform_ = transform;
         baseScale_ = transform.localScale;
+        enemyLayerMask_ = SceneGlobals.Instance.EnemyAliveMask;
         map_ = SceneGlobals.Instance.MapScript;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (((1 << collision.gameObject.layer) & enemyLayerMask_) != 0)
+        {
+            var enemyScript = collision.gameObject.GetComponent<IEnemy>();
+            if (enemyScript != null)
+            {
+                enemyScript.TakeDamage(settings_.Damage, Direction * settings_.DamageForce);
+            }
+        }
         Explode();
     }
 

@@ -114,7 +114,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IAmmoProvid
         collider_.enabled = false;
     }
 
-    public void SetIsHumanControlled(bool isHumanControlled, bool showChangeEffect = false)
+    public void SetIsHumanControlled(bool isHumanControlled, RigidbodyConstraints2D constraints = RigidbodyConstraints2D.FreezeRotation, bool showChangeEffect = false)
     {
         bool noChange = isHumanControlled == isHumanControlled_;
         if (noChange)
@@ -122,7 +122,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IAmmoProvid
 
         isHumanControlled_ = isHumanControlled;
         humanPlayerController_.enabled = isHumanControlled_;
-        body_.constraints = isHumanControlled ? RigidbodyConstraints2D.FreezeRotation : RigidbodyConstraints2D.FreezeAll;
+        body_.constraints = constraints;
         if (showChangeEffect && isHumanControlled)
         {
             ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.CharacterSelectedParticles, transform_.position + Vector3.up * 0.5f, 30);

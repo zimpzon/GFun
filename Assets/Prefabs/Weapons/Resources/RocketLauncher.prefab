@@ -135,5 +135,5 @@ MonoBehaviour:
     Range: 25
     Size: 0.7
     MaxBounces: 0
-    Damage: 10
-    DamageForce: 1
+    Damage: 20
+    DamageForce: 5

@@ -12,6 +12,9 @@ public class MapStyle : ScriptableObject
     public TileBase[] FloorTileVariations;
     public float FloorVariationChance = 0.1f;
 
+    [Header("Floor when wall is destroyed")]
+    public TileBase FloorBehindWallTile;
+
     [Header("Wall")]
     public TileBase WallTile;
     public TileBase[] WallTileVariations;
