@@ -292,11 +292,14 @@ public class CampScript : MonoBehaviour
         // Init the run data
         var player = PlayableCharacters.GetPlayerInScene();
         CurrentRunData.StartNewRun();
+        CurrentRunData.Instance.MaxLife = player.MaxLife;
+        CurrentRunData.Instance.Life = player.Life;
         CurrentRunData.Instance.CurrentWeapon = player.CurrentWeapon.Id;
         CurrentRunData.Instance.BulletAmmo = 999;
         CurrentRunData.Instance.ShellAmmo = 999;
         CurrentRunData.Instance.StartingCharacterTag = player.tag;
         CurrentRunData.Instance.HasPlayerData = true;
+        CurrentRunData.StoreState();
 
         SceneManager.LoadScene(EnterPortalSceneName, LoadSceneMode.Single);
     }

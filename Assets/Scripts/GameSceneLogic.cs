@@ -56,6 +56,7 @@ public class GameSceneLogic : MonoBehaviour
             CurrentRunData.StartNewRun();
             SavePlayerDataInCurrentRun(playerScript_, CurrentRunData.Instance);
             CurrentRunData.Instance.HasPlayerData = true;
+            CurrentRunData.StoreState();
         }
         else
         {
@@ -506,7 +507,10 @@ public class GameSceneLogic : MonoBehaviour
             Time.timeScale = timeScale;
 
             if (Input.GetKeyDown(KeyCode.R))
+            {
+                CurrentRunData.RestoreState();
                 LoadNextLevel();
+            }
 
             if (Input.GetKeyDown(KeyCode.Space))
                 LoadTheCamp();

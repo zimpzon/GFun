@@ -74,4 +74,15 @@ public class CurrentRunData
         Clear();
         Instance.RunStartTime = Time.unscaledTime;
     }
+
+    static string state;
+    public static void StoreState()
+    {
+        state = JsonUtility.ToJson(Instance);
+    }
+
+    public static void RestoreState()
+    {
+        Instance = JsonUtility.FromJson<CurrentRunData>(state);
+    }
 }
