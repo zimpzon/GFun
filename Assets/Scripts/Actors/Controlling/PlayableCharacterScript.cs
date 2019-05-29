@@ -1,4 +1,5 @@
 ﻿using GFun;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerSelfDamage : IEnemy
@@ -44,11 +45,13 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IAmmoProvid
     public WeaponIds DefaultWeapon = WeaponIds.Rifle;
     public AudioClip TakeDamageSound;
     public Texture2D CursorTexture;
+    int MaxWeapons = 1;
 
     [System.NonSerialized] public string KilledBy;
     [System.NonSerialized] public IEnemy KilledByEnemy;
     [System.NonSerialized] public IWeapon CurrentWeapon;
     [System.NonSerialized] public GameObject CurrentWeaponGo;
+    [System.NonSerialized] public List<GameObject> EquippedWeapons = new List<GameObject>();
     Transform weaponTransform_;
     SpriteRenderer weaponRenderer_;
     Material renderMaterial_;
@@ -131,16 +134,38 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IAmmoProvid
         RefreshInteracting();
     }
 
-    public void CreateWeapon(WeaponIds id)
+    public void EquipWeapon(WeaponIds id)
     {
         var weapon = Weapons.Instance.CreateWeapon(id);
-        AttachWeapon(weapon);
+        EquipWeapon(weapon);
     }
 
-    public void AttachWeapon(GameObject weapon)
+    public void EquipWeapon(GameObject weapon)
     {
         if (CurrentWeaponGo != null)
-            Destroy(CurrentWeaponGo);
+        {
+            if (EquippedWeapons.Count < MaxWeapons)
+            {
+                CurrentWeaponGo.SetActive(false);
+                EquippedWeapons.Add(CurrentWeaponGo);
+            }
+            else
+            {
+                // No room for the new weapon, drop the one we hold
+                var direction = (lookAt_ - transform.position).normalized;
+                var pickup = Instantiate(SceneGlobals.Instance.WeaponPickupPrefab, transform_.position + direction * 0.5f, Quaternion.identity);
+                var script = pickup.GetComponent<WeaponPickup>();
+                script.CreateFromExisting(CurrentWeaponGo);
+                pickup.SetActive(true);
+                script.Throw(direction * 100);
+
+                CurrentWeaponGo = null;
+            }
+        }
+        else
+        {
+            EquippedWeapons.Add(weapon);
+        }
 
         CurrentWeaponGo = weapon;
         CurrentWeapon = weapon.GetComponent<IWeapon>();
@@ -278,7 +303,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IAmmoProvid
         camPositioner_ = SceneGlobals.Instance.CameraPositioner;
 
         if (CurrentWeaponGo == null)
-            CreateWeapon(DefaultWeapon);
+            EquipWeapon(DefaultWeapon);
 
         UpdateHealth();
         RefreshInteracting();

@@ -15,8 +15,8 @@ public class CurrentRunData
     public WeaponIds CurrentWeapon = WeaponIds.NullWeapon;
     public int BulletAmmo = 999;
     public int ShellAmmo = 999;
-    public int ExplosiveAmmo = 100;
-    public int ArrowAmmo = 20;
+    public int ExplosiveAmmo = 999;
+    public int ArrowAmmo = 999;
 
     public int FloorInWorld = 2;
     public int TotalFloor = 1;

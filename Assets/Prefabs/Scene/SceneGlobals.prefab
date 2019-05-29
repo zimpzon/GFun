@@ -69,5 +69,7 @@ MonoBehaviour:
   EnemyBullet1Pool: {fileID: 0}
   EnemyIceBulletPool: {fileID: 0}
   DragonHatchlingProjectilePool: {fileID: 0}
+  WeaponPickupPrefab: {fileID: 5949134711215471000, guid: cc333f35a001fa9459b80d552a4ff4b4,
+    type: 3}
   PlayableCharacters: {fileID: 0}
   OnTheFloorSortingValue: 15

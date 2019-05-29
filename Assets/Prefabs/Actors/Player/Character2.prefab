@@ -358,7 +358,7 @@ MonoBehaviour:
   Name: Shotgun Guy
   Speed: 7
   MaxLife: 3
-  Life: 0
+  Life: 3
   Anim: {fileID: 11400000, guid: 861a36bbdedb0854188e5cddd67508d5, type: 2}
   LookAtOffset: 1
   Drag: 20

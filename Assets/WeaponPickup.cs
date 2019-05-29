@@ -10,14 +10,32 @@ public class WeaponPickup : MonoBehaviour
     GameObject weaponObj_;
     InteractableTrigger interact_;
 
+    public void Throw(Vector3 force)
+    {
+        var body = GetComponent<Rigidbody2D>();
+        body.AddForce(force, ForceMode2D.Impulse);
+    }
+
+    public void CreateFromExisting(GameObject weapon)
+    {
+        weaponObj_ = weapon;
+        weapon_ = weaponObj_.GetComponent<IWeapon>();
+        WeaponId = weapon_.Id;
+    }
+
     void Start()
     {
-        weaponObj_ = Weapons.Instance.CreateWeapon(WeaponId);
+        if (weaponObj_ == null)
+        {
+            weaponObj_ = Weapons.Instance.CreateWeapon(WeaponId);
+            weapon_ = weaponObj_.GetComponent<IWeapon>();
+        }
+
         weaponObj_.transform.SetParent(this.transform);
+        weaponObj_.transform.localScale = Vector3.one;
         weaponObj_.transform.localPosition = Vector3.zero;
         weaponObj_.transform.rotation = Quaternion.Euler(0, 0, Random.value * 360);
         weaponObj_.SetActive(false);
-        weapon_ = weaponObj_.GetComponent<IWeapon>();
 
         interact_ = GetComponentInChildren<InteractableTrigger>();
         interact_.Message = weapon_.Name;
@@ -32,7 +50,8 @@ public class WeaponPickup : MonoBehaviour
     {
         var player = PlayableCharacters.GetPlayerInScene();
         weaponObj_.SetActive(true);
-        player.AttachWeapon(weaponObj_);
-        this.gameObject.SetActive(false);
+        FloatingTextSpawner.Instance.Spawn(player.transform.position + Vector3.up * 0.5f, weapon_.Name, Color.white);
+        player.EquipWeapon(weaponObj_);
+        Destroy(this.gameObject);
     }
 }

@@ -154,6 +154,9 @@ public static class MapBuilder
 
     public static void DestroyTile(MapScript mapScript, MapStyle mapStyle, Vector3Int pos)
     {
+        if (mapStyle == null)
+            return;
+
         // Clear wall
         mapScript.WallTileMap.SetTile(pos, null);
 

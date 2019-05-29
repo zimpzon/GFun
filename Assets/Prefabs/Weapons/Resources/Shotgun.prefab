@@ -127,13 +127,13 @@ MonoBehaviour:
   WeaponId: 2
   DisplayName: Shotgun
   FireSound: {fileID: 8300000, guid: 810c97943c369fe43876f64b287305f2, type: 3}
-  AngleSpread: 15
-  BulletCount: 7
-  Cooldown: 0.3
+  AngleSpread: 20
+  BulletCount: 8
+  Cooldown: 0.5
   BulletSettings:
     Speed: 15
     Range: 5
     Size: 0.35
-    MaxBounces: 0
+    MaxBounces: 1
     Damage: 6
     DamageForce: 1

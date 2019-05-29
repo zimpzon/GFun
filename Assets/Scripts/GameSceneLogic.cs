@@ -101,7 +101,7 @@ public class GameSceneLogic : MonoBehaviour
 
     void InitializePlayerWithCurrentRunData(PlayableCharacterScript player, CurrentRunData run)
     {
-        player.CreateWeapon(run.CurrentWeapon);
+        player.EquipWeapon(run.CurrentWeapon);
         player.MaxLife = run.MaxLife;
         player.Life = run.Life;
     }
