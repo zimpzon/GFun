@@ -141,7 +141,7 @@ public class GolemKingController : EntityComponentBase
                     yield return Timing.WaitForSeconds(2);
 
                     // Stop rage
-                    MapScript.Instance.TriggerExplosion(transform_.position, 3, false, me_, damageSelf: false);
+                    MapScript.Instance.TriggerExplosion(transform_.position, 3.9f, false, me_, damageSelf: false);
                     enemyScript_.gameObject.layer = SceneGlobals.Instance.EnemyNoWallsLayer;
                     enemyScript_.EnableAiPath(true);
 

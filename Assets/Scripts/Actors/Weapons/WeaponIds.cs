@@ -5,4 +5,5 @@
     Shotgun,
     Slugger,
     BouncingAutoDoubleRifleRifle,
+    RocketLauncher,
 }

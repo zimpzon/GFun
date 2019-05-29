@@ -26,7 +26,6 @@ public class GameSceneLogic : MonoBehaviour
     public TextMeshProUGUI KilledByText;
     public TextMeshProUGUI StatsText;
     public TextMeshProUGUI HistoryText;
-    public AudioClip GameMusic;
     public AudioClip ShopMusic;
     public TextMeshProUGUI BulletAmmoText;
     public TextMeshProUGUI ShellAmmoText;
@@ -308,7 +307,7 @@ public class GameSceneLogic : MonoBehaviour
         }
 
         playerInScene.transform.SetPositionAndRotation(targetPos, Quaternion.identity);
-        map_.TriggerExplosion(targetPos, 2);
+        map_.TriggerExplosion(targetPos, 2.0f);
 
         var playerCenter = targetPos + Vector3.up * 0.5f;
         ParticleScript.EmitAtPosition(ParticleScript.Instance.PlayerLandParticles, playerCenter, 15);
@@ -399,7 +398,7 @@ public class GameSceneLogic : MonoBehaviour
 
         var pos = position;
         NextLevelPortal.transform.position = pos;
-        map_.TriggerExplosion(pos, 3);
+        map_.TriggerExplosion(pos, 2.9f);
         var portalCenter = pos + Vector3.up * 1.5f;
         ParticleScript.EmitAtPosition(ParticleScript.Instance.PlayerLandParticles, portalCenter, 25);
         ParticleScript.EmitAtPosition(ParticleScript.Instance.MuzzleFlashParticles, portalCenter, 1);

@@ -68,7 +68,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 31
-  m_Sprite: {fileID: 8606930319082817419, guid: e17279eb1cde3ad448618b1dd1a4c482,
+  m_Sprite: {fileID: -1789688629211898939, guid: e17279eb1cde3ad448618b1dd1a4c482,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -89,9 +89,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2816594798548844391}
-  - component: {fileID: 677534294}
+  - component: {fileID: -8678167970693402480}
   m_Layer: 0
-  m_Name: Rifle
+  m_Name: RocketLauncher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,7 +112,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &677534294
+--- !u!114 &-8678167970693402480
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,27 +121,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 2816594798548844389}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f06bde2b3e7810f4288edc4601d730d7, type: 3}
+  m_Script: {fileID: 11500000, guid: ce5340dc3374f5f4dbb2b0e4e0d47936, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponId: 1
-  DisplayName: Rifle
-  FireSound: {fileID: 8300000, guid: 810c97943c369fe43876f64b287305f2, type: 3}
-  FireSoundPitch: 1.1
-  FireSoundPitchVariation: 0.1
-  Recoil: 3
-  GunSettings:
-    Level: 1
-    AmmoCount: 100
-    FiringSpread: 0
-    FiringMode: 2
-    Precision: 0.8
-    BurstCount: 1
-    TimeBetweenShots: 0.1
-  BulletSettings:
-    Speed: 20
-    Range: 8
-    Size: 0.5
+  WeaponId: 5
+  DisplayName: Rocket Launcher
+  FireSound: {fileID: 8300000, guid: 6b5676cd1db39c243978dfe62eef2076, type: 3}
+  FireSoundPitch: 0.4
+  FireSoundPitchVariation: 0.05
+  Cooldown: 1
+  RocketSettings:
+    Speed: 15
+    Range: 25
+    Size: 0.7
     MaxBounces: 0
     Damage: 10
     DamageForce: 1

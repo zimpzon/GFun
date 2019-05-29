@@ -133,7 +133,7 @@ MonoBehaviour:
   BulletSettings:
     Speed: 15
     Range: 5
-    Size: 0.2
+    Size: 0.35
     MaxBounces: 0
     Damage: 6
     DamageForce: 1

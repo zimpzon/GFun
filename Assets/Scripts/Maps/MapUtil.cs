@@ -18,7 +18,7 @@ public static class MapUtil
 
         var wallTiles = mapScript.WallTileMap;
         var cellCenter = wallTiles.WorldToCell(worldPosition);
-        int cellRadius = (int)(worldRadius / wallTiles.cellSize.x); // Assuming square tiles
+        int cellRadius = Mathf.RoundToInt(worldRadius / wallTiles.cellSize.x); // Assuming square tiles
         int y0 = cellCenter.y - cellRadius;
         int y1 = cellCenter.y + cellRadius;
         int x0 = cellCenter.x - cellRadius;
@@ -34,7 +34,7 @@ public static class MapUtil
                 cellPos.x = x;
                 cellPos.y = y;
                 var offsetFromCenter = cellCenter - cellPos;
-                if (offsetFromCenter.magnitude < cellRadius)
+                if (offsetFromCenter.magnitude < worldRadius)
                 {
                     bool hasTile = wallTiles.HasTile(cellPos);
                     LatestResultPositions.Add(cellPos);

@@ -34,7 +34,7 @@ public class ShopPluginScript : MapPluginScript
 
     public override IEnumerator<float> GameLoopCo()
     {
-        AudioManager.Instance.PlayMusic(Music, 0.8f);
+        AudioManager.Instance.PlayMusic(Music, 0.3f);
 
         while (true)
         {

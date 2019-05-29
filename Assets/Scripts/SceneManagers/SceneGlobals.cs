@@ -27,6 +27,7 @@ public class SceneGlobals : MonoBehaviour
     public int DeadEnemyLayer;
     public int EnemyDeadOrAliveMask;
     public int EnemyAliveMask;
+    public GameObjectPool RocketPool;
     public GameObjectPool PlainBulletPool;
     public GameObjectPool ElongatedBulletPool;
     public GameObjectPool EnemyBullet1Pool;
