@@ -9,7 +9,7 @@ public class SpriteAnimator_IdleRun : MonoBehaviour, ISpriteAnimator
     float randomOffset_;
     bool latestFlip_;
 
-    public void UpdateAnimation(Vector3 latestMovementDirection, bool isDead = false)
+    public void UpdateAnimation(Vector3 latestMovementDirection, bool isDead = false, bool isAttack = false)
     {
         if (isDead)
         {

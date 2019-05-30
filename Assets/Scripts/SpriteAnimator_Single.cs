@@ -8,7 +8,7 @@ public class SpriteAnimator_Single : MonoBehaviour, ISpriteAnimator
     SpriteRenderer renderer_;
     float randomOffset_;
 
-    public void UpdateAnimation(Vector3 latestMovementDirection, bool isDead = false)
+    public void UpdateAnimation(Vector3 latestMovementDirection, bool isDead = false, bool isAttacking = false)
     {
         if (isDead)
             renderer_.sprite = SpriteWhenDead;

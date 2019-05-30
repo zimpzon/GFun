@@ -2,5 +2,5 @@
 
 public interface ISpriteAnimator
 {
-    void UpdateAnimation(Vector3 latestMovementDirection, bool isDead = false);
+    void UpdateAnimation(Vector3 latestMovementDirection, bool isDead = false, bool isAttacking = false);
 }

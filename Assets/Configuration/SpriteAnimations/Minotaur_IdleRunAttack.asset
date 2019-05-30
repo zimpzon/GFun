@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1394803210e4a414ebe4a6652d8ee43f, type: 3}
-  m_Name: Minotaur_IdleRun
+  m_Script: {fileID: 11500000, guid: bb50f36f6f83397409b58f088dff7216, type: 3}
+  m_Name: Minotaur_IdleRunAttack
   m_EditorClassIdentifier: 
-  DefaultAnimationFramesPerSecond: 5
+  DefaultAnimationFramesPerSecond: 6
   Idle:
   - {fileID: -2991773290986861209, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
   - {fileID: -3482560379574023985, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
@@ -27,3 +27,13 @@ MonoBehaviour:
   - {fileID: 7747281075459476067, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
   - {fileID: -4614463974701417080, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
   - {fileID: 576915257532028970, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
+  Attack:
+  - {fileID: 6078824932465409747, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
+  - {fileID: 3529761326654160688, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
+  - {fileID: 2444066426116628744, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
+  - {fileID: 3498436388096465697, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
+  - {fileID: -3370743376331586712, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
+  - {fileID: 4680398535389692255, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
+  - {fileID: 2555982017050634106, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
+  - {fileID: 2019166692100933425, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}
+  - {fileID: 7985030344456610341, guid: 1342f5d348af4a144aa32974542ae1f2, type: 3}

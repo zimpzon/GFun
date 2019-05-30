@@ -55,6 +55,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
 
     public bool HasNearbyCover { get; private set; }
     public Vector3 NearbyCoverPosition { get; private set; }
+    public bool IsAttacking;
 
     float speedMul_;
     float height_ = 1;
@@ -397,8 +398,11 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         UpdatePlayerLoS();
         UpdateNearbyCover();
         UpdateFlash();
-
-        spriteAnimator_?.UpdateAnimation(latestMovementDirection_, IsDead);
+        if (IsAttacking)
+        {
+            StopMove();
+        }
+        spriteAnimator_?.UpdateAnimation(latestMovementDirection_, IsDead, IsAttacking);
     }
 
     private void FixedUpdate()

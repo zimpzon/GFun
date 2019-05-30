@@ -2861,6 +2861,11 @@ PrefabInstance:
       propertyPath: DragonHatchlingProjectilePool
       value: 
       objectReference: {fileID: 1352407784}
+    - target: {fileID: 3580109083850555884, guid: 4f71464834809714da8c2a82a9933032,
+        type: 3}
+      propertyPath: MinotaurProjectilePool
+      value: 
+      objectReference: {fileID: 1920082393}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f71464834809714da8c2a82a9933032, type: 3}
 --- !u!4 &902635796 stripped
@@ -6347,6 +6352,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1906427292}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1920082393 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7578471688236336057, guid: 0cf7bc3918782f34fa3e38a7349bd53b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1904927183}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6933e99cec5c14f4dbd74c8f2b72527d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1934359037 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1934359037, guid: 0cf7bc3918782f34fa3e38a7349bd53b,

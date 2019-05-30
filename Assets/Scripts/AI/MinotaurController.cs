@@ -8,9 +8,14 @@ using UnityEngine;
 
 public class MinotaurController : EntityComponentBase
 {
+    public float ShootRange = 10;
+    public AudioClip FireSound;
+
     public bool DelayAppearance = true;
     public AudioClip AppearSound;
-    public DamagingParticleSystem DefaultProjectiles;
+    GameObjectPool bulletPool_;
+    AudioManager audioManager_;
+
     public ParticleSystem RageTelegraphParticles;
 
     IMovableActor myMovement_;
@@ -22,6 +27,10 @@ public class MinotaurController : EntityComponentBase
     Transform transform_;
     EnemyScript enemyScript_;
     CoroutineHandle aiCoHandle_;
+    float latestFiringTime_;
+    float coolDownEnd_;
+    float reloadEnd_;
+    int pendingShots_;
 
     public override EntityType AiType => EntityType.FleeingBat;
 
@@ -36,6 +45,8 @@ public class MinotaurController : EntityComponentBase
         myPhysics_ = GetComponent<IPhysicsActor>();
         transform_ = transform;
         enemyScript_ = GetComponent<EnemyScript>();
+        bulletPool_ = SceneGlobals.Instance.MinotaurProjectilePool;
+        audioManager_ = SceneGlobals.Instance.AudioManager;
 
         base.Awake();
     }
@@ -129,8 +140,8 @@ public class MinotaurController : EntityComponentBase
         while (true)
         {
             bool recentlySeenPlayer = mySenses_.GetPlayerLatestKnownPositionAge() < 2.0f;
-            DefaultProjectiles.EnableEmission = recentlySeenPlayer;
 
+            CheckFire(Time.time);
             if (recentlySeenPlayer)
             {
                 rageTimer += Time.deltaTime;
@@ -141,7 +152,6 @@ public class MinotaurController : EntityComponentBase
                     enemyScript_.EnableAiPath(false);
                     AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3, 0, 1.5f);
                     myMovement_.StopMove();
-                    DefaultProjectiles.EnableEmission = false;
                     var rageEmission = RageTelegraphParticles.emission;
                     rageEmission.enabled = true;
 
@@ -173,7 +183,6 @@ public class MinotaurController : EntityComponentBase
     void OnDeath()
     {
         Timing.KillCoroutines(aiCoHandle_);
-        DefaultProjectiles.EnableEmission = false;
         var rageEmission = RageTelegraphParticles.emission;
         rageEmission.enabled = false;
         enemyScript_.gameObject.layer = SceneGlobals.Instance.DeadEnemyLayer;
@@ -185,5 +194,59 @@ public class MinotaurController : EntityComponentBase
     {
         if (me_.IsDead && !deathDetected_)
             OnDeath();
+    }
+
+    void CheckFire(float time)
+    {
+        if (time < reloadEnd_ || me_.IsDead)
+        {
+            return;
+        }
+        else if (time < reloadEnd_ + 0.5f)
+        {
+            enemyScript_.IsAttacking = true;
+            return;
+        }
+
+        var myPos = transform_.position;
+
+        float sqrDistanceToPlayer = (AiBlackboard.Instance.PlayerPosition - myPos).sqrMagnitude;
+        bool withinRange = sqrDistanceToPlayer < ShootRange * ShootRange;
+
+        if (withinRange && pendingShots_ == 0)
+            pendingShots_ = 1;
+
+        if (pendingShots_ > 0)
+        {
+            if (time > coolDownEnd_)
+            {
+                var myCenter = myPos + Vector3.up * 0.5f;
+                var playerCenter = AiBlackboard.Instance.PlayerPosition + Vector3.up * 0.5f;
+                var directionToPlayer = (playerCenter - myCenter).normalized;
+                var bulletStartPos = myCenter + directionToPlayer * 0.2f;
+                var bulletDirection = (playerCenter - bulletStartPos).normalized;
+
+                float angleOffset = (Random.value - 0.5f) * 10;
+                var offsetDirection = Quaternion.AngleAxis(angleOffset, Vector3.forward) * bulletDirection;
+                Fire(bulletStartPos, offsetDirection);
+
+                coolDownEnd_ = time + 0.3f;
+                if (--pendingShots_ == 0)
+                    reloadEnd_ = time + 4.0f + Random.value;
+            }
+        }
+    }
+
+    void Fire(Vector3 position, Vector3 direction)
+    {
+        var bullet = bulletPool_.GetFromPool();
+        var bulletScript = (EnemyProjectileChaseScript)bullet.GetComponent(typeof(EnemyProjectileChaseScript));
+        bulletScript.Init(me_, position, direction, range: 10, speed: 5, turnSpeed: 2.0f, damage: 2, collideWalls: false);
+        bullet.SetActive(true);
+        float rotationDegrees = Mathf.Atan2(direction.x, -direction.y) * Mathf.Rad2Deg;
+        bullet.transform.rotation = Quaternion.Euler(0, 0, rotationDegrees - 90);
+
+        audioManager_.PlaySfxClip(FireSound, 3, 0.1f);
+        enemyScript_.IsAttacking = false;
     }
 }

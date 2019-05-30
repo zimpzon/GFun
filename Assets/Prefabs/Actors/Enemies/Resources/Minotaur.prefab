@@ -5196,7 +5196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1921782252708537649}
   - component: {fileID: 1921782252708537678}
-  - component: {fileID: 6318591177031732462}
+  - component: {fileID: 8372613301390328869}
   m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
@@ -5267,7 +5267,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!114 &6318591177031732462
+--- !u!114 &8372613301390328869
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5276,10 +5276,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1921782252708537648}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b2dc28d25f52f24eb2b1d2f6a4b0be2, type: 3}
+  m_Script: {fileID: 11500000, guid: eedabc1631c19ee4da7ae86bf927fb60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Anim: {fileID: 11400000, guid: 94199fb23fd37cc438684a173db0174e, type: 2}
+  Anim: {fileID: 11400000, guid: c2cd08629d4381c4cbc021f687af78df, type: 2}
   SpriteWhenDead: {fileID: -3147928011287162876, guid: 1342f5d348af4a144aa32974542ae1f2,
     type: 3}
 --- !u!1 &6834075159430559716
@@ -5330,7 +5330,7 @@ MonoBehaviour:
   EmitSound: {fileID: 8300000, guid: a9327dd0329195241a47a9c8fd50986b, type: 3}
   Damage: 1
   Enemy: {fileID: 1921782251215252596}
-  DamageCooldown: 0.25
+  DamageCooldown: 1
 --- !u!198 &2941941563745939562
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -6339,40 +6339,22 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.48648834
-          inSlope: 4.4793987
-          outSlope: 4.4793987
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.17423631
-        - serializedVersion: 3
-          time: 0.49842572
           value: 1
-          inSlope: -0.18507558
-          outSlope: -0.18507558
-          tangentMode: 0
+          inSlope: -1
+          outSlope: -1
+          tangentMode: 34
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.9052322
-          value: 0.97330415
-          inSlope: -0.2146183
-          outSlope: -0.2146183
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 1
+          inWeight: 0
+          outWeight: 0
         - serializedVersion: 3
           time: 1
           value: 0
-          inSlope: -8.530271
-          outSlope: -8.530271
-          tangentMode: 0
+          inSlope: -1
+          outSlope: -1
+          tangentMode: 34
           weightedMode: 0
-          inWeight: 0.13655159
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -6849,7 +6831,7 @@ ParticleSystem:
     speedRange: {x: 0, y: 1}
     tilesX: 1
     tilesY: 1
-    animationType: 0
+    animationType: 1
     rowIndex: 0
     cycles: 1
     uvChannelMask: -1
