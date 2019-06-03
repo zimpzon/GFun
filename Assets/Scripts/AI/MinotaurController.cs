@@ -1,22 +1,15 @@
-﻿using Apex.AI.Components;
-using Apex.Examples.AI;
-using Apex.Examples.AI.Game;
-using MEC;
+﻿using MEC;
 using Pathfinding;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MinotaurController : EntityComponentBase
+public class MinotaurController : MonoBehaviour
 {
     public float ShootRange = 10;
     public AudioClip FireSound;
 
-    public bool DelayAppearance = true;
-    public AudioClip AppearSound;
     GameObjectPool bulletPool_;
     AudioManager audioManager_;
-
-    public ParticleSystem RageTelegraphParticles;
 
     IMovableActor myMovement_;
     ISensingActor mySenses_;
@@ -32,9 +25,7 @@ public class MinotaurController : EntityComponentBase
     float reloadEnd_;
     int pendingShots_;
 
-    public override EntityType AiType => EntityType.FleeingBat;
-
-    private new void Awake()
+    private void Awake()
     {
         collider_ = GetComponent<Collider2D>();
         aiPath_ = GetComponent<AIPath>();
@@ -47,14 +38,6 @@ public class MinotaurController : EntityComponentBase
         enemyScript_ = GetComponent<EnemyScript>();
         bulletPool_ = SceneGlobals.Instance.MinotaurProjectilePool;
         audioManager_ = SceneGlobals.Instance.AudioManager;
-
-        base.Awake();
-    }
-
-    private void GameEvents_OnPlayerKilled(IEnemy enemy)
-    {
-        if (enemy == me_)
-            AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3);
     }
 
     void Activate(bool activate)
@@ -64,70 +47,9 @@ public class MinotaurController : EntityComponentBase
         mySenses_.SetLookForPlayerLoS(activate, 12);
     }
 
-    private new void Start()
+    private void Start()
     {
-        base.Start();
-        GameEvents.OnPlayerKilled += GameEvents_OnPlayerKilled;
-
-        if (DelayAppearance)
-        {
-            Activate(false);
-            transform.position = Vector3.right * 1000;
-            Timing.RunCoroutine(AppearCo().CancelWith(this.gameObject));
-        }
-        else
-        {
-            Activate(true);
-            aiCoHandle_ = Timing.RunCoroutine(AICo().CancelWith(this.gameObject));
-        }
-    }
-
-    public void SetAppearTimeLimits(float min, float random)
-    {
-        appearMin_ = min;
-        appearRandom_ = random;
-    }
-
-    float appearMin_ = 10;
-    float appearRandom_ = 5;
-
-    IEnumerator<float> AppearCo()
-    {
-        yield return Timing.WaitForSeconds(appearMin_ + Random.value * appearRandom_);
-
-        PlayerInfoScript.Instance.ShowInfo("A Horrifying Sound Is Heard In The Distance", Color.red);
-
-        AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3);
-        yield return Timing.WaitForSeconds(4);
-
-        var playerPos = AiBlackboard.Instance.PlayerPosition;
-        Vector3 appearPos;
-        if (playerPos.x > MapBuilder.WorldCenter.x)
-            appearPos = MapUtil.GetRightmostFreeCell();
-        else
-            appearPos = MapUtil.GetLeftmostFreeCell();
-
-        AudioManager.Instance.PlaySfxClip(SceneGlobals.Instance.AudioManager.AudioClips.PlayerLand, 1, 0.1f);
         Activate(true);
-
-        var startOffset = new Vector3(0, 1, -12);
-        float t = 1;
-        while (t >= 0)
-        {
-            CameraShake.Instance.SetMinimumShake(1.0f);
-
-            var pos = appearPos + startOffset * t;
-            transform_.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, t * 500));
-
-            t -= Time.unscaledDeltaTime * 2;
-            yield return 0;
-        }
-
-        transform_.SetPositionAndRotation(appearPos, Quaternion.identity);
-        MapScript.Instance.TriggerExplosion(appearPos, 3);
-
-        PlayerInfoScript.Instance.ShowInfo($"{me_.Name} Has Arrived!", Color.red);
-
         aiCoHandle_ = Timing.RunCoroutine(AICo().CancelWith(this.gameObject));
     }
 
@@ -142,38 +64,6 @@ public class MinotaurController : EntityComponentBase
             bool recentlySeenPlayer = mySenses_.GetPlayerLatestKnownPositionAge() < 2.0f;
 
             CheckFire(Time.time);
-            if (recentlySeenPlayer)
-            {
-                rageTimer += Time.deltaTime;
-                if (rageTimer > (me_.LifePct * 4) && me_.LifePct < 0.8f)
-                {
-                    // Telegraph to player
-                    enemyScript_.gameObject.layer = SceneGlobals.Instance.EnemyLayer;
-                    enemyScript_.EnableAiPath(false);
-                    AudioManager.Instance.PlaySfxClip(AppearSound, maxInstances: 3, 0, 1.5f);
-                    myMovement_.StopMove();
-                    var rageEmission = RageTelegraphParticles.emission;
-                    rageEmission.enabled = true;
-
-                    yield return Timing.WaitForSeconds(1);
-                    rageEmission.enabled = false;
-
-                    // Rage
-                    Vector2 playerDir = (AiBlackboard.Instance.PlayerPosition - transform_.position).normalized;
-                    myPhysics_.AddForce(playerDir * 200);
-                    rageTimer = 0;
-
-                    yield return Timing.WaitForSeconds(2);
-
-                    // Stop rage
-                    MapScript.Instance.TriggerExplosion(transform_.position, 3, false, me_, damageSelf: false);
-                    enemyScript_.gameObject.layer = SceneGlobals.Instance.EnemyNoWallsLayer;
-                    enemyScript_.EnableAiPath(true);
-
-                    yield return Timing.WaitForSeconds(0.3f);
-                }
-            }
-
             myMovement_.MoveTo(AiBlackboard.Instance.PlayerPosition);
             yield return 0;
         }
@@ -183,8 +73,6 @@ public class MinotaurController : EntityComponentBase
     void OnDeath()
     {
         Timing.KillCoroutines(aiCoHandle_);
-        var rageEmission = RageTelegraphParticles.emission;
-        rageEmission.enabled = false;
         enemyScript_.gameObject.layer = SceneGlobals.Instance.DeadEnemyLayer;
 
         deathDetected_ = true;
@@ -232,7 +120,7 @@ public class MinotaurController : EntityComponentBase
 
                 coolDownEnd_ = time + 0.3f;
                 if (--pendingShots_ == 0)
-                    reloadEnd_ = time + 4.0f + Random.value;
+                    reloadEnd_ = time + 2.0f + Random.value * 0.5f;
             }
         }
     }
@@ -240,8 +128,8 @@ public class MinotaurController : EntityComponentBase
     void Fire(Vector3 position, Vector3 direction)
     {
         var bullet = bulletPool_.GetFromPool();
-        var bulletScript = (EnemyProjectileChaseScript)bullet.GetComponent(typeof(EnemyProjectileChaseScript));
-        bulletScript.Init(me_, position, direction, range: 10, speed: 5, turnSpeed: 2.0f, damage: 2, collideWalls: false);
+        var bulletScript = (MinotaurProjectileScript)bullet.GetComponent(typeof(MinotaurProjectileScript));
+        bulletScript.Init(me_, position, direction, range: 20, speed: 5 + Random.value, turnSpeed: 1.0f + Random.value * 0.25f, damage: 2, collideWalls: true);
         bullet.SetActive(true);
         float rotationDegrees = Mathf.Atan2(direction.x, -direction.y) * Mathf.Rad2Deg;
         bullet.transform.rotation = Quaternion.Euler(0, 0, rotationDegrees - 90);

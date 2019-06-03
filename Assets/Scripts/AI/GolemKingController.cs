@@ -5,7 +5,7 @@ using Pathfinding;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GolemKingController : EntityComponentBase
+public class GolemKingController : MonoBehaviour
 {
     public AudioClip AppearSound;
     public ParticleSystem RageTelegraphParticles;
@@ -21,9 +21,7 @@ public class GolemKingController : EntityComponentBase
     CoroutineHandle aiCoHandle_;
     ShieldScript shield_;
 
-    public override EntityType AiType => EntityType.FleeingBat;
-
-    private new void Awake()
+    private void Awake()
     {
         collider_ = GetComponent<Collider2D>();
         aiPath_ = GetComponent<AIPath>();
@@ -37,8 +35,6 @@ public class GolemKingController : EntityComponentBase
         enemyScript_.SetDamageFilter(DamageFilter);
         shield_ = GetComponentInChildren<ShieldScript>();
         shield_.gameObject.SetActive(false);
-
-        base.Awake();
     }
 
     private void GameEvents_OnPlayerKilled(IEnemy enemy)
@@ -72,9 +68,8 @@ public class GolemKingController : EntityComponentBase
         mySenses_.SetLookForPlayerLoS(activate, 12);
     }
 
-    private new void Start()
+    private void Start()
     {
-        base.Start();
         GameEvents.OnPlayerKilled += GameEvents_OnPlayerKilled;
 
         Activate(true);

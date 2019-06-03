@@ -57,6 +57,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
     public Vector3 NearbyCoverPosition { get; private set; }
     public bool IsAttacking;
 
+    float spriteOffsetX_;
     float speedMul_;
     float height_ = 1;
     float speedVariation_;
@@ -71,6 +72,7 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
     int playerLayer_;
 
     Transform transform_;
+    Transform spriteTransform_;
     Rigidbody2D body_;
     IMapAccess map_;
     ISpriteAnimator spriteAnimator_;
@@ -130,6 +132,8 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         playerLayer_ = SceneGlobals.Instance.PlayerLayer;
         speedVariation_ = 1.0f - ((Random.value * SpeedVariation) - SpeedVariation * 0.5f);
         MaxLife = EnemyLife;
+        spriteTransform_ = SpriteRenderer.transform;
+        spriteOffsetX_ = spriteTransform_.localPosition.x;
     }
 
     bool isFirstStart_ = true;
@@ -402,7 +406,14 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
         {
             StopMove();
         }
+
+        // Some sprites (like minotaur with the big axe) should not be centered in the middle. Offset the sprite.
         spriteAnimator_?.UpdateAnimation(latestMovementDirection_, IsDead, IsAttacking);
+
+        // If a sprite is not centered at the middle flipping x will cause if to visibly change position. Adjust for this.
+        var spriteLocal = spriteTransform_.localPosition;
+        spriteLocal.x = Mathf.Abs(spriteOffsetX_) * (SpriteRenderer.flipX ? -1 : 1);
+        spriteTransform_.localPosition = spriteLocal;
     }
 
     private void FixedUpdate()

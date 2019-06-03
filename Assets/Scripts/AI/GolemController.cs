@@ -6,7 +6,7 @@ using Pathfinding;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GolemController : EntityComponentBase
+public class GolemController : MonoBehaviour
 {
     public bool DelayAppearance = true;
     public AudioClip AppearSound;
@@ -23,9 +23,7 @@ public class GolemController : EntityComponentBase
     EnemyScript enemyScript_;
     CoroutineHandle aiCoHandle_;
 
-    public override EntityType AiType => EntityType.FleeingBat;
-
-    private new void Awake()
+    private void Awake()
     {
         collider_ = GetComponent<Collider2D>();
         aiPath_ = GetComponent<AIPath>();
@@ -36,8 +34,6 @@ public class GolemController : EntityComponentBase
         myPhysics_ = GetComponent<IPhysicsActor>();
         transform_ = transform;
         enemyScript_ = GetComponent<EnemyScript>();
-
-        base.Awake();
     }
 
     private void GameEvents_OnPlayerKilled(IEnemy enemy)
@@ -53,9 +49,8 @@ public class GolemController : EntityComponentBase
         mySenses_.SetLookForPlayerLoS(activate, 12);
     }
 
-    private new void Start()
+    private void Start()
     {
-        base.Start();
         GameEvents.OnPlayerKilled += GameEvents_OnPlayerKilled;
 
         if (DelayAppearance)

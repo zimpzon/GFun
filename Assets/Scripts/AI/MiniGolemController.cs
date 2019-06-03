@@ -5,7 +5,7 @@ using Pathfinding;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MiniGolemController : EntityComponentBase
+public class MiniGolemController : MonoBehaviour
 {
     IMovableActor myMovement_;
     ISensingActor mySenses_;
@@ -16,9 +16,7 @@ public class MiniGolemController : EntityComponentBase
     EnemyScript enemyScript_;
     CoroutineHandle aiCoHandle_;
 
-    public override EntityType AiType => EntityType.FleeingBat;
-
-    private new void Awake()
+    private void Awake()
     {
         collider_ = GetComponent<Collider2D>();
         myMovement_ = GetComponent<IMovableActor>();
@@ -28,8 +26,6 @@ public class MiniGolemController : EntityComponentBase
         myPhysics_ = GetComponent<IPhysicsActor>();
         transform_ = transform;
         enemyScript_ = GetComponent<EnemyScript>();
-
-        base.Awake();
     }
 
     void Activate(bool activate)
@@ -38,10 +34,8 @@ public class MiniGolemController : EntityComponentBase
         mySenses_.SetLookForPlayerLoS(activate, 12);
     }
 
-    private new void Start()
+    private void Start()
     {
-        base.Start();
-
         Activate(true);
         aiCoHandle_ = Timing.RunCoroutine(AICo().CancelWith(this.gameObject));
     }

@@ -30,15 +30,13 @@ public class World1RandomPluginScript : MapPluginScript
 
         int batCount = 2 + difficulty / 2;
         int fireBatCount = difficulty + 1;
-//        int fleeingBatCount = 2;
         int scytheCount = isFirstLevel ? 0 : Random.Range(0, (difficulty / 2) + 2);
         int golemCount = (difficulty & 1) == 1 ? 0 : 1 + difficulty / 6;
 
-        enemySpawnDefinitions.Add( new EnemySpawnDefinition() { EnemyId = EnemyId.SeekerScythe, Count = scytheCount });
-        enemySpawnDefinitions.Add( new EnemySpawnDefinition() { EnemyId = EnemyId.Bat, Count = batCount });
-        enemySpawnDefinitions.Add( new EnemySpawnDefinition() { EnemyId = EnemyId.FireBat, Count = fireBatCount });
-//        enemySpawnDefinitions.Add( new EnemySpawnDefinition() { EnemyId = EnemyId.FleeingBat, Count = fleeingBatCount });
-        enemySpawnDefinitions.Add( new EnemySpawnDefinition() { EnemyId = EnemyId.Golem, Count = golemCount });
+        enemySpawnDefinitions.Add(new EnemySpawnDefinition() { EnemyId = EnemyId.SeekerScythe, Count = scytheCount });
+        enemySpawnDefinitions.Add(new EnemySpawnDefinition() { EnemyId = EnemyId.Bat, Count = batCount });
+        enemySpawnDefinitions.Add(new EnemySpawnDefinition() { EnemyId = EnemyId.FireBat, Count = fireBatCount });
+        enemySpawnDefinitions.Add(new EnemySpawnDefinition() { EnemyId = EnemyId.Golem, Count = golemCount });
 
         EnemySpawner.Instance.AddEnemiesForWorld(enemySpawnDefinitions, dynamicObjects.transform, forbiddenPositions);
     }

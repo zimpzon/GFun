@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acba23d901cf4de4794eb48ba0cbc0a2, type: 3}
+  m_Name: QuestGiver_Sprites
+  m_EditorClassIdentifier: 
+  DefaultAnimationFramesPerSecond: 6
+  Sprites:
+  - {fileID: 21300000, guid: 5d6a426230217fd41b31a64aacf058e3, type: 3}
+  - {fileID: 21300000, guid: a6f816f986813c14da63107828b6a050, type: 3}
+  - {fileID: 21300000, guid: 7aa3cad8487af224aa32e320038193d5, type: 3}
+  - {fileID: 21300000, guid: 23d7fc13b07b82d489867ae572de3e2a, type: 3}
+  - {fileID: 21300000, guid: e6784f5c9081b444da956631a95f498c, type: 3}
+  - {fileID: 21300000, guid: 75adfb418a947e44893ce661b7e16445, type: 3}
+  - {fileID: 21300000, guid: 967b3605cddadde4c87aebbe4f82cffd, type: 3}
+  - {fileID: 21300000, guid: 22f4fc14de2534347a4fe967893579e9, type: 3}
+  - {fileID: 21300000, guid: 2be279146d646fb49926de24afa51d68, type: 3}
+  - {fileID: 21300000, guid: e457ec260e0598b40b0392fd5b62f220, type: 3}
+  - {fileID: 21300000, guid: 629fe348bd2708246be491bcf798f94d, type: 3}

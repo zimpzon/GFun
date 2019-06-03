@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3193830628676095919}
-  m_LocalRotation: {x: -0.10773913, y: 0.99417925, z: -0, w: 0}
+  m_LocalRotation: {x: -0.7071068, y: 0.7071068, z: -0, w: 0}
   m_LocalPosition: {x: 0.15, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6462519186071445372}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: -12.37}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: -90}
 --- !u!198 &3948880507588927911
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -739,8 +739,8 @@ ParticleSystem:
     m_TextureClipChannel: 3
     m_TextureClipThreshold: 0
     m_TextureUVChannel: 0
-    m_TextureColorAffectsParticles: 1
-    m_TextureAlphaAffectsParticles: 1
+    m_TextureColorAffectsParticles: 0
+    m_TextureAlphaAffectsParticles: 0
     m_TextureBilinearFiltering: 0
     randomDirectionAmount: 1
     sphericalDirectionAmount: 0
@@ -4842,7 +4842,7 @@ GameObject:
   - component: {fileID: 6462519186071445372}
   - component: {fileID: 6462519186071445373}
   - component: {fileID: 818654541915301760}
-  - component: {fileID: 4159930752294443079}
+  - component: {fileID: 3986758348073993303}
   m_Layer: 22
   m_Name: MinotaurProjectile
   m_TagString: Untagged
@@ -4859,7 +4859,7 @@ Transform:
   m_GameObject: {fileID: 6462519186071445375}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 31.22, y: 26.75, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 6462519186202035093}
   - {fileID: 926433130372778730}
@@ -4884,7 +4884,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6b6166a699bcf414a8657450577bddde, type: 2}
+  - {fileID: 2100000, guid: 9b18c350d8bdba84ab82cac4ad6fe1e8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4901,9 +4901,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1959141927
-  m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 30
   m_Sprite: {fileID: 21300000, guid: d23a662517ccf3346b3b864995c8ed52, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4931,7 +4931,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.33
---- !u!114 &4159930752294443079
+--- !u!114 &3986758348073993303
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4940,7 +4940,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6462519186071445375}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 467b53fc3baba49439f5d82f53229563, type: 3}
+  m_Script: {fileID: 11500000, guid: cda215751e374c947bea5e05ba504b29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Direction: {x: 0, y: 0, z: 0}
