@@ -31,11 +31,15 @@ public class GraveStoneManager : MonoBehaviour
     {
         int gameProgressIndex = 0;
         // TODO: Load all the past deaths information here when we update instead of just the one
-        List<GameProgressData> gameProgress = new List<GameProgressData>();
-        gameProgress.Add(GameProgressData.CurrentProgress);
-        for (int i = 0; i < gameProgress[gameProgressIndex].NumberOfDeaths + 20; i++)
+        List<GraveStoneInfo> gameProgress = new List<GraveStoneInfo>();
+        for (int i = 0; i < 20; i++)
         {
-            gameProgress.Add(GameProgressData.CurrentProgress);
+            gameProgress.Add(new GraveStoneInfo
+            {
+                Name = "This Is Alpha",
+                Killedby = EnemyId.FireBat,
+                TimeOfDeath = System.DateTime.Now.AddDays(-i)
+            });
         }
         // going from right to left instead of left to right to fill in closer to the graveyard entrance first
         for (int xPos = GraveStoneStartX; xPos > GraveStoneXMin && gameProgressIndex < gameProgress.Count; xPos -= 2)
@@ -44,7 +48,8 @@ public class GraveStoneManager : MonoBehaviour
             // filling in top to bottom, separate by 2 due to the gravestone top and so the players have a row to move between
             for (; yPos > GraveStoneYMin && gameProgressIndex < gameProgress.Count; yPos -= 2)
             {
-                string info = $"Enemies Killed = {gameProgress[gameProgressIndex].EnemiesKilled} Deaths = {gameProgress[gameProgressIndex].NumberOfDeaths} ";
+                var stone = gameProgress[gameProgressIndex];
+                string info = $"Here lies {stone.Name} Killed by {stone.Killedby}, {stone.TimeOfDeath.Date}";
                 CreateGraveStone(xPos, yPos, info);
                 gameProgressIndex++;
             }

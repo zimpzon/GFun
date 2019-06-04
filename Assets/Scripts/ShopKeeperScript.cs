@@ -50,6 +50,8 @@ public class ShopKeeperScript : MonoBehaviour
         if (scythesEnabled_)
             return;
 
+        GameEvents.RaiseQuestEvent(QuestEvent.ReaperAnnoyed);
+
         CurrentRunData.Instance.ShopKeeperPokeCount++;
         int scytheCount = CurrentRunData.Instance.ShopKeeperPokeCount + 1;
         if (scytheCount > Scythes.Length)

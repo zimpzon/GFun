@@ -253,6 +253,8 @@ public class EnemyScript : MonoBehaviour, IMovableActor, ISensingActor, IEnemy, 
             return;
         }
 
+        amount += (int)(amount * CurrentRunData.Instance.DamageBonus);
+
         if (damageFilter_ != null)
             amount = damageFilter_(amount);
 

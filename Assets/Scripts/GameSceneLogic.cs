@@ -32,6 +32,7 @@ public class GameSceneLogic : MonoBehaviour
     public TextMeshProUGUI ExplosiveAmmoText;
     public TextMeshProUGUI ArrowAmmoText;
     public TextMeshProUGUI CoinText;
+    public TextMeshProUGUI DamageText;
 
     [System.NonSerialized] public PortalScript NextLevelPortal;
     [System.NonSerialized] public PortalScript BossPortal;
@@ -121,9 +122,23 @@ public class GameSceneLogic : MonoBehaviour
         UpdateXp(position, enemy.XP);
     }
 
+    void UpdateDamageBonus()
+    {
+        int level = XpCalc.GetLevelAtXp(CurrentRunData.Instance.Xp);
+        CurrentRunData.Instance.DamageBonus = (level - 1) * GameProgressData.CurrentProgress.DamageBonusPerLevel;
+        UpdateDamageText();
+    }
+
+    void UpdateDamageText()
+    {
+        float damage = 1.0f + CurrentRunData.Instance.DamageBonus;
+        int intDamage = Mathf.RoundToInt(damage * 100);
+        DamageText.text = $"<color=#efefef>DMG:</color>{intDamage}%";
+    }
+
     void UpdateXp(Vector3 position, int xp)
     {
-        int currentXp = GameProgressData.CurrentProgress.PlayerXp + CurrentRunData.Instance.XpEarned;
+        int currentXp = CurrentRunData.Instance.Xp;
         int levelBefore = XpCalc.GetLevelAtXp(currentXp);
         if (xp != 0)
         {
@@ -131,7 +146,7 @@ public class GameSceneLogic : MonoBehaviour
             FloatingTextSpawner.Instance.Spawn(position + Vector3.up * 0.5f, $"XP: {xp}", color, 0.2f, 2.0f, TMPro.FontStyles.Normal);
         }
 
-        CurrentRunData.Instance.XpEarned += xp;
+        CurrentRunData.Instance.Xp += xp;
         currentXp += xp;
 
         int levelAfter = XpCalc.GetLevelAtXp(currentXp);
@@ -141,11 +156,13 @@ public class GameSceneLogic : MonoBehaviour
         int xpInThisLevel = currentXp - XpCalc.GetTotalXpRequired(levelAfter);
         int xpRequiredInThisLevel = XpCalc.GetXpRequired(levelAfter);
         XpWidget.Instance.ShowXp(levelAfter, xpInThisLevel, xpRequiredInThisLevel, currentXp);
+
+        UpdateDamageBonus();
     }
 
     IEnumerator<float> LevelUpCo(int newLevel)
     {
-        FloatingTextSpawner.Instance.Spawn(AiBlackboard.Instance.PlayerPosition + Vector3.up * 0.5f, "Level Up", Color.yellow);
+        PlayerInfoScript.Instance.ShowInfo($"Level {newLevel}");
         yield return 0;
     }
 
@@ -263,6 +280,7 @@ public class GameSceneLogic : MonoBehaviour
         OnAmmoChanged(AmmoType.Shell, 0);
         OnAmmoChanged(AmmoType.Explosive, 0);
         OnAmmoChanged(AmmoType.Arrow, 0);
+        UpdateDamageBonus();
         Weapons.LoadWeaponsFromResources();
         Enemies.LoadEnemiesFromResources();
         yield return null;
@@ -410,8 +428,6 @@ public class GameSceneLogic : MonoBehaviour
 
     void UpdateLocalStats()
     {
-        GameProgressData.CurrentProgress.EnemiesKilled += CurrentRunData.Instance.EnemiesKilled;
-        GameProgressData.CurrentProgress.PlayerXp += CurrentRunData.Instance.XpEarned;
         GameProgressData.CurrentProgress.NumberOfDeaths++;
         GameProgressData.SaveProgress();
     }

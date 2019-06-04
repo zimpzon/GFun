@@ -17,6 +17,7 @@ public class CurrentRunData
     public int ShellAmmo = 999;
     public int ExplosiveAmmo = 999;
     public int ArrowAmmo = 999;
+    public float DamageBonus = 0.0f;
 
     public int FloorInWorld = 1;
     public int TotalFloor = 1;
@@ -35,7 +36,8 @@ public class CurrentRunData
     public int ItemsBought;
     public int CoinsCollected;
     public int EnemiesKilled;
-    public int XpEarned;
+    public int Xp;
+    public int Level = 1;
 
     public int Boss1Attempts;
     public int Boss1Kills;
