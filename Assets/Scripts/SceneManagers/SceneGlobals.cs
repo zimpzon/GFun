@@ -34,6 +34,8 @@ public class SceneGlobals : MonoBehaviour
     public GameObjectPool EnemyIceBulletPool;
     public GameObjectPool DragonHatchlingProjectilePool;
     public GameObjectPool MinotaurProjectilePool;
+    public GameObjectPool ElfIceArrowProjectilePool;
+    public GameObjectPool ElfFireArrowProjectilePool;
     public GameObject WeaponPickupPrefab;
     public PlayableCharacters PlayableCharacters;
     public int OnTheFloorSortingValue = 15;
