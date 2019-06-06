@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum QuestId { ReaperAnnoyed, };
+
 public class Quest
 {
     public QuestId Id;
     public Func<QuestProgress, string> GetDisplayText;
     public Func<QuestProgress, string> GetRewardText;
     public Func<QuestProgress, bool> IsCompleted;
+    public string Description;
+    public Action ActivationFunc;
     public Action ApplyReward;
     public int Level;
 
-    public static Quest Create(Func<QuestProgress, string> GetDisplayText, Func<QuestProgress, string> GetRewardText, Func<QuestProgress, bool> IsCompleted, Action ApplyReward, int Level)
+    public static Quest Create(Func<QuestProgress, string> GetDisplayText, string description, Func<QuestProgress, string> GetRewardText, Func<QuestProgress, bool> IsCompleted, Action ApplyReward, int Level)
     {
         var q = new Quest
         {
             GetDisplayText = GetDisplayText,
+            Description = description,
             GetRewardText = GetRewardText,
             IsCompleted = IsCompleted,
             ApplyReward = ApplyReward,
@@ -62,18 +66,20 @@ public class QuestProgress
         }
     }
 
-    static string Prog(int a, int b) => $"({a}/{b})";
+    static string Prog(int current, int required) => $"(<color=#ffffff>{current}</color>/<color=#ffffff>{required}</color>)";
 
     public QuestProgress()
     {
         Quests.Add(QReaperAnnoyed);
         Quests.Add(QReaperAnnoyed2);
+        Quests.Add(Q3);
     }
 
     Quest QReaperAnnoyed = new Quest
     {
         Id = QuestId.ReaperAnnoyed,
         GetDisplayText = (qp) => $"Annoy The Reaper In Reapers Hideout {Prog(qp.ReaperAnnoyed, 1)}",
+        Description = "A punishment can sometimes be turned into a benefit. But be careful not to overdo it!",
         GetRewardText = (qp) => $"+10 Starting Gold",
         IsCompleted = (qp) => qp.ReaperAnnoyed >= 1,
         ApplyReward = () => { CurrentRunData.Instance.Coins += 10; },
@@ -83,10 +89,22 @@ public class QuestProgress
     Quest QReaperAnnoyed2 = new Quest
     {
         Id = QuestId.ReaperAnnoyed,
-        GetDisplayText = (qp) => $"Annoy The Reaper2 In Reapers Hideout {Prog(qp.ReaperAnnoyed, 1)}",
-        GetRewardText = (qp) => $"+10 Starting Gold",
+        GetDisplayText = (qp) => $"Destroy A Golem Nest {Prog(qp.ReaperAnnoyed, 1)}",
+        Description = "We have located a golem nest. Let me know when you are ready to eliminate this menace and I will open a direct portal.",
+        GetRewardText = (qp) => $"Achievement",
         IsCompleted = (qp) => qp.ReaperAnnoyed >= 1,
-        ApplyReward = () => { CurrentRunData.Instance.Coins += 10; },
         Level = 1,
+        ActivationFunc = () => { },
+    };
+
+    Quest Q3 = new Quest
+    {
+        Id = QuestId.ReaperAnnoyed,
+        GetDisplayText = (qp) => $"Destroy A Golem Nest {Prog(1, 1)}",
+        Description = "We have located a golem nest. Let me know when you are ready to eliminate this menace and I will open a direct portal.",
+        GetRewardText = (qp) => $"Achievement",
+        IsCompleted = (qp) => true,
+        Level = 1,
+        ActivationFunc = () => { },
     };
 }

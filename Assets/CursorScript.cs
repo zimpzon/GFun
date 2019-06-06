@@ -9,17 +9,17 @@ public class CursorScript : MonoBehaviour
     {
         transform_ = transform;
         mainCam_ = Camera.main;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     void Update()
     {
         Cursor.visible = false;
+        //var mouseScreenPos = Input.mousePosition;
+        //mouseScreenPos.z = -mainCam_.transform.position.z;
+        //var mouseWorldPos = mainCam_.ScreenToWorldPoint(mouseScreenPos);
+        //mouseWorldPos.z = 0;
 
-        var mouseScreenPos = Input.mousePosition;
-        mouseScreenPos.z = -mainCam_.transform.position.z;
-        var mouseWorldPos = mainCam_.ScreenToWorldPoint(mouseScreenPos);
-        mouseWorldPos.z = 0;
-
-        transform.position = mouseWorldPos;
+        transform.position = Input.mousePosition;
     }
 }
