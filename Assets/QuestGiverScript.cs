@@ -31,7 +31,7 @@ public class QuestGiverScript : MonoBehaviour
         TextNotify.text = pendingCount == 0 ? "!" : "?";
     }
 
-    public void OnClose()
+    public void Close()
     {
         UpdateNotifyText();
         QuestCanvas.gameObject.SetActive(false);
@@ -81,7 +81,7 @@ public class QuestGiverScript : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && QuestCanvas.gameObject.activeInHierarchy)
-            OnClose();
+            Close();
 
         Vector3 directionToPlayer = AiBlackboard.Instance.PlayerPosition - transform_.position;
         anim_.UpdateAnimation(directionToPlayer);

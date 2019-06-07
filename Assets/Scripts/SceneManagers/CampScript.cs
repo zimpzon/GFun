@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class CampScript : MonoBehaviour
 {
+    public static CampScript Instance;
     static readonly TrackedPath GhostPath = new TrackedPath();
 
     public string EnterPortalSceneName;
@@ -23,6 +24,7 @@ public class CampScript : MonoBehaviour
     public Transform[] CharacterDefaultPositions;
     public GameObject GhostPlayerPrefab;
     public GameObject LockedCharacterPrefab;
+    public GameObject QuestPortal;
 
     LightingEffectSettings activeLightingSettings_;
     bool isInGraveyard_;
@@ -32,9 +34,11 @@ public class CampScript : MonoBehaviour
     IMapAccess mapAccess_;
     MapScript mapScript_;
     GhostPlayerScript ghostScript_;
+    QuestId activatedQuest_;
 
     private void Awake()
     {
+        Instance = this;
         GameProgressData.LoadProgress();
         GameProgressData.EnableSave = true;
     }
@@ -48,6 +52,8 @@ public class CampScript : MonoBehaviour
 
         Weapons.LoadWeaponsFromResources();
         Enemies.LoadEnemiesFromResources();
+
+        QuestPortal.SetActive(false);
 
         LoadingCanvas.gameObject.SetActive(false);
 
@@ -81,6 +87,20 @@ public class CampScript : MonoBehaviour
         ActivateLatestSelectedCharacter();
 
         StartCoroutine(InMenu());
+    }
+
+    public void ActivateQuest(QuestId id)
+    {
+        QuestGiverScript.Instance.Close();
+        activatedQuest_ = id;
+
+        var pos = QuestPortal.transform.position;
+        mapAccess_.TriggerExplosion(QuestPortal.transform.position, 2.9f);
+        var portalCenter = pos + Vector3.up * 1.5f;
+        ParticleScript.EmitAtPosition(ParticleScript.Instance.PlayerLandParticles, portalCenter, 25);
+        ParticleScript.EmitAtPosition(ParticleScript.Instance.MuzzleFlashParticles, portalCenter, 1);
+        ParticleScript.EmitAtPosition(ParticleScript.Instance.WallDestructionParticles, portalCenter, 10);
+        QuestPortal.SetActive(true);
     }
 
     void CreateCharacters()
@@ -150,6 +170,12 @@ public class CampScript : MonoBehaviour
     }
 
     public void OnPlayerEnterStartPortal()
+    {
+        StopAllCoroutines();
+        StartCoroutine(PlayerEnteredPortal());
+    }
+
+    public void OnPlayerEnterQuestPortal()
     {
         StopAllCoroutines();
         StartCoroutine(PlayerEnteredPortal());

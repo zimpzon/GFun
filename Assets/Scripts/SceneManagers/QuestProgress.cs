@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 public enum QuestId {
+    None,
     ReaperAnnoyed,
     ReaperAnnoyedMultipleInOneRun,
     ReachFloor3World1,

@@ -18,19 +18,19 @@ public class QuestUIScript : MonoBehaviour
 
     public void OnCollect()
     {
+        completionPending_ = false;
         if (activateQuestOnButtonPress_)
         {
-            Debug.Log("Activate " + quest_.GetDisplayText(progress_));
+            CampScript.Instance.ActivateQuest(quest_.Id);
         }
         else
         {
             // Collecting reward
             progress_.CollectQuest(quest_.Id);
-            completionPending_ = false;
             SetQuest(quest_, progress_);
 
             QuestGiverScript.Instance.CompleteParticles.transform.position = this.transform.position;
-            QuestGiverScript.Instance.CompleteParticles.Emit(22);
+            QuestGiverScript.Instance.CompleteParticles.Emit(21);
             AudioManager.Instance.PlaySfxClip(QuestGiverScript.Instance.CompleteSound, 3, 0, 1.0f);
             AudioManager.Instance.PlaySfxClip(QuestGiverScript.Instance.CompleteSound, 3, 0, 0.90f);
             AudioManager.Instance.PlaySfxClip(QuestGiverScript.Instance.CompleteSound, 3, 0, 1.1f);
