@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class EnemyBullet1Script : MonoBehaviour
 {
@@ -15,8 +16,9 @@ public class EnemyBullet1Script : MonoBehaviour
     int damage_;
     IEnemy owner_;
     bool collideWalls_;
+    Action<Vector3> CollisionAction;
 
-    public void Init(IEnemy owner, Vector3 position, Vector3 direction, float range, float speed, int damage, bool collideWalls = true)
+    public void Init(IEnemy owner, Vector3 position, Vector3 direction, float range, float speed, int damage, bool collideWalls = true, Action<Vector3> collisionAction = null)
     {
         owner_ = owner;
         position_ = position;
@@ -26,7 +28,7 @@ public class EnemyBullet1Script : MonoBehaviour
         speed_ = speed;
         damage_ = damage;
         collideWalls_ = collideWalls;
-
+        CollisionAction = collisionAction;
         UpdateState();
     }
 
@@ -52,6 +54,10 @@ public class EnemyBullet1Script : MonoBehaviour
     {
         ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.BulletFizzleParticles, position_, 4);
         SceneGlobals.Instance.EnemyBullet1Pool.ReturnToPool(this.gameObject);
+        if (CollisionAction != null)
+        {
+            CollisionAction(transform_.position);
+        }
     }
 
     void UpdateState()

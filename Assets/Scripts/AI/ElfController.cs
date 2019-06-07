@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ public class ElfController : MonoBehaviour
     int pendingShots_;
 
     List<GameObjectPool> bulletPool_;
-
+    List<Action<Vector3>> triggerActions;
     private void Start()
     {
         movable_ = GetComponent<IMovableActor>();
@@ -28,17 +29,27 @@ public class ElfController : MonoBehaviour
         me_ = GetComponent<IEnemy>();
         physicsActor_ = GetComponent<IPhysicsActor>();
         bulletPool_ = new List<GameObjectPool>() { SceneGlobals.Instance.ElfIceArrowProjectilePool, SceneGlobals.Instance.ElfFireArrowProjectilePool };
+        triggerActions = new List<Action<Vector3>>() { null, FireArrowAction };
         audioManager_ = SceneGlobals.Instance.AudioManager;
 
         StartCoroutine(AI());
     }
 
+    private void FireArrowAction(Vector3 pos)
+    {
+            MapScript.Instance.TriggerExplosion(pos, worldRadius: 1.9f, damageWallsOnly: false);
+
+            ParticleScript.EmitAtPosition(ParticleScript.Instance.WallDestructionParticles, pos, 10);
+            ParticleScript.EmitAtPosition(ParticleScript.Instance.MuzzleFlashParticles, pos, 1);
+            ParticleScript.EmitAtPosition(ParticleScript.Instance.PlayerLandParticles, pos, 10);
+    }
+
     void Fire(Vector3 position, Vector3 direction)
     {
-        int randBullet = Random.Range(0, bulletPool_.Count);
+        int randBullet = UnityEngine.Random.Range(0, bulletPool_.Count);
         var bullet = bulletPool_[randBullet].GetFromPool();
         var bulletScript = (EnemyBullet1Script)bullet.GetComponent(typeof(EnemyBullet1Script));
-        bulletScript.Init(me_, position, direction, range: 25, speed: 7, damage: 2, collideWalls: true);
+        bulletScript.Init(me_, position, direction, range: 25, speed: 7, damage: 2, collideWalls: true, triggerActions[randBullet]);
         bullet.SetActive(true);
         float rotationDegrees = Mathf.Atan2(direction.x, -direction.y) * Mathf.Rad2Deg;
         bullet.transform.rotation = Quaternion.Euler(0, 0, rotationDegrees - 90);
@@ -67,13 +78,13 @@ public class ElfController : MonoBehaviour
                 var bulletStartPos = myCenter + directionToPlayer * 0.2f;
                 var bulletDirection = (playerCenter - bulletStartPos).normalized;
 
-                float angleOffset = (Random.value - 0.5f) * 15;
+                float angleOffset = (UnityEngine.Random.value - 0.5f) * 15;
                 var offsetDirection = Quaternion.AngleAxis(angleOffset, Vector3.forward) * bulletDirection;
                 Fire(bulletStartPos, offsetDirection);
 
                 coolDownEnd_ = time + 0.4f;
                 if (--pendingShots_ == 0)
-                    reloadEnd_ = time + 3.0f + Random.value;
+                    reloadEnd_ = time + 3.0f + UnityEngine.Random.value;
             }
         }
     }
@@ -85,10 +96,10 @@ public class ElfController : MonoBehaviour
         while (true)
         {
             var pos = movable_.GetPosition();
-            var direction = CollisionUtil.GetRandomFreeDirection(pos) * (Random.value * 0.8f + 0.1f);
+            var direction = CollisionUtil.GetRandomFreeDirection(pos) * (UnityEngine.Random.value * 0.8f + 0.1f);
             movable_.MoveTo(pos + direction);
 
-            float endTime = Time.time + 3 + Random.value * 2;
+            float endTime = Time.time + 3 + UnityEngine.Random.value * 2;
             while (true)
             {
                 if (me_.IsDead)
