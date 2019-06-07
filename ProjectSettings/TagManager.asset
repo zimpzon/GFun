@@ -34,7 +34,7 @@ TagManager:
   - NPC
   - DeadEnemy
   - EnemyNoWalls
-  - 
+  - UiParticles
   - 
   - 
   - 
@@ -55,4 +55,10 @@ TagManager:
     locked: 0
   - name: Lighting
     uniqueID: 3604034227
+    locked: 0
+  - name: UI
+    uniqueID: 1652895351
+    locked: 0
+  - name: UiParticles
+    uniqueID: 2147215071
     locked: 0

@@ -1,7 +1,11 @@
 ﻿using GFun;
 using UnityEngine;
 
-public enum QuestEvent { ReaperAnnoyed, ReachedGolemKingWithNoDamage };
+public enum QuestEvent {
+    RunStarted,
+    ReaperAnnoyed,
+    GolemNestDestroyed,
+};
 
 public static class GameEvents
 {
@@ -48,5 +52,7 @@ public static class GameEvents
         OnPlayerEnteredPortal = null;
         OnGolemKingCallingForHelp = null;
         OnAllEnemiesKilled = null;
+        OnQuestCompleted = null;
+        OnQuestEvent = null;
     }
 }

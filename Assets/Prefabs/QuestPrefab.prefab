@@ -68,8 +68,7 @@ MonoBehaviour:
   m_text: Complete
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9b3154c8745e85a43a6f7cf571b19677, type: 2}
-  m_sharedMaterial: {fileID: 6269209844368396311, guid: 9b3154c8745e85a43a6f7cf571b19677,
-    type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 096ebb6c52bac1942a9473ecbcd0ab9e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -358,8 +357,7 @@ MonoBehaviour:
   m_text: 10 Starting Gold
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9b3154c8745e85a43a6f7cf571b19677, type: 2}
-  m_sharedMaterial: {fileID: 6269209844368396311, guid: 9b3154c8745e85a43a6f7cf571b19677,
-    type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 096ebb6c52bac1942a9473ecbcd0ab9e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -488,7 +486,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -8.450012}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 790, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &590582968797926318
@@ -632,8 +630,7 @@ MonoBehaviour:
   m_text: Annoy The Reaper In Reapers Hideout (<color=#ffffff>0</color>/<color=#ffffff>1</color>)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9b3154c8745e85a43a6f7cf571b19677, type: 2}
-  m_sharedMaterial: {fileID: 6269209844368396311, guid: 9b3154c8745e85a43a6f7cf571b19677,
-    type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 096ebb6c52bac1942a9473ecbcd0ab9e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -664,7 +661,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 32
   m_textAlignment: 513
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -674,8 +671,8 @@ MonoBehaviour:
   m_charWidthMaxAdj: 0
   m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 0
+  m_overflowMode: 3
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -696,7 +693,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: -12.116211, z: -747.67444, w: -9.239929}
   m_textInfo:
     textComponent: {fileID: 590582969021003887}
     characterCount: 41
@@ -791,8 +788,7 @@ MonoBehaviour:
     to overdo it!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9b3154c8745e85a43a6f7cf571b19677, type: 2}
-  m_sharedMaterial: {fileID: 6269209844368396311, guid: 9b3154c8745e85a43a6f7cf571b19677,
-    type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 096ebb6c52bac1942a9473ecbcd0ab9e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -833,7 +829,7 @@ MonoBehaviour:
   m_charWidthMaxAdj: 0
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
+  m_overflowMode: 3
   m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0

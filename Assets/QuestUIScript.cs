@@ -25,10 +25,17 @@ public class QuestUIScript : MonoBehaviour
         else
         {
             // Collecting reward
-            Debug.Log("Collect " + quest_.GetDisplayText(progress_));
-            progress_.CollectQuest(quest_);
+            progress_.CollectQuest(quest_.Id);
             completionPending_ = false;
             SetQuest(quest_, progress_);
+
+            QuestGiverScript.Instance.CompleteParticles.transform.position = this.transform.position;
+            QuestGiverScript.Instance.CompleteParticles.Emit(22);
+            AudioManager.Instance.PlaySfxClip(QuestGiverScript.Instance.CompleteSound, 3, 0, 1.0f);
+            AudioManager.Instance.PlaySfxClip(QuestGiverScript.Instance.CompleteSound, 3, 0, 0.90f);
+            AudioManager.Instance.PlaySfxClip(QuestGiverScript.Instance.CompleteSound, 3, 0, 1.1f);
+
+            GameProgressData.SaveProgress();
         }
     }
 
@@ -61,8 +68,8 @@ public class QuestUIScript : MonoBehaviour
         quest_ = quest;
         progress_ = progress;
 
-        bool isCompleted = quest.IsCompleted(progress);
-        bool isCollected = progress.IsCollected(quest);
+        bool isCompleted = progress.IsCompleted(quest.Id);
+        bool isCollected = progress.IsCollected(quest.Id);
         bool mustBeActivated = quest.ActivationFunc != null;
 
         QuestText.text = quest.GetDisplayText(progress);
@@ -80,14 +87,14 @@ public class QuestUIScript : MonoBehaviour
         {
             // Quest is completed and collected
             backgroundImage.color = QuestGiverScript.Instance.CollectedColor;
-            RewardText.text = "Completed";
+            QuestText.text += "  <color=#00ff00>(COMPLETE)</color>";
         }
         else if (isCompleted && !isCollected)
         {
             // Quest is completed but not yet collected
-            QuestText.text = "<color=#00ff00>Completed</color>: " + QuestText.text;
             backgroundImage.color = QuestGiverScript.Instance.CompletedColor;
-            buttontext.text = "Collect";
+            QuestText.text += "  <color=#00ff00>(COMPLETE)</color>";
+            buttontext.text = "Complete";
             buttonImage.color = QuestGiverScript.Instance.CollectButtonColor;
             Button.gameObject.SetActive(true);
 

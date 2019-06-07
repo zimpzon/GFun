@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class QuestGiverScript : MonoBehaviour
@@ -15,14 +16,27 @@ public class QuestGiverScript : MonoBehaviour
     public Canvas QuestCanvas;
     public GameObject QuestContentParent;
     public GameObject QuestPrefab;
+    public TextMeshPro TextNotify;
+    public ParticleSystem CompleteParticles;
+    public AudioClip CompleteSound;
+    public AudioClip ShowSound;
+    public AudioClip CloseSound;
 
     SpriteAnimator_Single anim_;
     Transform transform_;
 
+    void UpdateNotifyText()
+    {
+        int pendingCount = GameProgressData.CurrentProgress.QuestProgress.CountQuestsPendingCollection();
+        TextNotify.text = pendingCount == 0 ? "!" : "?";
+    }
+
     public void OnClose()
     {
+        UpdateNotifyText();
         QuestCanvas.gameObject.SetActive(false);
         HumanPlayerController.Disabled = false;
+        AudioManager.Instance.PlaySfxClip(CloseSound, 1);
     }
 
     public void OnTalk()
@@ -30,23 +44,29 @@ public class QuestGiverScript : MonoBehaviour
         HumanPlayerController.Disabled = true;
         QuestCanvas.gameObject.SetActive(true);
 
-        for (int i = 0; i < QuestContentParent.transform.childCount; ++i)
-            DestroyImmediate(QuestContentParent.transform.GetChild(i).gameObject);
+        while(QuestContentParent.transform.childCount > 0)
+            DestroyImmediate(QuestContentParent.transform.GetChild(0).gameObject);
 
         var qp = GameProgressData.CurrentProgress.QuestProgress;
-        var collectedQuests = qp.Quests.Where(q => q.IsCompleted(qp) && qp.IsCollected(q)).OrderBy(q => q.GetDisplayText(qp));
-        var completedQuests = qp.Quests.Where(q => q.IsCompleted(qp) && !qp.IsCollected(q)).OrderBy(q => q.GetDisplayText(qp));
-        var activeQuests = qp.Quests.Where(q => !q.IsCompleted(qp)).OrderBy(q => q.GetDisplayText(qp));
+        var collectedQuests = qp.Quests.Where(q => qp.IsCompleted(q.Id) && qp.IsCollected(q.Id)).OrderBy(q => q.GetDisplayText(qp)).ToList();
+        var completedQuests = qp.Quests.Where(q => qp.IsCompleted(q.Id) && !qp.IsCollected(q.Id)).OrderBy(q => q.GetDisplayText(qp)).ToList();
+        var activeQuests = qp.Quests.Where(q => !qp.IsCompleted(q.Id)).OrderBy(q => q.GetDisplayText(qp)).ToList();
 
-        var sortedQuests = activeQuests.Concat(completedQuests).Concat(collectedQuests).ToList();
+        var sortedQuests = completedQuests.Concat(activeQuests).Concat(collectedQuests).ToList();
         for (int i = 0; i < sortedQuests.Count; ++i)
         {
-            var quest = qp.Quests[i];
+            var quest = sortedQuests[i];
+            if (!quest.IsVisibleToPlayer(qp))
+                continue;
+
             var uiQuest = Instantiate(QuestPrefab).GetComponent<QuestUIScript>();
             uiQuest.SetQuest(quest, qp);
             uiQuest.transform.SetParent(QuestContentParent.transform);
-            uiQuest.transform.SetAsLastSibling();
+            uiQuest.transform.localScale = Vector3.one;
+            uiQuest.transform.localPosition = Vector3.zero;
         }
+
+        AudioManager.Instance.PlaySfxClip(ShowSound, 1);
     }
 
     void Start()
@@ -54,6 +74,8 @@ public class QuestGiverScript : MonoBehaviour
         Instance = this;
         anim_ = GetComponent<SpriteAnimator_Single>();
         transform_ = transform;
+        UpdateNotifyText();
+        QuestCanvas.gameObject.SetActive(false);
     }
 
     void Update()

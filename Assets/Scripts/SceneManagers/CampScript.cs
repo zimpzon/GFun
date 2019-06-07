@@ -286,9 +286,6 @@ public class CampScript : MonoBehaviour
         PlayerPrefs.SetString("LatestCampPath", stringPath);
         PlayerPrefs.Save();
 
-        CurrentRunData.Clear();
-        CurrentRunData.Instance.StartingCharacterTag = PlayableCharacters.GetPlayerInScene().tag;
-
         // Init the run data
         var player = PlayableCharacters.GetPlayerInScene();
         CurrentRunData.StartNewRun();
@@ -299,6 +296,8 @@ public class CampScript : MonoBehaviour
         CurrentRunData.Instance.ShellAmmo = 999;
         CurrentRunData.Instance.StartingCharacterTag = player.tag;
         CurrentRunData.Instance.HasPlayerData = true;
+
+        GameProgressData.CurrentProgress.QuestProgress.ApplyAllRewards();
         CurrentRunData.StoreState();
 
         SceneManager.LoadScene(EnterPortalSceneName, LoadSceneMode.Single);

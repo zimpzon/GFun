@@ -204,6 +204,9 @@ public class GameSceneLogic : MonoBehaviour
         GameEvents.OnPlayerDamaged += OnPlayerDamaged;
         GameEvents.OnAutoPickUp += OnAutoPickUp;
         GameEvents.OnAmmoChanged += OnAmmoChanged;
+        GameEvents.OnQuestCompleted += GameEvents_OnQuestCompleted;
+
+        GameProgressData.CurrentProgress.QuestProgress.BeginQuestTracking();
 
         map_ = SceneGlobals.Instance.MapScript;
 
@@ -214,6 +217,11 @@ public class GameSceneLogic : MonoBehaviour
         BossPortal = GameObject.FindWithTag("GreenPortal").GetComponent<PortalScript>();
         BossPortal.gameObject.SetActive(false);
         BossPortal.OnPlayerEnter.AddListener(OnPlayerEnterBossPortal);
+    }
+
+    private void GameEvents_OnQuestCompleted(Quest quest)
+    {
+        PlayerInfoScript.Instance.ShowInfo($"Quest Complete: {quest.GetDisplayText(GameProgressData.CurrentProgress.QuestProgress)}", Color.green);
     }
 
     void UpdateAmmoText(TextMeshProUGUI text, int amount, int max)
