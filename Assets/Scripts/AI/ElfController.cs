@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Assets.Scripts;
+using Assets.Scripts.Effects;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +22,7 @@ public class ElfController : MonoBehaviour
     int pendingShots_;
 
     List<GameObjectPool> bulletPool_;
-    List<Action<Vector3>> triggerActions;
+    List<Func<Vector3, IEffect>> triggerActions;
     private void Start()
     {
         movable_ = GetComponent<IMovableActor>();
@@ -29,19 +31,25 @@ public class ElfController : MonoBehaviour
         me_ = GetComponent<IEnemy>();
         physicsActor_ = GetComponent<IPhysicsActor>();
         bulletPool_ = new List<GameObjectPool>() { SceneGlobals.Instance.ElfIceArrowProjectilePool, SceneGlobals.Instance.ElfFireArrowProjectilePool };
-        triggerActions = new List<Action<Vector3>>() { null, FireArrowAction };
+        triggerActions = new List<Func<Vector3, IEffect>>() { IceArrowEffect, FireArrowEffect };
         audioManager_ = SceneGlobals.Instance.AudioManager;
 
         StartCoroutine(AI());
     }
 
-    private void FireArrowAction(Vector3 pos)
+    private IEffect FireArrowEffect(Vector3 pos)
     {
-            MapScript.Instance.TriggerExplosion(pos, worldRadius: 1.9f, damageWallsOnly: false);
+        MapScript.Instance.TriggerExplosion(pos, worldRadius: 1.9f, damageWallsOnly: false, me_);
 
-            ParticleScript.EmitAtPosition(ParticleScript.Instance.WallDestructionParticles, pos, 10);
-            ParticleScript.EmitAtPosition(ParticleScript.Instance.MuzzleFlashParticles, pos, 1);
-            ParticleScript.EmitAtPosition(ParticleScript.Instance.PlayerLandParticles, pos, 10);
+        ParticleScript.EmitAtPosition(ParticleScript.Instance.WallDestructionParticles, pos, 10);
+        ParticleScript.EmitAtPosition(ParticleScript.Instance.MuzzleFlashParticles, pos, 1);
+        ParticleScript.EmitAtPosition(ParticleScript.Instance.PlayerLandParticles, pos, 10);
+        return new NoEffect();
+    }
+
+    private IEffect IceArrowEffect(Vector3 pos)
+    {
+        return new SlowEffect() { Effect = eEffects.Slowed, Time = 200000.0f, Value = 0.25f };
     }
 
     void Fire(Vector3 position, Vector3 direction)
@@ -49,7 +57,7 @@ public class ElfController : MonoBehaviour
         int randBullet = UnityEngine.Random.Range(0, bulletPool_.Count);
         var bullet = bulletPool_[randBullet].GetFromPool();
         var bulletScript = (EnemyBullet1Script)bullet.GetComponent(typeof(EnemyBullet1Script));
-        bulletScript.Init(me_, position, direction, range: 25, speed: 7, damage: 2, collideWalls: true, triggerActions[randBullet]);
+        bulletScript.Init(me_, position, direction, range: 25, speed: 7, damage: 0, collideWalls: true, triggerActions[randBullet]);
         bullet.SetActive(true);
         float rotationDegrees = Mathf.Atan2(direction.x, -direction.y) * Mathf.Rad2Deg;
         bullet.transform.rotation = Quaternion.Euler(0, 0, rotationDegrees - 90);

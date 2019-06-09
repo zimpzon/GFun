@@ -1,5 +1,8 @@
-﻿using GFun;
+﻿using Assets.Scripts;
+using GFun;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerSelfDamage : IEnemy
@@ -75,6 +78,8 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IAmmoProvid
 
     bool isHumanControlled_;
     InteractableTrigger switchPlayerInteract_;
+    List<IEffect> Effects = new List<IEffect>();
+    float SpeedAdjustment = 1.0f;
 
     public bool TryUseAmmo(AmmoType ammoType, int amount)
     {
@@ -229,11 +234,14 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IAmmoProvid
         UpdateHealth();
     }
 
-    public void TakeDamage(IEnemy enemy, int amount, Vector3 damageForce)
+    public void TakeDamage(IEnemy enemy, int amount, Vector3 damageForce, IEffect effect = null)
     {
         if (IsDead)
             return;
-
+        if (effect != null)
+        {
+            Effects.Add(effect);
+        }
         AudioManager.Instance.PlaySfxClip(TakeDamageSound, 1);
         DoFlash(2, 0.3f);
         ParticleScript.EmitAtPosition(ParticleScript.Instance.DeathFlashParticles, transform_.position, 2);
@@ -319,7 +327,7 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IAmmoProvid
 
     void FixedUpdateInternal(float dt)
     {
-        Vector3 movement = moveRequest_ * Speed * dt + force_ * dt;
+        Vector3 movement = moveRequest_ * Speed * SpeedAdjustment * dt + force_ * dt;
 
         latestFixedMovenentDirection_ = movement.normalized;
         moveRequest_ = Vector3.zero;
@@ -398,6 +406,34 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IAmmoProvid
 
         if (ShowCollisionDebug)
             DrawCollisionDebug();
+        UpdateEffects(dt);
+    }
+
+    private void UpdateEffects(float dt)
+    {
+        float speedAdjustment = 1.0f;
+        List<IEffect> speedEffects = Effects.Where(e => e.Effect == global::eEffects.Slowed).OrderByDescending(e => e.Value).ToList();
+        if (speedEffects.Count > 0)
+        {
+            // this selects the highest speed adjustment because the effects are ordered
+            // they are ordered decending because the closer to 0, the higher the speed reduction
+            for (int i = 0; i < speedEffects.Count; i++)
+            {
+                IEffect speedEffect = speedEffects[i];
+                speedEffect.Time -= dt;
+                if (speedEffect.Time <= 0)
+                {
+                    Effects.Remove(speedEffect);
+                }
+                else
+                {
+                    speedAdjustment = speedEffect.Value;
+                }
+            }
+            speedAdjustment = speedEffects.Max(e => e.Value);
+        }
+        SpeedAdjustment = speedAdjustment;
+        Effects.RemoveAll(e => e.Effect == eEffects.None);
     }
 
     void UpdateInternal_KeyboardControls(float dt)

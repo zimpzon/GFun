@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts;
+using System;
 using UnityEngine;
 
 public class EnemyBullet1Script : MonoBehaviour
@@ -16,9 +17,9 @@ public class EnemyBullet1Script : MonoBehaviour
     int damage_;
     IEnemy owner_;
     bool collideWalls_;
-    Action<Vector3> CollisionAction;
+    Func<Vector3, IEffect> CollisionAction;
 
-    public void Init(IEnemy owner, Vector3 position, Vector3 direction, float range, float speed, int damage, bool collideWalls = true, Action<Vector3> collisionAction = null)
+    public void Init(IEnemy owner, Vector3 position, Vector3 direction, float range, float speed, int damage, bool collideWalls = true, Func<Vector3, IEffect> collisionAction = null)
     {
         owner_ = owner;
         position_ = position;
@@ -44,8 +45,15 @@ public class EnemyBullet1Script : MonoBehaviour
     {
         if (collision.gameObject.layer == playerLayer_.value)
         {
+            IEffect effect = null;
+            if (CollisionAction != null)
+            {
+                effect = CollisionAction(transform_.position);
+                // remove the collision action so that it doesn't get triggered again in Die()
+                CollisionAction = null;
+            }
             var player = collision.gameObject.GetComponent<PlayableCharacterScript>();
-            player.TakeDamage(owner_, damage_, Direction);
+            player.TakeDamage(owner_, damage_, Direction, effect);
             Die();
         }
     }
