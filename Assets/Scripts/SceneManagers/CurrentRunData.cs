@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum World { World1, World2 };
+public enum World { World1, World2, World3 };
 public enum SpecialLocation { None, Shop, BossWorld1, }
 
 [Serializable]

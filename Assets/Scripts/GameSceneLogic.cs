@@ -15,6 +15,7 @@ public class GameSceneLogic : MonoBehaviour
     public MapStyle MapStyleShop;
     public MapStyle MapStyleDungeon1;
     public MapStyle MapStyleIce1;
+    public MapStyle MapStyleOutdoor1;
     public Canvas DeadCanvas;
     public Canvas InitCanvas;
     public string CampSceneName = "TheCampScene";
@@ -254,10 +255,16 @@ public class GameSceneLogic : MonoBehaviour
     {
         if (run.SpecialLocation == SpecialLocation.None)
         {
-            if (run.World == World.World1)
-                return (MapPlugins.World1RandomPlugin, MapStyleDungeon1);
-
-            return (MapPlugins.World2RandomPlugin, MapStyleIce1);
+            //if (run.World == World.World1)
+            //    return (MapPlugins.World1RandomPlugin, MapStyleDungeon1);
+            //else if (run.World == World.World2)
+            //{
+            //    return (MapPlugins.World2RandomPlugin, MapStyleIce1);
+            //}
+            //else
+            {
+                return (MapPlugins.World3RandomPlugin, MapStyleOutdoor1);
+            }
         }
         else if (run.SpecialLocation == SpecialLocation.Shop)
         {
