@@ -21,11 +21,15 @@ public class GameSceneLogic : MonoBehaviour
     public string GameSceneName = "GameScene";
     public Transform DynamicObjectRoot;
     public AudioClip PlayerDeadSound;
+    public AudioClip LevelUpSound;
+    public LightingEffectSettings LevelUpLightingSettings;
+    public AnimationCurve LevelUpFlashCurve;
     public MapPlugins MapPlugins;
     public TextMeshProUGUI LoadingText;
     public TextMeshProUGUI KilledByText;
     public TextMeshProUGUI StatsText;
     public TextMeshProUGUI HistoryText;
+    public TextMeshProUGUI HintsText;
     public AudioClip ShopMusic;
     public TextMeshProUGUI BulletAmmoText;
     public TextMeshProUGUI ShellAmmoText;
@@ -82,7 +86,7 @@ public class GameSceneLogic : MonoBehaviour
         }
         else if (run.SpecialLocation == SpecialLocation.None)
         {
-            // Just complated a standard floor.
+            // Just completed a standard floor.
             run.FloorInWorld++;
             run.TotalFloor++;
             run.SpecialLocation = SpecialLocation.Shop;
@@ -162,7 +166,13 @@ public class GameSceneLogic : MonoBehaviour
 
     IEnumerator<float> LevelUpCo(int newLevel)
     {
-        PlayerInfoScript.Instance.ShowInfo($"Level {newLevel}");
+        var playerPos = AiBlackboard.Instance.PlayerPosition + Vector3.up * 0.5f;
+        AudioManager.Instance.PlaySfxClip(LevelUpSound, 1);
+        var player = PlayableCharacters.GetPlayerInScene();
+        if (player.Life == 1)
+            LootDropScript.Instance.SpawnHealth(1, playerPos, 5);
+        FloatingTextSpawner.Instance.Spawn(playerPos, "Level Up!", Color.yellow, 0.1f, 3);
+        LightingImageEffect.Instance.FlashColor(LevelUpLightingSettings, LevelUpFlashCurve, 0.2f);
         yield return 0;
     }
 
@@ -375,6 +385,9 @@ public class GameSceneLogic : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.K))
                 KillAllEnemies();
 
+            if (Input.GetKeyDown(KeyCode.L))
+                Timing.RunCoroutine(LevelUpCo(1).CancelWith(this.gameObject));
+
             yield return 0;
         }
     }
@@ -508,6 +521,10 @@ public class GameSceneLogic : MonoBehaviour
             }
         }
         HistoryText.text = sb.ToString();
+        var questsPendingCollection = GameProgressData.CurrentProgress.QuestProgress.CountQuestsPendingCollection();
+
+        HintsText.enabled = questsPendingCollection > 0;
+        HintsText.text = $"You Have <color=#00ff00>{questsPendingCollection}</color> Completed Quest{(questsPendingCollection == 1 ? "" : "s")} Waiting In Your Camp!";
 
         MiniMapCamera.Instance.Show(false);
 

@@ -12,8 +12,9 @@ public class GameProgressData
     public int Version = 3;
     public const int RequiredVersion = 3;
     public int NumberOfDeaths;
-    public float DamageBonusPerLevel = 0.02f;
+    public float DamageBonusPerLevel = 0.1f;
     public QuestProgress QuestProgress = new QuestProgress();
+    public bool FakeCompletionFlag = false;
 
     public List<string> UnlockedCharacters = new List<string>() { "Character1", "Character2", "Character3" };
 

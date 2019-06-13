@@ -78,6 +78,7 @@ public class CampScript : MonoBehaviour
         mapAccess_ = SceneGlobals.Instance.MapAccess;
         mapScript_ = SceneGlobals.Instance.MapScript;
 
+        lightingImageEffect_.Darkness = 0.0f;
         SceneGlobals.Instance.GraveStoneManager.CreateGravestones();
 
         mapAccess_.BuildCollisionMapFromWallTilemap(mapScript_.FloorTileMap);
@@ -166,6 +167,17 @@ public class CampScript : MonoBehaviour
         {
             GameProgressData.RestartProgress();
             PlayerInfoScript.Instance.ShowInfo("Progress Reset", Color.red);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F11))
+        {
+            var prog = GameProgressData.CurrentProgress.QuestProgress;
+            foreach (var quest in prog.Quests)
+            {
+                if (quest.IsVisibleToPlayer(prog) && !prog.IsCompleted(quest.Id))
+                    GameProgressData.CurrentProgress.QuestProgress.CompleteQuest(quest.Id);
+            }
+            PlayerInfoScript.Instance.ShowInfo("Active Quests Completed", Color.red);
         }
     }
 

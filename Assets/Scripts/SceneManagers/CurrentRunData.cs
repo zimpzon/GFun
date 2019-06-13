@@ -20,10 +20,10 @@ public class CurrentRunData
     public float DamageBonus = 0.0f;
 
     public int FloorInWorld = 1;
-    public int TotalFloor = 1;
+    public int TotalFloor = 6;
     public int StartingDifficulty = 0;
-    public World World = World.World1;
-    public SpecialLocation SpecialLocation = SpecialLocation.Shop;
+    public World World = World.World2;
+    public SpecialLocation SpecialLocation = SpecialLocation.None;
 
     public string StartingCharacterTag = "Character1";
     public int Coins;
@@ -75,6 +75,7 @@ public class CurrentRunData
     {
         Clear();
         Instance.RunStartTime = Time.unscaledTime;
+        GameEvents.RaiseQuestEvent(QuestEvent.RunStarted);
     }
 
     static string state;

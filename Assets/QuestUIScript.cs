@@ -31,9 +31,9 @@ public class QuestUIScript : MonoBehaviour
 
             QuestGiverScript.Instance.CompleteParticles.transform.position = this.transform.position;
             QuestGiverScript.Instance.CompleteParticles.Emit(21);
-            AudioManager.Instance.PlaySfxClip(QuestGiverScript.Instance.CompleteSound, 3, 0, 1.0f);
-            AudioManager.Instance.PlaySfxClip(QuestGiverScript.Instance.CompleteSound, 3, 0, 0.90f);
-            AudioManager.Instance.PlaySfxClip(QuestGiverScript.Instance.CompleteSound, 3, 0, 1.1f);
+            AudioManager.Instance.PlaySfxClip(QuestGiverScript.Instance.CompleteSound, 5, 0, 1.0f);
+            AudioManager.Instance.PlaySfxClip(QuestGiverScript.Instance.CompleteSound, 5, 0, 0.90f);
+            AudioManager.Instance.PlaySfxClip(QuestGiverScript.Instance.CompleteSound, 5, 0, 1.1f);
 
             GameProgressData.SaveProgress();
         }
