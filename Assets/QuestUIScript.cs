@@ -10,11 +10,21 @@ public class QuestUIScript : MonoBehaviour
     public TextMeshProUGUI DescriptionText;
     public TextMeshProUGUI RewardText;
     public GameObject Button;
+    public GameObject DebugButton;
 
     Quest quest_;
     QuestProgress progress_;
     bool activateQuestOnButtonPress_;
     bool completionPending_;
+
+    public void OnDebugCompleteClick()
+    {
+        if (!progress_.IsCompleted(quest_.Id))
+        {
+            GameProgressData.CurrentProgress.QuestProgress.CompleteQuest(quest_.Id);
+            SetQuest(quest_, progress_);
+        }
+    }
 
     public void OnCollect()
     {
@@ -71,6 +81,9 @@ public class QuestUIScript : MonoBehaviour
         bool isCompleted = progress.IsCompleted(quest.Id);
         bool isCollected = progress.IsCollected(quest.Id);
         bool mustBeActivated = quest.ActivationFunc != null;
+
+        if (Application.isEditor && !isCompleted)
+            DebugButton.SetActive(true);
 
         QuestText.text = quest.GetDisplayText(progress);
         RewardText.text = quest.GetRewardText(progress);

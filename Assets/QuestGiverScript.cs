@@ -37,10 +37,12 @@ public class QuestGiverScript : MonoBehaviour
         QuestCanvas.gameObject.SetActive(false);
         HumanPlayerController.Disabled = false;
         AudioManager.Instance.PlaySfxClip(CloseSound, 1);
+        CampScript.Instance.ShowPlayerName(true);
     }
 
     public void OnTalk()
     {
+        CampScript.Instance.ShowPlayerName(false);
         HumanPlayerController.Disabled = true;
         QuestCanvas.gameObject.SetActive(true);
 

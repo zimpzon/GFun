@@ -1,5 +1,6 @@
 ﻿using GFun;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +13,10 @@ public class CampScript : MonoBehaviour
     public Canvas IntroCanvas;
     public Canvas LoadingCanvas;
     public Canvas OptionsCanvas;
+    public Canvas EnterNameCanvas;
+    public TMP_InputField EnterNameInput;
+    public TextMeshProUGUI PlayerNameText;
+    public GameObject PlayerNameRoot;
     public AudioClip IntroMusicClip;
     public AudioClip DistantThunder;
     public LightingEffectSettings CampLightingSettings;
@@ -46,6 +51,7 @@ public class CampScript : MonoBehaviour
     IEnumerator Start()
     {
         LoadingCanvas.gameObject.SetActive(true);
+        ShowPlayerName(false);
 
         while (!PlayFabFacade.Instance.LoginProcessComplete)
             yield return null;
@@ -154,6 +160,8 @@ public class CampScript : MonoBehaviour
         PlayableCharacters.Instance.SetCharacterToHumanControlled(characterTag, showChangeEffect: true);
     }
 
+    int resetProgressCount;
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -165,19 +173,11 @@ public class CampScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F12))
         {
-            GameProgressData.RestartProgress();
-            PlayerInfoScript.Instance.ShowInfo("Progress Reset", Color.red);
-        }
-
-        if (Input.GetKeyDown(KeyCode.F11))
-        {
-            var prog = GameProgressData.CurrentProgress.QuestProgress;
-            foreach (var quest in prog.Quests)
+            if (resetProgressCount++ > 5)
             {
-                if (quest.IsVisibleToPlayer(prog) && !prog.IsCompleted(quest.Id))
-                    GameProgressData.CurrentProgress.QuestProgress.CompleteQuest(quest.Id);
+                GameProgressData.RestartProgress();
+                PlayerInfoScript.Instance.ShowInfo("Progress Reset", Color.red);
             }
-            PlayerInfoScript.Instance.ShowInfo("Active Quests Completed", Color.red);
         }
     }
 
@@ -236,6 +236,27 @@ public class CampScript : MonoBehaviour
         }
     }
 
+    public void ShowPlayerName(bool show)
+        => PlayerNameRoot.SetActive(show);
+
+    public void ShowEnterName()
+    {
+        EnterNameInput.text = GameProgressData.CurrentProgress.PlayerName;
+        EnterNameCanvas.gameObject.SetActive(true);
+        EnterNameInput.ActivateInputField();
+    }
+
+    public void CloseEnterName()
+    {
+        if (!string.IsNullOrWhiteSpace(EnterNameInput.text))
+        {
+            GameProgressData.CurrentProgress.PlayerName = EnterNameInput.text;
+            GameProgressData.SaveProgress();
+            PlayerNameText.text = GameProgressData.CurrentProgress.PlayerName;
+        }
+        EnterNameCanvas.gameObject.SetActive(false);
+    }
+
     IEnumerator InCamp()
     {
         Time.timeScale = 1.0f;
@@ -244,6 +265,18 @@ public class CampScript : MonoBehaviour
         LightingFadeTo(isInGraveyard_ ? GraveyardLightingSettings : CampLightingSettings, transitionSpeed: 20);
         IntroCanvas.enabled = false;
         StartCoroutine(SceneGlobals.Instance.AudioManager.SetAudioProfile(AudioManager.eScene.InGame));
+
+        ShowPlayerName(true);
+        if (string.IsNullOrWhiteSpace(GameProgressData.CurrentProgress.PlayerName))
+        {
+            GameProgressData.CurrentProgress.PlayerName = $"Anonymous{Random.Range(100000, 999999)}";
+            GameProgressData.SaveProgress();
+            ShowEnterName();
+        }
+        else
+        {
+            PlayerNameText.text = GameProgressData.CurrentProgress.PlayerName;
+        }
 
         if (!ghostScript_.IsStarted)
             ghostScript_.Wander(GhostPath, 2.0f + Random.value * 3);
@@ -255,15 +288,33 @@ public class CampScript : MonoBehaviour
         {
             UpdateThunder(Time.time);
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            // Quick hacky solution to prevent entering name from triggering other stuff. Skip the checks.
+            if (EnterNameCanvas.gameObject.activeInHierarchy)
             {
-                StartCoroutine(InMenu());
-                yield break;
+                if (Input.GetKeyDown(KeyCode.Escape))
+                    CloseEnterName();
+
+                if (Input.GetKey(KeyCode.Return))
+                    CloseEnterName();
+
+                yield return null;
             }
-            else if(Input.GetKeyDown(KeyCode.M))
+            else
             {
-                StartCoroutine(ShowOptions());
-                yield break;
+                if (Input.GetKeyDown(KeyCode.N))
+                {
+                    ShowEnterName();
+                }
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    StartCoroutine(InMenu());
+                    yield break;
+                }
+                else if (Input.GetKeyDown(KeyCode.M))
+                {
+                    StartCoroutine(ShowOptions());
+                    yield break;
+                }
             }
             yield return null;
         }

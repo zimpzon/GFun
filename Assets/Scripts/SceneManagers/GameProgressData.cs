@@ -10,7 +10,8 @@ public class GameProgressData
     public static bool EnableSave = false; // So we can start at different scenes without overwriting
 
     public int Version = 3;
-    public const int RequiredVersion = 3;
+    public const int RequiredVersion = 4;
+    public string PlayerName;
     public int NumberOfDeaths;
     public float DamageBonusPerLevel = 0.1f;
     public QuestProgress QuestProgress = new QuestProgress();
