@@ -7,6 +7,7 @@ public class HumanPlayerController : MonoBehaviour
 
     public static TrackedPath TrackedPath = new TrackedPath();
     public static bool Disabled = false;
+    public static bool CanShoot = true;
 
     PlayableCharacterScript player_;
     Transform transform_;
@@ -16,7 +17,7 @@ public class HumanPlayerController : MonoBehaviour
     float bulletTimeTarget_;
     bool isMoving_;
     Camera mainCam_;
-    
+
     private void Start()
     {
         mainCam_ = Camera.main;
@@ -75,6 +76,9 @@ public class HumanPlayerController : MonoBehaviour
 
     void Fire(Vector3 direction)
     {
+        if (!CanShoot)
+            return;
+
         player_.CurrentWeapon.OnTriggerDown(direction);
     }
 

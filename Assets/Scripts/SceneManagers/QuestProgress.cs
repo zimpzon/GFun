@@ -182,10 +182,10 @@ public class QuestProgress
         Quests.Add(new Quest
         {
             Id = QuestId.ReaperAnnoyedMultipleInOneRun,
-            GetDisplayText = (qp) => $"Annoy The Reaper 3 Times In One Run", // count
+            GetDisplayText = (qp) => $"Annoy The Reaper 6 Times In One Run", // count
             Description = "Time To Test His Limits!",
             GetRewardText = (qp) => $"+10 Starting Gold",
-            CheckCurrentCompletionState = (qp) => currentRunStats.ReaperAnnoyed >= 3, // count
+            CheckCurrentCompletionState = (qp) => currentRunStats.ReaperAnnoyed >= 6, // count
             ApplyReward = () => { CurrentRunData.Instance.Coins += 10; },
             IsVisibleToPlayer = (qp) => IsCompleted(QuestId.ReaperAnnoyed),
             Level = 2,

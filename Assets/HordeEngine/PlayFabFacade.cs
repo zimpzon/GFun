@@ -23,6 +23,7 @@ public class PlayFabFacade : MonoBehaviour
     public bool LoginWhenInEditor = false;
 
     [NonSerialized] public object LastResult;
+    [NonSerialized] public string LastError;
     [NonSerialized] public bool LoginProcessComplete;
 
     void Awake()
@@ -117,16 +118,17 @@ public class PlayFabFacade : MonoBehaviour
         PlayFabClientAPI.LoginWithAndroidDeviceID(request, onsuccess, onError);
     }
 
-    public IEnumerator LogPlayerData(string key, string value)
+    public void LogPlayerDataAsync(string key, string value, UserDataPermission permission = UserDataPermission.Private)
     {
-        yield return LogPlayerData(new Dictionary<string, string> { { key, value } });
+        StartCoroutine(LogPlayerData(new Dictionary<string, string> { { key, value } }));
     }
 
-    public IEnumerator LogPlayerData(Dictionary<string, string> pairs)
+    public IEnumerator LogPlayerData(Dictionary<string, string> pairs, UserDataPermission permission = UserDataPermission.Private)
     {
         UpdateUserDataRequest req = new UpdateUserDataRequest();
         {
             req.Data = pairs;
+            req.Permission = permission;
         };
 
         Action<Action<UpdateUserDataResult>, Action<PlayFabError>> apiCall = (onsuccess, onError) =>
@@ -135,6 +137,28 @@ public class PlayFabFacade : MonoBehaviour
         };
 
         yield return ExecuteApiCallWithRetry(apiCall);
+    }
+
+    public void UpdatePlayerNameAsync(string name, Action callback)
+    {
+        StartCoroutine(UpdatePlayerName(name, callback));
+    }
+
+    public IEnumerator UpdatePlayerName(string name, Action callback)
+    {
+        var req = new UpdateUserTitleDisplayNameRequest();
+        {
+            req.DisplayName = name;
+        };
+
+        Action<Action<UpdateUserTitleDisplayNameResult>, Action<PlayFabError>> apiCall = (onsuccess, onError) =>
+        {
+            PlayFabClientAPI.UpdateUserTitleDisplayName(req, onsuccess, onError);
+        };
+
+        yield return ExecuteApiCallWithRetry(apiCall);
+
+        callback();
     }
 
     Dictionary<string, StatisticValue> CurrentStats = new Dictionary<string, StatisticValue>();
@@ -150,6 +174,39 @@ public class PlayFabFacade : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public IEnumerator GetLeaderboardAroundPlayer(string name, int max)
+    {
+        GetLeaderboardAroundPlayerRequest req = new GetLeaderboardAroundPlayerRequest
+        {
+            StatisticName = name,
+            MaxResultsCount = max,
+            ProfileConstraints = new PlayerProfileViewConstraints { ShowDisplayName = true },
+        };
+        Action<Action<GetLeaderboardAroundPlayerResult>, Action<PlayFabError>> apiCall = (onsuccess, onError) =>
+        {
+            PlayFabClientAPI.GetLeaderboardAroundPlayer(req, onsuccess, onError);
+        };
+
+        yield return ExecuteApiCallWithRetry(apiCall);
+    }
+
+    public IEnumerator GetLeaderboard(string name, int start, int max)
+    {
+        GetLeaderboardRequest req = new GetLeaderboardRequest
+        {
+            StatisticName = name,
+            MaxResultsCount = max,
+            StartPosition = start,
+            ProfileConstraints = new PlayerProfileViewConstraints { ShowDisplayName = true },
+        };
+        Action<Action<GetLeaderboardResult>, Action<PlayFabError>> apiCall = (onsuccess, onError) =>
+        {
+            PlayFabClientAPI.GetLeaderboard(req, onsuccess, onError);
+        };
+
+        yield return ExecuteApiCallWithRetry(apiCall);
     }
 
     public IEnumerator GetAllStats()
@@ -248,63 +305,49 @@ public class PlayFabFacade : MonoBehaviour
     IEnumerator ExecuteApiCallWithRetry<TResult>(Action<Action<TResult>, Action<PlayFabError>> apiAction)
     {
         LastResult = null;
+        LastError = null;
 
         float startTime = Time.unscaledTime;
         float timeWaited = 0;
-        int attempts = 0;
         TResult result = default;
 
-        while (true)
+        bool callComplete = false;
+        float apiCallRetryTime = 2.0f;
+
+        Action<TResult> onSuccess = callResult =>
         {
-            attempts++;
-            if (attempts > 5)
-            {
-                Debug.LogWarning("PlayFab: Cannot connect, giving up.");
-                break;
-            }
+            float timeTotal = Time.unscaledTime - startTime;
+            Debug.Log("PlayFab: Request succesful, ms = " + timeTotal * 1000);
+            result = callResult;
+            callComplete = true;
+        };
 
-            bool callComplete = false;
-            bool callSuccess = false;
-            float apiCallRetryTime = 2.0f;
+        Action<PlayFabError> onError = error =>
+        {
+            string fullMsg = error.ErrorMessage;
+            if (error.ErrorDetails != null)
+                foreach (var pair in error.ErrorDetails)
+                    foreach (var eachMsg in pair.Value)
+                        fullMsg += "\n" + pair.Key + ": " + eachMsg;
 
-            Action<TResult> onSuccess = callResult =>
-            {
-                float timeTotal = Time.unscaledTime - startTime;
-                Debug.Log("PlayFab: Request succesful, ms = " + timeTotal * 1000);
-                result = callResult;
-                callComplete = true;
-                callSuccess = true;
-            };
+            Debug.LogError(fullMsg);
+            LastError = fullMsg;
+            callComplete = true;
+        };
 
-            Action<PlayFabError> onError = error =>
-            {
-                string fullMsg = error.ErrorMessage;
-                if (error.ErrorDetails != null)
-                    foreach (var pair in error.ErrorDetails)
-                        foreach (var eachMsg in pair.Value)
-                            fullMsg += "\n" + pair.Key + ": " + eachMsg;
+        Debug.Log("PlayFab: Sending request...");
+        apiAction(onSuccess, onError);
 
-                Debug.LogError(fullMsg);
-                callComplete = true;
-            };
-
-            Debug.Log("PlayFab: Sending request...");
-            apiAction(onSuccess, onError);
-
-            while (!callComplete)
-            {
-                yield return null;
-                timeWaited = Time.unscaledTime - startTime;
-            }
-
-            if (callSuccess)
-                break;
-
+        while (!callComplete)
+        {
+            yield return null;
             timeWaited = Time.unscaledTime - startTime;
-
-            // Don't spam, wait a bit.
-            yield return new WaitForSeconds(apiCallRetryTime);
         }
+
+        timeWaited = Time.unscaledTime - startTime;
+
+        // Don't spam, wait a bit.
+        yield return new WaitForSeconds(apiCallRetryTime);
 
         LastResult = result;
     }
