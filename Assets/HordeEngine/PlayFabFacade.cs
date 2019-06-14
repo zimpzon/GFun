@@ -307,17 +307,17 @@ public class PlayFabFacade : MonoBehaviour
         LastResult = null;
         LastError = null;
 
-        float startTime = Time.unscaledTime;
+        string name = typeof(TResult).Name;
+        float startTime = Time.realtimeSinceStartup;
         float timeWaited = 0;
         TResult result = default;
 
         bool callComplete = false;
-        float apiCallRetryTime = 2.0f;
 
         Action<TResult> onSuccess = callResult =>
         {
-            float timeTotal = Time.unscaledTime - startTime;
-            Debug.Log("PlayFab: Request succesful, ms = " + timeTotal * 1000);
+            float timeTotal = Time.realtimeSinceStartup - startTime;
+            Debug.Log($"PlayFab: Request succesful ({name}), ms = " + timeTotal * 1000);
             result = callResult;
             callComplete = true;
         };
@@ -330,25 +330,21 @@ public class PlayFabFacade : MonoBehaviour
                     foreach (var eachMsg in pair.Value)
                         fullMsg += "\n" + pair.Key + ": " + eachMsg;
 
-            Debug.LogError(fullMsg);
+            Debug.LogError($"PlayFab: Request ({name}) failed: {fullMsg}");
             LastError = fullMsg;
             callComplete = true;
         };
 
-        Debug.Log("PlayFab: Sending request...");
+        Debug.Log($"PlayFab: Sending request...{name}");
         apiAction(onSuccess, onError);
 
         while (!callComplete)
         {
             yield return null;
-            timeWaited = Time.unscaledTime - startTime;
+            timeWaited = Time.realtimeSinceStartup - startTime;
         }
 
-        timeWaited = Time.unscaledTime - startTime;
-
-        // Don't spam, wait a bit.
-        yield return new WaitForSeconds(apiCallRetryTime);
-
+        timeWaited = Time.realtimeSinceStartup - startTime;
         LastResult = result;
     }
 }

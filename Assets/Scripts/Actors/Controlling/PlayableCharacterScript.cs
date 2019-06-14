@@ -279,6 +279,8 @@ public class PlayableCharacterScript : MonoBehaviour, IPhysicsActor, IAmmoProvid
     public void OnPlayerSwitchSelected()
     {
         PlayableCharacters.Instance.SetCharacterToHumanControlled(tag, showChangeEffect: true);
+        PlayerPrefs.SetString(PlayerPrefsNames.SelectedCharacterTag, tag);
+        PlayerPrefs.Save();
     }
 
     public void RefreshInteracting()

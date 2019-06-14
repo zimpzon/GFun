@@ -105,38 +105,38 @@ public class PlainBulletGun : MonoBehaviour, IWeapon
 
                 var angleOffsets = GetFiringAngleOffsets(GunSettings.FiringSpread, 1.0f);
                 int bulletCount = angleOffsets.Length;
-                if (ammoProvider_.TryUseAmmo(AmmoType, bulletCount))
+                if (!ammoProvider_.TryUseAmmo(AmmoType, bulletCount))
+                    yield break;
+
+                for (int j = 0; j < bulletCount; ++j)
                 {
-                    for (int j = 0; j < bulletCount; ++j)
-                    {
-                        float precisionPenalty = Mathf.Min(0.75f, Mathf.Max(0, -0.5f + penalty_ * 0.8f));
-                        float precision = GunSettings.Precision - precisionPenalty;
+                    float precisionPenalty = Mathf.Min(0.75f, Mathf.Max(0, -0.5f + penalty_ * 0.8f));
+                    float precision = GunSettings.Precision - precisionPenalty;
 
-                        float angleOffset = angleOffsets[j];
-                        const float MaxDegreesOffsetAtLowestPrecision = 30.0f;
-                        angleOffset += (Random.value - 0.5f) * (1.0f - precision) * MaxDegreesOffsetAtLowestPrecision;
-                        var offsetDirection = Quaternion.AngleAxis(angleOffset, Vector3.forward) * direction;
-                        Fire(position, offsetDirection);
-                    }
-
-                    latestFiringTime_ = Time.unscaledTime;
-
-                    audioManager_.PlaySfxClip(FireSound, 1, FireSoundPitchVariation, FireSoundPitch);
-                    cameraShake_.SetMinimumShake(0.75f);
-
-                    forceReceiver_.SetMinimumForce(-direction * Recoil);
-
-                    var particleCenter = position + direction * 0.3f;
-                    ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.MuzzleFlashParticles, particleCenter, 1);
-                    ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.MuzzleSmokeParticles, particleCenter, 5);
-
-                    float timePenalty = Mathf.Min(0.2f, Mathf.Max(0, -0.5f + penalty_ * 0.4f));
-                    float waitEndTime = Time.realtimeSinceStartup + GunSettings.TimeBetweenShots + timePenalty;
-                    while (Time.realtimeSinceStartup < waitEndTime)
-                        yield return 0;
-
-                    penalty_ = Mathf.Min(2.0f, penalty_ + 0.1f);
+                    float angleOffset = angleOffsets[j];
+                    const float MaxDegreesOffsetAtLowestPrecision = 30.0f;
+                    angleOffset += (Random.value - 0.5f) * (1.0f - precision) * MaxDegreesOffsetAtLowestPrecision;
+                    var offsetDirection = Quaternion.AngleAxis(angleOffset, Vector3.forward) * direction;
+                    Fire(position, offsetDirection);
                 }
+
+                latestFiringTime_ = Time.unscaledTime;
+
+                audioManager_.PlaySfxClip(FireSound, 1, FireSoundPitchVariation, FireSoundPitch);
+                cameraShake_.SetMinimumShake(0.75f);
+
+                forceReceiver_.SetMinimumForce(-direction * Recoil);
+
+                var particleCenter = position + direction * 0.3f;
+                ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.MuzzleFlashParticles, particleCenter, 1);
+                ParticleScript.EmitAtPosition(SceneGlobals.Instance.ParticleScript.MuzzleSmokeParticles, particleCenter, 5);
+
+                float timePenalty = Mathf.Min(0.2f, Mathf.Max(0, -0.5f + penalty_ * 0.4f));
+                float waitEndTime = Time.realtimeSinceStartup + GunSettings.TimeBetweenShots + timePenalty;
+                while (Time.realtimeSinceStartup < waitEndTime)
+                    yield return 0;
+
+                penalty_ = Mathf.Min(2.0f, penalty_ + 0.1f);
             }
 
             bool continueFiring = GunSettings.FiringMode == FiringMode.Auto && triggerIsDown_;

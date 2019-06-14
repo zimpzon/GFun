@@ -276,14 +276,14 @@ public class CampScript : MonoBehaviour
         playerNameBeforeEdit = GameProgressData.CurrentProgress.PlayerName;
         EnterNameInput.text = GameProgressData.CurrentProgress.PlayerName;
         PlayerNameErrorText.gameObject.SetActive(false);
-        ButtonPlayerNameOk.enabled = true;
+        ButtonPlayerNameOk.interactable = true;
         EnterNameCanvas.gameObject.SetActive(true);
         EnterNameInput.ActivateInputField();
     }
 
     void OnPlayerNameUpdated()
     {
-        ButtonPlayerNameOk.enabled = true;
+        ButtonPlayerNameOk.interactable = true;
 
         if (!string.IsNullOrEmpty(PlayFabFacade.Instance.LastError))
         {
@@ -301,8 +301,11 @@ public class CampScript : MonoBehaviour
         }
     }
 
-    public void CloseEnterName(bool saveName)
+    public void CloseEnterName(bool saveName = true)
     {
+        if (!ButtonPlayerNameOk.interactable)
+            return;
+
         if (!saveName || EnterNameInput.text == playerNameBeforeEdit)
         {
             EnterNameCanvas.gameObject.SetActive(false);
@@ -318,7 +321,8 @@ public class CampScript : MonoBehaviour
 
         if (!string.IsNullOrWhiteSpace(EnterNameInput.text))
         {
-            ButtonPlayerNameOk.enabled = false;
+            PlayerNameErrorText.text = "";
+            ButtonPlayerNameOk.interactable = false;
             PlayFabFacade.Instance.UpdatePlayerNameAsync(EnterNameInput.text, OnPlayerNameUpdated);
         }
     }
@@ -337,7 +341,7 @@ public class CampScript : MonoBehaviour
         ShowPlayerName(true);
         if (string.IsNullOrWhiteSpace(GameProgressData.CurrentProgress.PlayerName))
         {
-            GameProgressData.CurrentProgress.PlayerName = $"Anonymous{Random.Range(100000, 999999)}";
+            GameProgressData.CurrentProgress.PlayerName = $"Anonymous-{Random.Range(100000, 999999)}";
             GameProgressData.SaveProgress();
             ShowEnterName();
         }
@@ -363,7 +367,7 @@ public class CampScript : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Escape))
                     CloseEnterName(saveName: false);
 
-                if (Input.GetKey(KeyCode.Return))
+                if (Input.GetKeyDown(KeyCode.Return))
                     CloseEnterName(saveName: true);
 
                 yield return null;

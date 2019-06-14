@@ -36,18 +36,22 @@ public class LeaderboardScript : MonoBehaviour
         AudioManager.Instance.PlaySfxClip(ShowSound, 1);
     }
 
+    string GetDisplayName(PlayerLeaderboardEntry boardEntry)
+        => string.IsNullOrWhiteSpace(boardEntry.DisplayName) ? "(no name)" : boardEntry.DisplayName;
+
     IEnumerator LoadLeaderboard(string name, int start, int max, Func<int, string> formatScore)
     {
         TextLoading.SetActive(true);
 
-        var playerBoard = StartCoroutine(PlayFabFacade.Instance.GetLeaderboardAroundPlayer(name, max));
+        var playerBoard = StartCoroutine(PlayFabFacade.Instance.GetLeaderboardAroundPlayer(name, 1));
         yield return playerBoard;
         var playerResult = PlayFabFacade.Instance.LastResult as GetLeaderboardAroundPlayerResult;
         if (playerResult != null)
         {
-            TextPlayerRank.text = (playerResult.Leaderboard[0].Position + 1).ToString();
-            TextPlayerName.text = playerResult.Leaderboard[0].DisplayName;
-            TextPlayerScore.text = formatScore(playerResult.Leaderboard[0].StatValue);
+            var boardEntry = playerResult.Leaderboard[0];
+            TextPlayerRank.text = (boardEntry.Position + 1).ToString();
+            TextPlayerName.text = GetDisplayName(boardEntry);
+            TextPlayerScore.text = formatScore(boardEntry.StatValue);
         }
         else
         {
@@ -62,15 +66,15 @@ public class LeaderboardScript : MonoBehaviour
         var result = PlayFabFacade.Instance.LastResult as GetLeaderboardResult;
         for (int i = 0; i < result.Leaderboard.Count; ++i)
         {
-            var entryScript = Instantiate(EntryPrefab).GetComponent<LeaderboardUIScript>();
-            var board = result.Leaderboard[i];
-            entryScript.SetText(
-                (board.Position + 1).ToString(),
-                string.IsNullOrWhiteSpace(board.DisplayName) ? "(no name)" : board.DisplayName,
-                formatScore(board.StatValue));
-            entryScript.transform.SetParent(ContentRoot.transform);
-            entryScript.transform.localScale = Vector3.one;
-            entryScript.transform.localPosition = Vector3.zero;
+            var uiScript = Instantiate(EntryPrefab).GetComponent<LeaderboardUIScript>();
+            var boardEntry = result.Leaderboard[i];
+            uiScript.SetText(
+                (boardEntry.Position + 1).ToString(),
+                GetDisplayName(boardEntry),
+                formatScore(boardEntry.StatValue));
+            uiScript.transform.SetParent(ContentRoot.transform);
+            uiScript.transform.localScale = Vector3.one;
+            uiScript.transform.localPosition = Vector3.zero;
         }
 
         TextLoading.SetActive(false);

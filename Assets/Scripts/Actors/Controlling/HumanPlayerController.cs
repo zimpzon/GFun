@@ -74,10 +74,20 @@ public class HumanPlayerController : MonoBehaviour
         AiBlackboard.Instance.PlayerPosition = transform_.position;
     }
 
+    float nextOutOfAmmo_;
+
     void Fire(Vector3 direction)
     {
         if (!CanShoot)
             return;
+
+        int ammoLeft = player_.CurrentWeapon.AmmoCount;
+        if (ammoLeft == 0 && Time.unscaledTime > nextOutOfAmmo_)
+        {
+            FloatingTextSpawner.Instance.Spawn(player_.GetPosition() + Vector3.up * 0.5f, "Out Of Ammo!", Color.red);
+            nextOutOfAmmo_ = Time.unscaledTime + 0.5f;
+            return;
+        }
 
         player_.CurrentWeapon.OnTriggerDown(direction);
     }
