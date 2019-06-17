@@ -23,7 +23,7 @@ public class CurrentRunData
     public int TotalFloor = 1;
     public int StartingDifficulty = 0;
     public World World = World.World1;
-    public SpecialLocation SpecialLocation = SpecialLocation.Shop;
+    public SpecialLocation SpecialLocation = SpecialLocation.None;
 
     public string StartingCharacterTag = "Character1";
     public int Coins;
@@ -75,6 +75,7 @@ public class CurrentRunData
     {
         Clear();
         Instance.RunStartTime = Time.unscaledTime;
+        GameEvents.RaiseQuestEvent(QuestEvent.RunStarted);
     }
 
     static string state;

@@ -10,11 +10,21 @@ public class QuestUIScript : MonoBehaviour
     public TextMeshProUGUI DescriptionText;
     public TextMeshProUGUI RewardText;
     public GameObject Button;
+    public GameObject DebugButton;
 
     Quest quest_;
     QuestProgress progress_;
     bool activateQuestOnButtonPress_;
     bool completionPending_;
+
+    public void OnDebugCompleteClick()
+    {
+        if (!progress_.IsCompleted(quest_.Id))
+        {
+            GameProgressData.CurrentProgress.QuestProgress.CompleteQuest(quest_.Id);
+            SetQuest(quest_, progress_);
+        }
+    }
 
     public void OnCollect()
     {
@@ -31,9 +41,9 @@ public class QuestUIScript : MonoBehaviour
 
             QuestGiverScript.Instance.CompleteParticles.transform.position = this.transform.position;
             QuestGiverScript.Instance.CompleteParticles.Emit(21);
-            AudioManager.Instance.PlaySfxClip(QuestGiverScript.Instance.CompleteSound, 3, 0, 1.0f);
-            AudioManager.Instance.PlaySfxClip(QuestGiverScript.Instance.CompleteSound, 3, 0, 0.90f);
-            AudioManager.Instance.PlaySfxClip(QuestGiverScript.Instance.CompleteSound, 3, 0, 1.1f);
+            AudioManager.Instance.PlaySfxClip(QuestGiverScript.Instance.CompleteSound, 5, 0, 1.0f);
+            AudioManager.Instance.PlaySfxClip(QuestGiverScript.Instance.CompleteSound, 5, 0, 0.90f);
+            AudioManager.Instance.PlaySfxClip(QuestGiverScript.Instance.CompleteSound, 5, 0, 1.1f);
 
             GameProgressData.SaveProgress();
         }
@@ -71,6 +81,9 @@ public class QuestUIScript : MonoBehaviour
         bool isCompleted = progress.IsCompleted(quest.Id);
         bool isCollected = progress.IsCollected(quest.Id);
         bool mustBeActivated = quest.ActivationFunc != null;
+
+        if (Application.isEditor && !isCompleted)
+            DebugButton.SetActive(true);
 
         QuestText.text = quest.GetDisplayText(progress);
         RewardText.text = quest.GetRewardText(progress);

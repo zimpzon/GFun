@@ -24,6 +24,8 @@ public class QuestGiverScript : MonoBehaviour
 
     SpriteAnimator_Single anim_;
     Transform transform_;
+    int collectCountOnOpen_;
+
 
     void UpdateNotifyText()
     {
@@ -37,10 +39,15 @@ public class QuestGiverScript : MonoBehaviour
         QuestCanvas.gameObject.SetActive(false);
         HumanPlayerController.Disabled = false;
         AudioManager.Instance.PlaySfxClip(CloseSound, 1);
+        CampScript.Instance.ShowPlayerName(true);
+
+        if (collectCountOnOpen_ != GameProgressData.CurrentProgress.QuestProgress.CollectedQuests.Count)
+            CampScript.Instance.UpdatePlayFabStatsAsync();
     }
 
     public void OnTalk()
     {
+        CampScript.Instance.ShowPlayerName(false);
         HumanPlayerController.Disabled = true;
         QuestCanvas.gameObject.SetActive(true);
 
@@ -51,6 +58,7 @@ public class QuestGiverScript : MonoBehaviour
         var collectedQuests = qp.Quests.Where(q => qp.IsCompleted(q.Id) && qp.IsCollected(q.Id)).OrderBy(q => q.GetDisplayText(qp)).ToList();
         var completedQuests = qp.Quests.Where(q => qp.IsCompleted(q.Id) && !qp.IsCollected(q.Id)).OrderBy(q => q.GetDisplayText(qp)).ToList();
         var activeQuests = qp.Quests.Where(q => !qp.IsCompleted(q.Id)).OrderBy(q => q.GetDisplayText(qp)).ToList();
+        collectCountOnOpen_ = qp.CollectedQuests.Count;
 
         var sortedQuests = completedQuests.Concat(activeQuests).Concat(collectedQuests).ToList();
         for (int i = 0; i < sortedQuests.Count; ++i)

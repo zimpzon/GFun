@@ -97,13 +97,13 @@ public class QuestProgress
         }
     }
 
-    void TestCompletion(QuestId id)
+    void RaiseEventIfCompletedNow(QuestId id)
     {
         var quest = questLookup_[id];
         bool wasComplete = IsCompleted(id);
         if (!wasComplete && quest.CheckCurrentCompletionState(this))
         {
-            CompletedQuests.Add(id);
+            CompleteQuest(id);
             GameEvents.RaiseQuestCompletedEvent(quest);
         }
     }
@@ -111,6 +111,7 @@ public class QuestProgress
     public bool IsCompleted(QuestId id) => CompletedQuests.Contains(id);
     public bool IsCollected(QuestId id) => CollectedQuests.Contains(id);
     public void CollectQuest(QuestId id) => CollectedQuests.Add(id);
+    public void CompleteQuest(QuestId id) => CompletedQuests.Add(id);
 
     private void GameEvents_OnQuestEvent(QuestEvent evt)
     {
@@ -125,8 +126,8 @@ public class QuestProgress
             case QuestEvent.ReaperAnnoyed:
                 currentRunStats.ReaperAnnoyed++;
                 persistedStats.ReaperAnnoyed++;
-                TestCompletion(QuestId.ReaperAnnoyed);
-                TestCompletion(QuestId.ReaperAnnoyedMultipleInOneRun);
+                RaiseEventIfCompletedNow(QuestId.ReaperAnnoyed);
+                RaiseEventIfCompletedNow(QuestId.ReaperAnnoyedMultipleInOneRun);
                 break;
 
             // Instead: On GolemKingKilled, if damage taken == 0 then completed.
@@ -135,7 +136,7 @@ public class QuestProgress
 
             case QuestEvent.GolemNestDestroyed:
                 GolemNestDestroyed = true;
-                TestCompletion(QuestId.DestroyGolemNest);
+                RaiseEventIfCompletedNow(QuestId.DestroyGolemNest);
                 break;
 
             default:
@@ -181,10 +182,10 @@ public class QuestProgress
         Quests.Add(new Quest
         {
             Id = QuestId.ReaperAnnoyedMultipleInOneRun,
-            GetDisplayText = (qp) => $"Annoy The Reaper 3 Times In One Run", // count
+            GetDisplayText = (qp) => $"Annoy The Reaper 6 Times In One Run", // count
             Description = "Time To Test His Limits!",
             GetRewardText = (qp) => $"+10 Starting Gold",
-            CheckCurrentCompletionState = (qp) => currentRunStats.ReaperAnnoyed >= 3, // count
+            CheckCurrentCompletionState = (qp) => currentRunStats.ReaperAnnoyed >= 6, // count
             ApplyReward = () => { CurrentRunData.Instance.Coins += 10; },
             IsVisibleToPlayer = (qp) => IsCompleted(QuestId.ReaperAnnoyed),
             Level = 2,

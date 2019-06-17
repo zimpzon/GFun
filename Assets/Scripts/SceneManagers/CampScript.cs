@@ -1,7 +1,10 @@
 ﻿using GFun;
 using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CampScript : MonoBehaviour
 {
@@ -12,6 +15,15 @@ public class CampScript : MonoBehaviour
     public Canvas IntroCanvas;
     public Canvas LoadingCanvas;
     public Canvas OptionsCanvas;
+    public Canvas EnterNameCanvas;
+    public Canvas LeaderboardCanvas;
+    public Canvas CampCanvas;
+    public TMP_InputField EnterNameInput;
+    public TextMeshProUGUI PlayerNameText;
+    public TextMeshProUGUI PlayerNameErrorText;
+    public Button ButtonPlayerNameOk;
+    public TextMeshPro ControlsText;
+    public GameObject PlayerNameRoot;
     public AudioClip IntroMusicClip;
     public AudioClip DistantThunder;
     public LightingEffectSettings CampLightingSettings;
@@ -46,6 +58,9 @@ public class CampScript : MonoBehaviour
     IEnumerator Start()
     {
         LoadingCanvas.gameObject.SetActive(true);
+        ShowPlayerName(false);
+        HumanPlayerController.CanShoot = false;
+        ControlsText.gameObject.SetActive(GameProgressData.CurrentProgress.NumberOfDeaths == 0);
 
         while (!PlayFabFacade.Instance.LoginProcessComplete)
             yield return null;
@@ -56,6 +71,7 @@ public class CampScript : MonoBehaviour
         QuestPortal.SetActive(false);
 
         LoadingCanvas.gameObject.SetActive(false);
+        IntroCanvas.gameObject.SetActive(true);
 
         string ghostPath = PlayerPrefs.GetString("LatestCampPath");
         try
@@ -78,6 +94,7 @@ public class CampScript : MonoBehaviour
         mapAccess_ = SceneGlobals.Instance.MapAccess;
         mapScript_ = SceneGlobals.Instance.MapScript;
 
+        lightingImageEffect_.Darkness = 0.0f;
         SceneGlobals.Instance.GraveStoneManager.CreateGravestones();
 
         mapAccess_.BuildCollisionMapFromWallTilemap(mapScript_.FloorTileMap);
@@ -87,6 +104,24 @@ public class CampScript : MonoBehaviour
         ActivateLatestSelectedCharacter();
 
         StartCoroutine(InMenu());
+    }
+
+    public void UpdatePlayFabStatsAsync()
+    {
+        StartCoroutine(UpdatePlayFabStats());
+    }
+
+    IEnumerator UpdatePlayFabStats()
+    {
+        var statList = new List<(string name, int value)> {
+            (PlayFabData.Stat_QuestsCompleted, GameProgressData.CurrentProgress.QuestProgress.CollectedQuests.Count)
+        };
+        yield return PlayFabFacade.Instance.UpdateStats(statList);
+    }
+
+    public void Debug_QuestPortalNotImplemented()
+    {
+        FloatingTextSpawner.Instance.Spawn(QuestPortal.transform.position, "Not Implemented", Color.yellow);
     }
 
     public void ActivateQuest(QuestId id)
@@ -131,6 +166,8 @@ public class CampScript : MonoBehaviour
     void ActivateLatestSelectedCharacter()
     {
         string startCharacterTag = PlayerPrefs.GetString(PlayerPrefsNames.SelectedCharacterTag);
+        if (string.IsNullOrEmpty(startCharacterTag))
+            startCharacterTag = "Character1";
 
         // When developing we might experience the selected character is no longer unlocked. Revert to default.
         bool isUnlocked = GameProgressData.CharacterIsUnlocked(startCharacterTag);
@@ -153,6 +190,8 @@ public class CampScript : MonoBehaviour
         PlayableCharacters.Instance.SetCharacterToHumanControlled(characterTag, showChangeEffect: true);
     }
 
+    int resetProgressCount;
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -164,8 +203,11 @@ public class CampScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F12))
         {
-            GameProgressData.RestartProgress();
-            PlayerInfoScript.Instance.ShowInfo("Progress Reset", Color.red);
+            if (resetProgressCount++ > 5)
+            {
+                GameProgressData.RestartProgress();
+                PlayerInfoScript.Instance.ShowInfo("Progress Reset", Color.red);
+            }
         }
     }
 
@@ -224,14 +266,90 @@ public class CampScript : MonoBehaviour
         }
     }
 
+    public void ShowPlayerName(bool show)
+        => PlayerNameRoot.SetActive(show);
+
+    string playerNameBeforeEdit;
+
+    public void ShowEnterName()
+    {
+        playerNameBeforeEdit = GameProgressData.CurrentProgress.PlayerName;
+        EnterNameInput.text = GameProgressData.CurrentProgress.PlayerName;
+        PlayerNameErrorText.gameObject.SetActive(false);
+        ButtonPlayerNameOk.interactable = true;
+        EnterNameCanvas.gameObject.SetActive(true);
+        EnterNameInput.ActivateInputField();
+    }
+
+    void OnPlayerNameUpdated()
+    {
+        ButtonPlayerNameOk.interactable = true;
+
+        if (!string.IsNullOrEmpty(PlayFabFacade.Instance.LastError))
+        {
+            PlayerNameErrorText.text = $"Error: {PlayFabFacade.Instance.LastError}";
+            PlayerNameErrorText.gameObject.SetActive(true);
+        }
+        else
+        {
+            GameProgressData.CurrentProgress.PlayerName = EnterNameInput.text;
+            GameProgressData.SaveProgress();
+            PlayerNameText.text = GameProgressData.CurrentProgress.PlayerName;
+
+            PlayerInfoScript.Instance.ShowInfo($"Welcome, {GameProgressData.CurrentProgress.PlayerName}", Color.green);
+            EnterNameCanvas.gameObject.SetActive(false);
+        }
+    }
+
+    public void CloseEnterName(bool saveName = true)
+    {
+        if (!ButtonPlayerNameOk.interactable)
+            return;
+
+        if (!saveName || EnterNameInput.text == playerNameBeforeEdit)
+        {
+            EnterNameCanvas.gameObject.SetActive(false);
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(EnterNameInput.text) || EnterNameInput.text.Length < 4)
+        {
+            PlayerNameErrorText.text = "Name Is Too Short (Minimum 4)";
+            PlayerNameErrorText.gameObject.SetActive(true);
+            return;
+        }
+
+        if (!string.IsNullOrWhiteSpace(EnterNameInput.text))
+        {
+            PlayerNameErrorText.text = "";
+            ButtonPlayerNameOk.interactable = false;
+            PlayFabFacade.Instance.UpdatePlayerNameAsync(EnterNameInput.text, OnPlayerNameUpdated);
+        }
+    }
+
     IEnumerator InCamp()
     {
         Time.timeScale = 1.0f;
+
+        CampCanvas.gameObject.SetActive(true);
 
         CampfireSoundSource.enabled = true;
         LightingFadeTo(isInGraveyard_ ? GraveyardLightingSettings : CampLightingSettings, transitionSpeed: 20);
         IntroCanvas.enabled = false;
         StartCoroutine(SceneGlobals.Instance.AudioManager.SetAudioProfile(AudioManager.eScene.InGame));
+
+        ShowPlayerName(true);
+        if (string.IsNullOrWhiteSpace(GameProgressData.CurrentProgress.PlayerName))
+        {
+            GameProgressData.CurrentProgress.PlayerName = $"Anonymous-{Random.Range(100000, 999999)}";
+            GameProgressData.SaveProgress();
+            ShowEnterName();
+        }
+        else
+        {
+            PlayerNameText.text = GameProgressData.CurrentProgress.PlayerName;
+            PlayerInfoScript.Instance.ShowInfo($"Welcome back, {GameProgressData.CurrentProgress.PlayerName}", Color.green);
+        }
 
         if (!ghostScript_.IsStarted)
             ghostScript_.Wander(GhostPath, 2.0f + Random.value * 3);
@@ -243,15 +361,33 @@ public class CampScript : MonoBehaviour
         {
             UpdateThunder(Time.time);
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            // Quick hacky solution to prevent entering name from triggering other stuff. Skip the checks.
+            if (EnterNameCanvas.gameObject.activeInHierarchy)
             {
-                StartCoroutine(InMenu());
-                yield break;
+                if (Input.GetKeyDown(KeyCode.Escape))
+                    CloseEnterName(saveName: false);
+
+                if (Input.GetKeyDown(KeyCode.Return))
+                    CloseEnterName(saveName: true);
+
+                yield return null;
             }
-            else if(Input.GetKeyDown(KeyCode.M))
+            else
             {
-                StartCoroutine(ShowOptions());
-                yield break;
+                if (Input.GetKeyDown(KeyCode.N))
+                {
+                    ShowEnterName();
+                }
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    StartCoroutine(InMenu());
+                    yield break;
+                }
+                else if (Input.GetKeyDown(KeyCode.M))
+                {
+                    StartCoroutine(ShowOptions());
+                    yield break;
+                }
             }
             yield return null;
         }
@@ -326,6 +462,7 @@ public class CampScript : MonoBehaviour
         GameProgressData.CurrentProgress.QuestProgress.ApplyAllRewards();
         CurrentRunData.StoreState();
 
+        HumanPlayerController.CanShoot = true;
         SceneManager.LoadScene(EnterPortalSceneName, LoadSceneMode.Single);
     }
 

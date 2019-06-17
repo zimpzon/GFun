@@ -35,6 +35,7 @@ public class LightingImageEffect : MonoBehaviour
     public Material EffectMaterial;
 
     [NonSerialized] public RenderTexture LightingTexture;
+    public float Darkness = 0;
     public LightingEffectSettings StartValues = new LightingEffectSettings();
     public LightingEffectSettings CurrentValues = new LightingEffectSettings();
     LightingEffectSettings transitionValues_ = new LightingEffectSettings();
@@ -56,6 +57,8 @@ public class LightingImageEffect : MonoBehaviour
     int id_MonochromeDisplayR;
     int id_MonochromeDisplayG;
     int id_MonochromeDisplayB;
+    int id_Darkness;
+    int id_AspectRatio;
 
     public void SetBaseColorTarget(LightingEffectSettings target, float transitionSpeed = 30)
     {
@@ -105,6 +108,8 @@ public class LightingImageEffect : MonoBehaviour
         id_MonochromeDisplayR = Shader.PropertyToID("_MonochromeDisplayR");
         id_MonochromeDisplayG = Shader.PropertyToID("_MonochromeDisplayG");
         id_MonochromeDisplayB = Shader.PropertyToID("_MonochromeDisplayB");
+        id_Darkness = Shader.PropertyToID("_Darkness");
+        id_AspectRatio = Shader.PropertyToID("_AspectRatio");
 
         SetBaseColor(StartValues);
     }
@@ -169,6 +174,10 @@ public class LightingImageEffect : MonoBehaviour
         EffectMaterial.SetFloat(id_MonochromeFactorR, CurrentValues.MonochromeFactorR);
         EffectMaterial.SetFloat(id_MonochromeFactorG, CurrentValues.MonochromeFactorG);
         EffectMaterial.SetFloat(id_MonochromeFactorB, CurrentValues.MonochromeFactorB);
+
+        float aspectRatio = Screen.width / (float)Screen.height;
+        EffectMaterial.SetFloat(id_AspectRatio, aspectRatio);
+        EffectMaterial.SetFloat(id_Darkness, Darkness);
 
         //EffectMaterial.SetTexture("_LightingTex", LightingTexture);
         //EffectMaterial.SetFloat("_Brightness", CurrentValues.Brightness);

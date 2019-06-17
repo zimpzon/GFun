@@ -536,7 +536,8 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.2299999, y: 1.2299999, z: 1.2299999}
-  m_Children: []
+  m_Children:
+  - {fileID: 2096932674}
   m_Father: {fileID: 716762210}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -565,7 +566,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 
+  m_text: You Have 1 Completed Quest Waiting In Your Camp!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9b3154c8745e85a43a6f7cf571b19677, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: cd4ae020e8a11fa44b952615b36cd487, type: 2}
@@ -574,8 +575,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278255610
+  m_fontColor: {r: 0.9837978, g: 1, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -593,8 +594,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 10
-  m_fontSizeBase: 10
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -610,7 +611,7 @@ MonoBehaviour:
   m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 7
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -634,13 +635,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 341560934}
-    characterCount: 0
+    characterCount: 48
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 0
+    spaceCount: 8
+    wordCount: 9
     linkCount: 0
-    lineCount: 0
-    pageCount: 0
+    lineCount: 1
+    pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -648,7 +649,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2096932675}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -2047,7 +2048,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &718791550
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3290,11 +3291,56 @@ MonoBehaviour:
   GameSceneName: GameScene
   DynamicObjectRoot: {fileID: 459559867}
   PlayerDeadSound: {fileID: 8300000, guid: 73e225345a2177546baf5e71224d868b, type: 3}
+  LevelUpSound: {fileID: 8300000, guid: d48b7228a28333a4995a706967b10cf9, type: 3}
+  LevelUpLightingSettings:
+    AmbientLight: {r: 0.9, g: 0.9, b: 0.9, a: 1}
+    Brightness: 0.5
+    MonochromeAmount: 0.75
+    MonochromeFactorR: 0.23
+    MonochromeFactorG: 0.66
+    MonochromeFactorB: 0.11
+    MonochromeDisplayR: 0.3
+    MonochromeDisplayG: 0.3
+    MonochromeDisplayB: 0.3
+  LevelUpFlashCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.49302587
+      value: 1.0071244
+      inSlope: 0.091593646
+      outSlope: 0.091593646
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.12728682
+    - serializedVersion: 3
+      time: 0.9908447
+      value: 0.00340271
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   MapPlugins: {fileID: 11400000, guid: 1744cef2bc0749c4391ae831c49e0a03, type: 2}
   LoadingText: {fileID: 584597774}
   KilledByText: {fileID: 1970565223}
   StatsText: {fileID: 1116465470}
   HistoryText: {fileID: 718791551}
+  HintsText: {fileID: 341560934}
   ShopMusic: {fileID: 8300000, guid: d4299a350b83f3b489ec530a5195159b, type: 3}
   BulletAmmoText: {fileID: 1879689262}
   ShellAmmoText: {fileID: 1633295859}
@@ -6916,6 +6962,80 @@ MonoBehaviour:
     pivotPointRoot: {fileID: 0}
     spreadOutCount: 1
   showGraphs: 1
+--- !u!1 &2096932673
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2096932674}
+  - component: {fileID: 2096932676}
+  - component: {fileID: 2096932675}
+  m_Layer: 0
+  m_Name: TMP SubMeshUI [alagard Interact Text + LiberationSans SDF Atlas]
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2096932674
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2096932673}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 341560933}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2096932675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2096932673}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_spriteAsset: {fileID: 0}
+  m_material: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
+  m_isDefaultMaterial: 0
+  m_padding: 8.5625
+  m_canvasRenderer: {fileID: 2096932676}
+  m_TextComponent: {fileID: 341560934}
+  m_materialReferenceIndex: 1
+--- !u!222 &2096932676
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2096932673}
+  m_CullTransparentMesh: 0
 --- !u!1001 &2125216703
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6997,6 +7117,16 @@ PrefabInstance:
         type: 3}
       propertyPath: CurrentValues.MonochromeAmount
       value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030620504238268352, guid: 46bd76d6b3d875b4b9dbdd1aa11b2b3d,
+        type: 3}
+      propertyPath: VisibilityRadius
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030620504238268352, guid: 46bd76d6b3d875b4b9dbdd1aa11b2b3d,
+        type: 3}
+      propertyPath: Darkness
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46bd76d6b3d875b4b9dbdd1aa11b2b3d, type: 3}

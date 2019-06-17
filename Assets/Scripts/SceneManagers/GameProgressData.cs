@@ -9,18 +9,22 @@ public class GameProgressData
     public static GameProgressData CurrentProgress = new GameProgressData();
     public static bool EnableSave = false; // So we can start at different scenes without overwriting
 
-    public int Version = 3;
-    public const int RequiredVersion = 3;
+    public int Version = 4;
+    public const int RequiredVersion = 4;
+    public string PlayerName;
     public int NumberOfDeaths;
-    public float DamageBonusPerLevel = 0.02f;
+    public float DamageBonusPerLevel = 0.1f;
     public QuestProgress QuestProgress = new QuestProgress();
 
-    public List<string> UnlockedCharacters = new List<string>() { "Character1", "Character2", "Character3" };
+    public List<string> UnlockedCharacters = new List<string>() { "Character1", "Character2" };
 
     public static void RestartProgress()
     {
+        string name = CurrentProgress.PlayerName;
         PlayerPrefs.DeleteKey(PlayerPrefsNames.Progress);
         LoadProgress();
+        CurrentProgress.PlayerName = name;
+        SaveProgress();
     }
 
     public static bool CharacterIsUnlocked(string tag)
