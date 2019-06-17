@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b139d8c796108cb4683dea6764ddf51b, type: 3}
-  m_Name: MapStyleIce1
+  m_Name: MapStyleOutdoor1
   m_EditorClassIdentifier: 
-  Color: {r: 0, g: 1, b: 0.90622044, a: 1}
+  Color: {r: 0.019935932, g: 0.6037736, b: 0.05208574, a: 1}
   LightingSettings:
     AmbientLight: {r: 0.825, g: 0.825, b: 0.825, a: 1}
     Brightness: 2
@@ -23,19 +23,19 @@ MonoBehaviour:
     MonochromeDisplayR: 1
     MonochromeDisplayG: 1
     MonochromeDisplayB: 1
-  FloorTile: {fileID: 11400000, guid: 62c6243bc3a6eaf4d87f75cc5e71c981, type: 2}
+  FloorTile: {fileID: 11400000, guid: a5770e60d8974d04c9094e778df22fe5, type: 2}
   FloorTileVariations:
-  - {fileID: 11400000, guid: c320e8af5742fb54a8fc62680c533903, type: 2}
-  - {fileID: 11400000, guid: b684ee81217fbcb4e8a0dcd3e7caff01, type: 2}
+  - {fileID: 11400000, guid: b855af82f8e063146b5df9c20311bad2, type: 2}
+  - {fileID: 11400000, guid: 07249318bbbd49c4988c75fd27126f85, type: 2}
   FloorVariationChance: 0.02
-  FloorBehindWallTile: {fileID: 11400000, guid: 6609d94d3831d664e864dfd8767e83ac,
+  FloorBehindWallTile: {fileID: 11400000, guid: a5770e60d8974d04c9094e778df22fe5,
     type: 2}
-  WallTile: {fileID: 11400000, guid: 67dd239f118d13241817eff0c248df81, type: 2}
+  WallTile: {fileID: 11400000, guid: aa8bb6bdf4d475443aea8818b547df50, type: 2}
   WallTileVariations:
-  - {fileID: 11400000, guid: 2f069b14c708460428d8850a76ab4c82, type: 2}
+  - {fileID: 11400000, guid: 2568ac784e18983449f38d8ba23746ce, type: 2}
+  - {fileID: 11400000, guid: 43c5f1d3b36617f4baf6db72f17380bb, type: 2}
   WallVariationChance: 0.1
   InvisibleWallTile: {fileID: 11400000, guid: c7ca625c0c69a9b4eab844b48b864196, type: 2}
-  TopTile: {fileID: 11400000, guid: f287c09467502ed4e8313d4c912fc440, type: 2}
-  TopTileVariations:
-  - {fileID: 11400000, guid: bfe334ff8ea28f5498eb4c133ee245a9, type: 2}
+  TopTile: {fileID: 11400000, guid: c11291d96df257f48a06a3a450842605, type: 2}
+  TopTileVariations: []
   TopVariationChance: 0.1

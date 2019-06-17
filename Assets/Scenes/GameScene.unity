@@ -3283,6 +3283,7 @@ MonoBehaviour:
   MapStyleShop: {fileID: 11400000, guid: 1ef41cc645f1ea74881908f72b2db015, type: 2}
   MapStyleDungeon1: {fileID: 11400000, guid: fd8d51f23f7d5a64ebf61bfc1234ecd9, type: 2}
   MapStyleIce1: {fileID: 11400000, guid: e7a0e0d56b496db479a4077b7064e081, type: 2}
+  MapStyleOutdoor1: {fileID: 11400000, guid: bfa01c258602bf941ae224d0f5a7ecb5, type: 2}
   DeadCanvas: {fileID: 754898648}
   InitCanvas: {fileID: 1765966878}
   CampSceneName: TheCampScene
