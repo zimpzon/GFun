@@ -85,6 +85,13 @@ public class GameSceneLogic : MonoBehaviour
         {
             run.SpecialLocation = SpecialLocation.None;
         }
+        else if(run.World == World.World2 && run.FloorInWorld > 1)
+        {
+            run.FloorInWorld = 1;
+            run.World = World.World3;
+            run.SpecialLocation = SpecialLocation.Shop;
+            run.ShopKeeperPokeCount = 0;
+        }
         else if (run.SpecialLocation == SpecialLocation.None)
         {
             // Just completed a standard floor.
@@ -265,13 +272,15 @@ public class GameSceneLogic : MonoBehaviour
     {
         if (run.SpecialLocation == SpecialLocation.None)
         {
-            //if (run.World == World.World1)
-            //    return (MapPlugins.World1RandomPlugin, MapStyleDungeon1);
-            //else if (run.World == World.World2)
-            //{
-            //    return (MapPlugins.World2RandomPlugin, MapStyleIce1);
-            //}
-            //else
+            if (run.World == World.World1)
+            {
+                return (MapPlugins.World1RandomPlugin, MapStyleDungeon1);
+            }
+            else if (run.World == World.World2)
+            {
+                return (MapPlugins.World2RandomPlugin, MapStyleIce1);
+            }
+            else
             {
                 return (MapPlugins.World3RandomPlugin, MapStyleOutdoor1);
             }

@@ -26,12 +26,12 @@ public class World3RandomPluginScript : MapPluginScript
         int difficulty = CurrentRunData.Instance.StartingDifficulty + CurrentRunData.Instance.TotalFloor;
         List<EnemySpawnDefinition> enemySpawnDefinitions = new List<EnemySpawnDefinition>();
 
-        if (difficulty < 6)
-            DebugLinesScript.Show("Unexpected difficulty for World3 (expected >= 6)", difficulty);
+        if (difficulty < 12)
+            DebugLinesScript.Show("Unexpected difficulty for World3 (expected >= 12)", difficulty);
 
-        difficulty -= 5;
-
-        int minotaurCount = 2 + difficulty / 2;
+        difficulty -= 11;
+        difficulty = 1;
+        int minotaurCount = difficulty / 2;
         int elfCount = difficulty + 1;
         int ravenCount = Random.Range(0, (difficulty / 2) + 3) + 1;
 

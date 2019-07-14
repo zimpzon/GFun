@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b139d8c796108cb4683dea6764ddf51b, type: 3}
   m_Name: MapStyleOutdoor1
   m_EditorClassIdentifier: 
-  Color: {r: 0.019935932, g: 0.6037736, b: 0.05208574, a: 1}
+  Color: {r: 1, g: 0.9798658, b: 0, a: 1}
   LightingSettings:
     AmbientLight: {r: 0.825, g: 0.825, b: 0.825, a: 1}
     Brightness: 2
@@ -23,19 +23,26 @@ MonoBehaviour:
     MonochromeDisplayR: 1
     MonochromeDisplayG: 1
     MonochromeDisplayB: 1
-  FloorTile: {fileID: 11400000, guid: a5770e60d8974d04c9094e778df22fe5, type: 2}
+  FloorTile: {fileID: 11400000, guid: 8965cd19613a6e5438137f28d6562fbc, type: 2}
   FloorTileVariations:
-  - {fileID: 11400000, guid: b855af82f8e063146b5df9c20311bad2, type: 2}
-  - {fileID: 11400000, guid: 07249318bbbd49c4988c75fd27126f85, type: 2}
+  - {fileID: 11400000, guid: f50428121b244ca46a316a7644355331, type: 2}
+  - {fileID: 11400000, guid: 27fb7cda36bd7474d968c021be4f0386, type: 2}
+  - {fileID: 11400000, guid: a1bfa63591c982448ba2fe531c50b129, type: 2}
+  - {fileID: 11400000, guid: fc19a8d160ba7d94fbafb7ada6bd2856, type: 2}
+  - {fileID: 11400000, guid: f54341035f0b7154dbc3a6361258b098, type: 2}
+  - {fileID: 11400000, guid: 64fd1508e2d49d2469202625b3c05035, type: 2}
+  - {fileID: 11400000, guid: 8a11bf2bcba111545a5a302ec7d01840, type: 2}
+  - {fileID: 11400000, guid: ff58c4c8251a587458adf1eacf6ea472, type: 2}
+  - {fileID: 11400000, guid: e106ba5af5904b74c9d591d3354cfc62, type: 2}
   FloorVariationChance: 0.02
-  FloorBehindWallTile: {fileID: 11400000, guid: a5770e60d8974d04c9094e778df22fe5,
+  FloorBehindWallTile: {fileID: 11400000, guid: 8965cd19613a6e5438137f28d6562fbc,
     type: 2}
-  WallTile: {fileID: 11400000, guid: aa8bb6bdf4d475443aea8818b547df50, type: 2}
+  WallTile: {fileID: 11400000, guid: 1c79d8e41cfed0349bca29568fd8a76f, type: 2}
   WallTileVariations:
-  - {fileID: 11400000, guid: 2568ac784e18983449f38d8ba23746ce, type: 2}
-  - {fileID: 11400000, guid: 43c5f1d3b36617f4baf6db72f17380bb, type: 2}
+  - {fileID: 11400000, guid: e77440e19d5f4e84996618301d8c77cd, type: 2}
   WallVariationChance: 0.1
   InvisibleWallTile: {fileID: 11400000, guid: c7ca625c0c69a9b4eab844b48b864196, type: 2}
-  TopTile: {fileID: 11400000, guid: c11291d96df257f48a06a3a450842605, type: 2}
+  TopTile: {fileID: 11400000, guid: 98edd66fe12ebc64985a6b3aa53807de, type: 2}
   TopTileVariations: []
   TopVariationChance: 0.1
+  BackgroundMaterial: {fileID: 2100000, guid: e9f3cb13a625fb94b904881882c87e77, type: 2}

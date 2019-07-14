@@ -46,6 +46,7 @@ public class MapScript : MonoBehaviour, IMapAccess
     {
         mapStyle_ = mapStyle;
         SetColor(mapStyle_.Color);
+        backgroundRenderer_.material = mapStyle_.BackgroundMaterial;
     }
 
     void SetColor(Color color)
@@ -134,6 +135,7 @@ public class MapScript : MonoBehaviour, IMapAccess
         wallRenderer_ = WallTileMap.GetComponent<Renderer>();
         topRenderer_ = TopTileMap.GetComponent<Renderer>();
         backgroundRenderer_ = BackgroundQuad?.GetComponent<Renderer>();
+        
         floorRenderer_ = FloorTileMap.GetComponent<Renderer>();
 
         // Wall, top and background should all be equal so just pick one to start with

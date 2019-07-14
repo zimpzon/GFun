@@ -20,7 +20,7 @@ MonoBehaviour:
     type: 3}
   World2RandomPlugin: {fileID: 7537765696553365295, guid: d6d30131eeccb81498b61e347c9ecbf9,
     type: 3}
-  World3RandomPlugin: {fileID: 7537765696553365295, guid: 4f3fa3f14abb6184babeb61b6fdca555,
+  World3RandomPlugin: {fileID: 7537765696553365295, guid: bb54a001b3f30f045adb4428e17fee08,
     type: 3}
   Boss1Plugin: {fileID: 7537765696553365295, guid: 9dc9fdcdffd971849900ffcbaaa4688f,
     type: 3}

@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7537765696553365294}
-  - component: {fileID: 3825758650202006958}
+  - component: {fileID: 1336819196254577848}
   m_Layer: 0
-  m_Name: World2RandomPlugin
+  m_Name: World3RandomPlugin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3825758650202006958
+--- !u!114 &1336819196254577848
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,10 +40,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7537765696553365295}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 289c5e7663a7b1d4b978998ef36c6db0, type: 3}
+  m_Script: {fileID: 11500000, guid: d91cdb1041da12a47a38272e5ab55ae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   AppliedCellBounds:
     m_Position: {x: 0, y: 0, z: 0}
     m_Size: {x: 0, y: 0, z: 0}
-  Music: {fileID: 8300000, guid: d9db7774b6183a94ea8e1132e135d5b2, type: 3}
+  Music: {fileID: 8300000, guid: a0a790bd48dd4984da1914f5cdc20c47, type: 3}

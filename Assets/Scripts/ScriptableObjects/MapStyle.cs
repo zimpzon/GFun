@@ -25,4 +25,7 @@ public class MapStyle : ScriptableObject
     public TileBase TopTile;
     public TileBase[] TopTileVariations;
     public float TopVariationChance = 0.1f;
+
+    [Header("Roof")]
+    public Material BackgroundMaterial;
 }

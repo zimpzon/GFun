@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Dungeon1RoofMat
+  m_Name: IndoorDungeon1RoofMat
   m_Shader: {fileID: 4800000, guid: 06cd29d0d04f6d346aec5d7aaa00081c, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4

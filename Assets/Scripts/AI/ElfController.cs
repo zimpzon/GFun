@@ -49,7 +49,7 @@ public class ElfController : MonoBehaviour
 
     private IEffect IceArrowEffect(Vector3 pos)
     {
-        return new SlowEffect() { Effect = eEffects.Slowed, Time = 200000.0f, Value = 0.25f };
+        return new SlowEffect() { Effect = eEffects.Slowed, Time = 2.0f, Value = 0.25f };
     }
 
     void Fire(Vector3 position, Vector3 direction)

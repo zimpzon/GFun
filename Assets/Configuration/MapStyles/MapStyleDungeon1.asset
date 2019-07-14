@@ -39,3 +39,4 @@ MonoBehaviour:
   TopTileVariations:
   - {fileID: 11400000, guid: bfe334ff8ea28f5498eb4c133ee245a9, type: 2}
   TopVariationChance: 0.1
+  BackgroundMaterial: {fileID: 2100000, guid: e47698ea43c376646932428539bbaad7, type: 2}
