@@ -1,50 +1,132 @@
 fileFormatVersion: 2
 guid: cc0d74a4207f37649bb64e04e3b684f8
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: Buff Totem Sprite Sheet_0
-    21300002: Buff Totem Sprite Sheet_1
-    21300004: Buff Totem Sprite Sheet_2
-    21300006: Buff Totem Sprite Sheet_3
-    21300008: Buff Totem Sprite Sheet_4
-    21300010: Buff Totem Sprite Sheet_5
-    21300012: Buff Totem Sprite Sheet_6
-    21300014: Buff Totem Sprite Sheet_7
-    21300016: Buff Totem Sprite Sheet_8
-    21300018: Buff Totem Sprite Sheet_9
-    21300020: Buff Totem Sprite Sheet_10
-    21300022: Buff Totem Sprite Sheet_11
-    21300024: Buff Totem Sprite Sheet_12
-    21300026: Buff Totem Sprite Sheet_13
-    21300028: Buff Totem Sprite Sheet_14
-    21300030: Buff Totem Sprite Sheet_15
-    21300032: Buff Totem Sprite Sheet_16
-    21300034: Buff Totem Sprite Sheet_17
-    21300036: Buff Totem Sprite Sheet_18
-    21300038: Buff Totem Sprite Sheet_19
-    21300040: Buff Totem Sprite Sheet_20
-    21300042: Buff Totem Sprite Sheet_21
-    21300044: Buff Totem Sprite Sheet_22
-    21300046: Buff Totem Sprite Sheet_23
-    21300048: Buff Totem Sprite Sheet_24
-    21300050: Buff Totem Sprite Sheet_25
-    21300052: Buff Totem Sprite Sheet_26
-    21300054: Buff Totem Sprite Sheet_27
-    21300056: Buff Totem Sprite Sheet_28
-    21300058: Buff Totem Sprite Sheet_29
-    21300060: Buff Totem Sprite Sheet_30
-    21300062: Buff Totem Sprite Sheet_31
-    21300064: Buff Totem Sprite Sheet_32
-    21300066: Buff Totem Sprite Sheet_33
-    21300068: Buff Totem Sprite Sheet_34
-    21300070: Buff Totem Sprite Sheet_35
-    21300072: Buff Totem Sprite Sheet_36
-    21300074: Buff Totem Sprite Sheet_37
-    21300076: Buff Totem Sprite Sheet_38
-    21300078: Buff Totem Sprite Sheet_39
-    21300080: Buff Totem Sprite Sheet_40
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: Buff Totem Sprite Sheet_0
+  - first:
+      213: 21300002
+    second: Buff Totem Sprite Sheet_1
+  - first:
+      213: 21300004
+    second: Buff Totem Sprite Sheet_2
+  - first:
+      213: 21300006
+    second: Buff Totem Sprite Sheet_3
+  - first:
+      213: 21300008
+    second: Buff Totem Sprite Sheet_4
+  - first:
+      213: 21300010
+    second: Buff Totem Sprite Sheet_5
+  - first:
+      213: 21300012
+    second: Buff Totem Sprite Sheet_6
+  - first:
+      213: 21300014
+    second: Buff Totem Sprite Sheet_7
+  - first:
+      213: 21300016
+    second: Buff Totem Sprite Sheet_8
+  - first:
+      213: 21300018
+    second: Buff Totem Sprite Sheet_9
+  - first:
+      213: 21300020
+    second: Buff Totem Sprite Sheet_10
+  - first:
+      213: 21300022
+    second: Buff Totem Sprite Sheet_11
+  - first:
+      213: 21300024
+    second: Buff Totem Sprite Sheet_12
+  - first:
+      213: 21300026
+    second: Buff Totem Sprite Sheet_13
+  - first:
+      213: 21300028
+    second: Buff Totem Sprite Sheet_14
+  - first:
+      213: 21300030
+    second: Buff Totem Sprite Sheet_15
+  - first:
+      213: 21300032
+    second: Buff Totem Sprite Sheet_16
+  - first:
+      213: 21300034
+    second: Buff Totem Sprite Sheet_17
+  - first:
+      213: 21300036
+    second: Buff Totem Sprite Sheet_18
+  - first:
+      213: 21300038
+    second: Buff Totem Sprite Sheet_19
+  - first:
+      213: 21300040
+    second: Buff Totem Sprite Sheet_20
+  - first:
+      213: 21300042
+    second: Buff Totem Sprite Sheet_21
+  - first:
+      213: 21300044
+    second: Buff Totem Sprite Sheet_22
+  - first:
+      213: 21300046
+    second: Buff Totem Sprite Sheet_23
+  - first:
+      213: 21300048
+    second: Buff Totem Sprite Sheet_24
+  - first:
+      213: 21300050
+    second: Buff Totem Sprite Sheet_25
+  - first:
+      213: 21300052
+    second: Buff Totem Sprite Sheet_26
+  - first:
+      213: 21300054
+    second: Buff Totem Sprite Sheet_27
+  - first:
+      213: 21300056
+    second: Buff Totem Sprite Sheet_28
+  - first:
+      213: 21300058
+    second: Buff Totem Sprite Sheet_29
+  - first:
+      213: 21300060
+    second: Buff Totem Sprite Sheet_30
+  - first:
+      213: 21300062
+    second: Buff Totem Sprite Sheet_31
+  - first:
+      213: 21300064
+    second: Buff Totem Sprite Sheet_32
+  - first:
+      213: 21300066
+    second: Buff Totem Sprite Sheet_33
+  - first:
+      213: 21300068
+    second: Buff Totem Sprite Sheet_34
+  - first:
+      213: 21300070
+    second: Buff Totem Sprite Sheet_35
+  - first:
+      213: 21300072
+    second: Buff Totem Sprite Sheet_36
+  - first:
+      213: 21300074
+    second: Buff Totem Sprite Sheet_37
+  - first:
+      213: 21300076
+    second: Buff Totem Sprite Sheet_38
+  - first:
+      213: 21300078
+    second: Buff Totem Sprite Sheet_39
+  - first:
+      213: 21300080
+    second: Buff Totem Sprite Sheet_40
   externalObjects: {}
-  serializedVersion: 9
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -64,6 +146,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -73,8 +157,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -95,11 +179,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  cookieLightType: 1
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -110,7 +199,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -121,7 +211,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -132,6 +223,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -151,6 +243,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: ace2f7d2602c0834298f010f6527aac0
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -171,6 +264,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 6b8e926a9a4beb349a803d6e4dadb071
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -191,6 +285,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 1d5712d8025ea8c468f945cd2053efc7
+      internalID: 21300008
       vertices: []
       indices: 
       edges: []
@@ -211,6 +306,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: dbed5faa62fd6ed4abb3070271480d86
+      internalID: 21300012
       vertices: []
       indices: 
       edges: []
@@ -231,6 +327,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 5d99094309774ee48bbc88d2f199f9ac
+      internalID: 21300014
       vertices: []
       indices: 
       edges: []
@@ -251,6 +348,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: bdc018a53ae002e4ebe7482fdb0fda31
+      internalID: 21300016
       vertices: []
       indices: 
       edges: []
@@ -271,6 +369,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: c59c1ae0335b1f542b4c3b3e7f838e72
+      internalID: 21300018
       vertices: []
       indices: 
       edges: []
@@ -291,6 +390,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: a4012bedf1cef884d9e789071cf5422a
+      internalID: 21300020
       vertices: []
       indices: 
       edges: []
@@ -311,6 +411,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 1ac36d0d6d89d2b4d884f596e797f62d
+      internalID: 21300022
       vertices: []
       indices: 
       edges: []
@@ -331,6 +432,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 34b718fef3ad3d2489bc7cf0ef0f14be
+      internalID: 21300024
       vertices: []
       indices: 
       edges: []
@@ -351,6 +453,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 49758b962dfe8254bb3ef6d52e061495
+      internalID: 21300026
       vertices: []
       indices: 
       edges: []
@@ -371,6 +474,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 82ccfa2f1b7ae8e4d94888642f672703
+      internalID: 21300028
       vertices: []
       indices: 
       edges: []
@@ -391,6 +495,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 368df3c9cf2a48d4ea465716548c67d1
+      internalID: 21300030
       vertices: []
       indices: 
       edges: []
@@ -411,6 +516,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 341a69bc74e71d049870fbbb628dcdd3
+      internalID: 21300032
       vertices: []
       indices: 
       edges: []
@@ -431,6 +537,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: ed5720b8411884c42aecd1c8716e3da3
+      internalID: 21300034
       vertices: []
       indices: 
       edges: []
@@ -451,6 +558,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 0557c393808651243ab7e89e14c6d3a9
+      internalID: 21300036
       vertices: []
       indices: 
       edges: []
@@ -471,6 +579,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: cf6512dc644fd074ea4fbb160d56fa19
+      internalID: 21300038
       vertices: []
       indices: 
       edges: []
@@ -491,6 +600,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 9877979c57b805549804363019501a02
+      internalID: 21300040
       vertices: []
       indices: 
       edges: []
@@ -511,6 +621,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: c59c2193572fa904cb01e5fba8d4d1d4
+      internalID: 21300042
       vertices: []
       indices: 
       edges: []
@@ -531,6 +642,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: e1e3183c4fa7f2946bd27465bc5c24b4
+      internalID: 21300044
       vertices: []
       indices: 
       edges: []
@@ -551,6 +663,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: ea3ac9e51c6093d46ac537c1d0e5dece
+      internalID: 21300046
       vertices: []
       indices: 
       edges: []
@@ -571,6 +684,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 2afef41588249cb4d9b421712e82a70e
+      internalID: 21300048
       vertices: []
       indices: 
       edges: []
@@ -591,6 +705,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: d22ef8173b83f9342b5221036ced61ec
+      internalID: 21300050
       vertices: []
       indices: 
       edges: []
@@ -611,6 +726,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 35a2796140d683843aa804a6c82da275
+      internalID: 21300052
       vertices: []
       indices: 
       edges: []
@@ -631,6 +747,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 9a9806afbb557924b8656167c82d0d7b
+      internalID: 21300054
       vertices: []
       indices: 
       edges: []
@@ -651,6 +768,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 458a0f2af26a771418a39fad457435f3
+      internalID: 21300056
       vertices: []
       indices: 
       edges: []
@@ -671,6 +789,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: a5a75b2340eeabd4396e7d2b0978283e
+      internalID: 21300058
       vertices: []
       indices: 
       edges: []
@@ -691,6 +810,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: f0e28257a6a5a0f4988e9e992208d1c1
+      internalID: 21300060
       vertices: []
       indices: 
       edges: []
@@ -711,6 +831,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 8d0f115841fae6448b9e8da3dee5433e
+      internalID: 21300062
       vertices: []
       indices: 
       edges: []
@@ -731,6 +852,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: a026c7a6b9ae04443b1d529caf19d747
+      internalID: 21300064
       vertices: []
       indices: 
       edges: []
@@ -751,6 +873,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 13dcac9b5e888084b89504a68955cdb4
+      internalID: 21300066
       vertices: []
       indices: 
       edges: []
@@ -771,6 +894,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 06a39bf812e963b469506ff4d4a1cbf8
+      internalID: 21300068
       vertices: []
       indices: 
       edges: []
@@ -791,6 +915,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 6e518ad327c869a4db0fa7028476d71a
+      internalID: 21300070
       vertices: []
       indices: 
       edges: []
@@ -811,6 +936,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: b77615c7f6d3ecc4f96cbc433c4ef753
+      internalID: 21300072
       vertices: []
       indices: 
       edges: []
@@ -831,6 +957,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 9df4942bfd21b1e4b90a1f2eb6f16a4f
+      internalID: 21300074
       vertices: []
       indices: 
       edges: []
@@ -851,6 +978,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 5e930bb0943b0444f8b87466980a2a0b
+      internalID: 21300076
       vertices: []
       indices: 
       edges: []
@@ -871,6 +999,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 70de19e55913a804782a78ac0efefeb6
+      internalID: 21300078
       vertices: []
       indices: 
       edges: []
@@ -891,6 +1020,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: ff66fc0b29d2c2c40a637289b4544c6b
+      internalID: 21300080
       vertices: []
       indices: 
       edges: []
@@ -899,10 +1029,51 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 84aa021c9dac46b4e8025e55669d8e28
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Buff Totem Sprite Sheet_0: 21300000
+      Buff Totem Sprite Sheet_1: 21300002
+      Buff Totem Sprite Sheet_10: 21300020
+      Buff Totem Sprite Sheet_11: 21300022
+      Buff Totem Sprite Sheet_12: 21300024
+      Buff Totem Sprite Sheet_13: 21300026
+      Buff Totem Sprite Sheet_14: 21300028
+      Buff Totem Sprite Sheet_15: 21300030
+      Buff Totem Sprite Sheet_16: 21300032
+      Buff Totem Sprite Sheet_17: 21300034
+      Buff Totem Sprite Sheet_18: 21300036
+      Buff Totem Sprite Sheet_19: 21300038
+      Buff Totem Sprite Sheet_20: 21300040
+      Buff Totem Sprite Sheet_21: 21300042
+      Buff Totem Sprite Sheet_22: 21300044
+      Buff Totem Sprite Sheet_23: 21300046
+      Buff Totem Sprite Sheet_24: 21300048
+      Buff Totem Sprite Sheet_25: 21300050
+      Buff Totem Sprite Sheet_26: 21300052
+      Buff Totem Sprite Sheet_27: 21300054
+      Buff Totem Sprite Sheet_28: 21300056
+      Buff Totem Sprite Sheet_29: 21300058
+      Buff Totem Sprite Sheet_30: 21300060
+      Buff Totem Sprite Sheet_31: 21300062
+      Buff Totem Sprite Sheet_32: 21300064
+      Buff Totem Sprite Sheet_33: 21300066
+      Buff Totem Sprite Sheet_34: 21300068
+      Buff Totem Sprite Sheet_35: 21300070
+      Buff Totem Sprite Sheet_36: 21300072
+      Buff Totem Sprite Sheet_37: 21300074
+      Buff Totem Sprite Sheet_38: 21300076
+      Buff Totem Sprite Sheet_39: 21300078
+      Buff Totem Sprite Sheet_4: 21300008
+      Buff Totem Sprite Sheet_40: 21300080
+      Buff Totem Sprite Sheet_6: 21300012
+      Buff Totem Sprite Sheet_7: 21300014
+      Buff Totem Sprite Sheet_8: 21300016
+      Buff Totem Sprite Sheet_9: 21300018
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

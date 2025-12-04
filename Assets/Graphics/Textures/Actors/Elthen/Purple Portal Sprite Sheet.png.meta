@@ -1,31 +1,75 @@
 fileFormatVersion: 2
 guid: 61a219862e479dc41b7cc6b97b868d1e
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: Purple Portal Sprite Sheet_0
-    21300002: Purple Portal Sprite Sheet_1
-    21300004: Purple Portal Sprite Sheet_2
-    21300006: Purple Portal Sprite Sheet_3
-    21300008: Purple Portal Sprite Sheet_4
-    21300010: Purple Portal Sprite Sheet_5
-    21300012: Purple Portal Sprite Sheet_6
-    21300014: Purple Portal Sprite Sheet_7
-    21300016: Purple Portal Sprite Sheet_8
-    21300018: Purple Portal Sprite Sheet_9
-    21300020: Purple Portal Sprite Sheet_10
-    21300022: Purple Portal Sprite Sheet_11
-    21300024: Purple Portal Sprite Sheet_12
-    21300026: Purple Portal Sprite Sheet_13
-    21300028: Purple Portal Sprite Sheet_14
-    21300030: Purple Portal Sprite Sheet_15
-    21300032: Purple Portal Sprite Sheet_16
-    21300034: Purple Portal Sprite Sheet_17
-    21300036: Purple Portal Sprite Sheet_18
-    21300038: Purple Portal Sprite Sheet_19
-    21300040: Purple Portal Sprite Sheet_20
-    21300042: Purple Portal Sprite Sheet_21
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: Purple Portal Sprite Sheet_0
+  - first:
+      213: 21300002
+    second: Purple Portal Sprite Sheet_1
+  - first:
+      213: 21300004
+    second: Purple Portal Sprite Sheet_2
+  - first:
+      213: 21300006
+    second: Purple Portal Sprite Sheet_3
+  - first:
+      213: 21300008
+    second: Purple Portal Sprite Sheet_4
+  - first:
+      213: 21300010
+    second: Purple Portal Sprite Sheet_5
+  - first:
+      213: 21300012
+    second: Purple Portal Sprite Sheet_6
+  - first:
+      213: 21300014
+    second: Purple Portal Sprite Sheet_7
+  - first:
+      213: 21300016
+    second: Purple Portal Sprite Sheet_8
+  - first:
+      213: 21300018
+    second: Purple Portal Sprite Sheet_9
+  - first:
+      213: 21300020
+    second: Purple Portal Sprite Sheet_10
+  - first:
+      213: 21300022
+    second: Purple Portal Sprite Sheet_11
+  - first:
+      213: 21300024
+    second: Purple Portal Sprite Sheet_12
+  - first:
+      213: 21300026
+    second: Purple Portal Sprite Sheet_13
+  - first:
+      213: 21300028
+    second: Purple Portal Sprite Sheet_14
+  - first:
+      213: 21300030
+    second: Purple Portal Sprite Sheet_15
+  - first:
+      213: 21300032
+    second: Purple Portal Sprite Sheet_16
+  - first:
+      213: 21300034
+    second: Purple Portal Sprite Sheet_17
+  - first:
+      213: 21300036
+    second: Purple Portal Sprite Sheet_18
+  - first:
+      213: 21300038
+    second: Purple Portal Sprite Sheet_19
+  - first:
+      213: 21300040
+    second: Purple Portal Sprite Sheet_20
+  - first:
+      213: 21300042
+    second: Purple Portal Sprite Sheet_21
   externalObjects: {}
-  serializedVersion: 9
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -45,6 +89,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -54,8 +100,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -76,11 +122,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  cookieLightType: 1
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -91,7 +142,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -102,7 +154,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -113,6 +166,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -132,6 +186,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: e7aefc2e63a68a54a983477d88abf6ef
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -152,6 +207,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: e0db0a0efe2939f419eedfed1666b401
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -172,6 +228,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 15224acf0c8da2048957c64c933d9979
+      internalID: 21300004
       vertices: []
       indices: 
       edges: []
@@ -192,6 +249,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 2548d3c9ac217a042af8fa29e8a12edc
+      internalID: 21300006
       vertices: []
       indices: 
       edges: []
@@ -212,6 +270,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 5df5f0f7daa58e64fabc861dca3621a0
+      internalID: 21300008
       vertices: []
       indices: 
       edges: []
@@ -232,6 +291,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: a2af85940fcc1ad4096bb1efd7407ec8
+      internalID: 21300010
       vertices: []
       indices: 
       edges: []
@@ -252,6 +312,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 08be83f313b599542a6742b77de4746e
+      internalID: 21300012
       vertices: []
       indices: 
       edges: []
@@ -272,6 +333,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 59032e747d77262428c2aab191f85167
+      internalID: 21300014
       vertices: []
       indices: 
       edges: []
@@ -292,6 +354,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 718bc600498d6a940b67945393663a15
+      internalID: 21300016
       vertices: []
       indices: 
       edges: []
@@ -312,6 +375,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: cc2e2f492971cce4e90072cd8f9e2247
+      internalID: 21300018
       vertices: []
       indices: 
       edges: []
@@ -332,6 +396,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 51812b81c9a246641b3885b2cac0395d
+      internalID: 21300020
       vertices: []
       indices: 
       edges: []
@@ -352,6 +417,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 9014df764242ef94a9c663cdcd4e922c
+      internalID: 21300022
       vertices: []
       indices: 
       edges: []
@@ -372,6 +438,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: d700daeb845ca854e96ec1d77c1edaa5
+      internalID: 21300024
       vertices: []
       indices: 
       edges: []
@@ -392,6 +459,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 402e757ae84ec5c448f3015f96f9d2e5
+      internalID: 21300026
       vertices: []
       indices: 
       edges: []
@@ -412,6 +480,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 0713e8904887fcb45ab6346d79a98920
+      internalID: 21300028
       vertices: []
       indices: 
       edges: []
@@ -432,6 +501,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 5d825204e36a3f64c98bffce917fcdfe
+      internalID: 21300030
       vertices: []
       indices: 
       edges: []
@@ -452,6 +522,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: c184ced98a1684744a58c6bc23af72d3
+      internalID: 21300032
       vertices: []
       indices: 
       edges: []
@@ -472,6 +543,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 31543dd94567ed4418d26bf2c2d6f4a6
+      internalID: 21300034
       vertices: []
       indices: 
       edges: []
@@ -492,6 +564,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: f730f49fa2a043b49858db3c7e9ba74d
+      internalID: 21300036
       vertices: []
       indices: 
       edges: []
@@ -512,6 +585,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: f3a549fe47104024f9fbc3c065df606d
+      internalID: 21300038
       vertices: []
       indices: 
       edges: []
@@ -532,6 +606,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: b23d29684cfd3b2419f947d6a11fa5b0
+      internalID: 21300040
       vertices: []
       indices: 
       edges: []
@@ -552,6 +627,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 3495fb28180d1d8449e5d905bf93b344
+      internalID: 21300042
       vertices: []
       indices: 
       edges: []
@@ -560,10 +636,35 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: e730d21e1a5cdfd4593cfed6b97faee8
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Purple Portal Sprite Sheet_0: 21300000
+      Purple Portal Sprite Sheet_1: 21300002
+      Purple Portal Sprite Sheet_10: 21300020
+      Purple Portal Sprite Sheet_11: 21300022
+      Purple Portal Sprite Sheet_12: 21300024
+      Purple Portal Sprite Sheet_13: 21300026
+      Purple Portal Sprite Sheet_14: 21300028
+      Purple Portal Sprite Sheet_15: 21300030
+      Purple Portal Sprite Sheet_16: 21300032
+      Purple Portal Sprite Sheet_17: 21300034
+      Purple Portal Sprite Sheet_18: 21300036
+      Purple Portal Sprite Sheet_19: 21300038
+      Purple Portal Sprite Sheet_2: 21300004
+      Purple Portal Sprite Sheet_20: 21300040
+      Purple Portal Sprite Sheet_21: 21300042
+      Purple Portal Sprite Sheet_3: 21300006
+      Purple Portal Sprite Sheet_4: 21300008
+      Purple Portal Sprite Sheet_5: 21300010
+      Purple Portal Sprite Sheet_6: 21300012
+      Purple Portal Sprite Sheet_7: 21300014
+      Purple Portal Sprite Sheet_8: 21300016
+      Purple Portal Sprite Sheet_9: 21300018
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

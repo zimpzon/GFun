@@ -1,33 +1,81 @@
 fileFormatVersion: 2
 guid: 3cf042600ac8de0439327e80964c514b
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: ReaperIdleFlipScythe20_0
-    21300002: ReaperIdleFlipScythe20_1
-    21300004: ReaperIdleFlipScythe20_2
-    21300006: ReaperIdleFlipScythe20_3
-    21300008: ReaperIdleFlipScythe20_4
-    21300010: ReaperIdleFlipScythe20_5
-    21300012: ReaperIdleFlipScythe20_6
-    21300014: ReaperIdleFlipScythe20_7
-    21300016: ReaperIdleFlipScythe20_8
-    21300018: ReaperIdleFlipScythe20_9
-    21300020: ReaperIdleFlipScythe20_10
-    21300022: ReaperIdleFlipScythe20_11
-    21300024: ReaperIdleFlipScythe20_12
-    21300026: ReaperIdleFlipScythe20_13
-    21300028: ReaperIdleFlipScythe20_14
-    21300030: ReaperIdleFlipScythe20_15
-    21300032: ReaperIdleFlipScythe20_16
-    21300034: ReaperIdleFlipScythe20_17
-    21300036: ReaperIdleFlipScythe20_18
-    21300038: ReaperIdleFlipScythe20_19
-    21300040: ReaperIdleFlipScythe20_20
-    21300042: ReaperIdleFlipScythe20_21
-    21300044: ReaperIdleFlipScythe20_22
-    21300046: ReaperIdleFlipScythe20_23
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: ReaperIdleFlipScythe20_0
+  - first:
+      213: 21300002
+    second: ReaperIdleFlipScythe20_1
+  - first:
+      213: 21300004
+    second: ReaperIdleFlipScythe20_2
+  - first:
+      213: 21300006
+    second: ReaperIdleFlipScythe20_3
+  - first:
+      213: 21300008
+    second: ReaperIdleFlipScythe20_4
+  - first:
+      213: 21300010
+    second: ReaperIdleFlipScythe20_5
+  - first:
+      213: 21300012
+    second: ReaperIdleFlipScythe20_6
+  - first:
+      213: 21300014
+    second: ReaperIdleFlipScythe20_7
+  - first:
+      213: 21300016
+    second: ReaperIdleFlipScythe20_8
+  - first:
+      213: 21300018
+    second: ReaperIdleFlipScythe20_9
+  - first:
+      213: 21300020
+    second: ReaperIdleFlipScythe20_10
+  - first:
+      213: 21300022
+    second: ReaperIdleFlipScythe20_11
+  - first:
+      213: 21300024
+    second: ReaperIdleFlipScythe20_12
+  - first:
+      213: 21300026
+    second: ReaperIdleFlipScythe20_13
+  - first:
+      213: 21300028
+    second: ReaperIdleFlipScythe20_14
+  - first:
+      213: 21300030
+    second: ReaperIdleFlipScythe20_15
+  - first:
+      213: 21300032
+    second: ReaperIdleFlipScythe20_16
+  - first:
+      213: 21300034
+    second: ReaperIdleFlipScythe20_17
+  - first:
+      213: 21300036
+    second: ReaperIdleFlipScythe20_18
+  - first:
+      213: 21300038
+    second: ReaperIdleFlipScythe20_19
+  - first:
+      213: 21300040
+    second: ReaperIdleFlipScythe20_20
+  - first:
+      213: 21300042
+    second: ReaperIdleFlipScythe20_21
+  - first:
+      213: 21300044
+    second: ReaperIdleFlipScythe20_22
+  - first:
+      213: 21300046
+    second: ReaperIdleFlipScythe20_23
   externalObjects: {}
-  serializedVersion: 9
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -47,6 +95,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -56,8 +106,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -78,11 +128,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  cookieLightType: 1
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 1024
     resizeAlgorithm: 0
@@ -93,7 +148,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 1024
     resizeAlgorithm: 0
@@ -104,7 +160,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: WebGL
     maxTextureSize: 1024
     resizeAlgorithm: 0
@@ -115,6 +172,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -134,6 +192,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 36e801f1419599c4dbb3ff886d9335cc
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -154,6 +213,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 618c593bdfaa7da45afc38906f000cb1
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -174,6 +234,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 48890f7c94352c641a28fbc158aa3f51
+      internalID: 21300004
       vertices: []
       indices: 
       edges: []
@@ -194,6 +255,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: e48202627317cf5418a2c619db9e86d1
+      internalID: 21300006
       vertices: []
       indices: 
       edges: []
@@ -214,6 +276,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 3b9cee9e4b9c25a4f98455bec2595c50
+      internalID: 21300008
       vertices: []
       indices: 
       edges: []
@@ -234,6 +297,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 94193057ce4281547926bd934da2ffd4
+      internalID: 21300010
       vertices: []
       indices: 
       edges: []
@@ -254,6 +318,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: c044fcfd4a40caf4fb0f5819276c0d1f
+      internalID: 21300012
       vertices: []
       indices: 
       edges: []
@@ -274,6 +339,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: f2ed0b2db5ee768418424eb8e8297fe8
+      internalID: 21300014
       vertices: []
       indices: 
       edges: []
@@ -294,6 +360,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: fa7997a54faac7d4a9bc95f9d172546c
+      internalID: 21300016
       vertices: []
       indices: 
       edges: []
@@ -314,6 +381,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: db094cf69048cdb4588ff028ac2a930f
+      internalID: 21300018
       vertices: []
       indices: 
       edges: []
@@ -334,6 +402,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 14a36d11829480c4482a4231e09f16c7
+      internalID: 21300020
       vertices: []
       indices: 
       edges: []
@@ -354,6 +423,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 379e0e712542e1a40ba3117358cb2538
+      internalID: 21300022
       vertices: []
       indices: 
       edges: []
@@ -374,6 +444,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: c04a3aa36bf29cb4b8b4d8f73413ee2e
+      internalID: 21300024
       vertices: []
       indices: 
       edges: []
@@ -394,6 +465,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 309ec8cace01d8842bb6c396f7ae245b
+      internalID: 21300026
       vertices: []
       indices: 
       edges: []
@@ -414,6 +486,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: f2be3cd143322a442a1bb73f1093c823
+      internalID: 21300028
       vertices: []
       indices: 
       edges: []
@@ -434,6 +507,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 44a1b6f0d13bc174f9b4621d39a9087b
+      internalID: 21300030
       vertices: []
       indices: 
       edges: []
@@ -454,6 +528,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 5673404e7dfa8d544a1b224a30f419be
+      internalID: 21300032
       vertices: []
       indices: 
       edges: []
@@ -474,6 +549,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 9901b9c1e0632d1478755be57f7af4d7
+      internalID: 21300034
       vertices: []
       indices: 
       edges: []
@@ -494,6 +570,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: aa52341499d142f409922fdf1ebd5e91
+      internalID: 21300036
       vertices: []
       indices: 
       edges: []
@@ -514,6 +591,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 5897c6acda7f707489857312912d6fb1
+      internalID: 21300038
       vertices: []
       indices: 
       edges: []
@@ -534,6 +612,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 640b6aa68734dc04f8199d47b3a82211
+      internalID: 21300040
       vertices: []
       indices: 
       edges: []
@@ -554,6 +633,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: b612ee11fc6bdf14d96e1b5722a6921c
+      internalID: 21300042
       vertices: []
       indices: 
       edges: []
@@ -574,6 +654,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 376168edb8c370043978c7753d5e7158
+      internalID: 21300044
       vertices: []
       indices: 
       edges: []
@@ -594,6 +675,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 8888aa0be75192847b604506a868fb48
+      internalID: 21300046
       vertices: []
       indices: 
       edges: []
@@ -602,10 +684,37 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 1cbb2b8a7b39df9429c8b298a2477a87
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      ReaperIdleFlipScythe20_0: 21300000
+      ReaperIdleFlipScythe20_1: 21300002
+      ReaperIdleFlipScythe20_10: 21300020
+      ReaperIdleFlipScythe20_11: 21300022
+      ReaperIdleFlipScythe20_12: 21300024
+      ReaperIdleFlipScythe20_13: 21300026
+      ReaperIdleFlipScythe20_14: 21300028
+      ReaperIdleFlipScythe20_15: 21300030
+      ReaperIdleFlipScythe20_16: 21300032
+      ReaperIdleFlipScythe20_17: 21300034
+      ReaperIdleFlipScythe20_18: 21300036
+      ReaperIdleFlipScythe20_19: 21300038
+      ReaperIdleFlipScythe20_2: 21300004
+      ReaperIdleFlipScythe20_20: 21300040
+      ReaperIdleFlipScythe20_21: 21300042
+      ReaperIdleFlipScythe20_22: 21300044
+      ReaperIdleFlipScythe20_23: 21300046
+      ReaperIdleFlipScythe20_3: 21300006
+      ReaperIdleFlipScythe20_4: 21300008
+      ReaperIdleFlipScythe20_5: 21300010
+      ReaperIdleFlipScythe20_6: 21300012
+      ReaperIdleFlipScythe20_7: 21300014
+      ReaperIdleFlipScythe20_8: 21300016
+      ReaperIdleFlipScythe20_9: 21300018
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

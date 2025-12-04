@@ -1,21 +1,45 @@
 fileFormatVersion: 2
 guid: 62b3583dd1d725f4ab236869f3ae6c60
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: reaper_blade_1_0
-    21300002: reaper_blade_1_1
-    21300004: reaper_blade_1_2
-    21300006: reaper_blade_1_3
-    21300008: reaper_blade_1_4
-    21300010: reaper_blade_1_5
-    21300012: reaper_blade_1_6
-    21300014: reaper_blade_1_7
-    21300016: reaper_blade_1_8
-    21300018: reaper_blade_1_9
-    21300020: reaper_blade_1_10
-    21300022: reaper_blade_1_11
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: reaper_blade_1_0
+  - first:
+      213: 21300002
+    second: reaper_blade_1_1
+  - first:
+      213: 21300004
+    second: reaper_blade_1_2
+  - first:
+      213: 21300006
+    second: reaper_blade_1_3
+  - first:
+      213: 21300008
+    second: reaper_blade_1_4
+  - first:
+      213: 21300010
+    second: reaper_blade_1_5
+  - first:
+      213: 21300012
+    second: reaper_blade_1_6
+  - first:
+      213: 21300014
+    second: reaper_blade_1_7
+  - first:
+      213: 21300016
+    second: reaper_blade_1_8
+  - first:
+      213: 21300018
+    second: reaper_blade_1_9
+  - first:
+      213: 21300020
+    second: reaper_blade_1_10
+  - first:
+      213: 21300022
+    second: reaper_blade_1_11
   externalObjects: {}
-  serializedVersion: 9
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -35,6 +59,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -44,8 +70,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -66,11 +92,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  cookieLightType: 1
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -81,7 +112,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -92,7 +124,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -103,6 +136,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -122,6 +156,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 4c70b894f16b3594582c2eb05c06bfce
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -142,6 +177,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 27dd5e0858b2ed948bf51b380d95bd24
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -162,6 +198,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: b9c71fdb378dcd7448278648ec9ca096
+      internalID: 21300004
       vertices: []
       indices: 
       edges: []
@@ -182,6 +219,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: d05b86e4d1e21254a8a758f87b12a331
+      internalID: 21300006
       vertices: []
       indices: 
       edges: []
@@ -202,6 +240,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 2d9dc6152c0112d4ca06cf92f9917b93
+      internalID: 21300008
       vertices: []
       indices: 
       edges: []
@@ -222,6 +261,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 40bfc4f71c3f2d84b9fe564957a66fa0
+      internalID: 21300010
       vertices: []
       indices: 
       edges: []
@@ -242,6 +282,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: a1fe443024699344cb00cff4c6628378
+      internalID: 21300012
       vertices: []
       indices: 
       edges: []
@@ -262,6 +303,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 45afb012329514a4d89fdaa4880625f7
+      internalID: 21300014
       vertices: []
       indices: 
       edges: []
@@ -282,6 +324,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: b7713e7fe90bf074d84804aa0d1a0b07
+      internalID: 21300016
       vertices: []
       indices: 
       edges: []
@@ -302,6 +345,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: c7eae7186f13a5a4782781cd0e95308b
+      internalID: 21300018
       vertices: []
       indices: 
       edges: []
@@ -322,6 +366,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: b1b656e4817bef84d861094eaf862b09
+      internalID: 21300020
       vertices: []
       indices: 
       edges: []
@@ -342,6 +387,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 65f8aae9d2c2f2f418fc1df3cc574ca1
+      internalID: 21300022
       vertices: []
       indices: 
       edges: []
@@ -350,10 +396,25 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 3310ca0bb1c5e9a4580ad5a1c3f17230
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      reaper_blade_1_0: 21300000
+      reaper_blade_1_1: 21300002
+      reaper_blade_1_10: 21300020
+      reaper_blade_1_11: 21300022
+      reaper_blade_1_2: 21300004
+      reaper_blade_1_3: 21300006
+      reaper_blade_1_4: 21300008
+      reaper_blade_1_5: 21300010
+      reaper_blade_1_6: 21300012
+      reaper_blade_1_7: 21300014
+      reaper_blade_1_8: 21300016
+      reaper_blade_1_9: 21300018
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

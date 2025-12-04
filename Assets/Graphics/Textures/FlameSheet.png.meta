@@ -147,7 +147,7 @@ TextureImporter:
       213: -5388187747402310589
     second: FlameSheet_47
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -167,6 +167,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -176,8 +178,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -198,11 +200,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  cookieLightType: 1
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 256
     resizeAlgorithm: 0
@@ -213,7 +220,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 256
     resizeAlgorithm: 0
@@ -224,7 +232,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: WebGL
     maxTextureSize: 256
     resizeAlgorithm: 0
@@ -235,6 +244,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -1256,6 +1266,55 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      FlameSheet_0: 190085063960478199
+      FlameSheet_1: -6000618301907503336
+      FlameSheet_10: -993546120022145959
+      FlameSheet_11: 6164815366038272765
+      FlameSheet_12: 6079288203764695662
+      FlameSheet_13: 3934615950314766142
+      FlameSheet_14: 895948838717819021
+      FlameSheet_15: 2268905209739928017
+      FlameSheet_16: -8970090674213717618
+      FlameSheet_17: -5748941324350356563
+      FlameSheet_18: 8341123732981901242
+      FlameSheet_19: 7291510721170215032
+      FlameSheet_2: 4218096318469973197
+      FlameSheet_20: -7757474715948588826
+      FlameSheet_21: 4114943428249584735
+      FlameSheet_22: 1185615205884935532
+      FlameSheet_23: -7649048142791391025
+      FlameSheet_24: -5290541173352579339
+      FlameSheet_25: 385776854248590100
+      FlameSheet_26: -7582287801343901213
+      FlameSheet_27: -9139987842281309391
+      FlameSheet_28: -2285254954857651955
+      FlameSheet_29: -8055786656044512864
+      FlameSheet_3: -3239334249804829092
+      FlameSheet_30: 8905981136696090400
+      FlameSheet_31: 370715654781769024
+      FlameSheet_32: -6600198980019706214
+      FlameSheet_33: 3027228094112448311
+      FlameSheet_34: -5558149445869377585
+      FlameSheet_35: -3158353047915610750
+      FlameSheet_36: -5140298479567717118
+      FlameSheet_37: -4400105774585163817
+      FlameSheet_38: 5256630974767784499
+      FlameSheet_39: -5745203917173742310
+      FlameSheet_4: 7559717275294142637
+      FlameSheet_40: 7585731922035105675
+      FlameSheet_41: -3219991141610262413
+      FlameSheet_42: -420271755137776477
+      FlameSheet_43: 7957752483767239621
+      FlameSheet_44: 7300441708653533621
+      FlameSheet_45: -3728878416952513738
+      FlameSheet_46: 2858633332033196317
+      FlameSheet_47: -5388187747402310589
+      FlameSheet_5: 4168820373287604792
+      FlameSheet_6: 4380629171195953833
+      FlameSheet_7: -7681997592316072197
+      FlameSheet_8: 4757667561248470635
+      FlameSheet_9: -5253252263242512192
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

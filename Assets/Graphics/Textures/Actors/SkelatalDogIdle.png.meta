@@ -1,12 +1,18 @@
 fileFormatVersion: 2
 guid: f0a2eb23c890ca84eaab3cad0e366984
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: SkelatalDogIdle_0
-    21300002: SkelatalDogIdle_1
-    21300004: SkelatalDogIdle_2
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: SkelatalDogIdle_0
+  - first:
+      213: 21300002
+    second: SkelatalDogIdle_1
+  - first:
+      213: 21300004
+    second: SkelatalDogIdle_2
   externalObjects: {}
-  serializedVersion: 9
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -26,6 +32,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -35,8 +43,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -57,11 +65,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  cookieLightType: 1
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 256
     resizeAlgorithm: 0
@@ -72,7 +85,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 256
     resizeAlgorithm: 0
@@ -83,7 +97,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: WebGL
     maxTextureSize: 256
     resizeAlgorithm: 0
@@ -94,6 +109,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -113,6 +129,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 4f9bf51322570b948b033ad9e9ae0ef1
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -133,6 +150,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: bdf35a37dbbe2b24a9a2dcbde6e2d507
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -153,6 +171,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 5a5ade823bd0e1b418707e1aba8dfef0
+      internalID: 21300004
       vertices: []
       indices: 
       edges: []
@@ -161,10 +180,16 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 088eae78bf393744a9455bdf5e4f7ec8
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      SkelatalDogIdle_0: 21300000
+      SkelatalDogIdle_1: 21300002
+      SkelatalDogIdle_2: 21300004
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
