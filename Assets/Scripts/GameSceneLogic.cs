@@ -398,10 +398,10 @@ public class GameSceneLogic : MonoBehaviour
     {
         while (true)
         {
-            if (Input.GetKeyDown(KeyCode.K))
+            if (Input.GetKeyDown(KeyCode.K) && Input.GetKeyDown(KeyCode.RightShift))
                 KillAllEnemies();
 
-            if (Input.GetKeyDown(KeyCode.L))
+            if (Input.GetKeyDown(KeyCode.L) && Input.GetKeyDown(KeyCode.RightShift))
                 Timing.RunCoroutine(LevelUpCo(1).CancelWith(this.gameObject));
 
             yield return 0;

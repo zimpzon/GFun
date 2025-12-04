@@ -22,7 +22,7 @@ public class CurrentRunData
     public int FloorInWorld = 1;
     public int TotalFloor = 1;
     public int StartingDifficulty = 0;
-    public World World = World.World3;
+    public World World = World.World1;
     public SpecialLocation SpecialLocation = SpecialLocation.None;
 
     public string StartingCharacterTag = "Character1";

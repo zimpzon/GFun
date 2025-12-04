@@ -224,3 +224,855 @@ AssetImportParameters requested are different than current active one (requested
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Refreshing native plugins compatible for Editor in 3.95 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 19 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 18 unused Assets / (306.6 KB). Loaded Objects now: 3608.
+Memory consumption went from 65.2 MB to 64.9 MB.
+Total: 3.023300 ms (FindLiveObjects: 0.195900 ms CreateObjectMapping: 0.170100 ms MarkObjects: 2.561000 ms  DeleteObjects: 0.095800 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-codec-MediaFoundation-h265: 746d11721c4dcdbdad8f713fa42b33f4 -> 
+  custom:CustomObjectIndexerAttribute: bc11b3a6c3213fcdd17b65e7da85e133 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Refreshing native plugins compatible for Editor in 3.53 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 19 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 18 unused Assets / (21.9 KB). Loaded Objects now: 3608.
+Memory consumption went from 64.4 MB to 64.3 MB.
+Total: 2.856300 ms (FindLiveObjects: 0.206800 ms CreateObjectMapping: 0.059500 ms MarkObjects: 2.572100 ms  DeleteObjects: 0.017400 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-codec-MediaFoundation-h265: 746d11721c4dcdbdad8f713fa42b33f4 -> 
+  custom:CustomObjectIndexerAttribute: bc11b3a6c3213fcdd17b65e7da85e133 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Refreshing native plugins compatible for Editor in 3.67 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 19 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 18 unused Assets / (21.9 KB). Loaded Objects now: 3608.
+Memory consumption went from 64.4 MB to 64.3 MB.
+Total: 2.300200 ms (FindLiveObjects: 0.200900 ms CreateObjectMapping: 0.065700 ms MarkObjects: 2.014000 ms  DeleteObjects: 0.018900 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-codec-MediaFoundation-h265: 746d11721c4dcdbdad8f713fa42b33f4 -> 
+  custom:CustomObjectIndexerAttribute: bc11b3a6c3213fcdd17b65e7da85e133 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.005030 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.66 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.817 seconds
+Domain Reload Profiling:
+	ReloadAssembly (818ms)
+		BeginReloadAssembly (113ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (5ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (25ms)
+		EndReloadAssembly (625ms)
+			LoadAssemblies (74ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (131ms)
+			ReleaseScriptCaches (2ms)
+			RebuildScriptCaches (49ms)
+			SetupLoadedEditorAssemblies (358ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (7ms)
+				SetLoadedEditorAssemblies (1ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (58ms)
+				ProcessInitializeOnLoadAttributes (227ms)
+				ProcessInitializeOnLoadMethodAttributes (54ms)
+				AfterProcessingInitializeOnLoad (8ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.97 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3021 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 21 unused Assets / (21.9 KB). Loaded Objects now: 3612.
+Memory consumption went from 124.8 MB to 124.7 MB.
+Total: 2.009300 ms (FindLiveObjects: 0.145500 ms CreateObjectMapping: 0.044200 ms MarkObjects: 1.799200 ms  DeleteObjects: 0.020100 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-codec-MediaFoundation-h265: 746d11721c4dcdbdad8f713fa42b33f4 -> 
+  custom:CustomObjectIndexerAttribute: bc11b3a6c3213fcdd17b65e7da85e133 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Refreshing native plugins compatible for Editor in 3.59 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 19 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 18 unused Assets / (21.9 KB). Loaded Objects now: 3612.
+Memory consumption went from 64.7 MB to 64.7 MB.
+Total: 2.608300 ms (FindLiveObjects: 0.218700 ms CreateObjectMapping: 0.057000 ms MarkObjects: 2.317900 ms  DeleteObjects: 0.014200 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-codec-MediaFoundation-h265: 746d11721c4dcdbdad8f713fa42b33f4 -> 
+  custom:CustomObjectIndexerAttribute: bc11b3a6c3213fcdd17b65e7da85e133 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 17771.248945 seconds.
+  path: Assets/Graphics/Textures/crosshair.png
+  artifactKey: Guid(252fddade9770cb40b3d15acc0d5bfd1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/crosshair.png using Guid(252fddade9770cb40b3d15acc0d5bfd1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3db7137f499b68e28bec8c68e9797aad') in 0.085529 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Prepare
+Refreshing native plugins compatible for Editor in 2.74 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 19 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 18 unused Assets / (21.9 KB). Loaded Objects now: 3619.
+Memory consumption went from 69.0 MB to 68.9 MB.
+Total: 2.472600 ms (FindLiveObjects: 0.193300 ms CreateObjectMapping: 0.048600 ms MarkObjects: 2.214400 ms  DeleteObjects: 0.016000 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-codec-MediaFoundation-h265: 746d11721c4dcdbdad8f713fa42b33f4 -> 
+  custom:CustomObjectIndexerAttribute: bc11b3a6c3213fcdd17b65e7da85e133 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 169.354207 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_81.png
+  artifactKey: Guid(b12a8c06ad5438a46b6566ab77c72d8b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_81.png using Guid(b12a8c06ad5438a46b6566ab77c72d8b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4932fd24c12fb3ecd60645114309e0d4') in 0.016882 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_106.png
+  artifactKey: Guid(ccf35fce7dc94884abc499e8974deb5c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_106.png using Guid(ccf35fce7dc94884abc499e8974deb5c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a391fc925689a7b206314c4274938ca6') in 0.012468 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_131.png
+  artifactKey: Guid(5369988ea82e7a64b806f55177ed6d5b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_131.png using Guid(5369988ea82e7a64b806f55177ed6d5b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3f74607ca9cd8edac9bfdea5ffaa83c2') in 0.011781 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000009 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_135.png
+  artifactKey: Guid(4bb8355e8724ba2428da734532ac34e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_135.png using Guid(4bb8355e8724ba2428da734532ac34e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3e9673f958cbd1e372ae0b42f0aecf68') in 0.009357 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000009 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_98.png
+  artifactKey: Guid(84bc901df026d2e499a26f2cea46102e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_98.png using Guid(84bc901df026d2e499a26f2cea46102e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fadc00ca3f3ce34c2e773b8ff49e85fc') in 0.012817 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_33.png
+  artifactKey: Guid(a2e38b2620050bc44a6549e43d8039e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_33.png using Guid(a2e38b2620050bc44a6549e43d8039e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7d934236d7eb6fd33661020d00501eeb') in 0.010237 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_69.png
+  artifactKey: Guid(4785047579b5dc241964ca03b977d0df) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_69.png using Guid(4785047579b5dc241964ca03b977d0df) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd9aed3ba8042a75a5b7c032e49f90bd7') in 0.012066 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_113.png
+  artifactKey: Guid(47233520181f3c3438a68e8272933aad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_113.png using Guid(47233520181f3c3438a68e8272933aad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '804eb766adf9490ab1f0c8d0727df9b0') in 0.009174 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_132.png
+  artifactKey: Guid(40c7df74f01ca1248b96c2b5cfd8c6d1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_132.png using Guid(40c7df74f01ca1248b96c2b5cfd8c6d1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '85a830a9c0e4999ee6f7dc76bb12189e') in 0.016148 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000011 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_130.png
+  artifactKey: Guid(b816e3c8071d73b4cbe2c4c42aa9d987) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_130.png using Guid(b816e3c8071d73b4cbe2c4c42aa9d987) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c67610f0435717957d04cf83e1b20088') in 0.010811 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000009 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_75.png
+  artifactKey: Guid(729fe2a4eef7a0c49a8fcc698568ec48) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_75.png using Guid(729fe2a4eef7a0c49a8fcc698568ec48) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '45cd266732c58c379fdd398918a476ec') in 0.009883 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000009 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_16.png
+  artifactKey: Guid(53aa3da07a9c4c84aab0a981814819ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_16.png using Guid(53aa3da07a9c4c84aab0a981814819ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3d6f09b3906fabbd6697af37f7fc8bab') in 0.009412 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000009 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_7.png
+  artifactKey: Guid(2b94644d079fa6e4ebcdad8f5032384a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_7.png using Guid(2b94644d079fa6e4ebcdad8f5032384a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '17abf855451b218a651396d16124832a') in 0.010115 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_55.png
+  artifactKey: Guid(f065ea6f10d629d46af89a7ad2f68f6c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_55.png using Guid(f065ea6f10d629d46af89a7ad2f68f6c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ba5a70255ce72af38f96588e88addbde') in 0.011730 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_153.png
+  artifactKey: Guid(d2f8ef066d5dce0418b525c5733a4243) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_153.png using Guid(d2f8ef066d5dce0418b525c5733a4243) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '79a2bfbe0093eab183b0eb0c54ebb57e') in 0.011606 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_71.png
+  artifactKey: Guid(cc59c8f6e3d3dd2409459777b9418bd6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_71.png using Guid(cc59c8f6e3d3dd2409459777b9418bd6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4ea5e2203f7d43c342156c7293a1a020') in 0.010246 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000007 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_25.png
+  artifactKey: Guid(a41fea28ede088b4493cfc8acabf568c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_25.png using Guid(a41fea28ede088b4493cfc8acabf568c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '11bc6370934176684194ef320c8575a4') in 0.014098 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_138.png
+  artifactKey: Guid(e97be08e8e970e84794ab51ac0c53c9e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_138.png using Guid(e97be08e8e970e84794ab51ac0c53c9e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4ac04e58918cf649ac65c6794e243dda') in 0.010802 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000012 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_114.png
+  artifactKey: Guid(a899e1982f9e8d64f8834005460ef0d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_114.png using Guid(a899e1982f9e8d64f8834005460ef0d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c8c0e8b61bde5428746ad2e35b48b7cc') in 0.012102 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_87.png
+  artifactKey: Guid(b20ca9cb374cc084fb6fafc3ce9ae4c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_87.png using Guid(b20ca9cb374cc084fb6fafc3ce9ae4c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8f3edd1da30fe60b2574c9eb0499ee15') in 0.009663 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000007 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_86.png
+  artifactKey: Guid(a13a0cabc6d368e4687af27d7d208f14) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_86.png using Guid(a13a0cabc6d368e4687af27d7d208f14) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '88953bb160a0db60c8c1e4765f0765ce') in 0.009512 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000007 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_84.png
+  artifactKey: Guid(ca1f886d02e44e04b8a4acb463e62113) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_84.png using Guid(ca1f886d02e44e04b8a4acb463e62113) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c8f93bef6896f57f2dad906abaa56cbf') in 0.010289 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_147.png
+  artifactKey: Guid(222c5357df1f7824ba89613f60392194) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_147.png using Guid(222c5357df1f7824ba89613f60392194) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '46a2a6e1fcc86dade673ca1c85dc31f6') in 0.010492 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_48.png
+  artifactKey: Guid(d42abb154079ba54b9c8ebb39fda5e06) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_48.png using Guid(d42abb154079ba54b9c8ebb39fda5e06) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a307208ca17ac75d49a5f08aa199583e') in 0.011525 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_2.png
+  artifactKey: Guid(8a2468ce9870945478ad56e7247484dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_2.png using Guid(8a2468ce9870945478ad56e7247484dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd90752eb3be9bfca7ae279aa6d06b988') in 0.009901 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_149.png
+  artifactKey: Guid(43fd0aa153f8b634097269c37e49500d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_149.png using Guid(43fd0aa153f8b634097269c37e49500d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4423b46053987d6398bebd7da7c7781b') in 0.010066 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_73.png
+  artifactKey: Guid(a06d7e1d83e2fd14ab750fbfc69b854a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_73.png using Guid(a06d7e1d83e2fd14ab750fbfc69b854a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9e61ab05764448d45d0ad4b6ce400461') in 0.010709 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_90.png
+  artifactKey: Guid(a01bfec6d4977ef4ba6e3af4c1bc86b8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_90.png using Guid(a01bfec6d4977ef4ba6e3af4c1bc86b8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7a83da25a548ccc7b11f2bbe708d8f6f') in 0.009754 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000009 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_6.png
+  artifactKey: Guid(21294a3908d66cc48b52fbc24ea2ab56) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_6.png using Guid(21294a3908d66cc48b52fbc24ea2ab56) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c54eacc6d56ee7ca05b29598d47272a9') in 0.017490 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000009 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_57.png
+  artifactKey: Guid(b04986f89193ff847ae7e3120cefc027) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_57.png using Guid(b04986f89193ff847ae7e3120cefc027) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '24969d7bfb4fbdcd511f93e2e067d27b') in 0.012314 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000010 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_94.png
+  artifactKey: Guid(f645e9555ab286948b7e8a03c87671be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_94.png using Guid(f645e9555ab286948b7e8a03c87671be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4717dd2202c75420625a5c7bf354ce82') in 0.009546 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_67.png
+  artifactKey: Guid(cf17b711ae353ff4a95362329066d888) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_67.png using Guid(cf17b711ae353ff4a95362329066d888) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f983b12d38ab44e7517ad28f57c0432e') in 0.011353 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000011 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_101.png
+  artifactKey: Guid(98bb19d9daba94743bc7c012f1f0b553) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_101.png using Guid(98bb19d9daba94743bc7c012f1f0b553) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '43874d7e15b5a75ce0a2c13156c0a170') in 0.010762 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_62.png
+  artifactKey: Guid(c01f4ccc890e2ee48a250eaad112daab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_62.png using Guid(c01f4ccc890e2ee48a250eaad112daab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'af5bfca1a71f91a3b9dcec0758af4b2c') in 0.012867 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_38.png
+  artifactKey: Guid(e76fd471a924fe143ab877801d688299) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_38.png using Guid(e76fd471a924fe143ab877801d688299) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '03d117df279bc84158afe71b16902084') in 0.008899 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000009 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_103.png
+  artifactKey: Guid(5f391370d7eec6b4ebae440bedb4f183) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_103.png using Guid(5f391370d7eec6b4ebae440bedb4f183) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3a42c78d57067e157904663094169f95') in 0.008941 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000011 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_102.png
+  artifactKey: Guid(a04d99e0a6835a0479cfa9235a8beca0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_102.png using Guid(a04d99e0a6835a0479cfa9235a8beca0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '77010e9bb4caa8abe0f048515a749ba0') in 0.008101 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000011 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_93.png
+  artifactKey: Guid(2c9e15787311ab940a572d016a1b9b1b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_93.png using Guid(2c9e15787311ab940a572d016a1b9b1b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b42a20be01153ab4dbfbf2761f705fc5') in 0.008890 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000010 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_24.png
+  artifactKey: Guid(5228a6272cfa37d4aabe23ab5511e8ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_24.png using Guid(5228a6272cfa37d4aabe23ab5511e8ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0730e823a4b37b276bad7b8fa8548fd2') in 0.009205 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_32.png
+  artifactKey: Guid(644c735b7414c814c9ea97d6948b27e9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_32.png using Guid(644c735b7414c814c9ea97d6948b27e9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '41910abeb1160d3679f433f1fd602e67') in 0.008661 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000009 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_123.png
+  artifactKey: Guid(8ed86e31784fdaa41b43798368c460fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_123.png using Guid(8ed86e31784fdaa41b43798368c460fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f74d36059230134627454dabd92d240d') in 0.008906 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000010 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_49.png
+  artifactKey: Guid(7c34c17c94d09d145a72fd76b56fca78) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_49.png using Guid(7c34c17c94d09d145a72fd76b56fca78) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd299a78ca2b734b1cdd9bef4965a6af9') in 0.008535 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_30.png
+  artifactKey: Guid(69d0e377130bd274ea63d37819f9a038) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_30.png using Guid(69d0e377130bd274ea63d37819f9a038) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8c448b8e2184a78b8f1517de6d3e57ce') in 0.008722 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_45.png
+  artifactKey: Guid(0b1c74116ba82004284be9c39fb23bce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_45.png using Guid(0b1c74116ba82004284be9c39fb23bce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e5f3f0fb92f53b16dbd2086c6f9f24a4') in 0.008832 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_54a.png
+  artifactKey: Guid(72d7adb67e6e1aa408f3d4a267b31e10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_54a.png using Guid(72d7adb67e6e1aa408f3d4a267b31e10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '99510ceef49eccc161df4889454453f3') in 0.008596 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_97.png
+  artifactKey: Guid(2c3da3a3d6fbbb846b343365869bc6a6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_97.png using Guid(2c3da3a3d6fbbb846b343365869bc6a6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aa737bd729c86e52f893c221074fa4e7') in 0.009615 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_12.png
+  artifactKey: Guid(8a6396e1073ca6a40995cabe366d4f35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_12.png using Guid(8a6396e1073ca6a40995cabe366d4f35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1639c3f69bc36379e12b89acc2a675d2') in 0.008539 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000009 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_43.png
+  artifactKey: Guid(3e0c192007611f4458b4e987f6ced881) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_43.png using Guid(3e0c192007611f4458b4e987f6ced881) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '59e7f5b31f531d07bbbadbcbf04b193d') in 0.008218 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000009 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_165.png
+  artifactKey: Guid(7fe48d58881c3cd48a8965391e588fa1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_165.png using Guid(7fe48d58881c3cd48a8965391e588fa1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2f7874164edf6bf64588fb990c27353e') in 0.008123 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_124.png
+  artifactKey: Guid(1acc3c1b27e454943a9f0a18a73fc777) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_124.png using Guid(1acc3c1b27e454943a9f0a18a73fc777) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '816d3689272f57a688f66972f81e5259') in 0.009438 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000009 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_50.png
+  artifactKey: Guid(db975c1b09eaa0c4886e01ce3565e0b8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_50.png using Guid(db975c1b09eaa0c4886e01ce3565e0b8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ce1890ba0b508f5bb275d196a1567c3e') in 0.008705 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000007 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_54.png
+  artifactKey: Guid(bc3e51842cd5d90429c2feea343cce16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_54.png using Guid(bc3e51842cd5d90429c2feea343cce16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7649c81b48c496487190087e1b76f1a4') in 0.009318 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000009 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_116.png
+  artifactKey: Guid(dae54da27ff048e408b7114bea993e9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_116.png using Guid(dae54da27ff048e408b7114bea993e9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '947ebaefd4a0769efad5a5aa7234d9f3') in 0.008076 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_26.png
+  artifactKey: Guid(175e63fb1817756458a74e010c33194f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_26.png using Guid(175e63fb1817756458a74e010c33194f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1b59113ebb8ea3a7448106b92852e589') in 0.010700 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_99.png
+  artifactKey: Guid(43af1219fc893584181d67cd8947a690) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_99.png using Guid(43af1219fc893584181d67cd8947a690) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e17a3f848e1c34e3b999abdfd5e4c4f2') in 0.008660 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_53.png
+  artifactKey: Guid(2195c1820b337d54abb3b8021f258c4f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_53.png using Guid(2195c1820b337d54abb3b8021f258c4f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3ebe743dc98dfdfb1868b4aae4ef0e56') in 0.007868 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_154.png
+  artifactKey: Guid(e469abaf252e7f449853fd9f9ba42e97) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_154.png using Guid(e469abaf252e7f449853fd9f9ba42e97) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '822a3e84bde6e01af57da9e3c173f4c2') in 0.008407 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_91.png
+  artifactKey: Guid(6a7a42708f5674a45a3cea47853c7679) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_91.png using Guid(6a7a42708f5674a45a3cea47853c7679) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a0f14d4abed36ce1f3fcd15d8bf66ae0') in 0.009325 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_8.png
+  artifactKey: Guid(b959469621725844cbab8163ec9fdba8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_8.png using Guid(b959469621725844cbab8163ec9fdba8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7a04b3aa2b0ccc9e65570c20fdd4d303') in 0.010079 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_129.png
+  artifactKey: Guid(35633d128e800ed48a3f44e66b20ae38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_129.png using Guid(35633d128e800ed48a3f44e66b20ae38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '49693cadd7d56f97e7cac95a828c671c') in 0.008402 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_5.png
+  artifactKey: Guid(d67735c9d25aa31418e049011effdff5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_5.png using Guid(d67735c9d25aa31418e049011effdff5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0e66e30e2590367f751b020f3b4a8c7e') in 0.008316 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000010 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_179.png
+  artifactKey: Guid(91fb01ac820560744b537c9247d4c9d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_179.png using Guid(91fb01ac820560744b537c9247d4c9d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2b091ae657a46412ca887a065cc01426') in 0.008041 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_146.png
+  artifactKey: Guid(5abc478be46b0b2428a5373d0b6aa62e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_146.png using Guid(5abc478be46b0b2428a5373d0b6aa62e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7e214ef1b70ba0b71d06b38b26133475') in 0.008876 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_100.png
+  artifactKey: Guid(d3dfd235072f73d488b3d3e1541f4657) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_100.png using Guid(d3dfd235072f73d488b3d3e1541f4657) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0bf7cc98c38824cd9c15c7f2b3902aee') in 0.008919 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000009 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_105.png
+  artifactKey: Guid(5ddc31a4f8c4f6142bb51ef5d34662d9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_105.png using Guid(5ddc31a4f8c4f6142bb51ef5d34662d9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '34126d301de3c72e42999b20923d7c8f') in 0.007913 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_121.png
+  artifactKey: Guid(d7f94db0bf6f2b24d97b926f4533fa74) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_121.png using Guid(d7f94db0bf6f2b24d97b926f4533fa74) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '92cb45836792106db03e54c943a4eca4') in 0.009306 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_68.png
+  artifactKey: Guid(30778444b9ca4454b9e020e9b139e76b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_68.png using Guid(30778444b9ca4454b9e020e9b139e76b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '29efd3dbe6edc6ff0b63866504fbff08') in 0.008704 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_40.png
+  artifactKey: Guid(d885569da6ae8bc4eb44cec274be3118) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_40.png using Guid(d885569da6ae8bc4eb44cec274be3118) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '442e51d0c17f4839fe16765c98e13cdb') in 0.009307 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_111.png
+  artifactKey: Guid(4e3ef1f4a048cde42b19a38704f92c0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_111.png using Guid(4e3ef1f4a048cde42b19a38704f92c0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b902a0faa48387b0ad487bc0f1faa63e') in 0.008926 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_96.png
+  artifactKey: Guid(98a2fcbf2116a734189001db4954eadf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_96.png using Guid(98a2fcbf2116a734189001db4954eadf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6a6b2f75ad8a27045f02e827dcc9dfc7') in 0.009110 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_77.png
+  artifactKey: Guid(e4306fd3211924948bc7ad716f33e605) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_77.png using Guid(e4306fd3211924948bc7ad716f33e605) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0963c34e9130bfcf6e6bd5e5671fefc5') in 0.009519 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_117.png
+  artifactKey: Guid(55755e34ff9640a44bfb04006885d139) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_117.png using Guid(55755e34ff9640a44bfb04006885d139) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'de2baba5bb6d59cd8f546ecaad8ca00c') in 0.007987 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_70.png
+  artifactKey: Guid(502d72e4c63c16a418afd5e50b9ecc7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_70.png using Guid(502d72e4c63c16a418afd5e50b9ecc7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '797c6bacbb70522d6d9b5cc2247e88e4') in 0.007954 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000008 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_64.png
+  artifactKey: Guid(1473affe8a95dc149ade6e0dc3a26ff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_64.png using Guid(1473affe8a95dc149ade6e0dc3a26ff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f56a42b21d0ae78683f86862cec75fee') in 0.008250 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000009 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_122.png
+  artifactKey: Guid(c2a081b010e1a43468e1fe2c08ddbdba) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_122.png using Guid(c2a081b010e1a43468e1fe2c08ddbdba) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '31c6664961358c0480bcdf565a437ee0') in 0.008165 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_29.png
+  artifactKey: Guid(ab33b98f13c0d374381c80a28fd7f486) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_29.png using Guid(ab33b98f13c0d374381c80a28fd7f486) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '21c949813c3e32643c5c8fa31939628d') in 0.008134 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000007 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_152.png
+  artifactKey: Guid(708fcaab73f78294e987df8e0d36213d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_152.png using Guid(708fcaab73f78294e987df8e0d36213d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7c1f234cfe947177a11e4923b54bb14f') in 0.007877 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000007 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_44.png
+  artifactKey: Guid(e859212ec2b33714ea8c09d083e907a0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_44.png using Guid(e859212ec2b33714ea8c09d083e907a0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6d35a412d390a0c9f2bcd3a4f34a11ad') in 0.007842 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000007 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_63.png
+  artifactKey: Guid(53e3f4786f08b754d9a0d8c6e61cebb1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_63.png using Guid(53e3f4786f08b754d9a0d8c6e61cebb1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9f3c574f559dd08ab603ca9074d25fca') in 0.008958 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000007 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_37.png
+  artifactKey: Guid(ffdaa8c938d377846abe52fbcd0c39bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_37.png using Guid(ffdaa8c938d377846abe52fbcd0c39bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7f34942726ec5a9fc6369ecd2e3248d4') in 0.008200 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000007 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_182.png
+  artifactKey: Guid(fd79a779d41345148893159fc69d6f7c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_182.png using Guid(fd79a779d41345148893159fc69d6f7c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c03361fb6daafc9f2433d0690eb789aa') in 0.008370 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000007 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_3.png
+  artifactKey: Guid(7b9b9b75ef97f8a4eaf50b0166cb79cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_3.png using Guid(7b9b9b75ef97f8a4eaf50b0166cb79cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f963ce1db65839e7822eeb8544e4b275') in 0.008310 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000007 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_47.png
+  artifactKey: Guid(77bb926ea05fe694a9afca5f221eefa5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_47.png using Guid(77bb926ea05fe694a9afca5f221eefa5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c92f5d5d67840cde73d49c97f6dde768') in 0.007626 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000007 seconds.
+  path: Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_10.png
+  artifactKey: Guid(5de77173395a426468e167fa208e09dd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Graphics/Textures/Tiles/OutdoorTiles/rpg_tileset_10.png using Guid(5de77173395a426468e167fa208e09dd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4d023f55c154ec28c6c6a6e4c24139d7') in 0.007872 seconds 
+Number of asset objects unloaded after import = 3
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0
